@@ -9,7 +9,7 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems"))
 
 # Import after path modification
-from problem_005 import (
+from problems.problem_005 import (
     gcd,
     lcm,
     solve_builtin,
