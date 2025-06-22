@@ -13,7 +13,6 @@ Answer: 232792560
 
 import math
 import time
-from typing import List, Tuple
 
 
 def gcd(a: int, b: int) -> int:
@@ -85,7 +84,7 @@ def solve_mathematical(n: int) -> int:
         return 1
 
     # エラトステネスの篩で素数を求める
-    def sieve_of_eratosthenes(limit: int) -> List[int]:
+    def sieve_of_eratosthenes(limit: int) -> list[int]:
         """エラトステネスの篩による素数列挙"""
         if limit < 2:
             return []
@@ -235,9 +234,9 @@ def main() -> None:
     print(f"結果: {result_optimized:,}")
 
     # 簡単な因数分解表示
-    def prime_factorization(num: int) -> List[Tuple[int, int]]:
+    def prime_factorization(num: int) -> list[tuple[int, int]]:
         """素因数分解を行う"""
-        factors: List[Tuple[int, int]] = []
+        factors: list[tuple[int, int]] = []
         d = 2
         while d * d <= num:
             while num % d == 0:
