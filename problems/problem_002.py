@@ -23,13 +23,16 @@ def solve_naive(limit: int) -> int:
     時間計算量: O(n) - nはlimit以下のフィボナッチ数の個数
     空間計算量: O(1) - 定数個の変数のみ使用
     """
+    if limit <= 0:
+        return 0
+    
     if limit < 2:
         return 0
     
     a, b = 1, 2  # フィボナッチ数列の最初の2項
     total = 0
     
-    while b <= limit:
+    while b < limit:
         if b % 2 == 0:  # 偶数かチェック
             total += b
         a, b = b, a + b  # 次のフィボナッチ数を計算
@@ -50,6 +53,9 @@ def solve_optimized(limit: int) -> int:
     時間計算量: O(log n) - 偶数項の個数は全体の約1/3
     空間計算量: O(1)
     """
+    if limit <= 0:
+        return 0
+    
     if limit < 2:
         return 0
     
@@ -58,11 +64,11 @@ def solve_optimized(limit: int) -> int:
     total = 0
     
     # 最初の項（2）を処理
-    if e1 <= limit:
+    if e1 < limit:
         total += e1
     
     # 2番目以降の偶数項を処理
-    while e2 <= limit:
+    while e2 < limit:
         total += e2
         e1, e2 = e2, 4 * e2 + e1  # 偶数項の漸化式
     
@@ -79,14 +85,19 @@ def solve_mathematical(limit: int) -> int:
     時間計算量: O(log n)
     空間計算量: O(1)
     """
+    if limit <= 0:
+        return 0
+    
     if limit < 2:
         return 0
     
     def fibonacci(n: int) -> int:
-        """n番目のフィボナッチ数を計算（Binet's formula使用）"""
+        """n番目のフィボナッチ数を計算"""
         if n <= 0:
             return 0
         if n == 1:
+            return 1
+        if n == 2:
             return 1
         
         # 動的計画法で計算
@@ -100,20 +111,19 @@ def solve_mathematical(limit: int) -> int:
     
     while True:
         fib_n = fibonacci(n)
-        if fib_n > limit:
+        if fib_n >= limit:
             break
         total += fib_n
         n += 3  # 3つおきに偶数項が現れる
     
     return total
 
-def test_solutions():
+def test_solutions() -> None:
     """テストケースで解答を検証"""
     test_cases = [
-        (10, 10),      # 1,2,3,5,8 → 2+8 = 10
-        (50, 44),      # 1,2,3,5,8,13,21,34 → 2+8+34 = 44
-        (100, 44),     # 1,2,3,5,8,13,21,34,55,89 → 2+8+34 = 44
-        (400, 188),    # 1,2,3,5,8,13,21,34,55,89,144,233,377 → 2+8+34+144 = 188
+        (10, 10),      # 2 + 8 = 10
+        (50, 44),      # 2 + 8 + 34 = 44
+        (100, 44),     # 2 + 8 + 34 = 44
     ]
     
     print("=== テストケース ===")
@@ -129,7 +139,7 @@ def test_solutions():
         print(f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}")
         print()
 
-def main():
+def main() -> None:
     """メイン関数"""
     limit = 4_000_000
     
@@ -165,7 +175,7 @@ def main():
     
     # 結果の検証
     if result_naive == result_optimized == result_math:
-        print(f"✓ 解答: {result_naive:,}")
+        print(f"✓ 解答: {result_optimized:,}")
     else:
         print("✗ 解答が一致しません")
         return

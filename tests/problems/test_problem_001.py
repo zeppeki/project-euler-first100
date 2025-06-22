@@ -13,62 +13,47 @@ from problem_001 import solve_naive, solve_optimized, solve_mathematical
 class TestProblem001:
     """Test cases for Problem 001."""
 
-    def test_solve_naive(self):
+    @pytest.mark.parametrize("limit,expected", [
+        (10, 23),      # 3 + 5 + 6 + 9 = 23
+        (20, 78),      # 3 + 5 + 6 + 9 + 10 + 12 + 15 + 18 = 78
+        (100, 2318),   # Known result for limit 100
+    ])
+    def test_solve_naive(self, limit, expected):
         """Test the naive solution."""
-        # Test cases: (limit, expected_result)
-        test_cases = [
-            (10, 23),      # 3 + 5 + 6 + 9 = 23
-            (20, 78),      # 3 + 5 + 6 + 9 + 10 + 12 + 15 + 18 = 78
-            (100, 2318),   # Known result for limit 100
-        ]
-        
-        for limit, expected in test_cases:
-            with self.subTest(limit=limit):
-                result = solve_naive(limit)
-                assert result == expected, f"Expected {expected}, got {result} for limit {limit}"
+        result = solve_naive(limit)
+        assert result == expected, f"Expected {expected}, got {result} for limit {limit}"
 
-    def test_solve_optimized(self):
+    @pytest.mark.parametrize("limit,expected", [
+        (10, 23),      # 3 + 5 + 6 + 9 = 23
+        (20, 78),      # 3 + 5 + 6 + 9 + 10 + 12 + 15 + 18 = 78
+        (100, 2318),   # Known result for limit 100
+    ])
+    def test_solve_optimized(self, limit, expected):
         """Test the optimized solution."""
-        # Test cases: (limit, expected_result)
-        test_cases = [
-            (10, 23),      # 3 + 5 + 6 + 9 = 23
-            (20, 78),      # 3 + 5 + 6 + 9 + 10 + 12 + 15 + 18 = 78
-            (100, 2318),   # Known result for limit 100
-        ]
-        
-        for limit, expected in test_cases:
-            with self.subTest(limit=limit):
-                result = solve_optimized(limit)
-                assert result == expected, f"Expected {expected}, got {result} for limit {limit}"
+        result = solve_optimized(limit)
+        assert result == expected, f"Expected {expected}, got {result} for limit {limit}"
 
-    def test_solve_mathematical(self):
+    @pytest.mark.parametrize("limit,expected", [
+        (10, 23),      # 3 + 5 + 6 + 9 = 23
+        (20, 78),      # 3 + 5 + 6 + 9 + 10 + 12 + 15 + 18 = 78
+        (100, 2318),   # Known result for limit 100
+    ])
+    def test_solve_mathematical(self, limit, expected):
         """Test the mathematical solution."""
-        # Test cases: (limit, expected_result)
-        test_cases = [
-            (10, 23),      # 3 + 5 + 6 + 9 = 23
-            (20, 78),      # 3 + 5 + 6 + 9 + 10 + 12 + 15 + 18 = 78
-            (100, 2318),   # Known result for limit 100
-        ]
-        
-        for limit, expected in test_cases:
-            with self.subTest(limit=limit):
-                result = solve_mathematical(limit)
-                assert result == expected, f"Expected {expected}, got {result} for limit {limit}"
+        result = solve_mathematical(limit)
+        assert result == expected, f"Expected {expected}, got {result} for limit {limit}"
 
-    def test_all_solutions_agree(self):
+    @pytest.mark.parametrize("limit", [10, 20, 50, 100])
+    def test_all_solutions_agree(self, limit):
         """Test that all solutions give the same result."""
-        test_limits = [10, 20, 50, 100]
+        naive_result = solve_naive(limit)
+        optimized_result = solve_optimized(limit)
+        math_result = solve_mathematical(limit)
         
-        for limit in test_limits:
-            with self.subTest(limit=limit):
-                naive_result = solve_naive(limit)
-                optimized_result = solve_optimized(limit)
-                math_result = solve_mathematical(limit)
-                
-                assert naive_result == optimized_result == math_result, (
-                    f"Solutions disagree for limit {limit}: "
-                    f"naive={naive_result}, optimized={optimized_result}, math={math_result}"
-                )
+        assert naive_result == optimized_result == math_result, (
+            f"Solutions disagree for limit {limit}: "
+            f"naive={naive_result}, optimized={optimized_result}, math={math_result}"
+        )
 
     def test_edge_cases(self):
         """Test edge cases."""
@@ -87,6 +72,13 @@ class TestProblem001:
         assert solve_optimized(2) == 0
         assert solve_mathematical(2) == 0
 
+    def test_negative_input(self):
+        """Test with negative input (should handle gracefully)."""
+        # All solutions should handle negative input gracefully
+        assert solve_naive(-10) == 0
+        assert solve_optimized(-10) == 0
+        assert solve_mathematical(-10) == 0
+
     @pytest.mark.slow
     def test_large_number(self):
         """Test with a large number (marked as slow)."""
@@ -101,10 +93,3 @@ class TestProblem001:
         assert result_naive == expected
         assert result_optimized == expected
         assert result_math == expected
-
-    def test_negative_input(self):
-        """Test with negative input (should handle gracefully)."""
-        # All solutions should handle negative input gracefully
-        assert solve_naive(-10) == 0
-        assert solve_optimized(-10) == 0
-        assert solve_mathematical(-10) == 0

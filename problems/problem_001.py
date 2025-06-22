@@ -19,6 +19,9 @@ def solve_naive(limit: int) -> int:
     時間計算量: O(n)
     空間計算量: O(1)
     """
+    if limit <= 0:
+        return 0
+    
     total = 0
     for i in range(limit):
         if i % 3 == 0 or i % 5 == 0:
@@ -32,6 +35,9 @@ def solve_optimized(limit: int) -> int:
     時間計算量: O(1)
     空間計算量: O(1)
     """
+    if limit <= 0:
+        return 0
+    
     def sum_multiples(n: int, limit: int) -> int:
         """nの倍数の和を計算（limit未満）"""
         count = (limit - 1) // n
@@ -47,6 +53,9 @@ def solve_mathematical(limit: int) -> int:
     時間計算量: O(n)
     空間計算量: O(n)
     """
+    if limit <= 0:
+        return 0
+    
     return sum(i for i in range(limit) if i % 3 == 0 or i % 5 == 0)
 
 
