@@ -38,7 +38,7 @@ jobs:
         flags: unittests
         name: codecov-umbrella
 
-  lint:
+  quality:
     runs-on: ubuntu-latest
 
     steps:
@@ -55,35 +55,14 @@ jobs:
     - name: Install dependencies
       run: uv pip install --system -e .[dev]
 
-    - name: Run ruff check
+    - name: Run ruff linting
       run: uv run ruff check problems/ tests/
 
-    - name: Run ruff format check
+    - name: Run ruff formatting check
       run: uv run ruff format --check problems/ tests/
 
-    - name: Run mypy
+    - name: Run mypy type checking
       run: uv run mypy problems/ tests/
-
-    - name: Run bandit
-      run: |
-        uv run bandit -r problems/ -f json -o bandit-report.json || echo '[]' > bandit-report.json
-
-  security:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-
-    - name: Install uv
-      uses: astral-sh/setup-uv@v4
-
-    - name: Install dependencies
-      run: uv pip install --system -e .[dev]
 
     - name: Run bandit security scan
       run: |
@@ -94,23 +73,3 @@ jobs:
       with:
         name: security-report
         path: bandit-report.json
-
-  format:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-
-    - name: Install uv
-      uses: astral-sh/setup-uv@v4
-
-    - name: Install dependencies
-      run: uv pip install --system -e .[dev]
-
-    - name: Check code formatting
-      run: uv run ruff format --check problems/ tests/
