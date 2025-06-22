@@ -193,9 +193,9 @@ def main() -> None:
     # パフォーマンス比較
     print("=== パフォーマンス比較 ===")
     fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time/fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time/fastest_time:.2f}x")
-    print(f"数学的解法: {math_time/fastest_time:.2f}x")
+    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
+    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
+    print(f"数学的解法: {math_time / fastest_time:.2f}x")
 
 
 if __name__ == "__main__":

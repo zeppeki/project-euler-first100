@@ -11,7 +11,6 @@ Answer: 906609
 """
 
 import time
-from typing import Tuple
 
 
 def is_palindrome(n: int) -> bool:
@@ -20,7 +19,7 @@ def is_palindrome(n: int) -> bool:
     return s == s[::-1]
 
 
-def solve_naive(min_digits: int, max_digits: int) -> Tuple[int, int, int]:
+def solve_naive(min_digits: int, max_digits: int) -> tuple[int, int, int]:
     """
     素直な解法: 全ての組み合わせをチェック
     時間計算量: O(n²)
@@ -47,7 +46,7 @@ def solve_naive(min_digits: int, max_digits: int) -> Tuple[int, int, int]:
     return largest_palindrome, factors[0], factors[1]
 
 
-def solve_optimized(min_digits: int, max_digits: int) -> Tuple[int, int, int]:
+def solve_optimized(min_digits: int, max_digits: int) -> tuple[int, int, int]:
     """
     最適化解法: 上から下に向かって探索し、早期終了を活用
     時間計算量: O(n²) but with better pruning
@@ -81,7 +80,7 @@ def solve_optimized(min_digits: int, max_digits: int) -> Tuple[int, int, int]:
     return largest_palindrome, factors[0], factors[1]
 
 
-def solve_mathematical(min_digits: int, max_digits: int) -> Tuple[int, int, int]:
+def solve_mathematical(min_digits: int, max_digits: int) -> tuple[int, int, int]:
     """
     数学的解法: 回文の構造を利用した最適化
     回文は特定の構造を持つため、候補を絞り込める
@@ -233,15 +232,15 @@ def main() -> None:
     # パフォーマンス比較
     print("=== パフォーマンス比較 ===")
     fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time/fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time/fastest_time:.2f}x")
-    print(f"数学的解法: {math_time/fastest_time:.2f}x")
+    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
+    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
+    print(f"数学的解法: {math_time / fastest_time:.2f}x")
 
     # 回文の検証
     print("\n=== 回文の検証 ===")
     palindrome = result_optimized[0]
     print(f"数値: {palindrome}")
-    print(f"文字列: {str(palindrome)}")
+    print(f"文字列: {palindrome!s}")
     print(f"逆順: {str(palindrome)[::-1]}")
     print(f"回文: {'✓' if is_palindrome(palindrome) else '✗'}")
 

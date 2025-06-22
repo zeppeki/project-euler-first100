@@ -9,7 +9,7 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems"))
 
 # Import after path modification
-from problem_005 import (  # noqa: E402
+from problem_005 import (
     gcd,
     lcm,
     solve_builtin,
@@ -191,9 +191,9 @@ class TestProblem005:
         for n in range(1, 11):
             math_result = solve_mathematical(n)
             optimized_result = solve_optimized(n)
-            assert (
-                math_result == optimized_result
-            ), f"Mathematical and optimized solutions disagree for n={n}"
+            assert math_result == optimized_result, (
+                f"Mathematical and optimized solutions disagree for n={n}"
+            )
 
     def test_performance_comparison(self) -> None:
         """Test that optimized solutions are faster for larger inputs."""
@@ -235,9 +235,9 @@ class TestProblem005:
 
         # Verify it's divisible by all numbers from 1 to 20
         for i in range(1, n + 1):
-            assert (
-                expected_answer % i == 0
-            ), f"Expected answer {expected_answer} not divisible by {i}"
+            assert expected_answer % i == 0, (
+                f"Expected answer {expected_answer} not divisible by {i}"
+            )
 
     def test_prime_factorization_properties(self) -> None:
         """Test that the mathematical approach handles prime powers correctly."""

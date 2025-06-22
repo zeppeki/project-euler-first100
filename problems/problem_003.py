@@ -27,10 +27,7 @@ def is_prime(n: int) -> bool:
         return False
 
     # 3から√nまでの奇数で試し割り
-    for i in range(3, int(math.sqrt(n)) + 1, 2):
-        if n % i == 0:
-            return False
-    return True
+    return all(n % i != 0 for i in range(3, int(math.sqrt(n)) + 1, 2))
 
 
 def solve_naive(n: int) -> int:
@@ -201,9 +198,9 @@ def main() -> None:
     # パフォーマンス比較
     print("=== パフォーマンス比較 ===")
     fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time/fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time/fastest_time:.2f}x")
-    print(f"数学的解法: {math_time/fastest_time:.2f}x")
+    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
+    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
+    print(f"数学的解法: {math_time / fastest_time:.2f}x")
 
 
 if __name__ == "__main__":

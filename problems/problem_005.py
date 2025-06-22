@@ -13,7 +13,6 @@ Answer: 232792560
 
 import math
 import time
-from typing import List, Tuple
 
 
 def gcd(a: int, b: int) -> int:
@@ -85,7 +84,7 @@ def solve_mathematical(n: int) -> int:
         return 1
 
     # エラトステネスの篩で素数を求める
-    def sieve_of_eratosthenes(limit: int) -> List[int]:
+    def sieve_of_eratosthenes(limit: int) -> list[int]:
         """エラトステネスの篩による素数列挙"""
         if limit < 2:
             return []
@@ -225,19 +224,19 @@ def main() -> None:
     # パフォーマンス比較
     print("=== パフォーマンス比較 ===")
     fastest_time = min(naive_time, optimized_time, math_time, builtin_time)
-    print(f"素直な解法: {naive_time/fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time/fastest_time:.2f}x")
-    print(f"数学的解法: {math_time/fastest_time:.2f}x")
-    print(f"標準ライブラリ解法: {builtin_time/fastest_time:.2f}x")
+    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
+    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
+    print(f"数学的解法: {math_time / fastest_time:.2f}x")
+    print(f"標準ライブラリ解法: {builtin_time / fastest_time:.2f}x")
 
     # 素因数分解の確認
     print("\n=== 素因数分解の確認 ===")
     print(f"結果: {result_optimized:,}")
 
     # 簡単な因数分解表示
-    def prime_factorization(num: int) -> List[Tuple[int, int]]:
+    def prime_factorization(num: int) -> list[tuple[int, int]]:
         """素因数分解を行う"""
-        factors: List[Tuple[int, int]] = []
+        factors: list[tuple[int, int]] = []
         d = 2
         while d * d <= num:
             while num % d == 0:
@@ -265,16 +264,16 @@ def main() -> None:
     verification_failed = False
     for i in range(1, min(n + 1, 11)):  # 表示は最初の10個まで
         if result_optimized % i == 0:
-            print(f"{result_optimized:,} ÷ {i} = {result_optimized//i:,} ✓")
+            print(f"{result_optimized:,} ÷ {i} = {result_optimized // i:,} ✓")
         else:
-            print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized%i} ✗")
+            print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized % i} ✗")
             verification_failed = True
 
     if n > 10:
         print(f"... (11から{n}まで省略)")
         for i in range(11, n + 1):
             if result_optimized % i != 0:
-                print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized%i} ✗")
+                print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized % i} ✗")
                 verification_failed = True
 
     if not verification_failed:
