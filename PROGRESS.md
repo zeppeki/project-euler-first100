@@ -9,6 +9,7 @@
 | 001 | Multiples of 3 and 5 | 🟢 完了 | Python | 2024-12-19 |
 | 002 | Even Fibonacci numbers | 🟢 完了 | Python | 2024-12-19 |
 | 003 | Largest prime factor | 🟢 完了 | Python | 2024-12-19 |
+| 004 | Largest palindrome product | 🟢 完了 | Python | 2024-12-22 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -20,9 +21,9 @@
 
 ## 統計
 
-- 完了: 3/100
+- 完了: 4/100
 - 作業中: 0/100
-- 未着手: 97/100
+- 未着手: 96/100
 
 ## 目標
 
@@ -66,4 +67,15 @@
   - `problems/problem_003.py`
   - `solutions/solution_003.md`
 
-最終更新: 2024-12-19
+### Problem 004: Largest palindrome product
+- **解答**: 906609
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 全ての3桁の数の積をチェック、早期終了あり
+  - 最適化解法 (O(n²)) - より効果的な早期終了条件で探索空間を削減
+  - 数学的解法 (O(n²)) - 6桁回文が11で割り切れる性質を活用
+- **ファイル**:
+  - `problems/problem_004.py`
+  - `solutions/solution_004.md`
+
+最終更新: 2024-12-22
