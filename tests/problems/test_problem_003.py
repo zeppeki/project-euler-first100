@@ -8,7 +8,8 @@ import pytest
 # Add the problems directory to the path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems"))
 
-from problem_003 import solve_mathematical, solve_naive, solve_optimized
+# Import after path modification
+from problem_003 import solve_mathematical, solve_naive, solve_optimized  # noqa: E402
 
 
 class TestProblem003:
