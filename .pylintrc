@@ -1,0 +1,46 @@
+[MASTER]
+# Python version
+py-version = 3.8
+
+# Disable specific warnings
+disable = 
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+    R0903,  # too-few-public-methods
+    R0913,  # too-many-arguments
+    R0914,  # too-many-locals
+    R0915,  # too-many-statements
+    W0621,  # redefined-outer-name
+    W0622,  # redefined-builtin
+
+[FORMAT]
+# Maximum number of characters on a single line
+max-line-length = 88
+
+[MESSAGES CONTROL]
+# Disable specific warnings
+disable = 
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+    R0903,  # too-few-public-methods
+    R0913,  # too-many-arguments
+    R0914,  # too-many-locals
+    R0915,  # too-many-statements
+    W0621,  # redefined-outer-name
+    W0622,  # redefined-builtin
+
+[BASIC]
+# Good variable names
+good-names = i, j, k, ex, Run, _, id, db
+
+# Bad variable names
+bad-names = foo, bar, baz, toto, tutu, tata
+
+[SIMILARITIES]
+# Minimum lines number of a similarity
+min-similarity-lines = 4
+
+# Ignore imports when computing similarities
+ignore-imports = yes 
