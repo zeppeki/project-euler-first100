@@ -69,13 +69,14 @@ Each problem follows a consistent structure:
 2. **Comprehensive Testing**:
    - Unit tests with parametrized test cases
    - Edge case handling
-   - Performance verification
+   - Functional verification (optimized for CI speed)
    - All solutions must agree on results
 
 3. **Performance Analysis**:
    - Time complexity documentation
-   - Runtime measurement and comparison
+   - Algorithm correctness verification
    - Memory usage analysis
+   - CI-optimized test execution
 
 4. **Documentation**:
    - Detailed problem explanation
@@ -125,8 +126,8 @@ def main() -> None:
 ## Project Status and Workflow
 
 ### Current Progress
-- Completed: 5/100 problems (Problems 001, 002, 003, 004, 005)
-- Next target: Problem 006
+- Completed: 6/100 problems (Problems 001, 002, 003, 004, 005, 006)
+- Next target: Problem 007
 
 ### Development Workflow
 1. Create GitHub issue for new problem
@@ -153,7 +154,13 @@ def main() -> None:
 - Performance tests (marked with `@pytest.mark.slow`)
 - Edge case validation
 
-### Test Execution
+### Test Execution Performance
+Tests are optimized for fast CI execution:
+- **Fast tests**: 143 tests run in ~0.1-0.4 seconds
+- **Slow tests**: 2 tests run in ~0.03 seconds
+- **Total**: 145 tests complete in under 1 second
+- **CI optimization**: Fast and slow tests run in separate steps for better visibility
+
 Tests are configured with strict settings and comprehensive markers for different test types (unit, integration, slow).
 
 ## Configuration Details
@@ -168,3 +175,14 @@ Tests are configured with strict settings and comprehensive markers for differen
 
 ### Import Handling
 The project uses dynamic imports for problem modules in tests. MyPy configuration includes specific overrides for problem modules to handle import resolution.
+
+## Performance Optimization History
+
+### Test Performance Optimization (2025-06)
+- **Problem**: CI execution time was 58+ seconds due to timing-based performance tests
+- **Solution**: Refactored all performance tests to use functional verification instead of `time.time()` measurements
+- **Results**:
+  - Execution time reduced from 58s to 0.1-0.4s (99.3% improvement)
+  - Maintained 100% test coverage with 145 tests
+  - Split CI into fast tests (143) and slow tests (2) for better visibility
+  - All Project Euler correctness verification preserved
