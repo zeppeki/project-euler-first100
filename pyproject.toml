@@ -168,6 +168,10 @@ module = "problems.problem_*"
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
+module = "problem_*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
 module = "tests.problems.test_problem_*"
 ignore_missing_imports = true
 
