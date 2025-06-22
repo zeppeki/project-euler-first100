@@ -77,7 +77,8 @@ def test_solutions() -> None:
         print(f"  Expected: {expected}")
         print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
         print(
-            f"  Optimized: {result_optimized} {'✓' if result_optimized == expected else '✗'}"
+            f"  Optimized: {result_optimized} "
+            f"{'✓' if result_optimized == expected else '✗'}"
         )
         print(
             f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
