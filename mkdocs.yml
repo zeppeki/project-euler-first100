@@ -1,0 +1,142 @@
+site_name: Project Euler First 100
+site_description: Project Eulerの最初の100問を体系的に解決し、学習効果を最大化するためのリポジトリ
+site_author: zeppeki
+site_url: https://zeppeki.github.io/project-euler-first100/
+
+repo_name: zeppeki/project-euler-first100
+repo_url: https://github.com/zeppeki/project-euler-first100
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: ja
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.select
+    - content.action.edit
+    - content.action.view
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+
+plugins:
+  - search:
+      lang: ja
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: datetime
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: zeppeki
+      repo: project-euler-first100
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/zeppeki
+  analytics:
+    feedback:
+      title: このページは役に立ちましたか？
+      ratings:
+        - icon: material/thumb-up-outline
+          name: このページは役に立った
+          data: 1
+        - icon: material/thumb-down-outline
+          name: このページは改善が必要
+          data: 0
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - ホーム: index.md
+  - はじめに:
+    - セットアップ: setup.md
+    - 貢献ガイド: contributing.md
+    - コーディング規約: coding-standards.md
+    - ワークフロー: workflow.md
+    - テストガイド: testing.md
+  - 進捗状況:
+    - 全体の進捗: progress.md
+    - 問題一覧: problems/index.md
+  - 解答詳細:
+    - Problem 001: solutions/solution_001.md
+    - Problem 002: solutions/solution_002.md
+    - Problem 003: solutions/solution_003.md
+    - Problem 004: solutions/solution_004.md
+    - Problem 005: solutions/solution_005.md
+    - Problem 006: solutions/solution_006.md
+  - 問題集:
+    - 概要: problems/index.md
+    - Problem 001: problems/problem_001.md
+    - Problem 002: problems/problem_002.md
+    - Problem 003: problems/problem_003.md
+    - Problem 004: problems/problem_004.md
+    - Problem 005: problems/problem_005.md
+    - Problem 006: problems/problem_006.md
