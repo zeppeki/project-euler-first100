@@ -1,1 +1,1 @@
-"""Test package for Project Euler First 100.""" 
+"""Test package for Project Euler First 100."""

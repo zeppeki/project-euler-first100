@@ -160,4 +160,4 @@ disable = [
 max-line-length = 88
 
 [tool.pylint.basic]
-good-names = ["i", "j", "k", "ex", "Run", "_", "id", "db"] 
+good-names = ["i", "j", "k", "ex", "Run", "_", "id", "db"]

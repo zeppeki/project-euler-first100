@@ -1,1 +1,1 @@
-"""Test package for solution documentation.""" 
+"""Test package for solution documentation."""

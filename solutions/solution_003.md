@@ -18,15 +18,15 @@
 def solve_naive(n: int) -> int:
     if n < 2:
         return n
-    
+
     largest_prime = 1
     current = n
-    
+
     # 2で割り切れるだけ割る
     while current % 2 == 0:
         largest_prime = 2
         current //= 2
-    
+
     # 3から順に奇数で試し割り
     for i in range(3, current + 1, 2):
         while current % i == 0:
@@ -34,11 +34,11 @@ def solve_naive(n: int) -> int:
             current //= i
         if current == 1:
             break
-    
+
     return largest_prime
 ```
 
-**時間計算量**: O(n) - 最悪の場合、nまで試し割りが必要  
+**時間計算量**: O(n) - 最悪の場合、nまで試し割りが必要
 **空間計算量**: O(1) - 定数個の変数のみ使用
 
 ### 2. 最適化解法
@@ -49,15 +49,15 @@ def solve_naive(n: int) -> int:
 def solve_optimized(n: int) -> int:
     if n < 2:
         return n
-    
+
     largest_prime = 1
     current = n
-    
+
     # 2で割り切れるだけ割る
     while current % 2 == 0:
         largest_prime = 2
         current //= 2
-    
+
     # 3から√nまでの奇数で試し割り
     sqrt_n = int(math.sqrt(current))
     for i in range(3, sqrt_n + 1, 2):
@@ -65,15 +65,15 @@ def solve_optimized(n: int) -> int:
             largest_prime = i
             current //= i
             sqrt_n = int(math.sqrt(current))  # 平方根を再計算
-    
+
     # 残った数が1より大きければ、それは素数
     if current > 1:
         largest_prime = current
-    
+
     return largest_prime
 ```
 
-**時間計算量**: O(√n) - 平方根まで試し割り  
+**時間計算量**: O(√n) - 平方根まで試し割り
 **空間計算量**: O(1)
 
 ### 3. 数学的解法
@@ -84,34 +84,34 @@ def solve_optimized(n: int) -> int:
 def solve_mathematical(n: int) -> int:
     if n < 2:
         return n
-    
+
     def trial_division(n: int) -> list:
         """試し割りによる素因数分解"""
         factors = []
         current = n
-        
+
         # 2で割り切れるだけ割る
         while current % 2 == 0:
             factors.append(2)
             current //= 2
-        
+
         # 3から√nまでの奇数で試し割り
         for i in range(3, int(math.sqrt(current)) + 1, 2):
             while current % i == 0:
                 factors.append(i)
                 current //= i
-        
+
         # 残った数が1より大きければ、それは素数
         if current > 1:
             factors.append(current)
-        
+
         return factors
-    
+
     factors = trial_division(n)
     return max(factors) if factors else 1
 ```
 
-**時間計算量**: O(√n)  
+**時間計算量**: O(√n)
 **空間計算量**: O(1)
 
 ## 数学的背景
@@ -130,7 +130,7 @@ def solve_mathematical(n: int) -> int:
 
 **定理**: nの素因数は必ず√n以下に存在する
 
-**証明**: 
+**証明**:
 - n = a × b とすると、a ≤ √n または b ≤ √n
 - もし a > √n かつ b > √n なら、a × b > n となり矛盾
 - したがって、nの素因数は必ず√n以下に存在する
@@ -190,4 +190,4 @@ def solve_mathematical(n: int) -> int:
 - [Project Euler Problem 3](https://projecteuler.net/problem=3)
 - [Prime factorization](https://en.wikipedia.org/wiki/Integer_factorization)
 - [Trial division](https://en.wikipedia.org/wiki/Trial_division)
-- [Fundamental theorem of arithmetic](https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic) 
+- [Fundamental theorem of arithmetic](https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic)

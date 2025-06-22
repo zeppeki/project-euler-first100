@@ -36,7 +36,7 @@ def solve_optimized(limit):
     def sum_multiples(n, limit):
         count = (limit - 1) // n
         return n * count * (count + 1) // 2
-    
+
     return sum_multiples(3, limit) + sum_multiples(5, limit) - sum_multiples(15, limit)
 ```
 
@@ -118,4 +118,4 @@ S = n(a + l) / 2
 ## 参考
 - [Project Euler Problem 1](https://projecteuler.net/problem=1)
 - [等差数列の和](https://ja.wikipedia.org/wiki/%E7%AD%89%E5%B7%AE%E6%95%B0%E5%88%97)
-- [包除原理](https://ja.wikipedia.org/wiki/%E5%8C%85%E9%99%A4%E5%8E%9F%E7%90%86) 
+- [包除原理](https://ja.wikipedia.org/wiki/%E5%8C%85%E9%99%A4%E5%8E%9F%E7%90%86)

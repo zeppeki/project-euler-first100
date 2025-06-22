@@ -20,19 +20,19 @@
 def solve_naive(limit: int) -> int:
     if limit < 2:
         return 0
-    
+
     a, b = 1, 2  # フィボナッチ数列の最初の2項
     total = 0
-    
+
     while b <= limit:
         if b % 2 == 0:  # 偶数かチェック
             total += b
         a, b = b, a + b  # 次のフィボナッチ数を計算
-    
+
     return total
 ```
 
-**時間計算量**: O(n) - nはlimit以下のフィボナッチ数の個数  
+**時間計算量**: O(n) - nはlimit以下のフィボナッチ数の個数
 **空間計算量**: O(1) - 定数個の変数のみ使用
 
 ### 2. 最適化解法
@@ -50,24 +50,24 @@ def solve_naive(limit: int) -> int:
 def solve_optimized(limit: int) -> int:
     if limit < 2:
         return 0
-    
+
     # 偶数項のみを生成
     e1, e2 = 2, 8  # 最初の2つの偶数項
     total = 0
-    
+
     # 最初の項（2）を処理
     if e1 <= limit:
         total += e1
-    
+
     # 2番目以降の偶数項を処理
     while e2 <= limit:
         total += e2
         e1, e2 = e2, 4 * e2 + e1  # 偶数項の漸化式
-    
+
     return total
 ```
 
-**時間計算量**: O(log n) - 偶数項の個数は全体の約1/3  
+**時間計算量**: O(log n) - 偶数項の個数は全体の約1/3
 **空間計算量**: O(1)
 
 ### 3. 数学的解法
@@ -80,34 +80,34 @@ def solve_optimized(limit: int) -> int:
 def solve_mathematical(limit: int) -> int:
     if limit < 2:
         return 0
-    
+
     def fibonacci(n: int) -> int:
         """n番目のフィボナッチ数を計算"""
         if n <= 0:
             return 0
         if n == 1:
             return 1
-        
+
         # 動的計画法で計算
         a, b = 1, 1
         for _ in range(2, n):
             a, b = b, a + b
         return b
-    
+
     total = 0
     n = 3  # 3番目から開始（最初の偶数項）
-    
+
     while True:
         fib_n = fibonacci(n)
         if fib_n > limit:
             break
         total += fib_n
         n += 3  # 3つおきに偶数項が現れる
-    
+
     return total
 ```
 
-**時間計算量**: O(log n)  
+**時間計算量**: O(log n)
 **空間計算量**: O(1)
 
 ## 数学的背景
@@ -121,7 +121,7 @@ def solve_mathematical(limit: int) -> int:
    - E(n) = 4 × E(n-1) + E(n-2)
    - ただし、E(1) = 2, E(2) = 8
 
-3. **数学的証明**: 
+3. **数学的証明**:
    - F(n) = F(n-1) + F(n-2)
    - F(n+3) = F(n+2) + F(n+1) = (F(n+1) + F(n)) + F(n+1) = 2F(n+1) + F(n)
    - F(n+6) = 2F(n+4) + F(n+3) = 2(2F(n+3) + F(n+2)) + (2F(n+1) + F(n))
@@ -171,4 +171,4 @@ def solve_mathematical(limit: int) -> int:
 
 - [Project Euler Problem 2](https://projecteuler.net/problem=2)
 - [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number)
-- [Even Fibonacci Numbers](https://mathworld.wolfram.com/FibonacciNumber.html) 
+- [Even Fibonacci Numbers](https://mathworld.wolfram.com/FibonacciNumber.html)
