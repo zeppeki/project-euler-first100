@@ -17,10 +17,10 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 def solve_naive(min_digits, max_digits):
     min_num = 10 ** (min_digits - 1)
     max_num = 10 ** max_digits - 1
-    
+
     largest_palindrome = 0
     factors = (0, 0)
-    
+
     for i in range(max_num, min_num - 1, -1):
         for j in range(i, min_num - 1, -1):
             product = i * j
@@ -29,7 +29,7 @@ def solve_naive(min_digits, max_digits):
             if is_palindrome(product):
                 largest_palindrome = product
                 factors = (i, j)
-    
+
     return largest_palindrome, factors[0], factors[1]
 ```
 
@@ -46,24 +46,24 @@ def solve_naive(min_digits, max_digits):
 def solve_optimized(min_digits, max_digits):
     min_num = 10 ** (min_digits - 1)
     max_num = 10 ** max_digits - 1
-    
+
     largest_palindrome = 0
     factors = (0, 0)
-    
+
     for i in range(max_num, min_num - 1, -1):
         if i * max_num <= largest_palindrome:
             break  # 外側ループの早期終了
-            
+
         for j in range(min(i, max_num), min_num - 1, -1):
             product = i * j
             if product <= largest_palindrome:
                 break
-                
+
             if is_palindrome(product):
                 largest_palindrome = product
                 factors = (i, j)
                 break  # 最大値を見つけたので内側ループ終了
-    
+
     return largest_palindrome, factors[0], factors[1]
 ```
 
@@ -81,25 +81,25 @@ def solve_mathematical(min_digits, max_digits):
     # 6桁の回文の性質を利用
     # abccba = 100001*a + 10010*b + 1100*c = 11*(9091*a + 910*b + 100*c)
     # つまり、6桁の回文は必ず11で割り切れる
-    
+
     for i in range(max_num, min_num - 1, -1):
         if i * max_num <= largest_palindrome:
             break
-            
+
         j_step = 11 if i % 11 != 0 else 1
         j_start = j_start - (j_start % 11) if i % 11 != 0 else j_start
-        
+
         j = j_start
         while j >= min_num:
             product = i * j
             if product <= largest_palindrome:
                 break
-                
+
             if is_palindrome(product):
                 largest_palindrome = product
                 factors = (i, j)
                 break
-                
+
             j -= j_step
 ```
 

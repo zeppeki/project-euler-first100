@@ -64,7 +64,7 @@ pre-commit install
 
 ### Directory Structure
 - `problems/` - Solution implementations with multiple approaches
-- `solutions/` - Detailed explanations and analysis  
+- `solutions/` - Detailed explanations and analysis
 - `tests/` - Comprehensive test suites
 - `docs/` - Additional documentation
 
@@ -113,7 +113,7 @@ def solve_naive(limit: int) -> int:
 
 def solve_optimized(limit: int) -> int:
     """
-    最適化解法: [Description in Japanese]  
+    最適化解法: [Description in Japanese]
     時間計算量: O(log n)
     空間計算量: O(1)
     """

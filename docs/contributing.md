@@ -222,7 +222,7 @@ class TestProblemXXX:
             (input2, expected2),
             # ...
         ]
-        
+
         for input_val, expected in test_cases:
             assert solve_naive(input_val) == expected
 
@@ -233,7 +233,7 @@ class TestProblemXXX:
             (input2, expected2),
             # ...
         ]
-        
+
         for input_val, expected in test_cases:
             assert solve_optimized(input_val) == expected
 
@@ -244,7 +244,7 @@ class TestProblemXXX:
             (input2, expected2),
             # ...
         ]
-        
+
         for input_val, expected in test_cases:
             assert solve_mathematical(input_val) == expected
 
@@ -255,12 +255,12 @@ class TestProblemXXX:
             input2,
             # ...
         ]
-        
+
         for input_val in test_cases:
             naive_result = solve_naive(input_val)
             optimized_result = solve_optimized(input_val)
             math_result = solve_mathematical(input_val)
-            
+
             assert naive_result == optimized_result == math_result
 ```
 
@@ -580,4 +580,4 @@ A: 通常1-3日以内にレビューを行います。緊急の場合は、Issue
 
 ## 謝辞
 
-このプロジェクトに貢献していただき、ありがとうございます。皆さんの貢献により、より良い学習環境とコミュニティを作ることができます。 
+このプロジェクトに貢献していただき、ありがとうございます。皆さんの貢献により、より良い学習環境とコミュニティを作ることができます。

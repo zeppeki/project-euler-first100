@@ -223,7 +223,7 @@ class TestProblemXXX:
             (input2, expected2),
             # ...
         ]
-        
+
         for input_val, expected in test_cases:
             assert solve_naive(input_val) == expected
 
@@ -234,7 +234,7 @@ class TestProblemXXX:
             (input2, expected2),
             # ...
         ]
-        
+
         for input_val, expected in test_cases:
             assert solve_optimized(input_val) == expected
 
@@ -245,7 +245,7 @@ class TestProblemXXX:
             (input2, expected2),
             # ...
         ]
-        
+
         for input_val, expected in test_cases:
             assert solve_mathematical(input_val) == expected
 
@@ -256,12 +256,12 @@ class TestProblemXXX:
             input2,
             # ...
         ]
-        
+
         for input_val in test_cases:
             naive_result = solve_naive(input_val)
             optimized_result = solve_optimized(input_val)
             math_result = solve_mathematical(input_val)
-            
+
             assert naive_result == optimized_result == math_result
 ```
 
@@ -555,29 +555,29 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
-    
+
     - name: Install uv
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-    
+
     - name: Install dependencies
       run: uv sync
-    
+
     - name: Run tests
       run: uv run pytest
-    
+
     - name: Run linting
       run: uv run ruff check problems/ solutions/ tests/
-    
+
     - name: Run type checking
       run: uv run mypy problems/ solutions/
 ```
@@ -675,4 +675,4 @@ uv run mypy problems/problem_XXX.py --show-error-codes
 - [GitHub Flow](https://guides.github.com/introduction/flow/)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Pytest Best Practices](https://docs.pytest.org/en/stable/explanation/goodpractices.html)
-- [Ruff Best Practices](https://docs.astral.sh/ruff/) 
+- [Ruff Best Practices](https://docs.astral.sh/ruff/)
