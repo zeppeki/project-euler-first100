@@ -113,7 +113,7 @@ def solve_problem(numbers: list[int]) -> dict[str, int]:
 class Container[T]:
     def __init__(self, value: T) -> None:
         self._value = value
-    
+
     def get_value(self) -> T:
         return self._value
 
@@ -172,7 +172,7 @@ def solve_optimized(n: int) -> int:
     def sum_multiples(k: int) -> int:
         m = (n - 1) // k
         return k * m * (m + 1) // 2
-    
+
     return sum_multiples(3) + sum_multiples(5) - sum_multiples(15)
 
 def solve_mathematical(n: int) -> int:

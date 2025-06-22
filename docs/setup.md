@@ -217,7 +217,7 @@ def new_style(numbers: list[int]) -> dict[str, int]:
 class Container[T]:
     def __init__(self, value: T) -> None:
         self._value = value
-    
+
     def get_value(self) -> T:
         return self._value
 
@@ -550,4 +550,4 @@ dev = [
 1. エラーメッセージを確認
 2. このドキュメントのトラブルシューティングセクションを参照
 3. GitHubのIssuesで問題を報告
-4. 必要に応じて、環境情報を含めて詳細を記載 
+4. 必要に応じて、環境情報を含めて詳細を記載

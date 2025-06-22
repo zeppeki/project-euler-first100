@@ -22,10 +22,10 @@ def solve_naive(n):
             if candidate % i != 0:
                 is_divisible = False
                 break
-        
+
         if is_divisible:
             return candidate
-        
+
         candidate += 1
 ```
 
@@ -63,11 +63,11 @@ def solve_mathematical(n):
     # エラトステネスの篩で素数を求める
     primes = sieve_of_eratosthenes(n)
     result = 1
-    
+
     for prime in primes:
         max_power = max_prime_power(prime, n)
         result *= prime ** max_power
-    
+
     return result
 ```
 
@@ -116,7 +116,7 @@ GCD(a, 0) = a
 
 例：LCM(12, 18, 24)の場合
 - 12 = 2² × 3¹
-- 18 = 2¹ × 3²  
+- 18 = 2¹ × 3²
 - 24 = 2³ × 3⁰
 
 各素数の最大冪：2³, 3²
@@ -132,7 +132,7 @@ GCD(a, 0) = a
 
 ### テストケース
 - **n=1**: 1
-- **n=2**: 2  
+- **n=2**: 2
 - **n=3**: 6
 - **n=4**: 12
 - **n=5**: 60
