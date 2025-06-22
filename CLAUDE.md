@@ -11,53 +11,43 @@ This is a Project Euler problem-solving repository focused on systematically sol
 ### Testing
 ```bash
 # Run all tests
-pytest
+uv run pytest
 
 # Run specific test file
-pytest tests/problems/test_problem_001.py
-
-# Run tests with coverage
-pytest --cov=problems --cov=solutions
+uv run pytest tests/problems/test_problem_001.py
 
 # Run only fast tests (exclude slow tests)
-pytest -m "not slow"
+uv run pytest -m "not slow"
 
 # Run with verbose output
-pytest -v
+uv run pytest -v
 ```
 
 ### Code Quality
 ```bash
 # Format code
-black .
-
-# Sort imports
-isort .
+uv run ruff format
 
 # Lint code
-flake8 .
-pylint problems/ solutions/
+uv run ruff check --fix
 
 # Type checking
-mypy .
+uv run mypy .
 
 # Security scanning
-bandit -r problems/ solutions/
+uv run bandit -r problems/
 
 # Run all quality checks
-black . && isort . && flake8 . && mypy . && pylint problems/ solutions/ && bandit -r problems/ solutions/
+uv run ruff format && uv run ruff check --fix && uv run mypy . && uv run bandit -r problems/
 ```
 
 ### Development Setup
 ```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Install dev dependencies
-pip install -e .[dev]
+# Install dependencies (uv automatically manages virtual environment)
+uv sync
 
 # Setup pre-commit hooks
-pre-commit install
+uv run pre-commit install
 ```
 
 ## Code Architecture
@@ -135,8 +125,8 @@ def main() -> None:
 ## Project Status and Workflow
 
 ### Current Progress
-- Completed: 3/100 problems (Problems 001, 002, 003)
-- Next target: Problem 004
+- Completed: 5/100 problems (Problems 001, 002, 003, 004, 005)
+- Next target: Problem 006
 
 ### Development Workflow
 1. Create GitHub issue for new problem
@@ -169,11 +159,12 @@ Tests are configured with strict settings and comprehensive markers for differen
 ## Configuration Details
 
 ### Tool Configuration
-- **Black**: Line length 88, Python 3.8+ target
+- **Ruff**: Unified linting and formatting, replaces Black/isort/flake8/pylint
 - **MyPy**: Strict typing enabled, handles import issues for problem modules
 - **Pytest**: Comprehensive markers, strict configuration
-- **Coverage**: Excludes test files, includes problems and solutions
 - **Bandit**: Security scanning with specific exclusions for test files
+- **UV**: Fast Python package manager and project management
+- **Pre-commit**: Automated code quality checks with ruff-based hooks
 
 ### Import Handling
 The project uses dynamic imports for problem modules in tests. MyPy configuration includes specific overrides for problem modules to handle import resolution.
