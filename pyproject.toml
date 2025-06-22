@@ -164,13 +164,11 @@ pretty = true
 
 # Ignore missing imports for problem modules in tests
 [[tool.mypy.overrides]]
-module = [
-    "problem_001",
-    "problem_002",
-    "problem_003",
-    "problem_004",
-    "problem_005"
-]
+module = "problems.problem_*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tests.problems.test_problem_*"
 ignore_missing_imports = true
 
 # Pytest configuration
