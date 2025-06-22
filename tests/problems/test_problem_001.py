@@ -26,9 +26,9 @@ class TestProblem001:
     def test_solve_naive(self, limit: int, expected: int) -> None:
         """Test the naive solution."""
         result = solve_naive(limit)
-        assert (
-            result == expected
-        ), f"Expected {expected}, got {result} for limit {limit}"
+        assert result == expected, (
+            f"Expected {expected}, got {result} for limit {limit}"
+        )
 
     @pytest.mark.parametrize(
         "limit,expected",
@@ -41,9 +41,9 @@ class TestProblem001:
     def test_solve_optimized(self, limit: int, expected: int) -> None:
         """Test the optimized solution."""
         result = solve_optimized(limit)
-        assert (
-            result == expected
-        ), f"Expected {expected}, got {result} for limit {limit}"
+        assert result == expected, (
+            f"Expected {expected}, got {result} for limit {limit}"
+        )
 
     @pytest.mark.parametrize(
         "limit,expected",
@@ -56,9 +56,9 @@ class TestProblem001:
     def test_solve_mathematical(self, limit: int, expected: int) -> None:
         """Test the mathematical solution."""
         result = solve_mathematical(limit)
-        assert (
-            result == expected
-        ), f"Expected {expected}, got {result} for limit {limit}"
+        assert result == expected, (
+            f"Expected {expected}, got {result} for limit {limit}"
+        )
 
     @pytest.mark.parametrize("limit", [10, 20, 50, 100])
     def test_all_solutions_agree(self, limit: int) -> None:

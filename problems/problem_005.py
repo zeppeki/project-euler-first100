@@ -224,10 +224,10 @@ def main() -> None:
     # パフォーマンス比較
     print("=== パフォーマンス比較 ===")
     fastest_time = min(naive_time, optimized_time, math_time, builtin_time)
-    print(f"素直な解法: {naive_time/fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time/fastest_time:.2f}x")
-    print(f"数学的解法: {math_time/fastest_time:.2f}x")
-    print(f"標準ライブラリ解法: {builtin_time/fastest_time:.2f}x")
+    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
+    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
+    print(f"数学的解法: {math_time / fastest_time:.2f}x")
+    print(f"標準ライブラリ解法: {builtin_time / fastest_time:.2f}x")
 
     # 素因数分解の確認
     print("\n=== 素因数分解の確認 ===")
@@ -264,16 +264,16 @@ def main() -> None:
     verification_failed = False
     for i in range(1, min(n + 1, 11)):  # 表示は最初の10個まで
         if result_optimized % i == 0:
-            print(f"{result_optimized:,} ÷ {i} = {result_optimized//i:,} ✓")
+            print(f"{result_optimized:,} ÷ {i} = {result_optimized // i:,} ✓")
         else:
-            print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized%i} ✗")
+            print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized % i} ✗")
             verification_failed = True
 
     if n > 10:
         print(f"... (11から{n}まで省略)")
         for i in range(11, n + 1):
             if result_optimized % i != 0:
-                print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized%i} ✗")
+                print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized % i} ✗")
                 verification_failed = True
 
     if not verification_failed:

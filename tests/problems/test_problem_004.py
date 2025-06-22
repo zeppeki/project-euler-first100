@@ -51,23 +51,23 @@ class TestProblem004:
     ) -> None:
         """Test the naive solution."""
         result, factor1, factor2 = solve_naive(min_digits, max_digits)
-        assert (
-            result == expected_palindrome
-        ), f"Expected {expected_palindrome}, got {result}"
+        assert result == expected_palindrome, (
+            f"Expected {expected_palindrome}, got {result}"
+        )
         assert is_palindrome(result), f"Result {result} is not a palindrome"
-        assert (
-            factor1 * factor2 == result
-        ), f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
+        assert factor1 * factor2 == result, (
+            f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
+        )
 
         # Check that factors are within the expected range
         min_num = 10 ** (min_digits - 1)
         max_num = 10**max_digits - 1
-        assert (
-            min_num <= factor1 <= max_num
-        ), f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
-        assert (
-            min_num <= factor2 <= max_num
-        ), f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
+        assert min_num <= factor1 <= max_num, (
+            f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
+        )
+        assert min_num <= factor2 <= max_num, (
+            f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
+        )
 
     @pytest.mark.parametrize(
         "min_digits,max_digits,expected_palindrome",
@@ -81,23 +81,23 @@ class TestProblem004:
     ) -> None:
         """Test the optimized solution."""
         result, factor1, factor2 = solve_optimized(min_digits, max_digits)
-        assert (
-            result == expected_palindrome
-        ), f"Expected {expected_palindrome}, got {result}"
+        assert result == expected_palindrome, (
+            f"Expected {expected_palindrome}, got {result}"
+        )
         assert is_palindrome(result), f"Result {result} is not a palindrome"
-        assert (
-            factor1 * factor2 == result
-        ), f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
+        assert factor1 * factor2 == result, (
+            f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
+        )
 
         # Check that factors are within the expected range
         min_num = 10 ** (min_digits - 1)
         max_num = 10**max_digits - 1
-        assert (
-            min_num <= factor1 <= max_num
-        ), f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
-        assert (
-            min_num <= factor2 <= max_num
-        ), f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
+        assert min_num <= factor1 <= max_num, (
+            f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
+        )
+        assert min_num <= factor2 <= max_num, (
+            f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
+        )
 
     @pytest.mark.parametrize(
         "min_digits,max_digits,expected_palindrome",
@@ -111,23 +111,23 @@ class TestProblem004:
     ) -> None:
         """Test the mathematical solution."""
         result, factor1, factor2 = solve_mathematical(min_digits, max_digits)
-        assert (
-            result == expected_palindrome
-        ), f"Expected {expected_palindrome}, got {result}"
+        assert result == expected_palindrome, (
+            f"Expected {expected_palindrome}, got {result}"
+        )
         assert is_palindrome(result), f"Result {result} is not a palindrome"
-        assert (
-            factor1 * factor2 == result
-        ), f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
+        assert factor1 * factor2 == result, (
+            f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
+        )
 
         # Check that factors are within the expected range
         min_num = 10 ** (min_digits - 1)
         max_num = 10**max_digits - 1
-        assert (
-            min_num <= factor1 <= max_num
-        ), f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
-        assert (
-            min_num <= factor2 <= max_num
-        ), f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
+        assert min_num <= factor1 <= max_num, (
+            f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
+        )
+        assert min_num <= factor2 <= max_num, (
+            f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
+        )
 
     @pytest.mark.parametrize("min_digits,max_digits", [(1, 1), (2, 2)])
     def test_all_solutions_agree(self, min_digits: int, max_digits: int) -> None:
@@ -204,9 +204,9 @@ class TestProblem004:
 
         # All 6-digit palindromes should be divisible by 11
         for palindrome in palindromes_6_digit:
-            assert (
-                palindrome % 11 == 0
-            ), f"6-digit palindrome {palindrome} not divisible by 11"
+            assert palindrome % 11 == 0, (
+                f"6-digit palindrome {palindrome} not divisible by 11"
+            )
             assert is_palindrome(palindrome), f"{palindrome} is not a palindrome"
 
     def test_performance_comparison(self) -> None:
