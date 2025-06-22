@@ -52,6 +52,8 @@ include = ["problems*", "solutions*", "tests*"]
 [tool.ruff]
 target-version = "py311"
 line-length = 88
+
+[tool.ruff.lint]
 select = [
     "E",   # pycodestyle errors
     "W",   # pycodestyle warnings
@@ -83,6 +85,9 @@ ignore = [
     "PLR0912", # too many branches
     "PLR0911", # too many return statements
     "PLR2004", # magic value used in comparison
+    "RUF001",  # string contains ambiguous characters (allow Japanese)
+    "RUF002",  # docstring contains ambiguous characters (allow Japanese)
+    "RUF003",  # comment contains ambiguous characters (allow Japanese)
 ]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
@@ -114,9 +119,6 @@ exclude = [
     "venv",
 ]
 
-# Set same as above for consistency
-indent-width = 4
-
 [tool.ruff.format]
 # Like Black, use double quotes for strings.
 quote-style = "double"
@@ -130,14 +132,14 @@ skip-magic-trailing-comma = false
 # Like Black, automatically detect the appropriate line ending.
 line-ending = "auto"
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["problems", "solutions", "tests"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
 "tests/**/*" = ["PLR0915", "PLR0913", "PLR0912", "PLR0911"]
 

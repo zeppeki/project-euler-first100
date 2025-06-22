@@ -240,7 +240,7 @@ def main() -> None:
     print("\n=== 回文の検証 ===")
     palindrome = result_optimized[0]
     print(f"数値: {palindrome}")
-    print(f"文字列: {str(palindrome)}")
+    print(f"文字列: {palindrome!s}")
     print(f"逆順: {str(palindrome)[::-1]}")
     print(f"回文: {'✓' if is_palindrome(palindrome) else '✗'}")
 

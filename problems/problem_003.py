@@ -27,10 +27,7 @@ def is_prime(n: int) -> bool:
         return False
 
     # 3から√nまでの奇数で試し割り
-    for i in range(3, int(math.sqrt(n)) + 1, 2):
-        if n % i == 0:
-            return False
-    return True
+    return all(n % i != 0 for i in range(3, int(math.sqrt(n)) + 1, 2))
 
 
 def solve_naive(n: int) -> int:

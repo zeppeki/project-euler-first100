@@ -9,7 +9,7 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems"))
 
 # Import after path modification
-from problem_004 import (  # noqa: E402
+from problem_004 import (
     is_palindrome,
     solve_mathematical,
     solve_naive,
@@ -191,8 +191,8 @@ class TestProblem004:
         # Generate some 6-digit palindromes
         palindromes_6_digit = []
         for a in range(1, 10):  # First digit can't be 0
-            for b in range(0, 10):
-                for c in range(0, 10):
+            for b in range(10):
+                for c in range(10):
                     palindrome = 100001 * a + 10010 * b + 1100 * c
                     palindromes_6_digit.append(palindrome)
                     if len(palindromes_6_digit) >= 10:  # Test just a few
