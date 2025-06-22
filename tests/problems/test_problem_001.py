@@ -96,17 +96,17 @@ class TestProblem001:
         assert solve_optimized(-10) == 0
         assert solve_mathematical(-10) == 0
 
-    @pytest.mark.slow
-    def test_large_number(self) -> None:
-        """Test with a large number (marked as slow)."""
+    def test_problem_answer(self) -> None:
+        """Test with the actual problem limit (optimized for speed)."""
         # Test with the actual problem limit
         limit = 1000
         expected = 233168
 
-        result_naive = solve_naive(limit)
-        result_optimized = solve_optimized(limit)
+        # Only test mathematical solution for speed, then verify others agree
         result_math = solve_mathematical(limit)
-
-        assert result_naive == expected
-        assert result_optimized == expected
         assert result_math == expected
+
+        # Verify all solutions agree (quick check)
+        result_optimized = solve_optimized(limit)
+        result_naive = solve_naive(limit)
+        assert result_naive == result_optimized == result_math
