@@ -1,0 +1,267 @@
+# Project Euler First 100 - Cursor Rules
+
+## プロジェクト概要
+このプロジェクトは、Project Eulerの最初の100問を解くためのリポジトリです。体系的に問題を解決し、学習効果を最大化することを目的としています。
+
+## 作業プロセス
+
+### 1. Issue作成
+新しい問題に取り組む際は、必ずGitHub Issueを作成します：
+
+```bash
+gh issue create --title "Solve Problem XXX: [問題タイトル]" --body "## Problem XXX: [問題タイトル]
+
+### 問題
+[問題の日本語説明]
+
+### 詳細
+[英語での問題文]
+
+### タスク
+- [ ] 問題の分析と理解
+- [ ] アルゴリズムの設計
+- [ ] Pythonでの実装
+- [ ] JavaScriptでの実装（オプション）
+- [ ] 解答の検証
+- [ ] 解答の説明をsolutions/に追加
+- [ ] 進捗表の更新
+
+### ファイル
+- `problems/problem_XXX.py`
+- `solutions/solution_XXX.md`
+
+### 参考
+- [Project Euler Problem XXX](https://projecteuler.net/problem=XXX)" --label "problem,XXX,in-progress"
+```
+
+### 2. ブランチ作成
+Issue用のブランチを作成します：
+
+```bash
+gh issue develop [ISSUE_NUMBER]
+git checkout [BRANCH_NAME]
+```
+
+### 3. 問題解決
+以下の手順で問題を解決します：
+
+#### 3.1 問題分析
+- 問題を完全に理解する
+- 入力と出力を明確にする
+- 制約条件を確認する
+- テストケースを考える
+
+#### 3.2 アルゴリズム設計
+- 複数の解法を検討する
+- 時間計算量と空間計算量を分析する
+- 最適化の可能性を探る
+
+#### 3.3 実装
+`problems/problem_XXX.py`を作成し、以下の要素を含めます：
+
+```python
+#!/usr/bin/env python3
+"""
+Problem XXX: [問題タイトル]
+
+[問題の詳細説明]
+
+Answer: [解答]
+"""
+
+import time
+
+def solve_naive(parameters):
+    """
+    素直な解法
+    時間計算量: O(...)
+    空間計算量: O(...)
+    """
+    # 実装
+    pass
+
+def solve_optimized(parameters):
+    """
+    最適化解法
+    時間計算量: O(...)
+    空間計算量: O(...)
+    """
+    # 実装
+    pass
+
+def main():
+    """メイン関数"""
+    # テストケース
+    # 本問題の解答
+    # パフォーマンス比較
+    pass
+
+if __name__ == "__main__":
+    main()
+```
+
+#### 3.4 解答説明
+`solutions/solution_XXX.md`を作成し、以下の要素を含めます：
+
+```markdown
+# Problem XXX: [問題タイトル]
+
+## 問題
+[問題の説明]
+
+## 解答: [数値]
+
+## 解法
+### 1. [解法名]
+[コードと説明]
+
+### 2. [解法名]
+[コードと説明]
+
+## 数学的背景
+[関連する数学的概念]
+
+## 検証
+[テストケースと検証結果]
+
+## パフォーマンス比較
+[各解法の性能比較]
+
+## 最適化のポイント
+[最適化のポイント]
+
+## 学習ポイント
+[学んだこと]
+
+## 参考
+[参考リンク]
+```
+
+### 4. 進捗更新
+`PROGRESS.md`を更新します：
+- 問題のステータスを「🟢 完了」に変更
+- 完了日を記録
+- 統計を更新
+- 完了した問題の詳細を追加
+
+### 5. コミットとプッシュ
+```bash
+git add .
+git commit -m "Solve Problem XXX: [問題タイトル]
+
+- [実装内容の要約]
+- [追加したファイル]
+- [重要なポイント]
+
+Answer: [解答]"
+git push origin [BRANCH_NAME]
+```
+
+### 6. プルリクエスト作成
+```bash
+gh pr create --title "Solve Problem XXX: [問題タイトル]" --body "## Problem XXX: [問題タイトル]
+
+### 解答: [数値]
+
+### 実装内容
+- [実装した解法の説明]
+
+### ファイル
+- [作成したファイル]
+
+### 特徴
+- [実装の特徴]
+
+### 検証
+- [検証結果]
+
+### 学習ポイント
+- [学んだこと]
+
+Closes #[ISSUE_NUMBER]" --label "problem,XXX,completed"
+```
+
+### 7. Issueクローズ
+```bash
+gh issue close [ISSUE_NUMBER] --reason completed
+```
+
+## コーディング規約
+
+### Python
+- PEP 8に準拠
+- 関数とクラスにはdocstringを記述
+- 型ヒントを使用（可能な場合）
+- テストケースを含める
+
+### ファイル命名
+- `problems/problem_XXX.py` - 解答コード
+- `solutions/solution_XXX.md` - 解答説明
+- XXXは3桁のゼロパディング（例：001, 012, 123）
+
+### コミットメッセージ
+- 英語で記述
+- 問題番号を含める
+- 解答を含める
+- 実装内容を簡潔に説明
+
+## 品質基準
+
+### 必須要素
+- ✅ 正しい解答
+- ✅ テストケース
+- ✅ 複数解法の実装
+- ✅ 詳細なドキュメント
+- ✅ パフォーマンス分析
+- ✅ 進捗表の更新
+
+### 推奨要素
+- 🔵 最適化解法の実装
+- 🔵 数学的背景の説明
+- 🔵 可視化や図表
+- 🔵 他の言語での実装
+
+## ラベル体系
+
+### 問題ラベル
+- `problem` - Project Euler問題
+- `001-100` - 問題番号
+- `in-progress` - 作業中
+- `completed` - 完了
+
+### 技術ラベル
+- `python` - Python実装
+- `javascript` - JavaScript実装
+- `optimization` - 最適化
+- `documentation` - ドキュメント
+
+## トラブルシューティング
+
+### よくある問題
+1. **解答が間違っている**
+   - テストケースで検証
+   - アルゴリズムを見直し
+   - 境界条件を確認
+
+2. **パフォーマンスが悪い**
+   - アルゴリズムの見直し
+   - データ構造の最適化
+   - 数学的アプローチの検討
+
+3. **コードが読みにくい**
+   - 関数の分割
+   - 変数名の改善
+   - コメントの追加
+
+## 学習目標
+- アルゴリズムとデータ構造の理解
+- 数学的思考力の向上
+- コードの品質向上
+- ドキュメント作成能力の向上
+- 問題解決プロセスの体系化
+
+## 参考資料
+- [Project Euler](https://projecteuler.net/)
+- [Python公式ドキュメント](https://docs.python.org/)
+- [GitHub CLI](https://cli.github.com/)
+- [Git Best Practices](https://git-scm.com/book/en/v2) 
