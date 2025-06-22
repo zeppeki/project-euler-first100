@@ -14,9 +14,15 @@ disable =
     W0621,  # redefined-outer-name
     W0622,  # redefined-builtin
 
+# Add the problems directory to the Python path
+init-hook='import sys; sys.path.insert(0, "problems")'
+
 [FORMAT]
 # Maximum number of characters on a single line
 max-line-length = 88
+
+# Maximum number of lines in a module
+max-module-lines=1000
 
 [MESSAGES CONTROL]
 # Disable specific warnings
@@ -31,9 +37,19 @@ disable =
     W0621,  # redefined-outer-name
     W0622,  # redefined-builtin
 
+# Disable import-related errors for test files
+disable=C0413,E0611
+
+[REPORTS]
+# Set the output format
+output-format=text
+
+# Set the score threshold
+fail-under=8.0
+
 [BASIC]
 # Good variable names
-good-names = i, j, k, ex, Run, _, id, db
+good-names = i, j, k, ex, Run, _, id, f, x, y, z
 
 # Bad variable names
 bad-names = foo, bar, baz, toto, tutu, tata
@@ -44,3 +60,7 @@ min-similarity-lines = 4
 
 # Ignore imports when computing similarities
 ignore-imports = yes
+
+[MISCELLANEOUS]
+# List of note tags to take into consideration
+notes=
