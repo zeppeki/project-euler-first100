@@ -10,6 +10,7 @@
 | 002 | Even Fibonacci numbers | 🟢 完了 | Python | 2024-12-19 |
 | 003 | Largest prime factor | 🟢 完了 | Python | 2024-12-19 |
 | 004 | Largest palindrome product | 🟢 完了 | Python | 2024-12-22 |
+| 005 | Smallest multiple | 🟢 完了 | Python | 2024-12-22 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -21,9 +22,9 @@
 
 ## 統計
 
-- 完了: 4/100
+- 完了: 5/100
 - 作業中: 0/100
-- 未着手: 96/100
+- 未着手: 95/100
 
 ## 目標
 
@@ -77,5 +78,17 @@
 - **ファイル**:
   - `problems/problem_004.py`
   - `solutions/solution_004.md`
+
+### Problem 005: Smallest multiple
+- **解答**: 232792560
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(result × n)) - 1から順番に各数で割り切れるかチェック
+  - 最適化解法 (O(n × log(max))) - LCMの性質を利用した効率的計算
+  - 数学的解法 (O(n × log(n))) - 素因数分解による直接計算
+  - 標準ライブラリ解法 (O(n × log(max))) - Python math.lcm活用
+- **ファイル**:
+  - `problems/problem_005.py`
+  - `solutions/solution_005.md`
 
 最終更新: 2024-12-22
