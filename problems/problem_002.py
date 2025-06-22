@@ -7,8 +7,8 @@ By starting with 1 and 2, the first 10 terms will be:
 
 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
 
-By considering the terms in the Fibonacci sequence whose values do not exceed four million,
-find the sum of the even-valued terms.
+By considering the terms in the Fibonacci sequence whose values do not exceed 
+four million, find the sum of the even-valued terms.
 
 Answer: 4613732
 """
@@ -140,7 +140,8 @@ def test_solutions() -> None:
         print(f"  Expected: {expected}")
         print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
         print(
-            f"  Optimized: {result_optimized} {'✓' if result_optimized == expected else '✗'}"
+            f"  Optimized: {result_optimized} "
+            f"{'✓' if result_optimized == expected else '✗'}"
         )
         print(
             f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
