@@ -9,7 +9,12 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems"))
 
 # Import after path modification
-from problem_004 import is_palindrome, solve_mathematical, solve_naive, solve_optimized
+from problems.problem_004 import (
+    is_palindrome,
+    solve_mathematical,
+    solve_naive,
+    solve_optimized,
+)
 
 
 class TestProblem004:
