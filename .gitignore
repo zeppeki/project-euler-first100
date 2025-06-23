@@ -82,3 +82,6 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+
+# MkDocs build output
+site/
