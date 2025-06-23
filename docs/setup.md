@@ -292,6 +292,84 @@ uv run python problems/problem_002.py
 uv run python problems/problem_003.py
 ```
 
+### 5. ドキュメントのビルドと確認
+
+このプロジェクトはMkDocsを使用してGitHub Pagesで公開される包括的なドキュメントを生成します。
+
+#### 5.1 MkDocs依存関係のインストール
+
+```bash
+# MkDocsとプラグインをインストール
+uv pip install mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-minify-plugin
+
+# インストール確認
+uv run mkdocs --version
+```
+
+#### 5.2 ドキュメントのビルド
+
+```bash
+# 開発用サーバーの起動（リアルタイムプレビュー）
+uv run mkdocs serve --dev-addr=127.0.0.1:8000
+
+# ブラウザで http://127.0.0.1:8000 にアクセスして確認
+```
+
+#### 5.3 本番用ビルド
+
+```bash
+# 静的HTMLファイルの生成
+uv run mkdocs build
+
+# 厳密モードでのビルド（警告をエラーとして扱う）
+uv run mkdocs build --clean --strict
+
+# 出力先: site/ ディレクトリにHTMLファイルが生成される
+```
+
+#### 5.4 ドキュメント構造
+
+- **docs/** - ドキュメントのソースファイル
+  - **index.md** - ホームページ
+  - **setup.md** - 開発環境セットアップ（このファイル）
+  - **contributing.md** - 貢献ガイドライン
+  - **problems/index.md** - 問題一覧と進捗状況
+  - **solutions/** - 各問題の詳細解説
+    - **solution_001.md** - Problem 001の解説
+    - **solution_002.md** - Problem 002の解説
+    - etc.
+
+#### 5.5 ドキュメント作成時の注意点
+
+```bash
+# ドキュメント追加時は必ずビルドエラーをチェック
+uv run mkdocs build --clean --strict
+
+# リンク切れや警告がある場合、詳細なエラーメッセージが表示される
+# 例: "WARNING - Doc file contains a link 'path/to/file.md', but the target is not found"
+```
+
+#### 5.6 GitHub Pagesへの自動デプロイ
+
+- **自動デプロイ**: mainブランチへのプッシュで自動的にGitHub Pagesにデプロイ
+- **手動チェック**: ローカルでビルドテストしてからプッシュすることを推奨
+- **公開URL**: https://zeppeki.github.io/project-euler-first100/
+
+#### 5.7 解答値の隠匿化ポリシー
+
+Project Eulerの方針に従い、GitHub Pagesでは解答値を直接表示しません：
+
+```markdown
+## 解答
+
+Project Euler公式サイトで確認してください。
+
+## 検証
+- **入力:** 1000
+- **解答:** [隠匿]
+- **検証:** ✓
+```
+
 ## トラブルシューティング
 
 ### よくある問題と解決方法
@@ -351,6 +429,33 @@ cat pyproject.toml | grep -A 10 "\[tool.mypy\]"
 uv run mypy problems/ solutions/ tests/
 ```
 
+#### 7. MkDocsビルドエラー
+```bash
+# MkDocs依存関係の再インストール
+uv pip install --force-reinstall mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-minify-plugin
+
+# 厳密モードでエラー詳細を確認
+uv run mkdocs build --clean --strict --verbose
+
+# 一般的な問題と解決策:
+# - リンク切れ: 参照先ファイルの存在確認
+# - 画像ファイルが見つからない: パスの確認
+# - 設定エラー: mkdocs.yml の構文確認
+```
+
+#### 8. ドキュメントの表示問題
+```bash
+# ローカルサーバーでの確認
+uv run mkdocs serve --dev-addr=127.0.0.1:8000
+
+# キャッシュクリア
+rm -rf site/
+uv run mkdocs build --clean
+
+# 特定のページのみビルド確認
+uv run mkdocs build --clean --strict 2>&1 | grep "ERROR\|WARNING"
+```
+
 ### パフォーマンスの問題
 
 #### 1. 遅い依存関係インストール
@@ -398,10 +503,17 @@ touch solutions/solution_XXX.md
 uv run python problems/problem_XXX.py
 uv run pytest tests/problems/test_problem_XXX.py
 
-# 6. コード品質チェック
+# 6. ドキュメントの作成と確認
+# 解答説明ドキュメントを作成
+# solutions/solution_XXX.md を編集
+
+# ドキュメントのビルド確認
+uv run mkdocs build --clean --strict
+
+# 7. コード品質チェック
 uv run pre-commit run --all-files
 
-# 7. コミットとプッシュ
+# 8. コミットとプッシュ
 git add .
 git commit -m "Solve Problem XXX: [問題タイトル]"
 git push origin problem-XXX
@@ -421,10 +533,13 @@ uv sync
 # 4. テスト実行
 uv run pytest
 
-# 5. コード品質チェック
+# 5. ドキュメントのビルド確認（ドキュメント変更時）
+uv run mkdocs build --clean --strict
+
+# 6. コード品質チェック
 uv run pre-commit run --all-files
 
-# 6. コミット
+# 7. コミット
 git add .
 git commit -m "Update: [変更内容]"
 ```
