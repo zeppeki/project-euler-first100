@@ -131,6 +131,7 @@ nav:
     - 全体の進捗: progress.md
     - 問題一覧: problems/index.md
   - 解答詳細:
+    - 概要: solutions/README.md
     - Problem 001: solutions/solution_001.md
     - Problem 002: solutions/solution_002.md
     - Problem 003: solutions/solution_003.md
