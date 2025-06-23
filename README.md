@@ -50,17 +50,39 @@ cd project-euler-first100
 # uvのインストール（まだインストールしていない場合）
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# 仮想環境を作成し、依存関係をインストール
-uv sync
+# 初回セットアップ（Makefileを使用）
+make setup
 
-# pre-commitフックをインストール
+# または従来の方法
+uv sync --extra all
 uv run pre-commit install
+```
 
-# 動作確認
-uv run pytest
+### よく使うコマンド（Makefile）
+
+```bash
+# ヘルプ表示
+make help
+
+# テスト実行
+make test                 # 全テスト
+make test-fast            # 高速テストのみ
+make test-problem PROBLEM=001  # 特定問題
+
+# 問題実行
+make run-problem PROBLEM=001
 
 # コード品質チェック
-uv run ruff check problems/ solutions/ tests/
+make quality              # 全品質チェック
+make check                # CI相当のチェック
+
+# ドキュメント
+make docs-serve           # 開発サーバー起動
+
+# ユーティリティ
+make problems             # 問題一覧
+make status               # プロジェクト状況
+make new-problem PROBLEM=010  # 新問題テンプレート
 ```
 
 詳細なセットアップ手順は [`docs/setup.md`](docs/setup.md) を参照してください。
