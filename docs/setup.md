@@ -86,8 +86,14 @@ git pull origin main
 ### 4. 仮想環境の作成と依存関係のインストール
 
 ```bash
-# 仮想環境を作成し、依存関係をインストール
-uv sync
+# 開発用依存関係をインストール
+uv sync --extra dev
+
+# ドキュメント用依存関係も含める場合
+uv sync --extra dev --extra docs
+
+# 全ての依存関係をインストール（推奨）
+uv sync --extra all
 
 # 仮想環境をアクティベート
 source .venv/bin/activate  # Linux/macOS
@@ -299,8 +305,14 @@ uv run python problems/problem_003.py
 #### 5.1 MkDocs依存関係のインストール
 
 ```bash
-# MkDocsとプラグインをインストール
-uv pip install mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-minify-plugin
+# ドキュメント用依存関係をインストール
+uv sync --extra docs
+
+# または開発とドキュメントの両方をインストール
+uv sync --extra dev --extra docs
+
+# 全ての依存関係をインストール
+uv sync --extra all
 
 # インストール確認
 uv run mkdocs --version
@@ -406,8 +418,12 @@ uv sync
 # キャッシュをクリア
 uv cache clean
 
-# 再インストール
-uv sync --reinstall
+# 全ての依存関係を再インストール
+uv sync --extra all --reinstall
+
+# 特定のグループのみ再インストール
+uv sync --extra dev --reinstall
+uv sync --extra docs --reinstall
 ```
 
 #### 5. pre-commit のエラー
@@ -432,7 +448,7 @@ uv run mypy problems/ solutions/ tests/
 #### 7. MkDocsビルドエラー
 ```bash
 # MkDocs依存関係の再インストール
-uv pip install --force-reinstall mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-minify-plugin
+uv sync --extra docs --reinstall
 
 # 厳密モードでエラー詳細を確認
 uv run mkdocs build --clean --strict --verbose
@@ -482,9 +498,87 @@ uv run ruff check problems/problem_001.py
 uv run ruff check --cache-dir .ruff_cache problems/
 ```
 
+## Makefileの使用
+
+このプロジェクトでは、開発でよく使うコマンドをMakefileにまとめています。
+
+### 主要なコマンド
+
+```bash
+# ヘルプ表示（全コマンド一覧）
+make help
+
+# 依存関係のインストール
+make install              # 全依存関係をインストール（推奨）
+make install-dev          # 開発用のみ
+make install-docs         # ドキュメント用のみ
+
+# テスト実行
+make test                 # 全テスト実行
+make test-fast            # 高速テストのみ
+make test-problem PROBLEM=001  # 特定問題のテスト
+
+# コード品質チェック
+make format               # コードフォーマット
+make lint-fix             # リンティング（自動修正）
+make typecheck            # 型チェック
+make quality              # 全品質チェック
+
+# ドキュメント
+make docs-serve           # 開発サーバー起動
+make docs-build           # ドキュメントビルド
+make docs-strict          # 厳密モードビルド
+
+# 開発ワークフロー
+make check                # CI相当の全チェック
+make pre-commit           # pre-commitフック実行
+make run-problem PROBLEM=001  # 特定問題の実行
+
+# ユーティリティ
+make problems             # 問題一覧表示
+make status               # プロジェクト状況表示
+make new-problem PROBLEM=010  # 新問題テンプレート作成
+make clean                # キャッシュクリア
+```
+
+### Makefileの利点
+
+- **コマンド短縮**: 長いuvコマンドを短い形式で実行
+- **一貫性**: チーム内でのコマンド統一
+- **自動化**: 複数コマンドの組み合わせ実行
+- **初心者支援**: makeコマンドは直感的で覚えやすい
+
 ## 開発ワークフロー
 
-### 1. 新しい問題に取り組む際の手順
+### 1. 新しい問題に取り組む際の手順（Makefile使用）
+
+```bash
+# 1. 新しい問題テンプレートを作成
+make new-problem PROBLEM=XXX
+
+# 2. 実装とテスト
+# problems/problem_XXX.py を編集
+# tests/problems/test_problem_XXX.py を編集
+
+# 3. テスト実行
+make test-problem PROBLEM=XXX
+
+# 4. 問題実行確認
+make run-problem PROBLEM=XXX
+
+# 5. ドキュメント作成
+# docs/solutions/solution_XXX.md を編集
+
+# 6. 全チェック実行
+make check
+
+# 7. コミットとプッシュ
+git add .
+git commit -m "Solve Problem XXX: [問題タイトル]"
+git push origin problem-XXX
+```
+
+### 2. 従来の手順（uvコマンド直接使用）
 
 ```bash
 # 1. 新しいブランチを作成
@@ -519,7 +613,30 @@ git commit -m "Solve Problem XXX: [問題タイトル]"
 git push origin problem-XXX
 ```
 
-### 2. 日常的な開発手順
+### 3. 日常的な開発手順（Makefile使用）
+
+```bash
+# 1. 最新の変更を取得
+git pull origin main
+
+# 2. 依存関係の更新確認
+make update
+
+# 3. 開発作業
+
+# 4. 開発中の確認
+make test-fast               # 高速テスト実行
+make run-problem PROBLEM=XXX # 特定問題の動作確認
+
+# 5. 全チェック実行
+make check                   # CI相当のチェック
+
+# 6. コミット
+git add .
+git commit -m "Update: [変更内容]"
+```
+
+### 4. 従来の手順（uvコマンド直接使用）
 
 ```bash
 # 1. 最新の変更を取得
@@ -544,20 +661,26 @@ git add .
 git commit -m "Update: [変更内容]"
 ```
 
-### 3. 新しい依存関係の追加
+### 5. 新しい依存関係の追加
 
 ```bash
 # 開発用依存関係を追加
-uv add --dev package-name
+uv add --optional-group dev package-name
 
-# 本番用依存関係を追加
+# ドキュメント用依存関係を追加
+uv add --optional-group docs package-name
+
+# 本番用依存関係を追加（基本的には使用しない）
 uv add package-name
 
 # 特定のバージョンを指定
-uv add "package-name>=1.0.0,<2.0.0"
+uv add --optional-group dev "package-name>=1.0.0,<2.0.0"
+
+# pyproject.tomlの手動編集も推奨
+# [project.optional-dependencies] セクションに直接追加
 ```
 
-### 4. コードフォーマットとリンティング
+### 6. コードフォーマットとリンティング
 
 ```bash
 # コードの自動修正
@@ -635,16 +758,26 @@ line-ending = "auto"
 [project]
 name = "project-euler-first100"
 version = "0.1.0"
-dependencies = [
-    "pytest>=7.0.0",
-    "ruff>=0.1.0",
-]
+requires-python = ">=3.11"
+dependencies = []  # 基本依存関係は空
 
 [project.optional-dependencies]
 dev = [
-    "pytest-cov>=4.0.0",
+    "pytest>=7.0.0",
+    "pytest-xdist>=3.0.0",
+    "ruff>=0.1.0",
     "mypy>=1.0.0",
+    "bandit>=1.7.0",
     "pre-commit>=3.0.0",
+]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocs-git-revision-date-localized-plugin>=1.2.0",
+    "mkdocs-minify-plugin>=0.7.0",
+]
+all = [
+    "project-euler-first100[dev,docs]",
 ]
 ```
 
