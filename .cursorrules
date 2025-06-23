@@ -4,9 +4,9 @@
 このプロジェクトは、Project Eulerの最初の100問を解くためのリポジトリです。体系的に問題を解決し、学習効果を最大化することを目的としています。
 
 ## 現在の進捗状況
-- **完了問題**: 6/100 (Problem 001, 002, 003, 004, 005, 006)
-- **最新完了**: Problem 006: Sum square difference (解答: 25,164,150)
-- **次回予定**: Problem 007: 10001st prime
+- **完了問題**: 7/100 (Problem 001, 002, 003, 004, 005, 006, 007)
+- **最新完了**: Problem 007: 10001st prime (解答: 104,743)
+- **次回予定**: Problem 008: Largest product in a series
 
 ## 作業プロセス
 
@@ -180,7 +180,9 @@ if __name__ == "__main__":
 ## 問題
 [問題の説明]
 
-## 解答: [数値]
+## 解答
+
+Project Euler公式サイトで確認してください。
 
 ## 解法
 ### 1. [解法名]
@@ -196,7 +198,9 @@ if __name__ == "__main__":
 [関連する数学的概念]
 
 ## 検証
-[テストケースと検証結果]
+- **入力:** [example input]
+- **解答:** [隠匿]
+- **検証:** ✓
 
 ## パフォーマンス比較
 [各解法の性能比較]
@@ -235,7 +239,9 @@ git push origin [BRANCH_NAME]
 ```bash
 gh pr create --title "Solve Problem XXX: [問題タイトル]" --body "## Problem XXX: [問題タイトル]
 
-### 解答: [数値]
+### 解答
+
+Project Euler公式サイトで確認してください。
 
 ### 実装内容
 - [実装した解法の説明]
@@ -255,8 +261,20 @@ gh pr create --title "Solve Problem XXX: [問題タイトル]" --body "## Proble
 Closes #[ISSUE_NUMBER]" --label "problem,XXX,completed"
 ```
 
-### 7. プルリクエストマージ
+### 7. CI/CD確認とプルリクエストマージ
+**重要**: すべてのCIチェックが成功するまでマージしないでください：
+
 ```bash
+# CIステータスを確認
+gh pr view [PR_NUMBER] --json statusCheckRollup
+
+# 期待される出力（成功時）:
+# - "conclusion": "SUCCESS" for all checks
+# - test (3.11): SUCCESS
+# - test (3.12): SUCCESS
+# - quality: SUCCESS
+
+# すべてのチェックが成功したらマージ
 gh pr merge [PR_NUMBER] --merge
 git checkout main
 git pull origin main
@@ -304,6 +322,68 @@ gh issue close [ISSUE_NUMBER] --reason completed
 - 🔵 可視化や図表
 - 🔵 他の言語での実装
 - 🔵 アルゴリズムの証明
+
+## テスト戦略
+
+### テストカテゴリ
+- 単体テスト（各関数ごと）
+- 統合テスト（全体解法）
+- パフォーマンステスト（`@pytest.mark.slow`）
+- エッジケース検証
+
+### テスト実行パフォーマンス
+- **高速テスト**: 191件（~0.1-0.4秒）
+- **低速テスト**: 3件（~0.03秒）
+- **合計**: 194件（1秒未満で完了）
+- **CI最適化**: 高速・低速テストを分離実行し、並列化・可視性向上
+- **パフォーマンステスト**: 実行時間計測ではなく機能検証ベースに最適化
+
+テストは厳格な設定と包括的なマーカーで管理され、CI/CDで高速かつ高品質に実行される。
+
+## CI/CDプロセス
+
+### GitHub Actionsワークフロー
+プロジェクトは以下のチェックを含む自動化CI/CDを使用：
+- **Test (Python 3.11)**: Python 3.11での全テスト実行
+- **Test (Python 3.12)**: Python 3.12での全テスト実行
+- **Quality**: コード品質チェック（ruff, mypy, bandit）
+
+### PRマージ要件
+**重要**: すべてのCIチェックが成功するまでPRをマージしないでください：
+
+```bash
+# マージ前にCIステータスを確認
+gh pr view [PR_NUMBER] --json statusCheckRollup
+
+# 成功時の期待される出力:
+# - "conclusion": "SUCCESS" for all checks
+# - test (3.11): SUCCESS
+# - test (3.12): SUCCESS
+# - quality: SUCCESS
+```
+
+**失敗または保留中のCIチェックがあるPRは絶対にマージしないでください。**
+
+## ドキュメントガイドライン
+
+### GitHub Pagesコンテンツポリシー
+- **直接的な解答値の表示禁止**: Project Eulerの解答値を直接表示しない
+- **解答セクション**: 「Project Euler公式サイトで確認してください」に統一
+- **検証結果**: 具体的な数値は「[隠匿]」で置換
+- **学習コンテンツ**: アルゴリズム解説と学習内容は保持
+- **小さな例題**: 学習のための小さな例題の期待値は保持可能
+
+### 解答ドキュメントテンプレート
+```markdown
+## 解答
+
+Project Euler公式サイトで確認してください。
+
+## 検証
+- **入力:** [example input]
+- **解答:** [隠匿]
+- **検証:** ✓
+```
 
 ## ラベル体系
 
@@ -358,7 +438,8 @@ gh issue close [ISSUE_NUMBER] --reason completed
    - 型ヒントの追加
 
 4. **プルリクエストのマージ**
-   - マージ後にmainブランチに切り替え
+   - CIチェックの完了を確認
+   - mainブランチに切り替え
    - 最新の変更を取得
    - 次の問題の準備
 
@@ -378,23 +459,6 @@ gh issue close [ISSUE_NUMBER] --reason completed
 - [Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation)
 - [Algorithm Analysis](https://en.wikipedia.org/wiki/Analysis_of_algorithms)
 
-## テスト戦略
-
-### テストカテゴリ
-- 単体テスト（各関数ごと）
-- 統合テスト（全体解法）
-- パフォーマンステスト（`@pytest.mark.slow`）
-- エッジケース検証
-
-### テスト実行パフォーマンス
-- **高速テスト**: 143件（~0.1-0.4秒）
-- **低速テスト**: 2件（~0.03秒）
-- **合計**: 145件（1秒未満で完了）
-- **CI最適化**: 高速・低速テストを分離実行し、並列化・可視性向上
-- **パフォーマンステスト**: 実行時間計測ではなく機能検証ベースに最適化
-
-テストは厳格な設定と包括的なマーカーで管理され、CI/CDで高速かつ高品質に実行される。
-
 ## パフォーマンス最適化履歴
 
 ### 2025年6月 テストパフォーマンス最適化
@@ -402,6 +466,6 @@ gh issue close [ISSUE_NUMBER] --reason completed
 - **対応**: すべてのパフォーマンステストを機能検証型にリファクタリング
 - **結果**:
   - 実行時間: 58秒→0.1-0.4秒（99.3%短縮）
-  - 145テスト・100%カバレッジ維持
+  - 194テスト・100%カバレッジ維持（Problem 007追加後）
   - 高速/低速テスト分離でCI可視性向上
   - Project Eulerの正答性検証は全て維持

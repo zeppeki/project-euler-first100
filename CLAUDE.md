@@ -50,6 +50,21 @@ uv sync
 uv run pre-commit install
 ```
 
+### Documentation
+```bash
+# Install MkDocs dependencies
+uv pip install mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-minify-plugin
+
+# Start development server
+mkdocs serve --dev-addr=127.0.0.1:8000
+
+# Build static HTML files
+mkdocs build
+
+# Build with clean output and strict validation
+mkdocs build --clean --strict
+```
+
 ## Code Architecture
 
 ### Directory Structure
@@ -83,6 +98,7 @@ Each problem follows a consistent structure:
    - Mathematical background
    - Algorithm analysis
    - Learning points
+   - **IMPORTANT**: No direct answer values in GitHub Pages documentation
 
 ### Code Style Guidelines
 - Follow PEP 8 standards
@@ -214,3 +230,24 @@ gh pr view [PR_NUMBER] --json statusCheckRollup
 ```
 
 **Never merge a PR with failing or pending CI checks.**
+
+## Documentation Guidelines
+
+### GitHub Pages Content Policy
+- **No Direct Answer Values**: Project Eulerの解答値を直接表示しない
+- **Answer Sections**: 「Project Euler公式サイトで確認してください」に統一
+- **Verification Results**: 具体的な数値は「[隠匿]」で置換
+- **Learning Content**: アルゴリズム解説と学習内容は保持
+- **Small Examples**: 小さな例題の期待値は学習のため保持可能
+
+### Solution Documentation Template
+```markdown
+## 解答
+
+Project Euler公式サイトで確認してください。
+
+## 検証
+- **入力:** [example input]
+- **解答:** [隠匿]
+- **検証:** ✓
+```
