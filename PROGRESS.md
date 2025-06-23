@@ -11,6 +11,10 @@
 | 003 | Largest prime factor | 🟢 完了 | Python | 2024-12-19 |
 | 004 | Largest palindrome product | 🟢 完了 | Python | 2024-12-22 |
 | 005 | Smallest multiple | 🟢 完了 | Python | 2024-12-22 |
+| 006 | Sum square difference | 🟢 完了 | Python | 2024-12-22 |
+| 007 | 10001st prime | 🟢 完了 | Python | 2024-12-22 |
+| 008 | Largest product in a series | 🟢 完了 | Python | 2024-12-22 |
+| 009 | Special Pythagorean triplet | 🟢 完了 | Python | 2025-06-23 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -22,13 +26,13 @@
 
 ## 統計
 
-- 完了: 5/100
+- 完了: 9/100
 - 作業中: 0/100
-- 未着手: 95/100
+- 未着手: 91/100
 
 ## 目標
 
-- [x] 最初の10問を完了
+- [ ] 最初の10問を完了 (9/10)
 - [ ] 最初の25問を完了
 - [ ] 最初の50問を完了
 - [ ] 最初の100問を完了
@@ -91,4 +95,48 @@
   - `problems/problem_005.py`
   - `solutions/solution_005.md`
 
-最終更新: 2024-12-22
+### Problem 006: Sum square difference
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - 順次計算による差の算出
+  - 最適化解法 (O(1)) - 等差数列の和の公式を活用
+  - 数学的解法 (O(1)) - 平方の和の公式を使用
+- **ファイル**:
+  - `problems/problem_006.py`
+  - `solutions/solution_006.md`
+
+### Problem 007: 10001st prime
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 各数について素数判定を実行
+  - 最適化解法 (O(n × √p)) - 平方根まで試し割りで素数判定
+  - 数学的解法 (O(n log log n)) - エラトステネスの篩を使用
+- **ファイル**:
+  - `problems/problem_007.py`
+  - `solutions/solution_007.md`
+
+### Problem 008: Largest product in a series
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n × k)) - 全ての隣接する桁のシーケンスをチェック
+  - 最適化解法 (O(n)) - スライディングウィンドウでゼロスキップ
+  - 数学的解法 (O(n)) - reduce関数を使用した効率的な積計算
+- **ファイル**:
+  - `problems/problem_008.py`
+  - `solutions/solution_008.md`
+
+### Problem 009: Special Pythagorean triplet
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n³)) - 3重ループで全ての組み合わせをチェック
+  - 最適化解法 (O(n²)) - 2重ループでcを計算により求める
+  - 数学的解法 (O(√n)) - 原始ピタゴラス数の生成公式を使用
+- **ファイル**:
+  - `problems/problem_009.py`
+  - `solutions/solution_009.md`
+
+最終更新: 2025-06-23
