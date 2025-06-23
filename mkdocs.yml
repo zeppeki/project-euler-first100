@@ -109,10 +109,15 @@ extra:
           name: このページは改善が必要
           data: 0
 
+extra_css:
+  - css/dashboard.css
+
 extra_javascript:
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://cdn.jsdelivr.net/npm/chart.js
+  - js/dashboard.js
 
 nav:
   - ホーム: index.md
@@ -132,5 +137,7 @@ nav:
     - Problem 004: solutions/solution_004.md
     - Problem 005: solutions/solution_005.md
     - Problem 006: solutions/solution_006.md
+    - Problem 007: solutions/solution_007.md
+    - Problem 008: solutions/solution_008.md
   - 問題集:
     - 概要: problems/index.md

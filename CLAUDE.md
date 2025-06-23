@@ -126,8 +126,8 @@ def main() -> None:
 ## Project Status and Workflow
 
 ### Current Progress
-- Completed: 6/100 problems (Problems 001, 002, 003, 004, 005, 006)
-- Next target: Problem 007
+- Completed: 7/100 problems (Problems 001, 002, 003, 004, 005, 006, 007)
+- Next target: Problem 008
 
 ### Development Workflow
 1. Create GitHub issue for new problem
@@ -136,8 +136,11 @@ def main() -> None:
 4. Add comprehensive tests
 5. Create solution documentation
 6. Update progress tracking
-7. Create PR and merge
-8. Close issue
+7. Create PR
+8. **IMPORTANT: Wait for CI completion and verify all checks pass before merging**
+9. Check CI status: `gh pr view [PR_NUMBER] --json statusCheckRollup`
+10. Merge PR only after confirming all CI checks are SUCCESS
+11. Close issue
 
 ### Quality Standards
 - Minimum 3 solution approaches per problem
@@ -145,6 +148,7 @@ def main() -> None:
 - Comprehensive documentation
 - Performance analysis included
 - All code passes linting and type checking
+- **CI verification required**: All GitHub Actions checks must pass before merging
 
 ## Testing Strategy
 
@@ -156,9 +160,9 @@ def main() -> None:
 
 ### Test Execution Performance
 Tests are optimized for fast CI execution:
-- **Fast tests**: 143 tests run in ~0.1-0.4 seconds
-- **Slow tests**: 2 tests run in ~0.03 seconds
-- **Total**: 145 tests complete in under 1 second
+- **Fast tests**: 191 tests run in ~0.1-0.4 seconds
+- **Slow tests**: 3 tests run in ~0.03 seconds
+- **Total**: 194 tests complete in under 1 second
 - **CI optimization**: Fast and slow tests run in separate steps for better visibility
 
 Tests are configured with strict settings and comprehensive markers for different test types (unit, integration, slow).
@@ -183,6 +187,30 @@ The project uses dynamic imports for problem modules in tests. MyPy configuratio
 - **Solution**: Refactored all performance tests to use functional verification instead of `time.time()` measurements
 - **Results**:
   - Execution time reduced from 58s to 0.1-0.4s (99.3% improvement)
-  - Maintained 100% test coverage with 145 tests
-  - Split CI into fast tests (143) and slow tests (2) for better visibility
+  - Maintained 100% test coverage with 194 tests (updated with Problem 007)
+  - Split CI into fast tests (191) and slow tests (3) for better visibility
   - All Project Euler correctness verification preserved
+
+## CI/CD Process
+
+### GitHub Actions Workflow
+The project uses automated CI/CD with the following checks:
+- **Test (Python 3.11)**: Run all tests on Python 3.11
+- **Test (Python 3.12)**: Run all tests on Python 3.12
+- **Quality**: Code quality checks (ruff, mypy, bandit)
+
+### PR Merge Requirements
+**CRITICAL**: PRs must only be merged after ALL CI checks pass:
+
+```bash
+# Check CI status before merging
+gh pr view [PR_NUMBER] --json statusCheckRollup
+
+# Expected output for successful CI:
+# - "conclusion": "SUCCESS" for all checks
+# - test (3.11): SUCCESS
+# - test (3.12): SUCCESS
+# - quality: SUCCESS
+```
+
+**Never merge a PR with failing or pending CI checks.**

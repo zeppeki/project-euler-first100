@@ -21,9 +21,16 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 
 ## 📊 現在の進捗
 
-- **完了問題**: 6/100
-- **最新完了**: Problem 006: Sum square difference
-- **実装済み解法**: 各問題3つの異なるアプローチ
+<!-- Progress Dashboard -->
+<div id="progress-dashboard" class="dashboard"></div>
+
+<!-- Statistics Dashboard -->
+<div id="stats-dashboard" class="dashboard"></div>
+
+### 詳細統計
+- **完了問題**: 8/100 (8%)
+- **最新完了**: Problem 008: Largest product in a series
+- **実装済み解法**: 各問題3つの異なるアプローチ（計24解法）
 - **テストカバレッジ**: 95%以上
 
 ### 完了した問題
@@ -36,6 +43,8 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 | 004 | Largest palindrome product | 906,609 | 回文の性質と効率的な探索 |
 | 005 | Smallest multiple | 232,792,560 | 最小公倍数の計算 |
 | 006 | Sum square difference | 25,164,150 | 数学的公式による最適化 |
+| 007 | 10001st prime | 104,743 | 素数生成と6k±1最適化 |
+| 008 | Largest product in a series | 23,514,624,000 | スライディングウィンドウとゼロスキップ |
 
 ## 🚀 特徴
 
