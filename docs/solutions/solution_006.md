@@ -14,7 +14,9 @@ Hence the difference between the sum of the squares of the first ten natural num
 
 Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
-## 解答: 25164150
+## 解答
+
+Project Euler公式サイトで確認してください。
 
 ## 解法
 
@@ -123,10 +125,10 @@ def solve_mathematical(n):
 - **差**: 3025 - 385 = 2640
 
 ### 実際の問題 (n=100)
-- **和**: 100 × 101 / 2 = 5050
-- **和の平方**: 5050² = 25,502,500
-- **平方の和**: 100 × 101 × 201 / 6 = 338,350
-- **差**: 25,502,500 - 338,350 = 25,164,150
+- **和**: [中間結果は隠匿]
+- **和の平方**: [中間結果は隠匿]
+- **平方の和**: [中間結果は隠匿]
+- **差**: [解答は隠匿]
 
 ## パフォーマンス比較
 
