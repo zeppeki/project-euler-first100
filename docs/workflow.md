@@ -61,7 +61,7 @@ gh issue create --title "Solve Problem XXX: [問題タイトル]" --body "## Pro
 - `solutions/solution_XXX.md`
 
 ### 参考
-- [Project Euler Problem XXX](https://projecteuler.net/problem=XXX)" --label "problem,XXX,in-progress"
+- [Project Euler Problem XXX](https://projecteuler.net/problem=XXX)" --label "problem,in-progress"
 ```
 
 ### 2. ブランチの作成

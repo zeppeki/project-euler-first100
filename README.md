@@ -217,8 +217,10 @@ def solve_mathematical(n: int) -> int:
    ```bash
    gh issue create --title "Solve Problem XXX: [問題タイトル]" \
      --body "## Problem XXX: [問題タイトル]\n\n### 問題\n[問題の説明]\n\n### タスク\n- [ ] 問題の分析\n- [ ] アルゴリズム設計\n- [ ] 実装\n- [ ] テスト\n- [ ] ドキュメント作成" \
-     --label "problem,XXX,in-progress"
+     --label "problem,in-progress"
    ```
+
+**注意**: ラベルは基本的な`problem,in-progress`のみを使用し、問題番号固有のラベル（例：`013`）は存在しない場合があるため指定しません。必要に応じて後から手動で追加してください。
 
 2. **ブランチ作成**
    ```bash
