@@ -69,6 +69,7 @@ gh issue create --title "Solve Problem XXX: [問題タイトル]" --body "## Pro
 - [ ] 問題の分析と理解
 - [ ] アルゴリズムの設計
 - [ ] Pythonでの実装
+- [ ] テストの作成と実行
 - [ ] 解答の検証
 - [ ] 解答の説明をsolutions/に追加
 - [ ] 進捗表の更新

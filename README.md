@@ -216,7 +216,7 @@ def solve_mathematical(n: int) -> int:
 1. **Issue作成**
    ```bash
    gh issue create --title "Solve Problem XXX: [問題タイトル]" \
-     --body "## Problem XXX: [問題タイトル]\n\n### 問題\n[問題の説明]\n\n### タスク\n- [ ] 問題の分析\n- [ ] アルゴリズム設計\n- [ ] 実装\n- [ ] テスト\n- [ ] ドキュメント作成" \
+     --body "## Problem XXX: [問題タイトル]\n\n### 問題\n[問題の説明]\n\n### タスク\n- [ ] 問題の分析\n- [ ] アルゴリズム設計\n- [ ] 実装\n- [ ] テストの作成と実行\n- [ ] ドキュメント作成" \
      --label "problem,in-progress"
    ```
 

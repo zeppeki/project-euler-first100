@@ -27,6 +27,7 @@ gh issue create --title "Solve Problem XXX: [問題タイトル]" --body "## Pro
 - [ ] アルゴリズムの設計
 - [ ] Pythonでの実装
 - [ ] JavaScriptでの実装（オプション）
+- [ ] テストの作成と実行
 - [ ] 解答の検証
 - [ ] 解答の説明をsolutions/に追加
 - [ ] 進捗表の更新
@@ -173,7 +174,95 @@ if __name__ == "__main__":
     main()
 ```
 
-#### 3.4 解答説明
+#### 3.4 テスト作成
+`tests/problems/test_problem_XXX.py`を作成し、以下の要素を含めます：
+
+```python
+#!/usr/bin/env python3
+"""
+Test for Problem XXX: [問題タイトル]
+"""
+
+import pytest
+from problems.problem_XXX import solve_naive, solve_optimized, solve_mathematical
+
+class TestProblemXXX:
+    """Problem XXXのテストクラス"""
+
+    def test_solve_naive(self):
+        """素直な解法のテスト"""
+        test_cases = [
+            (input1, expected1),
+            (input2, expected2),
+            # ...
+        ]
+
+        for input_val, expected in test_cases:
+            assert solve_naive(input_val) == expected
+
+    def test_solve_optimized(self):
+        """最適化解法のテスト"""
+        test_cases = [
+            (input1, expected1),
+            (input2, expected2),
+            # ...
+        ]
+
+        for input_val, expected in test_cases:
+            assert solve_optimized(input_val) == expected
+
+    def test_solve_mathematical(self):
+        """数学的解法のテスト"""
+        test_cases = [
+            (input1, expected1),
+            (input2, expected2),
+            # ...
+        ]
+
+        for input_val, expected in test_cases:
+            assert solve_mathematical(input_val) == expected
+
+    def test_all_solutions_agree(self):
+        """すべての解法が同じ結果を返すことを確認"""
+        test_cases = [
+            input1,
+            input2,
+            # ...
+        ]
+
+        for input_val in test_cases:
+            result_naive = solve_naive(input_val)
+            result_optimized = solve_optimized(input_val)
+            result_math = solve_mathematical(input_val)
+
+            assert result_naive == result_optimized == result_math, \
+                f"Solutions disagree for input {input_val}: " \
+                f"naive={result_naive}, optimized={result_optimized}, math={result_math}"
+
+    def test_edge_cases(self):
+        """エッジケースのテスト"""
+        # 境界値や特殊な入力のテスト
+        pass
+
+    def test_performance(self):
+        """パフォーマンステスト（必要に応じて）"""
+        # 大きな入力での実行時間テスト
+        pass
+```
+
+**テスト実行手順:**
+```bash
+# 単体テストの実行
+uv run pytest tests/problems/test_problem_XXX.py -v
+
+# 全テストの実行
+uv run pytest tests/ -v
+
+# カバレッジ確認
+uv run pytest tests/problems/test_problem_XXX.py --cov=problems.problem_XXX --cov-report=html
+```
+
+#### 3.5 解答説明
 `solutions/solution_XXX.md`を作成し、以下の要素を含めます：
 
 ```markdown
