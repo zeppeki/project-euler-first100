@@ -14,7 +14,9 @@ Hence the difference between the sum of the squares of the first ten natural num
 
 Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
-## 解答: 25164150
+## 解答
+
+Project Euler公式サイトで確認してください。
 
 ## 解法
 
