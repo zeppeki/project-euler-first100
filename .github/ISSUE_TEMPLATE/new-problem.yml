@@ -1,7 +1,7 @@
 name: 新しいProject Euler問題の実装
 description: 新しいProject Euler問題の解法実装を追加する
-title: "Problem [PROBLEM_NUMBER]: [PROBLEM_TITLE]"
-labels: ["problem/new", "enhancement"]
+title: "Solve Problem [PROBLEM_NUMBER]: [PROBLEM_TITLE]"
+labels: ["problem", "in-progress"]
 assignees:
   - []
 body:
