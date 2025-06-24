@@ -24,10 +24,8 @@ class TestProblem013:
         """Test that the fifty digit numbers are loaded correctly."""
         numbers = get_fifty_digit_numbers()
 
-        # Should have around 100 numbers (allowing some tolerance for data extraction)
-        assert 100 <= len(numbers) <= 110, (
-            f"Expected around 100 numbers, got {len(numbers)}"
-        )
+        # Should have exactly 100 numbers
+        assert len(numbers) == 100
 
         # Each number should be exactly 50 digits
         for i, num in enumerate(numbers):
@@ -47,8 +45,8 @@ class TestProblem013:
         assert len(result) == 10
         assert result.isdigit()
 
-        # Expected answer based on our dataset
-        assert result == "5872595345"
+        # Known answer from Project Euler
+        assert result == "5537376230"
 
     def test_solve_optimized(self) -> None:
         """Test the optimized solution."""
@@ -58,8 +56,8 @@ class TestProblem013:
         assert len(result) == 10
         assert result.isdigit()
 
-        # Should match the expected answer
-        assert result == "5872595345"
+        # Should match the known answer
+        assert result == "5537376230"
 
     def test_solve_mathematical(self) -> None:
         """Test the mathematical solution."""
@@ -69,8 +67,8 @@ class TestProblem013:
         assert len(result) == 10
         assert result.isdigit()
 
-        # Should match the expected answer
-        assert result == "5872595345"
+        # Should match the known answer
+        assert result == "5537376230"
 
     def test_all_solutions_agree(self) -> None:
         """Test that all solutions give the same result."""
@@ -190,8 +188,8 @@ class TestProblem013:
         # Should not start with 0 (would be unusual for this problem)
         assert result[0] != "0"
 
-        # Expected correct answer
-        assert result == "5872595345"
+        # Known correct answer
+        assert result == "5537376230"
 
     def test_mathematical_approach_accuracy(self) -> None:
         """Test that the mathematical approximation is accurate enough."""
@@ -211,8 +209,8 @@ class TestProblem013:
         """Test edge cases and boundary conditions."""
         numbers = get_fifty_digit_numbers()
 
-        # Verify we have around 100 numbers
-        assert 100 <= len(numbers) <= 110
+        # Verify we have exactly 100 numbers
+        assert len(numbers) == 100
 
         # Verify no empty strings
         for num in numbers:
@@ -239,8 +237,8 @@ class TestProblem013:
 
     def test_known_project_euler_answer(self) -> None:
         """Test against the known Project Euler answer."""
-        # The expected answer for our dataset
-        expected_answer = "5872595345"
+        # The known answer for Problem 013
+        expected_answer = "5537376230"
 
         # All our solutions should produce this answer
         assert solve_naive() == expected_answer
@@ -260,7 +258,7 @@ class TestProblem013:
         sum_str = str(total_sum)
 
         # Should start with our expected 10 digits
-        assert sum_str.startswith("5872595345")
+        assert sum_str.startswith("5537376230")
 
         # Total should be reasonable length
         assert 51 <= len(sum_str) <= 53  # Allow some tolerance
