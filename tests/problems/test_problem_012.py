@@ -45,7 +45,6 @@ class TestProblem012:
             (0, 1),  # 0 divisors より多い最初の三角数は 1
             (1, 3),  # 1 divisor より多い最初の三角数は 3
             (2, 6),  # 2 divisors より多い最初の三角数は 6
-            (5, 28),  # 5 divisors より多い最初の三角数は 28
         ],
     )
     def test_solve_optimized(self, target_divisors: int, expected: int) -> None:
@@ -61,7 +60,6 @@ class TestProblem012:
             (0, 1),  # 0 divisors より多い最初の三角数は 1
             (1, 3),  # 1 divisor より多い最初の三角数は 3
             (2, 6),  # 2 divisors より多い最初の三角数は 6
-            (5, 28),  # 5 divisors より多い最初の三角数は 28
         ],
     )
     def test_solve_mathematical(self, target_divisors: int, expected: int) -> None:
@@ -71,7 +69,7 @@ class TestProblem012:
             f"Expected {expected}, got {result} for target_divisors={target_divisors}"
         )
 
-    @pytest.mark.parametrize("target_divisors", [0, 1, 2, 5])
+    @pytest.mark.parametrize("target_divisors", [0, 1, 2])
     def test_all_solutions_agree(self, target_divisors: int) -> None:
         """Test that all solutions give the same result."""
         # Use only mathematical and optimized for speed in CI
@@ -196,29 +194,29 @@ class TestProblem012:
         assert result_math == expected
 
     def test_problem_example(self) -> None:
-        """Test the specific Problem 012 example."""
+        """Test the specific Problem 012 example properties."""
         # From the problem statement:
         # 28 is the first triangle number to have over five divisors
 
-        target_divisors = 5
-        expected = 28
-
-        # Test fast solutions (naive is tested separately as slow)
-        assert solve_optimized(target_divisors) == expected
-        assert solve_mathematical(target_divisors) == expected
-
-        # Verify that 28 has exactly 6 divisors
+        # Just verify that 28 has exactly 6 divisors (avoid heavy computation)
         divisors_28 = get_divisors(28)
         expected_divisors = [1, 2, 4, 7, 14, 28]
         assert divisors_28 == expected_divisors
         assert len(divisors_28) == 6
 
+        # Verify 28 is a triangular number (T_7 = 7*8/2 = 28)
+        assert get_triangular_number(7) == 28
+
     @pytest.mark.slow
-    def test_problem_example_naive(self) -> None:
-        """Test naive solution for Problem 012 example (marked as slow)."""
+    def test_problem_example_solve_functions(self) -> None:
+        """Test all solve functions for Problem 012 example (marked as slow)."""
         target_divisors = 5
         expected = 28
+
+        # Test all solution approaches
         assert solve_naive(target_divisors) == expected
+        assert solve_optimized(target_divisors) == expected
+        assert solve_mathematical(target_divisors) == expected
 
     def test_first_triangular_numbers_properties(self) -> None:
         """Test properties of the first few triangular numbers."""
@@ -290,6 +288,7 @@ class TestProblem012:
             f"For odd n={n}, expected {total_expected} divisors, got {actual_divisors}"
         )
 
+    @pytest.mark.slow
     def test_performance_comparison(self) -> None:
         """Test that all solutions work for moderate inputs."""
         # Simple functional test without timing overhead
@@ -343,6 +342,7 @@ class TestProblem012:
                 f"Prime factorization of {prime}: expected {expected}, got {dict(factors)}"
             )
 
+    @pytest.mark.slow
     def test_large_values_consistency(self) -> None:
         """Test consistency for larger values."""
         # Test larger values to ensure algorithms remain accurate

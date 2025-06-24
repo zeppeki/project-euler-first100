@@ -100,6 +100,10 @@ def prime_factorization(num: int) -> dict[int, int]:
     """素因数分解を行い、各素因数の指数を返す"""
     factors: defaultdict[int, int] = defaultdict(int)
 
+    # 0以下の場合は空の辞書を返す
+    if num <= 1:
+        return factors
+
     # 2で割り切れる回数を数える
     while num % 2 == 0:
         factors[2] += 1
