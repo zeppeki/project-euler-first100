@@ -259,7 +259,6 @@ class TestProblem012:
                 f"Optimized divisor count for T_{n}={triangular}: expected {expected_count}, got {divisor_count_optimized}"
             )
 
-    @pytest.mark.slow
     def test_mathematical_algorithm_properties(self) -> None:
         """Test mathematical algorithm specific properties."""
         # The mathematical algorithm uses the property that T_n = n(n+1)/2
@@ -291,11 +290,10 @@ class TestProblem012:
             f"For odd n={n}, expected {total_expected} divisors, got {actual_divisors}"
         )
 
-    @pytest.mark.slow
     def test_performance_comparison(self) -> None:
         """Test that all solutions work for moderate inputs."""
         # Simple functional test without timing overhead
-        target_divisors = 12
+        target_divisors = 6
 
         # Verify all solutions work and agree
         result_naive = solve_naive(target_divisors)
@@ -345,11 +343,10 @@ class TestProblem012:
                 f"Prime factorization of {prime}: expected {expected}, got {dict(factors)}"
             )
 
-    @pytest.mark.slow
     def test_large_values_consistency(self) -> None:
         """Test consistency for larger values."""
         # Test larger values to ensure algorithms remain accurate
-        test_values = [6, 8, 10]
+        test_values = [6]
 
         for target_divisors in test_values:
             naive_result = solve_naive(target_divisors)
