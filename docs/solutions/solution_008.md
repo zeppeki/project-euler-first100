@@ -9,7 +9,9 @@ The four adjacent digits in the 1000-digit number that have the greatest product
 Find the thirteen adjacent digits in the 1000-digit number that have the greatest product.
 What is the value of this product?
 
-## 解答: 23514624000
+## 解答
+
+Project Euler公式サイトで確認してください。
 
 ## 解法
 
@@ -131,8 +133,8 @@ def solve_mathematical(adjacent_digits=13):
 計算: 9 × 9 × 8 × 9 = **5832**
 
 ### 実際の問題 (13桁の場合)
-最大積となる13桁のシーケンス: **5576689664895**
-計算: 5 × 5 × 7 × 6 × 6 × 8 × 9 × 6 × 6 × 4 × 8 × 9 × 5 = **23514624000**
+最大積となる13桁のシーケンス: **[隠匿]**
+計算: [隠匿]
 
 ### 1000桁数値の統計
 - **総桁数**: 1000
