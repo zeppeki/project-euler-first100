@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Project Euler公式サイト
+    url: https://projecteuler.net/
+    about: Project Eulerの公式サイトで問題を確認
+  - name: プロジェクトドキュメント
+    url: https://zepp.github.io/project-euler-first100/
+    about: このプロジェクトのドキュメントサイト
+  - name: ディスカッション
+    url: https://github.com/zepp/project-euler-first100/discussions
+    about: 質問や議論はこちら

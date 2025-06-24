@@ -1,0 +1,91 @@
+name: 新しいProject Euler問題の実装
+description: 新しいProject Euler問題の解法実装を追加する
+title: "Solve Problem [PROBLEM_NUMBER]: [PROBLEM_TITLE]"
+labels: ["problem", "in-progress"]
+assignees:
+  - []
+body:
+  - type: input
+    id: problem_number
+    attributes:
+      label: 問題番号
+      description: Project Eulerの問題番号を入力してください
+      placeholder: "例: 008"
+    validations:
+      required: true
+
+  - type: input
+    id: problem_title
+    attributes:
+      label: 問題タイトル
+      description: Project Eulerの問題タイトルを入力してください
+      placeholder: "例: Largest product in a series"
+    validations:
+      required: true
+
+  - type: input
+    id: problem_url
+    attributes:
+      label: 問題URL
+      description: Project Euler公式サイトの問題URLを入力してください
+      placeholder: "https://projecteuler.net/problem=xxx"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem_description
+    attributes:
+      label: 問題概要
+      description: 問題の簡潔な説明を記載してください
+      placeholder: |
+        問題の内容を簡潔に説明してください。
+        具体的な数値例や制約条件も含めると良いでしょう。
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: approaches
+    attributes:
+      label: 実装予定のアプローチ
+      description: 実装予定のアプローチにチェックを入れてください（複数選択可）
+      options:
+        - label: 素直な解法 (solve_naive) - O(n)の実装
+          required: true
+        - label: 最適化解法 (solve_optimized) - O(log n)やO(1)の実装
+          required: false
+        - label: 数学的解法 (solve_mathematical) - 数式ベースの実装
+          required: false
+
+  - type: checkboxes
+    id: tasks
+    attributes:
+      label: 実装チェックリスト
+      description: 以下のタスクを順次実行してください
+      options:
+        - label: 問題解法の実装 (problems/problem_XXX.py)
+          required: false
+        - label: 包括的なテストの作成 (tests/problems/test_problem_XXX.py)
+          required: false
+        - label: 解法ドキュメントの作成 (docs/solutions/solution_XXX.md)
+          required: false
+        - label: 進捗追跡の更新 (PROGRESS.md)
+          required: false
+        - label: コード品質チェック (ruff format && ruff check --fix && mypy . && bandit -r problems/)
+          required: false
+        - label: テスト実行確認 (uv run pytest)
+          required: false
+        - label: CI/CD確認（全てのチェックがSUCCESS）
+          required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 備考・参考情報
+      description: アルゴリズムのヒント、参考資料、特記事項などがあれば記載してください
+      placeholder: |
+        - 参考になるアルゴリズム
+        - 数学的背景
+        - 実装上の注意点
+        - その他特記事項
+    validations:
+      required: false

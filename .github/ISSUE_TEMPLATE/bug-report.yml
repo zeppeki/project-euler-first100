@@ -1,0 +1,92 @@
+name: バグ報告
+description: バグや不具合の報告
+title: "[BUG] "
+labels: ["bug"]
+assignees:
+  - []
+body:
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: バグの説明
+      description: 発生している問題について詳しく説明してください
+      placeholder: |
+        何が起こっているのか、何が期待されていたのかを明確に説明してください。
+    validations:
+      required: true
+
+  - type: input
+    id: problem_number
+    attributes:
+      label: 関連する問題番号
+      description: 該当するProject Euler問題番号（該当する場合）
+      placeholder: "例: 005"
+    validations:
+      required: false
+
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: 再現手順
+      description: バグを再現するための手順を記載してください
+      placeholder: |
+        1. ...を実行
+        2. ...をクリック
+        3. ...が発生
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: 期待される動作
+      description: 正常に動作した場合にどうなるべきかを説明してください
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: 実際の動作
+      description: 実際に何が起こったかを説明してください
+    validations:
+      required: true
+
+  - type: textarea
+    id: error_messages
+    attributes:
+      label: エラーメッセージ・ログ
+      description: 関連するエラーメッセージやログを貼り付けてください
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 環境情報
+      description: バグが発生した環境について記載してください
+      value: |
+        - OS: [例: Ubuntu 20.04, macOS 13.0, Windows 11]
+        - Python version: [例: 3.11.5]
+        - uv version: [例: 0.1.24]
+        - その他の関連情報:
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: 追加情報
+      description: その他、問題の理解に役立つ情報があれば記載してください
+      placeholder: |
+        - スクリーンショット
+        - 関連するコードスニペット
+        - 類似の問題への参照
+        - 一時的な回避策
+    validations:
+      required: false
