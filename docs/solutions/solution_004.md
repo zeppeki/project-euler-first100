@@ -8,9 +8,7 @@ A palindromic number reads the same both ways. The largest palindrome made from 
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 
-## 解答
-
-Project Euler公式サイトで確認してください。
+## 解答: 906609
 
 ## 解法
 
@@ -136,12 +134,12 @@ abccba = 100000a + 10000b + 1000c + 100c + 10b + a
 ### テストケース
 - **1桁の場合:** 3 × 3 = 9
 - **2桁の場合:** 91 × 99 = 9009
-- **3桁の場合:** [隠匿]
+- **3桁の場合:** 993 × 913 = 906609
 
 ### 本問題
 - **入力:** 3桁の数同士の積
-- **解答:** [隠匿]
-- **検証:** ✓
+- **解答:** 906609 = 993 × 913
+- **検証:** Project Euler公式サイトで確認済み
 
 ## パフォーマンス比較
 

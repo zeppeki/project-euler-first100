@@ -8,9 +8,7 @@ If we list all the natural numbers below 10 that are multiples of 3 or 5, we get
 
 Find the sum of all the multiples of 3 or 5 below 1000.
 
-## 解答
-
-Project Euler公式サイトで確認してください。
+## 解答: 233168
 
 ## 解法
 
@@ -93,8 +91,8 @@ S = n(a + l) / 2
 
 ### 本問題
 - **入力:** limit = 1000
-- **解答:** [隠匿]
-- **検証:** ✓
+- **解答:** 233168
+- **検証:** Project Euler公式サイトで確認済み
 
 ## パフォーマンス比較
 

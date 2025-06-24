@@ -69,9 +69,9 @@ mkdocs build --clean --strict
 
 ### Directory Structure
 - `problems/` - Solution implementations with multiple approaches
-- `solutions/` - Detailed explanations and analysis
+- `docs/solutions/` - Detailed explanations and analysis
 - `tests/` - Comprehensive test suites
-- `docs/` - Additional documentation
+- `docs/` - MkDocs documentation and GitHub Pages content
 
 ### Problem Implementation Pattern
 Each problem follows a consistent structure:
