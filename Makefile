@@ -131,6 +131,8 @@ quality: format lint typecheck security ## Run all code quality checks
 docs-serve: ## Start documentation development server
 	@echo "$(BOLD)$(MAGENTA)Starting documentation server...$(RESET)"
 	@echo "$(CYAN)Documentation will be available at: http://127.0.0.1:8000$(RESET)"
+	@echo "$(YELLOW)Note: Use Ctrl+C to stop the server$(RESET)"
+	@lsof -ti :8000 | xargs -r kill 2>/dev/null || true
 	$(MKDOCS) serve --dev-addr=127.0.0.1:8000
 
 docs-build: ## Build documentation
