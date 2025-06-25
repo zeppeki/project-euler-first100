@@ -16,6 +16,8 @@
 | 008 | Largest product in a series | 🟢 完了 | Python | 2024-12-22 |
 | 009 | Special Pythagorean triplet | 🟢 完了 | Python | 2025-06-23 |
 | 011 | Largest product in a grid | 🟢 完了 | Python | 2025-06-23 |
+| 015 | Lattice paths | 🟢 完了 | Python | 2025-06-25 |
+| 016 | Power digit sum | 🟢 完了 | Python | 2025-06-25 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -27,9 +29,9 @@
 
 ## 統計
 
-- 完了: 10/100
+- 完了: 12/100
 - 作業中: 0/100
-- 未着手: 90/100
+- 未着手: 88/100
 
 ## 目標
 
@@ -151,4 +153,27 @@
   - `problems/problem_011.py`
   - `solutions/solution_011.md`
 
-最終更新: 2025-06-23
+### Problem 015: Lattice paths
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 動的プログラミングで各点までの経路数を計算
+  - 最適化解法 (O(n²)) - 動的プログラミングで空間効率を向上
+  - 数学的解法 (O(n)) - 組み合わせ論 C(2n,n) を効率的に計算
+  - 階乗解法 (O(n)) - math.factorial()を使用した直接計算
+- **ファイル**:
+  - `problems/problem_015.py`
+  - `solutions/solution_015.md`
+
+### Problem 016: Power digit sum
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(power²)) - 2^powerを計算し、剰余演算で桁の和を求める
+  - 最適化解法 (O(power²)) - 文字列変換を使用して桁の和を計算
+  - 数学的解法 (O(power²)) - pow()関数を使用した効率的な累乗計算
+- **ファイル**:
+  - `problems/problem_016.py`
+  - `docs/solutions/solution_016.md`
+
+最終更新: 2025-06-25
