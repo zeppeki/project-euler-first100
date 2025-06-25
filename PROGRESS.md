@@ -18,6 +18,7 @@
 | 011 | Largest product in a grid | 🟢 完了 | Python | 2025-06-23 |
 | 015 | Lattice paths | 🟢 完了 | Python | 2025-06-25 |
 | 016 | Power digit sum | 🟢 完了 | Python | 2025-06-25 |
+| 017 | Number letter counts | 🟢 完了 | Python | 2025-06-25 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -29,9 +30,9 @@
 
 ## 統計
 
-- 完了: 12/100
+- 完了: 13/100
 - 作業中: 0/100
-- 未着手: 88/100
+- 未着手: 87/100
 
 ## 目標
 
@@ -175,5 +176,16 @@
 - **ファイル**:
   - `problems/problem_016.py`
   - `docs/solutions/solution_016.md`
+
+### Problem 017: Number letter counts
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - 各数値を英語に変換し文字数をカウント
+  - 最適化解法 (O(1)) - パターンごとの文字数を事前計算
+  - 数学的解法 (O(1)) - パターン分析による効率的な計算
+- **ファイル**:
+  - `problems/problem_017.py`
+  - `docs/solutions/solution_017.md`
 
 最終更新: 2025-06-25
