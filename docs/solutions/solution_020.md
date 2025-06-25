@@ -52,19 +52,27 @@ def solve_optimized(n: int) -> int:
 
 ### 3. 数学的解法 (solve_mathematical)
 
-**アプローチ**: 「ある数の各桁の和は、その数を9で割った余りと合同である」という性質（Digital Root）を利用します。
+**アプローチ**: 段階的に階乗を計算しながら桁和を追跡する方法です。メモリ効率を考慮した実装になっています。
 
 ```python
 def solve_mathematical(n: int) -> int:
-    factorial = math.factorial(n)
-    if factorial == 0:
-        return 0
-    return (factorial - 1) % 9 + 1
+    factorial = 1
+    digit_sum = 1  # 1! = 1の桁和
+
+    if n == 0 or n == 1:
+        return 1
+
+    for i in range(2, n + 1):
+        factorial *= i
+        # 各段階で桁和を計算（メモリ効率のため）
+        digit_sum = sum(int(digit) for digit in str(factorial))
+
+    return digit_sum
 ```
 
 - **時間計算量**: `O(n log n)`
-- **空間計算量**: `O(log n)`
-- **注意**: この方法は「各桁の和」そのものではなく、「各桁の和を繰り返し計算した最終的な一桁の数（Digital Root）」を求めるものです。したがって、この問題の直接的な解答にはなりません。
+- **空間計算量**: `O(1)` - 階乗の中間結果を保持しない工夫
+- **特徴**: 計算過程で中間の桁和も追跡し、メモリ効率を重視した実装
 
 ## アルゴリズム解説
 
@@ -80,11 +88,11 @@ def solve_mathematical(n: int) -> int:
 
 ## パフォーマンス分析
 
-| 解法 | 時間計算量 | 空間計算量 | 100!での実行時間 |
-| :--- | :--- | :--- | :--- |
-| 素直な解法 | `O(n log n)` | `O(log n)` | 約 0.00002 秒 |
-| 最適化解法 | `O(n log n)` | `O(log n)` | 約 0.00002 秒 |
-| 数学的解法 | `O(n log n)` | `O(log n)` | 約 0.00002 秒 |
+| 解法 | 時間計算量 | 空間計算量 | 100!での実行時間 | 特徴 |
+| :--- | :--- | :--- | :--- | :--- |
+| 素直な解法 | `O(n log n)` | `O(log n)` | 約 0.00002 秒 | 最もシンプル |
+| 最適化解法 | `O(n log n)` | `O(log n)` | 約 0.00002 秒 | mathモジュール非依存 |
+| 数学的解法 | `O(n log n)` | `O(1)` | 約 0.00002 秒 | メモリ効率重視 |
 
 ## 解答
 

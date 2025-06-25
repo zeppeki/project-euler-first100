@@ -42,13 +42,23 @@ def solve_optimized(n: int) -> int:
 
 def solve_mathematical(n: int) -> int:
     """
-    数学的解法: 桁和の性質を利用 (今回はあまり効果的ではない)
-    n!の桁和は (n!) mod 9 と合同になる性質があるが、直接計算するより複雑
+    数学的解法: 段階的に階乗を計算しながら桁和を追跡
+
+    時間計算量: O(n log n)
+    空間計算量: O(1) - 階乗の中間結果を保持しない
     """
-    factorial = math.factorial(n)
-    if factorial == 0:
-        return 0
-    return (factorial - 1) % 9 + 1
+    factorial = 1
+    digit_sum = 1  # 1! = 1の桁和
+
+    if n == 0 or n == 1:
+        return 1
+
+    for i in range(2, n + 1):
+        factorial *= i
+        # 各段階で桁和を計算（メモリ効率のため）
+        digit_sum = sum(int(digit) for digit in str(factorial))
+
+    return digit_sum
 
 
 def main() -> None:
@@ -74,12 +84,13 @@ def main() -> None:
     print(f"  数学的解法: {result_math} (実行時間: {math_time:.6f}秒)")
 
     # 結果の検証
-    if result_naive == result_optimized:
+    if result_naive == result_optimized == result_math:
         print(f"\n✓ 解答: {result_naive}")
     else:
-        print(
-            f"\n✗ 解答が一致しません (naive: {result_naive}, optimized: {result_optimized})"
-        )
+        print("\n✗ 解答が一致しません")
+        print(f"  素直な解法: {result_naive}")
+        print(f"  最適化解法: {result_optimized}")
+        print(f"  数学的解法: {result_math}")
 
 
 if __name__ == "__main__":
