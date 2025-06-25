@@ -76,6 +76,22 @@ body:
           required: false
         - label: CI/CD確認（全てのチェックがSUCCESS）
           required: false
+        - label: ブランチ作成 (gh issue develop [ISSUE_NUMBER])
+          required: false
+        - label: プルリクエスト作成
+          required: false
+        - label: CI完了待ち（全てのチェックがSUCCESS）
+          required: false
+        - label: CI状態確認 (gh pr view [PR_NUMBER] --json statusCheckRollup)
+          required: false
+        - label: プルリクエストマージ（CI成功確認後）
+          required: false
+        - label: イシュークローズ
+          required: false
+        - label: MkDocsドキュメントビルド確認 (mkdocs build --clean --strict)
+          required: false
+        - label: パフォーマンス分析実装確認（main関数のベンチマーク）
+          required: false
 
   - type: textarea
     id: notes
