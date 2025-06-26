@@ -94,39 +94,6 @@ def solve_optimized(n: int) -> int:
     return largest_factor
 
 
-def solve_mathematical(n: int) -> int:
-    """
-    数学的解法: より効率的な素因数分解
-
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n <= 0:
-        return 0
-
-    if n == 1:
-        return 1
-
-    largest_factor = 1
-
-    # 2で割り切れるだけ割る
-    while n % 2 == 0:
-        largest_factor = 2
-        n //= 2
-
-    # 奇数の約数を平方根まで試す
-    for i in range(3, int(math.sqrt(n)) + 1, 2):
-        while n % i == 0:
-            largest_factor = i
-            n //= i
-
-    # nが1より大きい場合、n自体が素数
-    if n > 1:
-        largest_factor = n
-
-    return largest_factor
-
-
 def test_solutions() -> None:
     """テストケースで解答を検証"""
     test_cases = [
@@ -141,7 +108,6 @@ def test_solutions() -> None:
     for n, expected in test_cases:
         result_naive = solve_naive(n)
         result_optimized = solve_optimized(n)
-        result_math = solve_mathematical(n)
 
         print(f"n: {n}")
         print(f"  Expected: {expected}")
@@ -149,9 +115,6 @@ def test_solutions() -> None:
         print(
             f"  Optimized: {result_optimized} "
             f"{'✓' if result_optimized == expected else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
         )
         print()
 
@@ -179,17 +142,12 @@ def main() -> None:
     result_optimized = solve_optimized(n)
     optimized_time = time.time() - start_time
 
-    start_time = time.time()
-    result_math = solve_mathematical(n)
-    math_time = time.time() - start_time
-
     print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
     print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
     print()
 
     # 結果の検証
-    if result_naive == result_optimized == result_math:
+    if result_naive == result_optimized:
         print(f"✓ 解答: {result_optimized:,}")
     else:
         print("✗ 解答が一致しません")
@@ -197,10 +155,9 @@ def main() -> None:
 
     # パフォーマンス比較
     print("=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
+    fastest_time = min(naive_time, optimized_time)
     print(f"素直な解法: {naive_time / fastest_time:.2f}x")
     print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
 
 
 if __name__ == "__main__":
