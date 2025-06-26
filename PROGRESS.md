@@ -53,13 +53,13 @@
 ### Problem 001: Multiples of 3 and 5
 - **解答**: 233168
 - **実装言語**: Python
-- **解法**:
-  - 素直な解法 (O(n))
-  - 最適化解法 (O(1)) - 等差数列の和の公式
-  - リスト内包表記解法 (O(n))
+- **解法** (2解法):
+  - 素直な解法 (O(n)) - ループで全数をチェック
+  - 最適化解法 (O(1)) - 等差数列の和の公式と包除原理
 - **ファイル**:
   - `problems/problem_001.py`
   - `solutions/solution_001.md`
+- **注意**: 数学的解法を削除 (O(n)のリスト内包表記でO(1)公式と重複)
 
 ### Problem 002: Even Fibonacci numbers
 - **解答**: 4613732
@@ -75,13 +75,13 @@
 ### Problem 003: Largest prime factor
 - **解答**: 6857
 - **実装言語**: Python
-- **解法**:
+- **解法** (2解法):
   - 素直な解法 (O(n)) - 2から順に試し割りで素因数分解
   - 最適化解法 (O(√n)) - 平方根まで試し割り、残った数が素数かチェック
-  - 数学的解法 (O(√n)) - 効率的な素因数分解アルゴリズム
 - **ファイル**:
   - `problems/problem_003.py`
   - `solutions/solution_003.md`
+- **注意**: 数学的解法を削除 (最適化解法と完全に同一)
 
 ### Problem 004: Largest palindrome product
 - **解答**: 906609
@@ -161,6 +161,17 @@
   - `problems/problem_011.py`
   - `solutions/solution_011.md`
 
+### Problem 014: Longest Collatz sequence
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法** (2解法):
+  - 素直な解法 (O(n × L)) - 各数について個別にCollatz数列の長さを計算
+  - 最適化解法 (O(n × log L)) - メモ化を使用して計算済みの値を再利用
+- **ファイル**:
+  - `problems/problem_014.py`
+  - `solutions/solution_014.md`
+- **注意**: 数学的解法を削除 (実質同じメモ化技法で数学的洞察不十分)
+
 ### Problem 015: Lattice paths
 - **解答**: [隠匿]
 - **実装言語**: Python
@@ -176,13 +187,13 @@
 ### Problem 016: Power digit sum
 - **解答**: [隠匿]
 - **実装言語**: Python
-- **解法**:
+- **解法** (2解法):
   - 素直な解法 (O(power²)) - 2^powerを計算し、剰余演算で桁の和を求める
   - 最適化解法 (O(power²)) - 文字列変換を使用して桁の和を計算
-  - 数学的解法 (O(power²)) - pow()関数を使用した効率的な累乗計算
 - **ファイル**:
   - `problems/problem_016.py`
   - `docs/solutions/solution_016.md`
+- **注意**: 数学的解法を削除 (pow() vs ** の違いのみで本質的に同一)
 
 ### Problem 017: Number letter counts
 - **解答**: [隠匿]

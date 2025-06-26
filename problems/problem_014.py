@@ -111,51 +111,6 @@ def collatz_length_memoized(n: int, memo: dict[int, int]) -> int:
     return memo[original_n]
 
 
-def solve_mathematical(limit: int) -> int:
-    """
-    数学的解法: 逆算とパターン認識を組み合わせた効率化
-    奇数に対して3n+1操作後の値を事前計算して効率化
-    時間計算量: O(n * log L)
-    空間計算量: O(n)
-    """
-    if limit <= 1:
-        raise ValueError("limit must be greater than 1")
-
-    memo = {1: 1}
-    max_length = 0
-    max_start = 0
-
-    for start in range(1, limit):
-        length = collatz_length_optimized(start, memo)
-        if length > max_length:
-            max_length = length
-            max_start = start
-
-    return max_start
-
-
-def collatz_length_optimized(n: int, memo: dict[int, int]) -> int:
-    """Collatz数列の長さを計算（数学的最適化版）"""
-    if n in memo:
-        return memo[n]
-
-    original_n = n
-    length = 0
-
-    while n not in memo and n != 1:
-        if n % 2 == 0:
-            n //= 2
-            length += 1
-        else:
-            # 奇数の場合、3n+1の後に必ず偶数になるので2ステップまとめて処理
-            n = (3 * n + 1) // 2
-            length += 2
-
-    # 既知の値に到達
-    memo[original_n] = length + memo.get(n, 1)
-    return memo[original_n]
-
-
 def test_solutions() -> None:
     """テストケースで解答を検証"""
     test_cases = [
@@ -171,16 +126,11 @@ def test_solutions() -> None:
     for limit, expected in test_cases:
         result_naive = solve_naive(limit)
         result_optimized = solve_optimized(limit)
-        result_math = solve_mathematical(limit)
-
         print(f"limit = {limit}")
         print(f"  Expected: {expected}")
         print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
         print(
             f"  Optimized: {result_optimized} {'✓' if result_optimized == expected else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
         )
 
         # 詳細情報を表示
@@ -214,41 +164,23 @@ def main() -> None:
     result_optimized = solve_optimized(limit)
     optimized_time = time.time() - start_time
 
-    start_time = time.time()
-    result_math = solve_mathematical(limit)
-    math_time = time.time() - start_time
-
     print(
         f"素直な解法 (limit={min(10000, limit):,}): {result_naive:,} (実行時間: {naive_time:.6f}秒)"
     )
     print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
     print()
 
     # 結果の検証
-    if result_optimized == result_math:
-        print(f"✓ 解答: {result_optimized:,}")
+    print(f"✓ 解答: {result_optimized:,}")
 
-        # 最長チェーンの詳細
-        max_length = collatz_length_simple(result_optimized)
-        print(f"✓ チェーンの長さ: {max_length:,}")
-    else:
-        print("✗ 解答が一致しません")
-        print(f"  Optimized: {result_optimized}")
-        print(f"  Mathematical: {result_math}")
-        return
-
-    # パフォーマンス比較
-    print("\n=== パフォーマンス比較 ===")
-    fastest_time = min(optimized_time, math_time)
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
+    # 最長チェーンの詳細
+    max_length = collatz_length_simple(result_optimized)
+    print(f"✓ チェーンの長さ: {max_length:,}")
 
     # アルゴリズムの説明
     print("\n=== アルゴリズムの説明 ===")
     print("素直な解法: 各数について個別にCollatz数列の長さを計算")
     print("最適化解法: メモ化を使用して計算済みの値を再利用")
-    print("数学的解法: 奇数処理の最適化と効率的なメモ化")
 
     # Collatz予想の説明
     print("\n=== Collatz予想について ===")

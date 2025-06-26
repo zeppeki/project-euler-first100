@@ -47,24 +47,6 @@ def solve_optimized(power: int) -> int:
     return sum(int(digit) for digit in result)
 
 
-def solve_mathematical(power: int) -> int:
-    """
-    数学的解法
-    大きな数の計算を効率化し、桁の和を計算
-
-    時間計算量: O(power * log(2^power)) = O(power^2)
-    空間計算量: O(power)
-
-    注意: この問題では数学的な最適化の余地が限定的ですが、
-    大きな数の処理を効率化するアプローチを示す
-    """
-    # 2^powerを計算（Pythonの組み込みの大きな数処理を活用）
-    result = pow(2, power)
-
-    # 文字列変換で桁の和を計算（最も効率的）
-    return sum(int(digit) for digit in str(result))
-
-
 def test_solutions() -> None:
     """テストケースで解答を検証"""
     test_cases = [
@@ -82,16 +64,11 @@ def test_solutions() -> None:
     for power, expected in test_cases:
         result_naive = solve_naive(power)
         result_optimized = solve_optimized(power)
-        result_math = solve_mathematical(power)
-
         print(f"2^{power} の桁の和:")
         print(f"  Expected: {expected}")
         print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
         print(
             f"  Optimized: {result_optimized} {'✓' if result_optimized == expected else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
         )
         print()
 
@@ -114,18 +91,13 @@ def main() -> None:
     result_optimized = solve_optimized(power)
     optimized_time = time.time() - start_time
 
-    start_time = time.time()
-    result_math = solve_mathematical(power)
-    math_time = time.time() - start_time
-
     print(f"2^{power} の桁の和:")
     print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
     print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
     print()
 
     # 結果の検証
-    if result_naive == result_optimized == result_math:
+    if result_naive == result_optimized:
         print(f"✓ 解答: {result_optimized:,}")
     else:
         print("✗ 解答が一致しません")
@@ -133,10 +105,9 @@ def main() -> None:
 
     # パフォーマンス比較
     print("=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
+    fastest_time = min(naive_time, optimized_time)
     print(f"素直な解法: {naive_time / fastest_time:.2f}x")
     print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
 
     # 追加情報
     print("\n=== 追加情報 ===")

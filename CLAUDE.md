@@ -77,9 +77,9 @@ mkdocs build --clean --strict
 Each problem follows a consistent structure:
 
 1. **Multiple Solution Approaches**:
-   - `solve_naive()` - Straightforward O(n) implementation
-   - `solve_optimized()` - Optimized algorithm (often O(log n) or O(1))
-   - `solve_mathematical()` - Mathematical/formula-based approach
+   - `solve_naive()` - Straightforward implementation for understanding
+   - `solve_optimized()` - Optimized algorithm with better complexity
+   - `solve_mathematical()` - Mathematical/formula-based approach (only when there's clear mathematical insight)
 
 2. **Comprehensive Testing**:
    - Unit tests with parametrized test cases
@@ -110,6 +110,7 @@ Each problem follows a consistent structure:
 ### Solution Template
 New problems should follow this template structure:
 
+**Standard template (2 approaches):**
 ```python
 def solve_naive(limit: int) -> int:
     """
@@ -125,13 +126,6 @@ def solve_optimized(limit: int) -> int:
     空間計算量: O(1)
     """
 
-def solve_mathematical(limit: int) -> int:
-    """
-    数学的解法: [Description in Japanese]
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-
 def test_solutions() -> None:
     """テストケースで解答を検証"""
 
@@ -139,11 +133,23 @@ def main() -> None:
     """メイン関数 - includes performance benchmarking"""
 ```
 
+**Extended template (3 approaches, only when mathematical insight exists):**
+```python
+def solve_mathematical(limit: int) -> int:
+    """
+    数学的解法: [Description in Japanese with clear mathematical insight]
+    時間計算量: O(1)
+    空間計算量: O(1)
+    """
+```
+
+**Note**: Mathematical solutions are only implemented when there's a clear mathematical insight that differs significantly from the optimized approach.
+
 ## Project Status and Workflow
 
 ### Current Progress
-- Completed: 7/100 problems (Problems 001, 002, 003, 004, 005, 006, 007)
-- Next target: Problem 008
+- Completed: 20/100 problems (Problems 001-020)
+- Next target: Problem 021
 
 ### Development Workflow
 1. Create GitHub issue for new problem
@@ -159,7 +165,7 @@ def main() -> None:
 11. Close issue
 
 ### Quality Standards
-- Minimum 3 solution approaches per problem
+- Minimum 2 solution approaches per problem (3 approaches only when clear mathematical insight exists)
 - 100% test coverage for core functions
 - Comprehensive documentation
 - Performance analysis included
