@@ -15,10 +15,17 @@
 | 007 | 10001st prime | 🟢 完了 | Python | 2024-12-22 |
 | 008 | Largest product in a series | 🟢 完了 | Python | 2024-12-22 |
 | 009 | Special Pythagorean triplet | 🟢 完了 | Python | 2025-06-23 |
+| 010 | Summation of primes | 🟢 完了 | Python | 2025-06-23 |
 | 011 | Largest product in a grid | 🟢 完了 | Python | 2025-06-23 |
+| 012 | Highly divisible triangular number | 🟢 完了 | Python | 2025-06-23 |
+| 013 | Large sum | 🟢 完了 | Python | 2025-06-23 |
+| 014 | Longest Collatz sequence | 🟢 完了 | Python | 2025-06-23 |
 | 015 | Lattice paths | 🟢 完了 | Python | 2025-06-25 |
 | 016 | Power digit sum | 🟢 完了 | Python | 2025-06-25 |
 | 017 | Number letter counts | 🟢 完了 | Python | 2025-06-25 |
+| 018 | Maximum path sum I | 🟢 完了 | Python | 2025-06-25 |
+| 019 | Counting Sundays | 🟢 完了 | Python | 2025-06-25 |
+| 020 | Factorial digit sum | 🟢 完了 | Python | 2025-06-25 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -30,14 +37,14 @@
 
 ## 統計
 
-- 完了: 13/100
+- 完了: 20/100
 - 作業中: 0/100
-- 未着手: 87/100
+- 未着手: 80/100
 
 ## 目標
 
 - [x] 最初の10問を完了 (10/10)
-- [ ] 最初の25問を完了
+- [ ] 最初の25問を完了 (20/25) - 80%進捗
 - [ ] 最初の50問を完了
 - [ ] 最初の100問を完了
 
