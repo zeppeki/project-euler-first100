@@ -104,6 +104,8 @@ jobs:
         path: bandit-report.json
 
   coverage:
+    # Skip coverage job for pull requests to speed up CI
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     needs: test
 
@@ -267,7 +269,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: [test, quality, coverage, dependency-check, metrics, docs]
+    needs: [test, quality, dependency-check, metrics, docs]
 
     steps:
       - name: Deploy to GitHub Pages
