@@ -60,9 +60,11 @@ body:
     id: tasks
     attributes:
       label: 実装チェックリスト
-      description: 以下のタスクを順次実行してください
+      description: 以下のタスクを順次実行してください（リファクタ後の構造に対応）
       options:
-        - label: 問題解法の実装 (problems/problem_XXX.py)
+        - label: アルゴリズム関数の実装 (problems/problem_XXX.py) - 純粋なアルゴリズムのみ
+          required: false
+        - label: 実行用ランナーの作成 (problems/runners/problem_XXX_runner.py) - テスト・実行・表示コード
           required: false
         - label: 包括的なテストの作成 (tests/problems/test_problem_XXX.py)
           required: false
@@ -70,9 +72,13 @@ body:
           required: false
         - label: 進捗追跡の更新 (PROGRESS.md)
           required: false
-        - label: コード品質チェック (ruff format && ruff check --fix && mypy . && bandit -r problems/)
+        - label: ランナー動作確認 (make run-problem PROBLEM=XXX)
           required: false
-        - label: テスト実行確認 (uv run pytest)
+        - label: 個別テスト実行確認 (make test-problem PROBLEM=XXX)
+          required: false
+        - label: コード品質チェック (make quality)
+          required: false
+        - label: 全テスト実行確認 (make test)
           required: false
         - label: CI/CD確認（全てのチェックがSUCCESS）
           required: false
@@ -88,9 +94,9 @@ body:
           required: false
         - label: イシュークローズ
           required: false
-        - label: MkDocsドキュメントビルド確認 (mkdocs build --clean --strict)
+        - label: MkDocsドキュメントビルド確認 (make docs-strict)
           required: false
-        - label: パフォーマンス分析実装確認（main関数のベンチマーク）
+        - label: パフォーマンス分析実装確認（共有ユーティリティ使用）
           required: false
 
   - type: textarea
@@ -99,6 +105,13 @@ body:
       label: 備考・参考情報
       description: アルゴリズムのヒント、参考資料、特記事項などがあれば記載してください
       placeholder: |
+        ## 実装構造について（リファクタ後）
+        - **problems/problem_XXX.py**: 純粋なアルゴリズム関数のみ（solve_naive, solve_optimized等）
+        - **problems/runners/problem_XXX_runner.py**: 実行・テスト・表示用コード（共有ユーティリティ使用）
+        - **problems/utils/performance.py**: パフォーマンス測定用共有ユーティリティ
+        - **problems/utils/display.py**: 表示・フォーマット用共有ユーティリティ
+
+        ## アルゴリズム・参考情報
         - 参考になるアルゴリズム
         - 数学的背景
         - 実装上の注意点

@@ -388,8 +388,10 @@ new-problem: ## Create new problem template (use: make new-problem PROBLEM=010)
 		echo "$(RED)Error: problems/problem_$(PROBLEM).py already exists$(RESET)"; \
 		exit 1; \
 	fi
-	@echo "$(BOLD)$(BLUE)Creating template for Problem $(PROBLEM)...$(RESET)"
-	@mkdir -p problems tests/problems docs/solutions
+	@echo "$(BOLD)$(BLUE)Creating template for Problem $(PROBLEM) (refactored structure)...$(RESET)"
+	@mkdir -p problems/runners tests/problems docs/solutions
+
+	# Create algorithm file (problems/problem_XXX.py)
 	@echo '#!/usr/bin/env python3' > problems/problem_$(PROBLEM).py
 	@echo '"""' >> problems/problem_$(PROBLEM).py
 	@echo 'Problem $(PROBLEM): [Problem Title]' >> problems/problem_$(PROBLEM).py
@@ -398,8 +400,6 @@ new-problem: ## Create new problem template (use: make new-problem PROBLEM=010)
 	@echo '' >> problems/problem_$(PROBLEM).py
 	@echo 'Answer: [Answer here]' >> problems/problem_$(PROBLEM).py
 	@echo '"""' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo 'import time' >> problems/problem_$(PROBLEM).py
 	@echo '' >> problems/problem_$(PROBLEM).py
 	@echo '' >> problems/problem_$(PROBLEM).py
 	@echo 'def solve_naive() -> int:' >> problems/problem_$(PROBLEM).py
@@ -420,39 +420,89 @@ new-problem: ## Create new problem template (use: make new-problem PROBLEM=010)
 	@echo '    """' >> problems/problem_$(PROBLEM).py
 	@echo '    # TODO: Implement optimized solution' >> problems/problem_$(PROBLEM).py
 	@echo '    pass' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo 'def solve_mathematical() -> int:' >> problems/problem_$(PROBLEM).py
-	@echo '    """' >> problems/problem_$(PROBLEM).py
-	@echo '    数学的解法: [Description]' >> problems/problem_$(PROBLEM).py
-	@echo '    時間計算量: O(1)' >> problems/problem_$(PROBLEM).py
-	@echo '    空間計算量: O(1)' >> problems/problem_$(PROBLEM).py
-	@echo '    """' >> problems/problem_$(PROBLEM).py
-	@echo '    # TODO: Implement mathematical solution' >> problems/problem_$(PROBLEM).py
-	@echo '    pass' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo 'def test_solutions() -> None:' >> problems/problem_$(PROBLEM).py
-	@echo '    """テストケースで解答を検証"""' >> problems/problem_$(PROBLEM).py
-	@echo '    # TODO: Add test cases' >> problems/problem_$(PROBLEM).py
-	@echo '    pass' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo 'def main() -> None:' >> problems/problem_$(PROBLEM).py
-	@echo '    """メイン関数"""' >> problems/problem_$(PROBLEM).py
-	@echo '    print("=== Problem $(PROBLEM): [Problem Title] ===")' >> problems/problem_$(PROBLEM).py
-	@echo '    # TODO: Implement main function' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo '' >> problems/problem_$(PROBLEM).py
-	@echo 'if __name__ == "__main__":' >> problems/problem_$(PROBLEM).py
-	@echo '    main()' >> problems/problem_$(PROBLEM).py
-	@echo "$(GREEN)Created: problems/problem_$(PROBLEM).py$(RESET)"
+	@echo "$(GREEN)Created: problems/problem_$(PROBLEM).py (algorithm functions only)$(RESET)"
+
+	# Create runner file (problems/runners/problem_XXX_runner.py)
+	@echo '#!/usr/bin/env python3' > problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '"""' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'Runner for Problem $(PROBLEM): [Problem Title]' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'This module contains the execution code for Problem $(PROBLEM), separated from the' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'algorithm implementations for better test coverage and code organization.' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '"""' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'from problems.problem_$(PROBLEM) import solve_naive, solve_optimized' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'from problems.utils.display import (' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    print_final_answer,' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    print_performance_comparison,' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    print_solution_header,' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    print_test_results,' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo ')' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'from problems.utils.performance import compare_performance' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'def run_tests() -> None:' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    """Run test cases to verify the solutions."""' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    test_cases = [' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        # TODO: Add test cases as (input, expected_output) tuples' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        # (10, 23),' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    ]' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    functions = [' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        ("素直な解法", solve_naive),' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        ("最適化解法", solve_optimized),' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    ]' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    print_test_results(test_cases, functions)' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'def run_problem() -> None:' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    """Run the main problem with performance comparison."""' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    # TODO: Set problem parameters' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    # limit = 1000' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    print_solution_header("$(PROBLEM)", "[Problem Title]", "[limit or description]")' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    # Run tests first' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    run_tests()' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    # Run main problem with performance measurement' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    functions = [' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        ("素直な解法", lambda: solve_naive()),' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        ("最適化解法", lambda: solve_optimized()),' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    ]' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    performance_results = compare_performance(functions)' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    # Verify all solutions agree' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    results = [data["result"] for data in performance_results.values()]' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    all_agree = len(set(results)) == 1' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    if all_agree:' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        answer = results[0]' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        print_final_answer(answer, verified=True)' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        print_performance_comparison(performance_results)' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    else:' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        print_final_answer(None, verified=False)' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '        print("Results:", results)' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'def main() -> None:' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    """Main function for standalone execution."""' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    run_problem()' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo 'if __name__ == "__main__":' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo '    main()' >> problems/runners/problem_$(PROBLEM)_runner.py
+	@echo "$(GREEN)Created: problems/runners/problem_$(PROBLEM)_runner.py (execution and display code)$(RESET)"
+
+	# Create test file (tests/problems/test_problem_XXX.py)
 	@echo '#!/usr/bin/env python3' > tests/problems/test_problem_$(PROBLEM).py
 	@echo '"""Tests for Problem $(PROBLEM)"""' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo 'import pytest' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '' >> tests/problems/test_problem_$(PROBLEM).py
-	@echo 'from problems.problem_$(PROBLEM) import solve_naive, solve_optimized, solve_mathematical' >> tests/problems/test_problem_$(PROBLEM).py
+	@echo 'from problems.problem_$(PROBLEM) import solve_naive, solve_optimized' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo 'class TestProblem$(PROBLEM):' >> tests/problems/test_problem_$(PROBLEM).py
@@ -468,16 +518,11 @@ new-problem: ## Create new problem template (use: make new-problem PROBLEM=010)
 	@echo '        # TODO: Add test cases' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '        pass' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '' >> tests/problems/test_problem_$(PROBLEM).py
-	@echo '    def test_solve_mathematical(self) -> None:' >> tests/problems/test_problem_$(PROBLEM).py
-	@echo '        """Test mathematical solution"""' >> tests/problems/test_problem_$(PROBLEM).py
-	@echo '        # TODO: Add test cases' >> tests/problems/test_problem_$(PROBLEM).py
-	@echo '        pass' >> tests/problems/test_problem_$(PROBLEM).py
-	@echo '' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '    def test_solutions_agree(self) -> None:' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '        """Test that all solutions agree"""' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '        # TODO: Verify all solutions return same result' >> tests/problems/test_problem_$(PROBLEM).py
 	@echo '        pass' >> tests/problems/test_problem_$(PROBLEM).py
-	@echo "$(GREEN)Created: tests/problems/test_problem_$(PROBLEM).py$(RESET)"
+	@echo "$(GREEN)Created: tests/problems/test_problem_$(PROBLEM).py (unit tests)$(RESET)"
 	@echo '# Problem $(PROBLEM): [Problem Title]' > docs/solutions/solution_$(PROBLEM).md
 	@echo '' >> docs/solutions/solution_$(PROBLEM).md
 	@echo '## 問題' >> docs/solutions/solution_$(PROBLEM).md
