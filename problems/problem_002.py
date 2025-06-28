@@ -13,6 +13,8 @@ four million, find the sum of the even-valued terms.
 Answer: 4613732
 """
 
+import time
+
 
 def solve_naive(limit: int) -> int:
     """
@@ -118,3 +120,83 @@ def solve_mathematical(limit: int) -> int:
         n += 3  # 3つおきに偶数項が現れる
 
     return total
+
+
+def test_solutions() -> None:
+    """テストケースで解答を検証"""
+    test_cases = [
+        (10, 10),  # 2 + 8 = 10
+        (50, 44),  # 2 + 8 + 34 = 44
+        (100, 44),  # 2 + 8 + 34 = 44
+    ]
+
+    print("=== テストケース ===")
+    for limit, expected in test_cases:
+        result_naive = solve_naive(limit)
+        result_optimized = solve_optimized(limit)
+        result_math = solve_mathematical(limit)
+
+        print(f"Limit: {limit}")
+        print(f"  Expected: {expected}")
+        print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
+        print(
+            f"  Optimized: {result_optimized} "
+            f"{'✓' if result_optimized == expected else '✗'}"
+        )
+        print(
+            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
+        )
+        print()
+
+
+def main() -> None:
+    """メイン関数"""
+    limit = 4_000_000
+
+    print("=== Problem 002: Even Fibonacci numbers ===")
+    print(f"Limit: {limit:,}")
+    print()
+
+    # テストケース
+    test_solutions()
+
+    # 本問題の解答
+    print("=== 本問題の解答 ===")
+
+    # 素直な解法
+    start_time = time.time()
+    result_naive = solve_naive(limit)
+    naive_time = time.time() - start_time
+
+    # 最適化解法
+    start_time = time.time()
+    result_optimized = solve_optimized(limit)
+    optimized_time = time.time() - start_time
+
+    # 数学的解法
+    start_time = time.time()
+    result_math = solve_mathematical(limit)
+    math_time = time.time() - start_time
+
+    print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
+    print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
+    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
+    print()
+
+    # 結果の検証
+    if result_naive == result_optimized == result_math:
+        print(f"✓ 解答: {result_optimized:,}")
+    else:
+        print("✗ 解答が一致しません")
+        return
+
+    # パフォーマンス比較
+    print("=== パフォーマンス比較 ===")
+    fastest_time = min(naive_time, optimized_time, math_time)
+    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
+    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
+    print(f"数学的解法: {math_time / fastest_time:.2f}x")
+
+
+if __name__ == "__main__":
+    main()
