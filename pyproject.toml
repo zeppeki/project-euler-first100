@@ -173,17 +173,21 @@ show_column_numbers = true
 show_error_context = true
 pretty = true
 
-# Ignore missing imports for problem modules in tests
-[[tool.mypy.overrides]]
-module = "problems.problem_*"
-ignore_missing_imports = true
-
+# Ignore missing imports for problem modules and utilities
 [[tool.mypy.overrides]]
 module = "problem_*"
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = "tests.problems.test_problem_*"
+module = "utils.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "problems.runners.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "problems.utils.*"
 ignore_missing_imports = true
 
 # Pytest configuration
