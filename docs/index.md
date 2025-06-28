@@ -28,9 +28,9 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 <div id="stats-dashboard" class="dashboard"></div>
 
 ### 詳細統計
-- **完了問題**: 8/100 (8%)
-- **最新完了**: Problem 008: Largest product in a series
-- **実装済み解法**: 各問題3つの異なるアプローチ（計24解法）
+- **完了問題**: 31/100 (31%)
+- **最新完了**: Problem 031: Coin sums
+- **実装済み解法**: 各問題3つの異なるアプローチ（計93解法）
 - **テストカバレッジ**: 95%以上
 
 ### 完了した問題
@@ -45,6 +45,29 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 | 006 | Sum square difference | 25,164,150 | 数学的公式による最適化 |
 | 007 | 10001st prime | 104,743 | 素数生成と6k±1最適化 |
 | 008 | Largest product in a series | 23,514,624,000 | スライディングウィンドウとゼロスキップ |
+| 009 | Special Pythagorean triplet | [隠匿] | ピタゴラス数の性質と効率的な探索 |
+| 010 | Summation of primes | [隠匿] | エラトステネスの篩と素数の和 |
+| 011 | Largest product in a grid | [隠匿] | 二次元配列の効率的な探索 |
+| 012 | Highly divisible triangular number | [隠匿] | 約数の個数と三角数の性質 |
+| 013 | Large sum | [隠匿] | 大きな数の加算とメモリ効率 |
+| 014 | Longest Collatz sequence | [隠匿] | 動的プログラミングとメモ化 |
+| 015 | Lattice paths | [隠匿] | 組み合わせと経路数の計算 |
+| 016 | Power Digit Sum | [隠匿] | 大きな数の桁和計算 |
+| 017 | Number Letter Counts | [隠匿] | 数値の英語表記と文字数計算 |
+| 018 | Maximum Path Sum I | [隠匿] | 動的プログラミングと経路探索 |
+| 019 | Counting Sundays | [隠匿] | 日付計算とカレンダー算法 |
+| 020 | Factorial Digit Sum | [隠匿] | 階乗の効率的な計算と桁和 |
+| 021 | Amicable Numbers | [隠匿] | 約数の和と友愛数の性質 |
+| 022 | Names Scores | [隠匿] | 文字列処理とソート最適化 |
+| 023 | Non-Abundant Sums | [隠匿] | 過剰数と合成数の性質 |
+| 024 | Lexicographic permutations | [隠匿] | 順列の辞書順と階乗進法 |
+| 025 | 1000-digit Fibonacci number | [隠匿] | フィボナッチ数列と大きな数 |
+| 026 | Reciprocal cycles | [隠匿] | 循環小数と周期の計算 |
+| 027 | Quadratic primes | [隠匿] | 二次多項式と素数生成 |
+| 028 | Number spiral diagonals | [隠匿] | 螺旋数列と数学的パターン |
+| 029 | Distinct powers | [隠匿] | 冪の重複除去と集合操作 |
+| 030 | Digit fifth powers | [隠匿] | 桁の冪乗と数値の性質 |
+| 031 | Coin sums | [隠匿] | 動的プログラミングと硬貨問題 |
 
 ## 🚀 特徴
 
