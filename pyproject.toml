@@ -183,11 +183,7 @@ module = "utils.*"
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = "problems.runners.*"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "problems.utils.*"
+module = "problems.runners.problem_001_runner"
 ignore_missing_imports = true
 
 # Pytest configuration
