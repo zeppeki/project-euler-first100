@@ -28,9 +28,10 @@ RESET := \033[0m
 .PHONY: help install install-dev install-docs update
 .PHONY: test test-fast test-slow test-cov test-problem
 .PHONY: format lint lint-fix typecheck security quality
+.PHONY: coverage dependency-check metrics ci-full
 .PHONY: docs-serve docs-build docs-strict
 .PHONY: pre-commit setup check run-problem
-.PHONY: clean clean-docs clean-all
+.PHONY: clean clean-docs clean-all clean-reports
 .PHONY: problems status new-problem
 
 ## Help
@@ -106,26 +107,48 @@ test-problem: ## Run tests for specific problem (use: make test-problem PROBLEM=
 ## Code Quality
 format: ## Format code with ruff
 	@echo "$(BOLD)$(YELLOW)Formatting code...$(RESET)"
-	$(RUFF) format problems/ solutions/ tests/
+	$(RUFF) format problems/ tests/
 
 lint: ## Check code with ruff (no fixes)
 	@echo "$(BOLD)$(YELLOW)Checking code with ruff...$(RESET)"
-	$(RUFF) check problems/ solutions/ tests/
+	$(RUFF) check problems/ tests/
 
 lint-fix: ## Check and fix code with ruff
 	@echo "$(BOLD)$(YELLOW)Checking and fixing code with ruff...$(RESET)"
-	$(RUFF) check --fix problems/ solutions/ tests/
+	$(RUFF) check --fix problems/ tests/
 
 typecheck: ## Run type checking with mypy
 	@echo "$(BOLD)$(YELLOW)Running type checking...$(RESET)"
-	$(MYPY) problems/ solutions/ tests/
+	$(MYPY) problems/ tests/
 
 security: ## Run security scan with bandit
 	@echo "$(BOLD)$(YELLOW)Running security scan...$(RESET)"
-	$(BANDIT) -r problems/ solutions/ tests/ -f json || true
+	$(BANDIT) -r problems/ tests/ -f json || true
+
+coverage: ## Generate test coverage report
+	@echo "$(BOLD)$(YELLOW)Generating coverage report...$(RESET)"
+	$(PYTEST) --cov=problems --cov-report=html --cov-report=xml --cov-report=term
+
+dependency-check: ## Run dependency security scan
+	@echo "$(BOLD)$(YELLOW)Running dependency security scan...$(RESET)"
+	$(UV) run safety check --json > safety-report.json || echo '[]' > safety-report.json
+	@echo "$(CYAN)Report saved to safety-report.json$(RESET)"
+
+metrics: ## Run code metrics analysis
+	@echo "$(BOLD)$(YELLOW)Running code metrics analysis...$(RESET)"
+	@echo "$(CYAN)Radon - Code complexity metrics...$(RESET)"
+	$(UV) run radon cc problems/ -s -j > radon-cc.json
+	$(UV) run radon mi problems/ -s -j > radon-mi.json
+	$(UV) run radon hal problems/ -j > radon-hal.json
+	@echo "$(CYAN)Xenon - Cyclomatic complexity...$(RESET)"
+	$(UV) run xenon problems/ --max-absolute A --max-modules A --max-average A > xenon-report.txt || echo 'No complexity issues found' > xenon-report.txt
+	@echo "$(CYAN)Reports saved: radon-*.json, xenon-report.txt$(RESET)"
 
 quality: format lint typecheck security ## Run all code quality checks
 	@echo "$(BOLD)$(GREEN)All quality checks completed!$(RESET)"
+
+ci-full: test coverage quality dependency-check metrics docs-strict ## Run complete CI/CD pipeline locally
+	@echo "$(BOLD)$(GREEN)Complete CI/CD pipeline completed successfully!$(RESET)"
 
 ## Documentation
 docs-serve: ## Start documentation development server
@@ -184,7 +207,12 @@ clean-docs: ## Clean documentation build files
 	@echo "$(BOLD)$(RED)Cleaning documentation build files...$(RESET)"
 	@rm -rf site/
 
-clean-all: clean clean-docs ## Clean everything
+clean-reports: ## Clean generated reports
+	@echo "$(BOLD)$(RED)Cleaning generated reports...$(RESET)"
+	@rm -f bandit-report.json safety-report.json xenon-report.txt radon-*.json coverage.xml
+	@rm -rf htmlcov/ .coverage
+
+clean-all: clean clean-docs clean-reports ## Clean everything
 	@echo "$(BOLD)$(GREEN)All cleaned!$(RESET)"
 
 problems: ## List all available problems

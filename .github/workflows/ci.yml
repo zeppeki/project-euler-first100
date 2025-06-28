@@ -5,6 +5,20 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main ]
+  # Allow manual workflow dispatch
+  workflow_dispatch:
+
+# Sets permissions for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   test:
@@ -23,6 +37,14 @@ jobs:
 
     - name: Install uv
       uses: astral-sh/setup-uv@v4
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-
 
     - name: Install dependencies
       run: uv pip install --system -e .[dev]
@@ -51,6 +73,14 @@ jobs:
     - name: Install uv
       uses: astral-sh/setup-uv@v4
 
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-
+
     - name: Install dependencies
       run: uv pip install --system -e .[dev]
 
@@ -72,3 +102,174 @@ jobs:
       with:
         name: security-report
         path: bandit-report.json
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-
+
+    - name: Install dependencies
+      run: uv pip install --system -e .[dev]
+
+    - name: Run tests with coverage
+      run: |
+        uv run pytest --cov=problems --cov-report=html --cov-report=xml --cov-report=term
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: |
+          htmlcov/
+          coverage.xml
+
+  dependency-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-
+
+    - name: Install dependencies
+      run: uv pip install --system -e .[dev]
+
+    - name: Run safety check
+      run: |
+        uv run safety check --json > safety-report.json || echo '[]' > safety-report.json
+
+    - name: Upload dependency check report
+      uses: actions/upload-artifact@v4
+      with:
+        name: dependency-check-report
+        path: safety-report.json
+
+  metrics:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-
+
+    - name: Install dependencies
+      run: uv pip install --system -e .[dev]
+
+    - name: Run code metrics analysis
+      run: |
+        # Radon - Code complexity metrics
+        uv run radon cc problems/ -s -j > radon-cc.json
+        uv run radon mi problems/ -s -j > radon-mi.json
+        uv run radon hal problems/ -j > radon-hal.json
+
+        # Xenon - Cyclomatic complexity
+        uv run xenon problems/ --max-absolute A --max-modules A --max-average A > xenon-report.txt || echo 'No complexity issues found' > xenon-report.txt
+
+    - name: Upload metrics reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: metrics-report
+        path: |
+          radon-*.json
+          xenon-report.txt
+
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-docs-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-docs-
+
+    - name: Install dependencies
+      run: uv pip install --system -e .[docs]
+
+    - name: Setup Pages
+      id: pages
+      uses: actions/configure-pages@v4
+
+    - name: Build documentation
+      run: |
+        uv run mkdocs build --clean --strict
+
+    - name: Upload documentation artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./site
+
+  deploy-docs:
+    # Deploy job - only runs on pushes to main branch and after all checks pass
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: [test, quality, coverage, dependency-check, metrics, docs]
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

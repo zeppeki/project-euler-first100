@@ -29,10 +29,14 @@ dependencies = []
 dev = [
     "pytest>=7.0.0",
     "pytest-xdist>=3.0.0",
+    "pytest-cov>=4.0.0",
     "ruff>=0.1.0",
     "mypy>=1.0.0",
     "bandit>=1.7.0",
     "pre-commit>=3.0.0",
+    "safety>=2.0.0",
+    "radon>=6.0.0",
+    "xenon>=0.8.0",
 ]
 docs = [
     "mkdocs>=1.5.0",
@@ -52,7 +56,7 @@ Documentation = "https://github.com/zeppeki/project-euler-first100/tree/main/doc
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["problems*", "solutions*", "tests*"]
+include = ["problems*", "tests*"]
 
 # Ruff configuration
 [tool.ruff]
@@ -139,7 +143,7 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.ruff.lint.isort]
-known-first-party = ["problems", "solutions", "tests"]
+known-first-party = ["problems", "tests"]
 
 [tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
