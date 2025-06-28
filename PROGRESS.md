@@ -34,6 +34,7 @@
 | 026 | Reciprocal cycles | 🟢 完了 | Python | 2025-06-28 |
 | 027 | Quadratic primes | 🟢 完了 | Python | 2025-06-28 |
 | 029 | Distinct powers | 🟢 完了 | Python | 2025-06-27 |
+| 030 | Digit fifth powers | 🟢 完了 | Python | 2025-06-28 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例

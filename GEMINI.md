@@ -6,12 +6,13 @@
 
 - **体系的学習:** 複数解法（素直な解法、最適化解法など）を実装し、計算量やパフォーマンスを比較・分析します。
 - **高品質なコード:** `ruff`, `mypy`による静的解析と`pytest`によるテストを徹底し、品質を維持します。
-- **ドキュメント化:** 各問題の解法、数学的背景、学習ポイントを`solutions`ディレクトリにMarkdownでまとめます。
+- **ドキュメント化:** 各問題の解法、数学的背景、学習ポイントを`docs/solutions`ディレクトリにMarkdownでまとめます。
 
 ## 2. 技術スタック
 
 - **言語:** Python 3.11+
-- **パッケージ管理:** `uv`
+- **パッケージ管理/タスクランナー:** `uv`
+- **自動化/ワークフロー:** `make`, GitHub CLI (`gh`)
 - **フォーマッタ/リンター:** `ruff`
 - **型チェック:** `mypy`
 - **テスト:** `pytest`
@@ -21,52 +22,58 @@
 ## 3. ディレクトリ構造
 
 - `problems/`: 各問題の解答Pythonスクリプト (`problem_XXX.py`)
-- `solutions/`: 各問題の詳細な解説Markdown (`solution_XXX.md`)
+- `docs/solutions/`: 各問題の詳細な解説Markdown (`solution_XXX.md`)
 - `tests/`: `pytest`用のテストコード
 - `docs/`: プロジェクトの規約やワークフローに関するドキュメント
 - `pyproject.toml`: プロジェクト設定と依存関係
-- `Makefile`: 開発用の便利なコマンド集
+- `Makefile`: **開発の中心となるコマンド集。`make help`で全コマンドを確認できます。**
 
-## 4. 開発ワークフロー
+## 4. 開発ワークフロー (Makefile中心)
 
-新しい問題に取り組む際の基本的な流れは以下の通りです。
+**重要:** このプロジェクトでは、開発の全工程を`Makefile`のコマンドで実行することが強く推奨されています。
 
-1.  **Issue作成:** `gh issue create`で新しい問題のIssueを作成します。
-2.  **ブランチ作成:** `git checkout -b problem-XXX` のように、問題番号を含むブランチを作成します。
+1.  **Issue作成:** `make issue-create PROBLEM=030 TITLE="Problem Title"`
+2.  **ブランチ作成:** `make issue-develop ISSUE=123` (Issue番号を指定)
 3.  **実装:**
-    - `problems/problem_XXX.py` に複数の解法（例: `solve_naive`, `solve_optimized`）を実装します。
-    - `tests/problems/test_problem_XXX.py` にテストコードを記述します。
-4.  **品質チェック:**
-    - `make quality` または `uv run ruff check .`, `uv run mypy .` を実行します。
-    - `make test` または `uv run pytest` を実行します。
-5.  **ドキュメント作成:** `solutions/solution_XXX.md` に解法の詳細な説明を記述します。
-6.  **コミット & PR:** 変更をコミットし、GitHub上でプルリクエストを作成します。コミットメッセージはConventional Commitsに準拠することが推奨されます。
+    - `make new-problem PROBLEM=030` でテンプレートを生成。
+    - `problems/problem_XXX.py` に解法を実装。
+    - `tests/problems/test_problem_XXX.py` にテストを記述。
+    - `docs/solutions/solution_XXX.md` に解説を記述。
+4.  **ローカルでの検証:**
+    - `make test-problem PROBLEM=030`: 特定問題のテストを実行。
+    - `make check`: CIで行われるチェック（テスト、品質、ドキュメント）をまとめて実行。
+    - `make quality`: 全ての品質チェックを実行。
+5.  **PR作成:** `make pr-create ISSUE=123 TITLE="Solve Problem 030"`
+6.  **マージ:**
+    - `make pr-status PR=124`: CIのステータスを確認。
+    - `make pr-merge PR=124`: CIが成功していればマージ。
 
-## 5. コーディング規約
+## 5. コーディング・ドキュメント規約
 
-- **スタイル:** `ruff`による自動フォーマット（Black準拠、88文字）。
+- **スタイル:** `ruff`による自動フォーマット（Black準拠、88文字）。`make format`で実行。
 - **命名規則:**
     - 関数/変数: `snake_case`
     - クラス: `PascalCase`
     - 定数: `UPPER_CASE`
-- **型ヒント:** Python 3.11+の記法 (`list[int]`, `dict[str, int]`) を使用します。
-- **Docstring:** 各モジュール、クラス、関数には、処理内容、引数、返り値などを明確に記述したDocstringが必須です。
+- **型ヒント:** Python 3.11+の記法 (`list[int]`, `dict[str, int]`) を使用。
+- **Docstring:** 各モジュール、クラス、関数には、処理内容、計算量などを記述。
+- **ドキュメントポリシー:** **GitHub Pagesで公開されるドキュメント (`docs/`) には、Project Eulerの解答を直接記載しないこと。** 解答のセクションは「Project Euler公式サイトで確認してください。」と記述する。
 
-## 6. 主要なコマンド
+## 6. 主要なコマンド (`make`)
 
-`Makefile`に定義されたコマンドの使用を推奨します。
+`make help` で全てのコマンドが確認できます。以下は特に重要なコマンドです。
 
 - **セットアップ:** `make setup`
-- **テスト実行:**
+- **テスト:**
     - `make test`: 全てのテストを実行
     - `make test-fast`: 高速なテストのみ実行
-    - `make test-problem PROBLEM=001`: 特定の問題のテストを実行
+    - `make test-problem PROBLEM=001`: 特定問題のテスト
+- **品質チェック:**
+    - `make quality`: `ruff`, `mypy`, `bandit` をすべて実行
+    - `make lint-fix`: `ruff` で自動修正
+    - `make typecheck`: `mypy` で型チェック
+- **CI/CD関連:**
+    - `make check`: CIの主要なチェックをローカルで実行
+    - `make ci-full`: 完全なCIパイプラインをローカルで実行
 - **問題の実行:** `make run-problem PROBLEM=001`
-- **品質チェック:** `make quality`
-- **ドキュメントサーバー:** `make docs-serve`
-
-個別のツールを直接実行することも可能です。
-
-- `uv run pytest`
-- `uv run ruff check .`
-- `uv run mypy .`
+- **ドキュメント:** `make docs-serve` (開発サーバー起動), `make docs-build` (ビルド)
