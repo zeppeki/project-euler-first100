@@ -84,7 +84,6 @@ gh issue create --title "Solve Problem XXX: [問題タイトル]" --body "## Pro
 - [Project Euler Problem XXX](https://projecteuler.net/problem=XXX)" --label "problem,in-progress"
 ```
 
-**注意**: ラベルは基本的な`problem,in-progress`のみを使用し、問題番号固有のラベル（例：`013`）は存在しない場合があるため指定しません。必要に応じて後から手動で追加してください。
 
 ### 2. ブランチの作成
 
