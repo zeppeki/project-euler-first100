@@ -74,7 +74,10 @@ make test-fast            # 高速テストのみ
 make test-problem PROBLEM=001  # 特定問題
 
 # 問題実行
-make run-problem PROBLEM=001
+make run-problem PROBLEM=001  # 推奨
+
+# または直接実行
+uv run python problems/runners/problem_001_runner.py
 
 # コード品質チェック
 make quality              # 全品質チェック
@@ -232,8 +235,13 @@ def solve_optimized(n: int) -> int:
 
 4. **品質チェック**
    ```bash
-   uv run ruff check problems/ solutions/ tests/
-   uv run mypy problems/ solutions/ tests/
+   make lint-fix             # コード品質チェック
+   make typecheck            # 型チェック
+   make test                 # テスト実行
+
+   # または直接実行
+   uv run ruff check problems/ tests/
+   uv run mypy problems/
    uv run pytest
    ```
 
@@ -264,17 +272,17 @@ def solve_optimized(n: int) -> int:
 ### 品質チェック
 
 ```bash
-# コード品質チェック
-uv run ruff check problems/ solutions/ tests/
+# コード品質チェック（推奨）
+make lint-fix             # 自動修正付きコード品質チェック
+make typecheck            # 型チェック
+make test                 # テスト実行
+make test-cov             # カバレッジ付きテスト
 
-# 型チェック
-uv run mypy problems/ solutions/ tests/
-
-# テスト実行
+# または直接実行
+uv run ruff check problems/ tests/
+uv run mypy problems/
 uv run pytest
-
-# カバレッジ確認
-uv run pytest --cov=problems --cov=solutions --cov-report=html
+uv run pytest --cov=problems --cov-report=html
 ```
 
 ### 自動化

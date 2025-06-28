@@ -58,8 +58,10 @@ gh issue create --title "Solve Problem XXX: [問題タイトル]" --body "## Pro
 - [ ] 進捗表の更新
 
 ### ファイル
-- `problems/problem_XXX.py`
-- `solutions/solution_XXX.md`
+- `problems/problem_XXX.py` （アルゴリズム実装）
+- `problems/runners/problem_XXX_runner.py` （実行・表示）
+- `tests/problems/test_problem_XXX.py` （テスト）
+- `solutions/solution_XXX.md` （解答説明）
 
 ### 参考
 - [Project Euler Problem XXX](https://projecteuler.net/problem=XXX)" --label "problem,in-progress"
@@ -98,6 +100,8 @@ git checkout [BRANCH_NAME]
 
 #### 4.1 問題ファイルの作成
 
+**アルゴリズム実装ファイル** (`problems/problem_XXX.py`):
+
 ```python
 #!/usr/bin/env python3
 """
@@ -108,7 +112,6 @@ Problem XXX: [問題タイトル]
 Answer: [解答]
 """
 
-import time
 import math  # 必要に応じて
 
 def solve_naive(parameters):
@@ -131,12 +134,27 @@ def solve_optimized(parameters):
 
 def solve_mathematical(parameters):
     """
-    数学的解法
+    数学的解法（明確な数学的洞察がある場合のみ）
     時間計算量: O(...)
     空間計算量: O(...)
     """
     # 実装
     pass
+```
+
+**実行・表示ファイル** (`problems/runners/problem_XXX_runner.py`):
+
+```python
+#!/usr/bin/env python3
+"""
+Problem XXX Runner: [問題タイトル]
+
+実行・表示・パフォーマンス測定を担当
+"""
+
+from problems.problem_XXX import solve_naive, solve_optimized, solve_mathematical
+from problems.utils.display import print_final_answer, print_performance_comparison
+from problems.utils.performance import compare_performance
 
 def test_solutions():
     """テストケースで解答を検証"""
@@ -159,48 +177,24 @@ def test_solutions():
         print(f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}")
         print()
 
-def main():
-    """メイン関数"""
+def run_problem():
+    """問題の実行"""
     # テストケース
     test_solutions()
 
-    # 本問題の解答
-    print("=== 本問題の解答 ===")
+    # パフォーマンス比較と結果表示
+    solutions = [
+        ("素直な解法", solve_naive),
+        ("最適化解法", solve_optimized),
+        ("数学的解法", solve_mathematical),
+    ]
 
-    # 各解法の実行時間測定
-    start_time = time.time()
-    result_naive = solve_naive(parameters)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(parameters)
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical(parameters)
-    math_time = time.time() - start_time
-
-    print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
-    print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
-    print()
-
-    # 結果の検証
-    if result_naive == result_optimized == result_math:
-        print(f"✓ 解答: {result_optimized:,}")
-    else:
-        print("✗ 解答が一致しません")
-        return
-
-    # パフォーマンス比較
-    print("=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time/fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time/fastest_time:.2f}x")
-    print(f"数学的解法: {math_time/fastest_time:.2f}x")
+    results = compare_performance(solutions, parameters)
+    print_performance_comparison(results)
+    print_final_answer(results[0]["result"])
 
 if __name__ == "__main__":
-    main()
+    run_problem()
 ```
 
 #### 4.2 テストファイルの作成
@@ -305,20 +299,26 @@ class TestProblemXXX:
 [参考リンク]
 ```
 
-### 5. テスト実行
+### 5. テスト・実行
 
 ```bash
-# 問題ファイルの実行
-uv run python problems/problem_XXX.py
+# 問題の実行（推奨）
+make run-problem PROBLEM=XXX
+
+# または、直接runnerファイルを実行
+uv run python problems/runners/problem_XXX_runner.py
 
 # テストの実行
+make test-problem PROBLEM=XXX
+
+# または、直接pytestを実行
 uv run pytest tests/problems/test_problem_XXX.py -v
 
 # 全テストの実行
-uv run pytest
+make test
 
 # カバレッジ付きでテスト実行
-uv run pytest --cov=problems --cov=solutions
+make test-cov
 ```
 
 ### 6. コード品質チェック
