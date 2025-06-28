@@ -30,6 +30,7 @@
 | 022 | ... | 🔴 未着手 | ... | ... |
 | 023 | Non-Abundant Sums | 🟢 完了 | Python | 2025-06-26 |
 | 024 | Lexicographic permutations | 🟢 完了 | Python | 2025-06-27 |
+| 025 | 1000-digit Fibonacci number | 🟢 完了 | Python | 2025-06-28 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -41,14 +42,14 @@
 
 ## 統計
 
-- 完了: 21/100
+- 完了: 22/100
 - 作業中: 0/100
-- 未着手: 79/100
+- 未着手: 78/100
 
 ## 目標
 
 - [x] 最初の10問を完了 (10/10)
-- [ ] 最初の25問を完了 (21/25) - 84%進捗
+- [ ] 最初の25問を完了 (22/25) - 88%進捗
 - [ ] 最初の50問を完了
 - [ ] 最初の100問を完了
 
@@ -210,4 +211,24 @@
   - `problems/problem_017.py`
   - `docs/solutions/solution_017.md`
 
-最終更新: 2025-06-25
+### Problem 024: Lexicographic permutations
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(d! × d)) - itertools.permutationsで全順列を生成
+  - 最適化解法 (O(d²)) - 階乗の性質を利用した数学的アプローチ
+- **ファイル**:
+  - `problems/problem_024.py`
+  - `docs/solutions/solution_024.md`
+
+### Problem 025: 1000-digit Fibonacci number
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - フィボナッチ数列を順次計算して桁数をチェック
+  - 最適化解法 (O(log n)) - ビネットの公式で対数計算による桁数推定
+- **ファイル**:
+  - `problems/problem_025.py`
+  - `docs/solutions/solution_025.md`
+
+最終更新: 2025-06-28
