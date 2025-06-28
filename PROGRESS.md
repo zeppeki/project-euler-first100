@@ -31,6 +31,7 @@
 | 023 | Non-Abundant Sums | 🟢 完了 | Python | 2025-06-26 |
 | 024 | Lexicographic permutations | 🟢 完了 | Python | 2025-06-27 |
 | 025 | 1000-digit Fibonacci number | 🟢 完了 | Python | 2025-06-28 |
+| 026 | Reciprocal cycles | 🟢 完了 | Python | 2025-06-28 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -42,14 +43,14 @@
 
 ## 統計
 
-- 完了: 22/100
+- 完了: 23/100
 - 作業中: 0/100
-- 未着手: 78/100
+- 未着手: 77/100
 
 ## 目標
 
 - [x] 最初の10問を完了 (10/10)
-- [ ] 最初の25問を完了 (22/25) - 88%進捗
+- [ ] 最初の25問を完了 (23/25) - 92%進捗
 - [ ] 最初の50問を完了
 - [ ] 最初の100問を完了
 
@@ -230,5 +231,15 @@
 - **ファイル**:
   - `problems/problem_025.py`
   - `docs/solutions/solution_025.md`
+
+### Problem 026: Reciprocal cycles
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 長除法をシミュレートして循環周期を検出
+  - 最適化解法 (O(n × log n)) - 法の性質を利用した効率的な周期計算
+- **ファイル**:
+  - `problems/problem_026.py`
+  - `docs/solutions/solution_026.md`
 
 最終更新: 2025-06-28
