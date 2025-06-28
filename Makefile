@@ -26,7 +26,7 @@ RESET := \033[0m
 
 # PHONY targets
 .PHONY: help install install-dev install-docs update
-.PHONY: test test-fast test-slow test-cov test-problem
+.PHONY: test test-fast test-slow test-cov test-cov-clean test-problem
 .PHONY: format lint lint-fix typecheck security quality
 .PHONY: coverage dependency-check metrics ci-full ci-check validate
 .PHONY: docs-serve docs-build docs-strict
@@ -104,6 +104,10 @@ test-slow: ## Run slow tests only
 test-cov: ## Run tests with coverage report
 	@echo "$(BOLD)$(GREEN)Running tests with coverage...$(RESET)"
 	$(PYTEST) --cov=problems --cov=solutions --cov-report=html --cov-report=term
+
+test-cov-clean: ## Run tests with coverage report (exclude runners/utils)
+	@echo "$(BOLD)$(GREEN)Running tests with coverage (exclude runners/utils)...$(RESET)"
+	COVERAGE_RCFILE=.coveragerc-clean $(PYTEST) --cov=problems --cov=solutions --cov-report=html --cov-report=term
 
 test-problem: ## Run tests for specific problem (use: make test-problem PROBLEM=001)
 	@if [ -z "$(PROBLEM)" ]; then \
@@ -208,12 +212,16 @@ run-problem: ## Run specific problem (use: make run-problem PROBLEM=001)
 		echo "Usage: make run-problem PROBLEM=001"; \
 		exit 1; \
 	fi
-	@if [ ! -f "problems/problem_$(PROBLEM).py" ]; then \
-		echo "$(RED)Error: problems/problem_$(PROBLEM).py not found$(RESET)"; \
+	@if [ -f "problems/runners/problem_$(PROBLEM)_runner.py" ]; then \
+		echo "$(BOLD)$(BLUE)Running Problem $(PROBLEM) (using runner)...$(RESET)"; \
+		$(PYTHON) problems/runners/problem_$(PROBLEM)_runner.py; \
+	elif [ -f "problems/problem_$(PROBLEM).py" ]; then \
+		echo "$(BOLD)$(BLUE)Running Problem $(PROBLEM) (direct)...$(RESET)"; \
+		$(PYTHON) problems/problem_$(PROBLEM).py; \
+	else \
+		echo "$(RED)Error: Neither problems/runners/problem_$(PROBLEM)_runner.py nor problems/problem_$(PROBLEM).py found$(RESET)"; \
 		exit 1; \
 	fi
-	@echo "$(BOLD)$(BLUE)Running Problem $(PROBLEM)...$(RESET)"
-	$(PYTHON) problems/problem_$(PROBLEM).py
 
 ## Performance & Analysis
 benchmark: ## Run performance benchmarks for all problems
@@ -567,8 +575,8 @@ pr-merge: ## Merge pull request after checks (use: make pr-merge PR=123)
 		exit 1; \
 	fi
 	@echo "$(BOLD)$(MAGENTA)Checking PR #$(PR) status before merge...$(RESET)"
-	@status=$$(gh pr view $(PR) --json statusCheckRollup --jq '.statusCheckRollup | map(select(.conclusion != "SUCCESS")) | length'); \
-	if [ "$$status" -gt 0 ]; then \
+	@failure_count=$$(gh pr view $(PR) --json statusCheckRollup | jq '[.statusCheckRollup[] | select(.conclusion == "FAILURE" or .conclusion == "ERROR" or .conclusion == "CANCELLED" or .conclusion == "TIMED_OUT")] | length'); \
+	if [ "$$failure_count" -gt 0 ]; then \
 		echo "$(RED)Error: PR has failing checks. Cannot merge.$(RESET)"; \
 		echo "$(YELLOW)Run 'make pr-status PR=$(PR)' to see details$(RESET)"; \
 		exit 1; \
