@@ -6,12 +6,16 @@ This module contains the execution code for Problem 004, separated from the
 algorithm implementations for better test coverage and code organization.
 """
 
-from problems.problem_004 import is_palindrome, solve_mathematical, solve_naive, solve_optimized
+from problems.problem_004 import (
+    is_palindrome,
+    solve_mathematical,
+    solve_naive,
+    solve_optimized,
+)
 from problems.utils.display import (
     print_final_answer,
     print_performance_comparison,
     print_solution_header,
-    print_test_results,
 )
 from problems.utils.performance import compare_performance
 
@@ -21,12 +25,6 @@ def run_tests() -> None:
     test_cases = [
         (1, 1, (9, 3, 3)),  # 1桁の場合: 3 * 3 = 9
         (2, 2, (9009, 91, 99)),  # 2桁の場合: 91 * 99 = 9009
-    ]
-
-    functions = [
-        ("素直な解法", lambda min_d, max_d: solve_naive(min_d, max_d)[0]),
-        ("最適化解法", lambda min_d, max_d: solve_optimized(min_d, max_d)[0]),
-        ("数学的解法", lambda min_d, max_d: solve_mathematical(min_d, max_d)[0]),
     ]
 
     print("=== テストケース ===")
@@ -64,7 +62,7 @@ def run_problem() -> None:
     min_digits = 3
     max_digits = 3
 
-    print_solution_header("004", "Largest palindrome product", 
+    print_solution_header("004", "Largest palindrome product",
                          f"product of {min_digits}-digit numbers")
 
     # Run tests first
@@ -93,7 +91,7 @@ def run_problem() -> None:
         )
         print()
         print_performance_comparison(performance_results)
-        
+
         # 回文の検証
         print("\n=== 回文の検証 ===")
         print(f"数値: {palindrome}")

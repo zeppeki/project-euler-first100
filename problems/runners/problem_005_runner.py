@@ -47,7 +47,7 @@ def run_problem() -> None:
     """Run the main problem with performance comparison."""
     n = 20
 
-    print_solution_header("005", "Smallest multiple", 
+    print_solution_header("005", "Smallest multiple",
                          f"divisible by all numbers from 1 to {n}")
 
     # Run tests first
@@ -71,15 +71,15 @@ def run_problem() -> None:
         answer = results[0]
         print_final_answer(answer, verified=True)
         print_performance_comparison(performance_results)
-        
+
         # 素因数分解の確認
         print("=== 素因数分解の確認 ===")
         print(f"結果: {answer:,}")
-        
+
         factors = prime_factorization(answer)
         factor_str = " × ".join([f"{p}^{e}" if e > 1 else str(p) for p, e in factors])
         print(f"素因数分解: {factor_str}")
-        
+
         # 検証: 1からnまでの各数で割り切れることを確認
         print("\n=== 除数確認 ===")
         verification_failed = False
@@ -89,14 +89,14 @@ def run_problem() -> None:
             else:
                 print(f"{answer:,} ÷ {i} = 余り{answer % i} ✗")
                 verification_failed = True
-        
+
         if n > 10:
             print(f"... (11から{n}まで省略)")
             for i in range(11, n + 1):
                 if answer % i != 0:
                     print(f"{answer:,} ÷ {i} = 余り{answer % i} ✗")
                     verification_failed = True
-        
+
         if not verification_failed:
             print("全ての数で割り切れることを確認 ✓")
     else:
