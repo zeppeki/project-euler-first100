@@ -62,8 +62,9 @@ def run_problem() -> None:
     min_digits = 3
     max_digits = 3
 
-    print_solution_header("004", "Largest palindrome product",
-                         f"product of {min_digits}-digit numbers")
+    print_solution_header(
+        "004", "Largest palindrome product", f"product of {min_digits}-digit numbers"
+    )
 
     # Run tests first
     run_tests()
@@ -86,9 +87,7 @@ def run_problem() -> None:
     if all_agree:
         result = results[0]
         palindrome, factor1, factor2 = result
-        print(
-            f"✓ 解答: {palindrome:,} = {factor1} × {factor2}"
-        )
+        print(f"✓ 解答: {palindrome:,} = {factor1} × {factor2}")
         print()
         print_performance_comparison(performance_results)
 

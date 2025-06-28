@@ -47,8 +47,9 @@ def run_problem() -> None:
     """Run the main problem with performance comparison."""
     n = 20
 
-    print_solution_header("005", "Smallest multiple",
-                         f"divisible by all numbers from 1 to {n}")
+    print_solution_header(
+        "005", "Smallest multiple", f"divisible by all numbers from 1 to {n}"
+    )
 
     # Run tests first
     run_tests()
