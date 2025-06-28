@@ -9,7 +9,6 @@ Answer: 6857
 """
 
 import math
-import time
 
 
 def is_prime(n: int) -> bool:
@@ -92,72 +91,3 @@ def solve_optimized(n: int) -> int:
         largest_factor = n
 
     return largest_factor
-
-
-def test_solutions() -> None:
-    """テストケースで解答を検証"""
-    test_cases = [
-        (13195, 29),  # Example: 5, 7, 13, 29 → max is 29
-        (100, 5),  # 100 = 2^2 × 5^2 → max is 5
-        (84, 7),  # 84 = 2^2 × 3 × 7 → max is 7
-        (17, 17),  # 素数 → 最大は17
-        (25, 5),  # 25 = 5^2 → 最大は5
-    ]
-
-    print("=== テストケース ===")
-    for n, expected in test_cases:
-        result_naive = solve_naive(n)
-        result_optimized = solve_optimized(n)
-        print(f"n: {n}")
-        print(f"  Expected: {expected}")
-        print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
-        print(
-            f"  Optimized: {result_optimized} "
-            f"{'✓' if result_optimized == expected else '✗'}"
-        )
-        print()
-
-
-def main() -> None:
-    """メイン関数"""
-    n = 600851475143
-
-    print("=== Problem 003: Largest prime factor ===")
-    print(f"n: {n:,}")
-    print()
-
-    # テストケース
-    test_solutions()
-
-    # 本問題の解答
-    print("=== 本問題の解答 ===")
-
-    # 各解法の実行時間測定
-    start_time = time.time()
-    result_naive = solve_naive(n)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(n)
-    optimized_time = time.time() - start_time
-
-    print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
-    print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print()
-
-    # 結果の検証
-    if result_naive == result_optimized:
-        print(f"✓ 解答: {result_optimized:,}")
-    else:
-        print("✗ 解答が一致しません")
-        return
-
-    # パフォーマンス比較
-    print("=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time)
-    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-
-
-if __name__ == "__main__":
-    main()
