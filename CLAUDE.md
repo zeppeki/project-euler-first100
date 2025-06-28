@@ -499,5 +499,126 @@ Project Euler公式サイトで確認してください。
 ## Git and PR Guidelines
 
 ### PR Submission Guidelines
-- **PR発行時のチェックリスト**:
-  - PRを発行するときは、pushするブランチがあっているかどうか確認して
+
+**CRITICAL**: PRs must only be created after ALL local checks pass to prevent CI failures.
+
+#### Pre-PR Checklist (Required)
+
+**Step 1: Complete Local Quality Checks**
+```bash
+# Run all code quality checks locally
+make quality
+
+# Alternative: Run full CI-equivalent checks
+make ci-check
+```
+
+**Step 2: Verify Pre-commit Hooks Pass**
+```bash
+# Add all changes and test commit WITHOUT --no-verify
+git add .
+git commit -m "Your commit message"
+```
+
+**IMPORTANT**: If pre-commit hooks fail:
+- **DO NOT** use `--no-verify` to bypass failures
+- Fix the issues first, then commit again
+
+**Step 3: Fix Any Pre-commit Hook Failures**
+```bash
+# Automatically fix common issues
+make lint-fix
+make format
+
+# Re-add files and commit
+git add .
+git commit --amend --no-edit  # Include fixes in the same commit
+```
+
+**Step 4: Verify Clean State**
+```bash
+# Ensure all checks pass
+make ci-check
+
+# Verify git status is clean
+git status
+```
+
+**Step 5: Push and Create PR**
+```bash
+# Push to remote branch
+git push
+
+# Create pull request
+make pr-create ISSUE=123 TITLE="Your PR Title"
+```
+
+#### Common Pre-commit Hook Issues
+
+**Formatting Issues:**
+- Missing trailing newlines (`W292`)
+- Trailing whitespace
+- Import sorting
+- Code formatting
+
+**Quality Issues:**
+- Linting errors (ruff)
+- Type checking errors (mypy)
+- Security issues (bandit - low severity acceptable)
+
+**Quick Fix Commands:**
+```bash
+# Fix most formatting issues automatically
+make lint-fix
+
+# Format code consistently
+make format
+
+# Check types
+make typecheck
+```
+
+#### Why This Process Matters
+
+1. **Prevents CI Failures**: Catches issues before they reach GitHub Actions
+2. **Reduces Review Cycles**: Cleaner PRs require fewer back-and-forth corrections
+3. **Maintains Code Quality**: Ensures consistent standards across the codebase
+4. **Saves Time**: Avoids the need for additional "fix linting" commits
+
+#### Workflow Integration
+
+This checklist integrates with the existing development workflow:
+
+```bash
+# After implementing solution
+make test-problem PROBLEM=033
+make ci-check                    # ← Critical step
+
+# Commit with pre-commit hook validation
+git add .
+git commit -m "Implement solution"  # ← No --no-verify
+
+# Only proceed if commit succeeds
+git push
+make pr-create ISSUE=123 TITLE="Solution"
+```
+
+### Additional PR Guidelines
+- **Branch Verification**: Ensure you're pushing to the correct feature branch
+- **Commit Messages**: Use descriptive commit messages following project conventions
+- **CI Status**: Monitor CI status after PR creation using `make pr-status PR=123`
+
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+
+**CRITICAL PR SUBMISSION REQUIREMENT**:
+ALWAYS follow the PR Submission Guidelines above. NEVER create pull requests without first:
+1. Running `make ci-check` locally
+2. Committing without `--no-verify` to test pre-commit hooks
+3. Fixing any pre-commit hook failures before proceeding
+4. Ensuring all local checks pass before pushing and creating PR
+
+This prevents CI failures and maintains code quality standards.
