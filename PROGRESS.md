@@ -32,6 +32,7 @@
 | 024 | Lexicographic permutations | 🟢 完了 | Python | 2025-06-27 |
 | 025 | 1000-digit Fibonacci number | 🟢 完了 | Python | 2025-06-28 |
 | 026 | Reciprocal cycles | 🟢 完了 | Python | 2025-06-28 |
+| 027 | Quadratic primes | 🟢 完了 | Python | 2025-06-28 |
 | ... | ... | ... | ... | ... |
 
 ## 凡例
@@ -43,14 +44,14 @@
 
 ## 統計
 
-- 完了: 23/100
+- 完了: 24/100
 - 作業中: 0/100
-- 未着手: 77/100
+- 未着手: 76/100
 
 ## 目標
 
 - [x] 最初の10問を完了 (10/10)
-- [ ] 最初の25問を完了 (23/25) - 92%進捗
+- [ ] 最初の25問を完了 (24/25) - 96%進捗
 - [ ] 最初の50問を完了
 - [ ] 最初の100問を完了
 
@@ -241,5 +242,15 @@
 - **ファイル**:
   - `problems/problem_026.py`
   - `docs/solutions/solution_026.md`
+
+### Problem 027: Quadratic primes
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(p × limit × k)) - 制約を絞り込んだ全探索
+  - 最適化解法 (O(n log log n + p × limit × k)) - エラトステネスの篩で素数を事前計算
+- **ファイル**:
+  - `problems/problem_027.py`
+  - `docs/solutions/solution_027.md`
 
 最終更新: 2025-06-28
