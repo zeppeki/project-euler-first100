@@ -495,3 +495,9 @@ Project Euler公式サイトで確認してください。
 - **解答:** [隠匿]
 - **検証:** ✓
 ```
+
+## Git and PR Guidelines
+
+### PR Submission Guidelines
+- **PR発行時のチェックリスト**:
+  - PRを発行するときは、pushするブランチがあっているかどうか確認して
