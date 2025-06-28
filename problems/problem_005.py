@@ -12,7 +12,6 @@ Answer: 232792560
 """
 
 import math
-import time
 
 
 def gcd(a: int, b: int) -> int:
@@ -139,146 +138,23 @@ def solve_builtin(n: int) -> int:
         return solve_optimized(n)
 
 
-def test_solutions() -> None:
-    """テストケースで解答を検証"""
-    test_cases = [
-        (1, 1),  # LCM(1) = 1
-        (2, 2),  # LCM(1,2) = 2
-        (3, 6),  # LCM(1,2,3) = 6
-        (4, 12),  # LCM(1,2,3,4) = 12
-        (5, 60),  # LCM(1,2,3,4,5) = 60
-        (10, 2520),  # 問題例: LCM(1,...,10) = 2520
-    ]
-
-    print("=== テストケース ===")
-    for n, expected in test_cases:
-        result_naive = solve_naive(n)
-        result_optimized = solve_optimized(n)
-        result_math = solve_mathematical(n)
-        result_builtin = solve_builtin(n)
-
-        print(f"n = {n}")
-        print(f"  Expected: {expected}")
-        print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
-        print(
-            f"  Optimized: {result_optimized} "
-            f"{'✓' if result_optimized == expected else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
-        )
-        print(
-            f"  Builtin: {result_builtin} {'✓' if result_builtin == expected else '✗'}"
-        )
-        print()
-
-
-def main() -> None:
-    """メイン関数"""
-    n = 20
-
-    print("=== Problem 005: Smallest multiple ===")
-    print(f"Finding smallest positive number divisible by all numbers from 1 to {n}")
-    print()
-
-    # テストケース
-    test_solutions()
-
-    # 本問題の解答
-    print("=== 本問題の解答 ===")
-
-    # 各解法の実行時間測定
-    start_time = time.time()
-    result_naive = solve_naive(n)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(n)
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical(n)
-    math_time = time.time() - start_time
-
-    start_time = time.time()
-    result_builtin = solve_builtin(n)
-    builtin_time = time.time() - start_time
-
-    print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
-    print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
-    print(f"標準ライブラリ解法: {result_builtin:,} (実行時間: {builtin_time:.6f}秒)")
-    print()
-
-    # 結果の検証
-    if result_naive == result_optimized == result_math == result_builtin:
-        print(f"✓ 解答: {result_optimized:,}")
-    else:
-        print("✗ 解答が一致しません")
-        print(f"  Naive: {result_naive}")
-        print(f"  Optimized: {result_optimized}")
-        print(f"  Mathematical: {result_math}")
-        print(f"  Builtin: {result_builtin}")
-        return
-
-    # パフォーマンス比較
-    print("=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time, builtin_time)
-    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
-    print(f"標準ライブラリ解法: {builtin_time / fastest_time:.2f}x")
-
-    # 素因数分解の確認
-    print("\n=== 素因数分解の確認 ===")
-    print(f"結果: {result_optimized:,}")
-
-    # 簡単な因数分解表示
-    def prime_factorization(num: int) -> list[tuple[int, int]]:
-        """素因数分解を行う"""
-        factors: list[tuple[int, int]] = []
-        d = 2
-        while d * d <= num:
-            while num % d == 0:
-                # 既存の因数があるか確認
-                found = False
-                for i, (prime, count) in enumerate(factors):
-                    if prime == d:
-                        factors[i] = (prime, count + 1)
-                        found = True
-                        break
-                if not found:
-                    factors.append((d, 1))
-                num //= d
-            d += 1
-        if num > 1:
-            factors.append((num, 1))
-        return factors
-
-    factors = prime_factorization(result_optimized)
-    factor_str = " × ".join([f"{p}^{e}" if e > 1 else str(p) for p, e in factors])
-    print(f"素因数分解: {factor_str}")
-
-    # 検証: 1からnまでの各数で割り切れることを確認
-    print("\n=== 除数確認 ===")
-    verification_failed = False
-    for i in range(1, min(n + 1, 11)):  # 表示は最初の10個まで
-        if result_optimized % i == 0:
-            print(f"{result_optimized:,} ÷ {i} = {result_optimized // i:,} ✓")
-        else:
-            print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized % i} ✗")
-            verification_failed = True
-
-    if n > 10:
-        print(f"... (11から{n}まで省略)")
-        for i in range(11, n + 1):
-            if result_optimized % i != 0:
-                print(f"{result_optimized:,} ÷ {i} = 余り{result_optimized % i} ✗")
-                verification_failed = True
-
-    if not verification_failed:
-        print("全ての数で割り切れることを確認 ✓")
-
-
-if __name__ == "__main__":
-    main()
+def prime_factorization(num: int) -> list[tuple[int, int]]:
+    """素因数分解を行う"""
+    factors: list[tuple[int, int]] = []
+    d = 2
+    while d * d <= num:
+        while num % d == 0:
+            # 既存の因数があるか確認
+            found = False
+            for i, (prime, count) in enumerate(factors):
+                if prime == d:
+                    factors[i] = (prime, count + 1)
+                    found = True
+                    break
+            if not found:
+                factors.append((d, 1))
+            num //= d
+        d += 1
+    if num > 1:
+        factors.append((num, 1))
+    return factors
