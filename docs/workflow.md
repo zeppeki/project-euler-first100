@@ -450,6 +450,279 @@ git checkout problem-XXX
 git merge main
 ```
 
+### 並行開発 (Git Worktree)
+
+Git Worktreeを使用することで、複数のProject Euler問題を同時に並行して開発することができます。これにより、ブランチの切り替えなしに複数の問題に取り組むことができます。
+
+#### Git Worktreeの利点
+
+- **並行開発**: 複数の問題を同時に開発可能
+- **独立した環境**: 各ワークツリーは独自の作業ディレクトリとインデックスを持つ
+- **共有リポジトリ**: すべてのワークツリーが同じGitリポジトリとリモート参照を共有
+- **高速なコンテキスト切り替え**: 変更のstashやコミットが不要
+
+#### ワークツリーのセットアップ
+
+**新しい問題用のワークツリーを作成:**
+
+```bash
+# 問題025用のワークツリーを作成（サブディレクトリ）
+git worktree add ../project-euler-problem-025 problem-025
+
+# または、専用のworktreesディレクトリに作成
+mkdir -p ../worktrees
+git worktree add ../worktrees/problem-025 problem-025
+
+# GitHub issueからブランチを作成してワークツリーを作成
+make issue-develop ISSUE=123  # GitHubのissueからブランチを作成
+git worktree add ../worktrees/problem-025 problem-025-branch-name
+```
+
+**既存のワークツリーを一覧表示:**
+
+```bash
+git worktree list
+```
+
+**ワークツリー間の移動:**
+
+```bash
+# 異なるワークツリーディレクトリに移動
+cd ../worktrees/problem-025
+
+# 各ワークツリーで独立してMakefileコマンドを実行可能
+make test-problem PROBLEM=025
+make run-problem PROBLEM=025
+make ci-check
+```
+
+#### 開発ワークフローとの統合
+
+**並行問題開発の例:**
+
+```bash
+# メインリポジトリ: 問題024に取り組み中
+cd project-euler-first100
+make test-problem PROBLEM=024
+
+# ワークツリー1: 問題025に取り組み中
+cd ../worktrees/problem-025
+make new-problem PROBLEM=025
+make test-problem PROBLEM=025
+
+# ワークツリー2: 問題026に取り組み中
+cd ../worktrees/problem-026
+make new-problem PROBLEM=026
+make run-problem PROBLEM=026
+
+# 各ワークツリーは独自の仮想環境と依存関係を維持
+```
+
+**独立したCIチェック:**
+
+```bash
+# 各ワークツリーで独立してCIチェックを実行
+cd ../worktrees/problem-025
+make ci-check
+
+cd ../worktrees/problem-026
+make ci-check
+```
+
+#### ベストプラクティス
+
+**ワークツリーの組織化:**
+
+```bash
+# 推奨ディレクトリ構造
+project-euler-first100/          # メインリポジトリ
+../worktrees/
+  ├── problem-025/               # 問題別ワークツリー
+  ├── problem-026/
+  ├── refactor-testing/          # 機能別ワークツリー
+  └── docs-update/
+```
+
+**命名規則:**
+- 問題用ワークツリー: `problem-XXX` (ブランチ名と一致)
+- 機能用ワークツリー: `feature-説明` または `issue-123`
+- メンテナンス用ワークツリー: `refactor-コンポーネント`, `docs-update`
+
+**依存関係の共有:**
+
+```bash
+# 各ワークツリーには独自の仮想環境が必要
+cd ../worktrees/problem-025
+uv sync --extra dev           # このワークツリー用の独立した.venvを作成
+
+# または、UVキャッシュを共有して再ダウンロードを回避
+export UV_CACHE_DIR="$HOME/.cache/uv"  # 共有キャッシュの場所
+```
+
+#### よく使用するコマンド
+
+**既存ブランチからワークツリーを作成:**
+
+```bash
+git worktree add ../worktrees/existing-branch 既存ブランチ名
+```
+
+**新しいブランチでワークツリーを作成:**
+
+```bash
+git worktree add -b 新ブランチ名 ../worktrees/new-feature origin/main
+```
+
+**完了したワークツリーを削除:**
+
+```bash
+# ブランチをマージ後、ワークツリーディレクトリを削除
+git worktree remove ../worktrees/problem-025
+
+# または、自動的に削除とクリーンアップ
+git worktree remove --force ../worktrees/problem-025
+```
+
+**ワークツリーの場所を移動:**
+
+```bash
+git worktree move ../worktrees/problem-025 ../new-location/problem-025
+```
+
+#### GitHubワークフローとの統合
+
+**ワークツリーからのPR作成:**
+
+```bash
+# どのワークツリーからでも通常通りPRを作成
+cd ../worktrees/problem-025
+make pr-create ISSUE=123 TITLE="Problem 025を解決"
+
+# PRの状況を監視
+make pr-status PR=124
+
+# マージとクリーンアップ
+make pr-merge PR=124
+git worktree remove ../worktrees/problem-025  # マージ成功後
+```
+
+**ブランチの同期:**
+
+```bash
+# すべてのワークツリーが同じリポジトリを共有
+# mainブランチの変更はすべてのワークツリーで可視
+git fetch origin                    # すべてのワークツリーを更新
+git branch -a                       # すべてのワークツリー間でブランチを表示
+```
+
+#### トラブルシューティング
+
+**よくある問題と解決策:**
+
+```bash
+# 問題: ワークツリーディレクトリが既に存在
+git worktree add ../worktrees/problem-025 problem-025
+# エラー: '../worktrees/problem-025' already exists
+
+# 解決策: まずディレクトリを削除するか、異なるパスを使用
+rm -rf ../worktrees/problem-025
+git worktree add ../worktrees/problem-025 problem-025
+
+# 問題: ブランチが既に他のワークツリーでチェックアウト済み
+# エラー: 'problem-025' is already checked out at '../worktrees/problem-025'
+
+# 解決策: 異なるブランチ名を使用するか、他のワークツリーを削除
+git worktree list                   # ブランチがどこでチェックアウトされているか確認
+git worktree remove path/to/worktree
+
+# 問題: 仮想環境の競合
+# 各ワークツリーが独自の.venvを持つことを確認
+cd ../worktrees/problem-025
+uv sync --extra dev                 # 独立した.venvを作成
+
+# 問題: 古いワークツリー参照
+git worktree prune                  # 削除されたワークツリー参照をクリーンアップ
+```
+
+**クリーンアップ:**
+
+```bash
+# すべてのワークツリーを一覧表示
+git worktree list
+
+# 未使用のワークツリーを削除（ブランチがマージされた後）
+git worktree prune
+
+# ワークツリーを強制削除（ディレクトリが手動で削除された場合）
+git worktree remove --force path/to/worktree
+```
+
+#### ワークツリーを使用するタイミング
+
+**推奨される場面:**
+- 複数の問題を同時に開発する場合
+- 迅速な修正と並行した長期機能開発
+- 異なるアルゴリズムアプローチの並行テスト
+- 異なるPythonバージョン用の独立環境の維持
+
+**避けるべき場面:**
+- 単純な単一問題開発（従来のブランチングで十分）
+- ディスク容量が限られている場合（各ワークツリーに独立した依存関係が必要）
+- Git初心者の場合（まず基本的なブランチングから始める）
+
+#### 実践的な使用例
+
+**複数問題の並行開発:**
+
+```bash
+# 1. メインリポジトリで問題024を開発
+cd project-euler-first100
+git checkout -b problem-024
+make new-problem PROBLEM=024
+
+# 2. 問題025用のワークツリーを作成
+git worktree add ../worktrees/problem-025 -b problem-025 origin/main
+cd ../worktrees/problem-025
+make new-problem PROBLEM=025
+
+# 3. 問題026用のワークツリーを作成
+git worktree add ../worktrees/problem-026 -b problem-026 origin/main
+cd ../worktrees/problem-026
+make new-problem PROBLEM=026
+
+# 4. 各ワークツリーで独立して作業
+# ワークツリー1で作業
+cd ../worktrees/problem-025
+# 実装、テスト、コミット
+
+# ワークツリー2で作業
+cd ../worktrees/problem-026
+# 実装、テスト、コミット
+
+# メインリポジトリで作業
+cd project-euler-first100
+# 実装、テスト、コミット
+```
+
+**長期機能開発と迅速な修正の並行:**
+
+```bash
+# 1. メインリポジトリで長期リファクタリング
+cd project-euler-first100
+git checkout -b refactor-performance
+# 長期的な性能改善作業
+
+# 2. 緊急のドキュメント修正用ワークツリー
+git worktree add ../worktrees/hotfix-docs -b hotfix-docs origin/main
+cd ../worktrees/hotfix-docs
+# 迅速なドキュメント修正、テスト、PR作成
+
+# 3. 新機能開発用ワークツリー
+git worktree add ../worktrees/feature-benchmarks -b feature-benchmarks origin/main
+cd ../worktrees/feature-benchmarks
+# 新しいベンチマーク機能の開発
+```
+
 ## テスト戦略
 
 ### テストの種類
