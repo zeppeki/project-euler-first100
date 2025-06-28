@@ -608,6 +608,211 @@ make pr-create ISSUE=123 TITLE="Solution"
 - **Commit Messages**: Use descriptive commit messages following project conventions
 - **CI Status**: Monitor CI status after PR creation using `make pr-status PR=123`
 
+### Git Worktree for Parallel Development
+
+Git worktrees enable parallel development on multiple problems simultaneously by creating separate working directories that share the same Git repository. This is particularly useful for Project Euler problems where you might want to work on multiple problems at once without context switching.
+
+#### Benefits of Git Worktrees
+- **Parallel Development**: Work on multiple problems simultaneously without branch switching
+- **Isolated Environments**: Each worktree has its own working directory and index
+- **Shared Repository**: All worktrees share the same Git repository and remote references
+- **Fast Context Switching**: No need to stash changes or commit incomplete work
+
+#### Setting Up Worktrees
+
+**Create a worktree for a new problem:**
+```bash
+# Create worktree for problem 025 in a subdirectory
+git worktree add ../project-euler-problem-025 problem-025
+
+# Or create in a dedicated worktrees directory
+mkdir -p ../worktrees
+git worktree add ../worktrees/problem-025 problem-025
+
+# Create worktree with new branch from issue
+make issue-develop ISSUE=123  # Creates branch from GitHub issue
+git worktree add ../worktrees/problem-025 problem-025-branch-name
+```
+
+**List existing worktrees:**
+```bash
+git worktree list
+```
+
+**Navigate between worktrees:**
+```bash
+# Switch to different worktree directory
+cd ../worktrees/problem-025
+
+# Each worktree can run Makefile commands independently
+make test-problem PROBLEM=025
+make run-problem PROBLEM=025
+make ci-check
+```
+
+#### Workflow Integration
+
+**Parallel problem development:**
+```bash
+# Main repository: working on problem 024
+cd project-euler-first100
+make test-problem PROBLEM=024
+
+# Worktree 1: working on problem 025
+cd ../worktrees/problem-025
+make new-problem PROBLEM=025
+make test-problem PROBLEM=025
+
+# Worktree 2: working on problem 026
+cd ../worktrees/problem-026
+make new-problem PROBLEM=026
+make run-problem PROBLEM=026
+
+# Each worktree maintains its own virtual environment and dependencies
+```
+
+**Independent CI checks:**
+```bash
+# Run CI checks in each worktree independently
+cd ../worktrees/problem-025
+make ci-check
+
+cd ../worktrees/problem-026
+make ci-check
+```
+
+#### Best Practices
+
+**Worktree Organization:**
+```bash
+# Recommended directory structure
+project-euler-first100/          # Main repository
+../worktrees/
+  ├── problem-025/               # Problem-specific worktrees
+  ├── problem-026/
+  ├── refactor-testing/          # Feature worktrees
+  └── docs-update/
+```
+
+**Naming Conventions:**
+- Problem worktrees: `problem-XXX` (matches branch names)
+- Feature worktrees: `feature-description` or `issue-123`
+- Maintenance worktrees: `refactor-component`, `docs-update`
+
+**Shared Dependencies:**
+```bash
+# Each worktree needs its own virtual environment
+cd ../worktrees/problem-025
+uv sync --extra dev           # Create separate .venv for this worktree
+
+# Or use shared UV cache to avoid re-downloading
+export UV_CACHE_DIR="$HOME/.cache/uv"  # Shared cache location
+```
+
+#### Common Commands
+
+**Create worktree from existing branch:**
+```bash
+git worktree add ../worktrees/existing-branch existing-branch-name
+```
+
+**Create worktree with new branch:**
+```bash
+git worktree add -b new-branch-name ../worktrees/new-feature origin/main
+```
+
+**Remove completed worktree:**
+```bash
+# First, delete the worktree directory (after merging branch)
+git worktree remove ../worktrees/problem-025
+
+# Or remove and clean up automatically
+git worktree remove --force ../worktrees/problem-025
+```
+
+**Move worktree location:**
+```bash
+git worktree move ../worktrees/problem-025 ../new-location/problem-025
+```
+
+#### Integration with GitHub Workflow
+
+**PR creation from worktrees:**
+```bash
+# In any worktree, create PR normally
+cd ../worktrees/problem-025
+make pr-create ISSUE=123 TITLE="Solve Problem 025"
+
+# Monitor PR status
+make pr-status PR=124
+
+# Merge and cleanup
+make pr-merge PR=124
+git worktree remove ../worktrees/problem-025  # After successful merge
+```
+
+**Branch synchronization:**
+```bash
+# All worktrees share the same repository
+# Changes in main branch are visible across all worktrees
+git fetch origin                    # Updates all worktrees
+git branch -a                       # Shows all branches across worktrees
+```
+
+#### Troubleshooting
+
+**Common issues and solutions:**
+
+```bash
+# Issue: Worktree directory already exists
+git worktree add ../worktrees/problem-025 problem-025
+# Error: '../worktrees/problem-025' already exists
+
+# Solution: Remove directory first or use different path
+rm -rf ../worktrees/problem-025
+git worktree add ../worktrees/problem-025 problem-025
+
+# Issue: Branch already checked out in another worktree
+# Error: 'problem-025' is already checked out at '../worktrees/problem-025'
+
+# Solution: Use different branch name or remove other worktree
+git worktree list                   # Find where branch is checked out
+git worktree remove path/to/worktree
+
+# Issue: Virtual environment conflicts
+# Make sure each worktree has its own .venv
+cd ../worktrees/problem-025
+uv sync --extra dev                 # Creates separate .venv
+
+# Issue: Stale worktree references
+git worktree prune                  # Clean up deleted worktree references
+```
+
+**Cleanup:**
+```bash
+# List all worktrees
+git worktree list
+
+# Remove unused worktrees (after branches are merged)
+git worktree prune
+
+# Force remove worktree (if directory was manually deleted)
+git worktree remove --force path/to/worktree
+```
+
+#### When to Use Worktrees
+
+**Recommended scenarios:**
+- Working on multiple problems simultaneously
+- Long-running feature development alongside quick fixes
+- Testing different algorithmic approaches in parallel
+- Maintaining separate environments for different Python versions
+
+**When to avoid:**
+- Simple single-problem development (traditional branching is sufficient)
+- When disk space is limited (each worktree needs separate dependencies)
+- For beginners unfamiliar with Git (stick to basic branching initially)
+
 # important-instruction-reminders
 Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.

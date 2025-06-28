@@ -376,6 +376,176 @@ git pull origin main
 gh issue close [ISSUE_NUMBER] --reason completed
 ```
 
+## Git Worktree for Parallel Development
+
+Git worktreeは、同じリポジトリの複数のブランチを異なるディレクトリで同時に作業できるようにする機能です。Project Eulerプロジェクトでは、複数の問題を並行して取り組む際に非常に有用です。
+
+### Git Worktreeの利点
+- **並行開発**: 複数のブランチを同時に編集
+- **コンテキストスイッチングの削減**: ブランチ切り替えが不要
+- **IDE/エディタの効率化**: 各worktreeで別々のエディタセッション
+- **テストの並行実行**: 異なるブランチで同時にテスト実行
+
+### 基本的な使い方
+
+#### Worktreeの作成
+```bash
+# 新しいブランチとworktreeを同時に作成
+git worktree add ../problem-008-branch problem-008
+
+# 既存のブランチのworktreeを作成
+git worktree add ../problem-007-fix problem-007-fix
+
+# 一時的なworktreeを作成（削除しやすい）
+git worktree add --detach ../temp-worktree HEAD
+```
+
+#### Worktreeの管理
+```bash
+# 現在のworktreeを表示
+git worktree list
+
+# worktreeを削除（ブランチは残る）
+git worktree remove ../problem-008-branch
+
+# 強制削除（未コミットの変更がある場合）
+git worktree remove --force ../problem-008-branch
+```
+
+### Project Eulerプロジェクトでの活用例
+
+#### 並行して複数の問題に取り組む
+```bash
+# Problem 008の作業用worktreeを作成
+git worktree add ../problem-008 problem-008
+
+# Problem 009の作業用worktreeを作成
+git worktree add ../problem-009 problem-009
+
+# それぞれのディレクトリで並行作業
+cd ../problem-008
+# Problem 008の実装
+
+cd ../problem-009
+# Problem 009の実装
+```
+
+#### 推奨ディレクトリ構造
+```bash
+project-euler-first100/          # メインリポジトリ
+../worktrees/
+  ├── problem-008/               # 問題固有のworktree
+  ├── problem-009/
+  ├── refactor-testing/          # 機能worktree
+  └── docs-update/
+```
+
+#### 命名規則
+- 問題worktree: `problem-XXX` (ブランチ名と一致)
+- 機能worktree: `feature-description` または `issue-123`
+- メンテナンスworktree: `refactor-component`, `docs-update`
+
+### 依存関係の管理
+
+#### 各worktreeの仮想環境
+```bash
+# 各worktreeで独立した仮想環境を作成
+cd ../worktrees/problem-008
+uv sync --extra dev           # このworktree用の.venvを作成
+
+# または共有UVキャッシュを使用
+export UV_CACHE_DIR="$HOME/.cache/uv"  # 共有キャッシュ場所
+```
+
+### GitHubワークフローとの統合
+
+#### PR作成とマージ
+```bash
+# 任意のworktreeでPRを通常通り作成
+cd ../worktrees/problem-008
+make pr-create ISSUE=123 TITLE="Solve Problem 008"
+
+# PRステータスの監視
+make pr-status PR=124
+
+# マージとクリーンアップ
+make pr-merge PR=124
+git worktree remove ../worktrees/problem-008  # 成功したマージ後
+```
+
+#### ブランチ同期
+```bash
+# すべてのworktreeが同じリポジトリを共有
+git fetch origin                    # すべてのworktreeを更新
+git branch -a                       # すべてのworktreeのブランチを表示
+```
+
+### トラブルシューティング
+
+#### よくある問題と解決策
+```bash
+# 問題: Worktreeディレクトリが既に存在
+# 解決策: ディレクトリを削除するか、別のパスを使用
+rm -rf ../worktrees/problem-008
+git worktree add ../worktrees/problem-008 problem-008
+
+# 問題: ブランチが他のworktreeでチェックアウト済み
+# 解決策: 他のworktreeを削除するか、別のブランチ名を使用
+git worktree list                   # ブランチがチェックアウトされている場所を確認
+git worktree remove path/to/worktree
+
+# 問題: 仮想環境の競合
+# 解決策: 各worktreeで独立した.venvを作成
+cd ../worktrees/problem-008
+uv sync --extra dev                 # 独立した.venvを作成
+
+# 問題: 古いworktree参照
+git worktree prune                  # 削除されたworktree参照をクリーンアップ
+```
+
+#### クリーンアップ
+```bash
+# すべてのworktreeを一覧表示
+git worktree list
+
+# 未使用のworktreeを削除（ブランチがマージされた後）
+git worktree prune
+
+# 強制削除（ディレクトリが手動で削除された場合）
+git worktree remove --force path/to/worktree
+```
+
+### 使用推奨シナリオ
+
+#### 推奨される場面
+- 複数の問題を同時に取り組む
+- 長期間の機能開発とクイックフィックスの並行
+- 異なるアルゴリズムアプローチの並行テスト
+- 異なるPythonバージョン用の独立した環境維持
+
+#### 避けるべき場面
+- 単純な単一問題開発（従来のブランチングで十分）
+- ディスク容量が限られている場合（各worktreeは独立した依存関係が必要）
+- Gitに不慣れな初心者（基本的なブランチングから始めることを推奨）
+
+### 実用的なエイリアス
+
+`.bashrc`や`.zshrc`に便利なエイリアスを追加：
+
+```bash
+# worktree一覧を表示
+alias gwt='git worktree list'
+
+# 新しいworktreeを作成
+alias gwt-add='git worktree add'
+
+# worktreeを削除
+alias gwt-rm='git worktree remove'
+
+# 現在のworktreeのパスを表示
+alias gwt-path='git worktree list --porcelain | grep worktree | head -1 | cut -d" " -f2'
+```
+
 ## コーディング規約
 
 ### Python
