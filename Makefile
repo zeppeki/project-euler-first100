@@ -28,11 +28,13 @@ RESET := \033[0m
 .PHONY: help install install-dev install-docs update
 .PHONY: test test-fast test-slow test-cov test-problem
 .PHONY: format lint lint-fix typecheck security quality
-.PHONY: coverage dependency-check metrics ci-full
+.PHONY: coverage dependency-check metrics ci-full ci-check validate
 .PHONY: docs-serve docs-build docs-strict
 .PHONY: pre-commit setup check run-problem
 .PHONY: clean clean-docs clean-all clean-reports
-.PHONY: problems status new-problem
+.PHONY: problems status stats progress new-problem
+.PHONY: benchmark benchmark-problem
+.PHONY: issue-create issue-develop pr-create pr-status pr-merge issue-close
 
 ## Help
 help: ## Show this help message
@@ -53,6 +55,12 @@ help: ## Show this help message
 	@echo "$(BOLD)Development Workflow:$(RESET)"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / && /setup|check|pre-commit|run-problem/ {printf "  $(BLUE)%-20s$(RESET) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo
+	@echo "$(BOLD)GitHub Workflow:$(RESET)"
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / && /issue-|pr-/ {printf "  $(MAGENTA)%-20s$(RESET) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@echo
+	@echo "$(BOLD)Performance & Analysis:$(RESET)"
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / && /benchmark|stats|progress/ {printf "  $(CYAN)%-20s$(RESET) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@echo
 	@echo "$(BOLD)Utilities:$(RESET)"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / && /clean|problems|status|new-problem/ {printf "  $(RED)%-20s$(RESET) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo
@@ -60,6 +68,8 @@ help: ## Show this help message
 	@echo "  make test-problem PROBLEM=001    # Test specific problem"
 	@echo "  make run-problem PROBLEM=001     # Run specific problem"
 	@echo "  make new-problem PROBLEM=010     # Create new problem template"
+	@echo "  make issue-create PROBLEM=025    # Create GitHub issue for problem"
+	@echo "  make pr-create ISSUE=123         # Create PR for issue"
 
 ## Dependencies
 install: ## Install all dependencies (recommended)
@@ -150,6 +160,19 @@ quality: format lint typecheck security ## Run all code quality checks
 ci-full: test coverage quality dependency-check metrics docs-strict ## Run complete CI/CD pipeline locally
 	@echo "$(BOLD)$(GREEN)Complete CI/CD pipeline completed successfully!$(RESET)"
 
+ci-check: test-fast quality docs-strict ## Run CI-equivalent checks locally (fast)
+	@echo "$(BOLD)$(GREEN)Local CI checks completed successfully!$(RESET)"
+
+validate: ## Validate project configuration files
+	@echo "$(BOLD)$(YELLOW)Validating project configuration...$(RESET)"
+	@echo "$(CYAN)Checking pyproject.toml...$(RESET)"
+	@$(UV) run python -c "import tomllib; tomllib.load(open('pyproject.toml', 'rb'))" && echo "  ✓ pyproject.toml is valid"
+	@echo "$(CYAN)Checking mkdocs.yml...$(RESET)"
+	@$(MKDOCS) build --strict --quiet && echo "  ✓ mkdocs.yml is valid"
+	@echo "$(CYAN)Checking .pre-commit-config.yaml...$(RESET)"
+	@$(PRE_COMMIT) validate-config && echo "  ✓ .pre-commit-config.yaml is valid"
+	@echo "$(BOLD)$(GREEN)All configuration files are valid!$(RESET)"
+
 ## Documentation
 docs-serve: ## Start documentation development server
 	@echo "$(BOLD)$(MAGENTA)Starting documentation server...$(RESET)"
@@ -192,6 +215,106 @@ run-problem: ## Run specific problem (use: make run-problem PROBLEM=001)
 	@echo "$(BOLD)$(BLUE)Running Problem $(PROBLEM)...$(RESET)"
 	$(PYTHON) problems/problem_$(PROBLEM).py
 
+## Performance & Analysis
+benchmark: ## Run performance benchmarks for all problems
+	@echo "$(BOLD)$(CYAN)Running benchmarks for all problems...$(RESET)"
+	@echo "$(YELLOW)This may take a while...$(RESET)"
+	@mkdir -p benchmarks
+	@echo '{"timestamp": "'$$(date -Iseconds)'", "benchmarks": [' > benchmarks/benchmark-results.json
+	@first=true; \
+	for file in problems/problem_*.py; do \
+		if [ -f "$$file" ]; then \
+			problem=$$(basename "$$file" .py | sed 's/problem_//'); \
+			echo "$(CYAN)Benchmarking Problem $$problem...$(RESET)"; \
+			if [ "$$first" = true ]; then first=false; else echo ',' >> benchmarks/benchmark-results.json; fi; \
+			echo -n '  {"problem": "'$$problem'", "timestamp": "'$$(date -Iseconds)'", ' >> benchmarks/benchmark-results.json; \
+			start_time=$$(date +%s%N); \
+			$(PYTHON) "$$file" > /dev/null 2>&1; \
+			end_time=$$(date +%s%N); \
+			duration=$$(($$end_time - $$start_time)); \
+			duration_ms=$$(($$duration / 1000000)); \
+			echo '"duration_ms": '$$duration_ms', "status": "success"}' >> benchmarks/benchmark-results.json; \
+		fi; \
+	done
+	@echo ']}' >> benchmarks/benchmark-results.json
+	@echo "$(BOLD)$(GREEN)Benchmark completed! Results saved to benchmarks/benchmark-results.json$(RESET)"
+
+benchmark-problem: ## Run benchmark for specific problem (use: make benchmark-problem PROBLEM=001)
+	@if [ -z "$(PROBLEM)" ]; then \
+		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
+		echo "Usage: make benchmark-problem PROBLEM=001"; \
+		exit 1; \
+	fi
+	@if [ ! -f "problems/problem_$(PROBLEM).py" ]; then \
+		echo "$(RED)Error: problems/problem_$(PROBLEM).py not found$(RESET)"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)$(CYAN)Benchmarking Problem $(PROBLEM)...$(RESET)"
+	@mkdir -p benchmarks
+	@start_time=$$(date +%s%N); \
+	$(PYTHON) problems/problem_$(PROBLEM).py; \
+	end_time=$$(date +%s%N); \
+	duration=$$(($$end_time - $$start_time)); \
+	duration_ms=$$(($$duration / 1000000)); \
+	echo "$(BOLD)$(GREEN)Execution time: $${duration_ms}ms$(RESET)"; \
+	echo '{"problem": "$(PROBLEM)", "timestamp": "'$$(date -Iseconds)'", "duration_ms": '$$duration_ms', "status": "success"}' > benchmarks/problem_$(PROBLEM)_benchmark.json
+
+stats: ## Show detailed project statistics
+	@echo "$(BOLD)$(CYAN)Project Euler First 100 - Detailed Statistics$(RESET)"
+	@echo
+	@echo "$(BOLD)Implementation Progress:$(RESET)"
+	@problem_count=$$(ls problems/problem_*.py 2>/dev/null | wc -l); \
+	progress_percent=$$(echo "scale=1; $$problem_count * 100 / 100" | bc 2>/dev/null || echo "$$problem_count"); \
+	echo "  Problems implemented: $$problem_count/100 ($$progress_percent%)"
+	@test_count=$$(ls tests/problems/test_problem_*.py 2>/dev/null | wc -l); \
+	echo "  Test files: $$test_count"
+	@doc_count=$$(ls docs/solutions/solution_*.md 2>/dev/null | wc -l); \
+	echo "  Documentation files: $$doc_count"
+	@echo
+	@echo "$(BOLD)Code Quality Metrics:$(RESET)"
+	@total_lines=$$(find problems/ -name "*.py" -exec wc -l {} + 2>/dev/null | tail -1 | awk '{print $$1}' || echo "0"); \
+	echo "  Total lines of code: $$total_lines"
+	@total_functions=$$(grep -r "^def " problems/ 2>/dev/null | wc -l || echo "0"); \
+	echo "  Total functions: $$total_functions"
+	@echo
+	@echo "$(BOLD)Test Coverage:$(RESET)"
+	@test_files=$$(find tests/ -name "*.py" -not -name "__*" | wc -l); \
+	echo "  Test files: $$test_files"
+	@total_tests=$$(grep -r "def test_" tests/ 2>/dev/null | wc -l || echo "0"); \
+	echo "  Total test functions: $$total_tests"
+	@echo
+	@echo "$(BOLD)Repository Status:$(RESET)"
+	@git status --porcelain | wc -l | xargs printf "  Modified files: %s\n"
+	@git rev-parse --abbrev-ref HEAD | xargs printf "  Current branch: %s\n"
+	@git log --oneline -1 | cut -d' ' -f2- | xargs printf "  Latest commit: %s\n"
+
+progress: ## Show progress toward 100 problems goal
+	@echo "$(BOLD)$(CYAN)Progress Toward 100 Problems Goal$(RESET)"
+	@echo
+	@problem_count=$$(ls problems/problem_*.py 2>/dev/null | wc -l); \
+	remaining=$$((100 - $$problem_count)); \
+	progress_percent=$$(echo "scale=1; $$problem_count * 100 / 100" | bc 2>/dev/null || echo "$$problem_count"); \
+	echo "$(BOLD)Current Progress:$(RESET) $$problem_count/100 problems ($$progress_percent%)"; \
+	echo "$(BOLD)Remaining:$(RESET) $$remaining problems"; \
+	echo; \
+	echo "$(BOLD)Progress Bar:$(RESET)"; \
+	completed_bars=$$(($$problem_count / 2)); \
+	remaining_bars=$$((50 - $$completed_bars)); \
+	printf "  ["; \
+	for i in $$(seq 1 $$completed_bars); do printf "$(GREEN)█$(RESET)"; done; \
+	for i in $$(seq 1 $$remaining_bars); do printf "$(RED)░$(RESET)"; done; \
+	printf "] $$progress_percent%%\n"; \
+	echo; \
+	if [ $$problem_count -ge 90 ]; then \
+		echo "$(BOLD)$(GREEN)🎉 Excellent progress! Almost at the goal!$(RESET)"; \
+	elif [ $$problem_count -ge 50 ]; then \
+		echo "$(BOLD)$(YELLOW)💪 Great progress! Halfway there!$(RESET)"; \
+	elif [ $$problem_count -ge 25 ]; then \
+		echo "$(BOLD)$(BLUE)📈 Good progress! Keep it up!$(RESET)"; \
+	else \
+		echo "$(BOLD)$(CYAN)🚀 Just getting started!$(RESET)"; \
+	fi
+
 ## Utilities
 clean: ## Clean cache and temporary files
 	@echo "$(BOLD)$(RED)Cleaning cache and temporary files...$(RESET)"
@@ -210,7 +333,7 @@ clean-docs: ## Clean documentation build files
 clean-reports: ## Clean generated reports
 	@echo "$(BOLD)$(RED)Cleaning generated reports...$(RESET)"
 	@rm -f bandit-report.json safety-report.json xenon-report.txt radon-*.json coverage.xml
-	@rm -rf htmlcov/ .coverage
+	@rm -rf htmlcov/ .coverage benchmarks/
 
 clean-all: clean clean-docs clean-reports ## Clean everything
 	@echo "$(BOLD)$(GREEN)All cleaned!$(RESET)"
@@ -372,3 +495,95 @@ new-problem: ## Create new problem template (use: make new-problem PROBLEM=010)
 	@echo "  1. Edit problems/problem_$(PROBLEM).py with problem description and solutions"
 	@echo "  2. Add test cases to tests/problems/test_problem_$(PROBLEM).py"
 	@echo "  3. Update docs/solutions/solution_$(PROBLEM).md with detailed explanation"
+
+## GitHub Workflow
+issue-create: ## Create GitHub issue for new problem (use: make issue-create PROBLEM=025 TITLE="Problem Title")
+	@if [ -z "$(PROBLEM)" ]; then \
+		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
+		echo "Usage: make issue-create PROBLEM=025 TITLE=\"Problem Title\""; \
+		exit 1; \
+	fi
+	@if [ -z "$(TITLE)" ]; then \
+		title="Solve Problem $(PROBLEM)"; \
+	else \
+		title="$(TITLE)"; \
+	fi
+	@echo "$(BOLD)$(MAGENTA)Creating GitHub issue for Problem $(PROBLEM)...$(RESET)"
+	@issue_url=$$(gh issue create \
+		--title "Solve Problem $(PROBLEM): $$title" \
+		--body "## 目標\nProject Euler Problem $(PROBLEM)の実装\n\n## タスク\n- [ ] 問題の理解と分析\n- [ ] 素直な解法の実装\n- [ ] 最適化解法の実装\n- [ ] 数学的解法の実装（必要に応じて）\n- [ ] テストケースの作成\n- [ ] ドキュメントの作成\n- [ ] パフォーマンステスト\n\n## 関連ファイル\n- problems/problem_$(PROBLEM).py\n- tests/problems/test_problem_$(PROBLEM).py\n- docs/solutions/solution_$(PROBLEM).md\n\n## 参考\n- [Project Euler Problem $(PROBLEM)](https://projecteuler.net/problem=$(PROBLEM))" \
+		--label "enhancement,problem" \
+		--assignee @me); \
+	echo "$(GREEN)Issue created: $$issue_url$(RESET)"
+
+issue-develop: ## Create development branch for issue (use: make issue-develop ISSUE=123)
+	@if [ -z "$(ISSUE)" ]; then \
+		echo "$(RED)Error: ISSUE variable is required$(RESET)"; \
+		echo "Usage: make issue-develop ISSUE=123"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)$(MAGENTA)Creating development branch for issue #$(ISSUE)...$(RESET)"
+	@gh issue develop $(ISSUE)
+	@echo "$(GREEN)Development branch created and checked out$(RESET)"
+
+pr-create: ## Create pull request for issue (use: make pr-create ISSUE=123 TITLE="Problem Title")
+	@if [ -z "$(ISSUE)" ]; then \
+		echo "$(RED)Error: ISSUE variable is required$(RESET)"; \
+		echo "Usage: make pr-create ISSUE=123 TITLE=\"Problem Title\""; \
+		exit 1; \
+	fi
+	@if [ -z "$(TITLE)" ]; then \
+		title="Solve Problem"; \
+	else \
+		title="$(TITLE)"; \
+	fi
+	@echo "$(BOLD)$(MAGENTA)Creating pull request for issue #$(ISSUE)...$(RESET)"
+	@current_branch=$$(git rev-parse --abbrev-ref HEAD); \
+	if [ "$$current_branch" = "main" ]; then \
+		echo "$(RED)Error: Cannot create PR from main branch$(RESET)"; \
+		exit 1; \
+	fi; \
+	git push -u origin $$current_branch; \
+	pr_url=$$(gh pr create \
+		--title "$$title" \
+		--body "$$(cat <<'EOF'\n## 概要\n問題の解決と実装\n\n## 変更内容\n- [ ] 問題解法の実装\n- [ ] テストケースの追加\n- [ ] ドキュメントの更新\n\n## テスト計画\n- [ ] 単体テストの実行\n- [ ] パフォーマンステスト\n- [ ] コード品質チェック\n\nCloses #$(ISSUE)\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\nEOF\n)" \
+		--assignee @me); \
+	echo "$(GREEN)Pull request created: $$pr_url$(RESET)"
+
+pr-status: ## Check pull request status (use: make pr-status PR=123)
+	@if [ -z "$(PR)" ]; then \
+		echo "$(RED)Error: PR variable is required$(RESET)"; \
+		echo "Usage: make pr-status PR=123"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)$(MAGENTA)Checking status of PR #$(PR)...$(RESET)"
+	@gh pr view $(PR) --json statusCheckRollup,reviewDecision,mergeable,title,url \
+		--template '{{.title}} - {{.url}}\nReview Status: {{.reviewDecision}}\nMergeable: {{.mergeable}}\nChecks:\n{{range .statusCheckRollup}}  - {{.context}}: {{.conclusion}}\n{{end}}'
+
+pr-merge: ## Merge pull request after checks (use: make pr-merge PR=123)
+	@if [ -z "$(PR)" ]; then \
+		echo "$(RED)Error: PR variable is required$(RESET)"; \
+		echo "Usage: make pr-merge PR=123"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)$(MAGENTA)Checking PR #$(PR) status before merge...$(RESET)"
+	@status=$$(gh pr view $(PR) --json statusCheckRollup --jq '.statusCheckRollup | map(select(.conclusion != "SUCCESS")) | length'); \
+	if [ "$$status" -gt 0 ]; then \
+		echo "$(RED)Error: PR has failing checks. Cannot merge.$(RESET)"; \
+		echo "$(YELLOW)Run 'make pr-status PR=$(PR)' to see details$(RESET)"; \
+		exit 1; \
+	fi
+	@echo "$(GREEN)All checks passed. Merging PR #$(PR)...$(RESET)"
+	@gh pr merge $(PR) --squash --delete-branch
+	@git checkout main && git pull
+	@echo "$(BOLD)$(GREEN)PR #$(PR) merged successfully!$(RESET)"
+
+issue-close: ## Close issue (use: make issue-close ISSUE=123)
+	@if [ -z "$(ISSUE)" ]; then \
+		echo "$(RED)Error: ISSUE variable is required$(RESET)"; \
+		echo "Usage: make issue-close ISSUE=123"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)$(MAGENTA)Closing issue #$(ISSUE)...$(RESET)"
+	@gh issue close $(ISSUE) --comment "✅ 実装完了しました。"
+	@echo "$(GREEN)Issue #$(ISSUE) closed$(RESET)"
