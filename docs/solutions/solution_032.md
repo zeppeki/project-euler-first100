@@ -27,7 +27,7 @@ Project Euler公式サイトで確認してください。
 ```python
 def solve_naive() -> int:
     pandigital_products = set()
-    
+
     # 1桁 × 4桁 = 4桁のケース
     for a in range(1, 10):
         for bcde in range(1000, 10000):
@@ -37,7 +37,7 @@ def solve_naive() -> int:
             combined = str(a) + str(bcde) + str(product)
             if is_pandigital_1_to_9(combined):
                 pandigital_products.add(product)
-    
+
     # 2桁 × 3桁 = 4桁のケース
     for ab in range(10, 100):
         for cde in range(100, 1000):
@@ -47,7 +47,7 @@ def solve_naive() -> int:
             combined = str(ab) + str(cde) + str(product)
             if is_pandigital_1_to_9(combined):
                 pandigital_products.add(product)
-    
+
     return sum(pandigital_products)
 ```
 
@@ -61,12 +61,12 @@ def solve_naive() -> int:
 ```python
 def solve_optimized() -> int:
     pandigital_products = set()
-    
+
     # 1桁 × 4桁 = 4桁のケース
     for multiplicand in range(1, 10):
         min_multiplier = 1000
         max_multiplier = min(9999, 9999 // multiplicand)
-        
+
         for multiplier in range(min_multiplier, max_multiplier + 1):
             product = multiplicand * multiplier
             if product < 1000 or product >= 10000:
@@ -74,12 +74,12 @@ def solve_optimized() -> int:
             combined = str(multiplicand) + str(multiplier) + str(product)
             if is_pandigital_1_to_9(combined):
                 pandigital_products.add(product)
-    
+
     # 2桁 × 3桁 = 4桁のケース
     for multiplicand in range(10, 100):
         min_multiplier = max(100, 1000 // multiplicand)
         max_multiplier = min(999, 9999 // multiplicand)
-        
+
         if min_multiplier > max_multiplier:
             continue
         for multiplier in range(min_multiplier, max_multiplier + 1):
@@ -89,7 +89,7 @@ def solve_optimized() -> int:
             combined = str(multiplicand) + str(multiplier) + str(product)
             if is_pandigital_1_to_9(combined):
                 pandigital_products.add(product)
-    
+
     return sum(pandigital_products)
 ```
 
@@ -105,20 +105,20 @@ def solve_mathematical() -> int:
     # 9桁のパンデジタル数では、可能な乗算パターンは限定される
     # a × bcde = fghi (1 + 4 + 4 = 9)
     # ab × cde = fghi (2 + 3 + 4 = 9)
-    
+
     def find_pandigital_products_pattern_1() -> set[int]:
         """1桁 × 4桁 = 4桁パターン"""
         # より効率的な範囲計算で実装
-    
+
     def find_pandigital_products_pattern_2() -> set[int]:
         """2桁 × 3桁 = 4桁パターン"""
         # より効率的な範囲計算で実装
-    
+
     # 両パターンの結果を結合
     pandigital_products = set()
     pandigital_products.update(find_pandigital_products_pattern_1())
     pandigital_products.update(find_pandigital_products_pattern_2())
-    
+
     return sum(pandigital_products)
 ```
 

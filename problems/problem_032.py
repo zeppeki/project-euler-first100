@@ -138,7 +138,6 @@ def solve_mathematical() -> int:
 
         # 1桁の乗数は1-9
         for a in range(1, 10):
-
             # 4桁数の最小値と最大値を計算
             min_4digit = 1000
             max_4digit = 9999
@@ -181,4 +180,3 @@ def solve_mathematical() -> int:
     pandigital_products.update(find_pandigital_products_pattern_2())
 
     return sum(pandigital_products)
-
