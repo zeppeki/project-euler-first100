@@ -16,7 +16,7 @@ from problems.problem_032 import (
 class TestProblem032:
     """Problem 032のテストクラス"""
 
-    def test_is_pandigital_1_to_9(self):
+    def test_is_pandigital_1_to_9(self) -> None:
         """パンデジタル判定関数のテスト"""
         # 正常な1-9パンデジタル
         assert is_pandigital_1_to_9("123456789") is True
@@ -25,18 +25,18 @@ class TestProblem032:
 
         # 異常ケース
         assert is_pandigital_1_to_9("123456788") is False  # 8が重複
-        assert is_pandigital_1_to_9("12345679") is False   # 8文字（不足）
-        assert is_pandigital_1_to_9("1234567890") is False # 10文字（過多）
+        assert is_pandigital_1_to_9("12345679") is False  # 8文字（不足）
+        assert is_pandigital_1_to_9("1234567890") is False  # 10文字（過多）
         assert is_pandigital_1_to_9("023456789") is False  # 0を含む
         assert is_pandigital_1_to_9("123456780") is False  # 0を含む、9がない
 
-    def test_known_pandigital_products(self):
+    def test_known_pandigital_products(self) -> None:
         """既知のパンデジタル積の例をテスト"""
         # 例題で示されている組み合わせ
         examples = [
-            (39, 186, 7254),   # 39 × 186 = 7254
-            (4, 1738, 6952),   # 4 × 1738 = 6952 (推定)
-            (4, 1963, 7852),   # 4 × 1963 = 7852 (推定)
+            (39, 186, 7254),  # 39 × 186 = 7254
+            (4, 1738, 6952),  # 4 × 1738 = 6952 (推定)
+            (4, 1963, 7852),  # 4 × 1963 = 7852 (推定)
         ]
 
         for multiplicand, multiplier, expected_product in examples:
@@ -48,7 +48,7 @@ class TestProblem032:
             if len(combined) == 9:  # 9桁の場合のみテスト
                 assert is_pandigital_1_to_9(combined)
 
-    def test_solve_naive(self):
+    def test_solve_naive(self) -> None:
         """素直な解法のテスト"""
         result = solve_naive()
         assert isinstance(result, int)
@@ -56,7 +56,7 @@ class TestProblem032:
         # 期待される解答の範囲をテスト（具体的な値は隠匿）
         assert 40000 <= result <= 50000
 
-    def test_solve_optimized(self):
+    def test_solve_optimized(self) -> None:
         """最適化解法のテスト"""
         result = solve_optimized()
         assert isinstance(result, int)
@@ -64,7 +64,7 @@ class TestProblem032:
         # 期待される解答の範囲をテスト
         assert 40000 <= result <= 50000
 
-    def test_solve_mathematical(self):
+    def test_solve_mathematical(self) -> None:
         """数学的解法のテスト"""
         result = solve_mathematical()
         assert isinstance(result, int)
@@ -72,7 +72,7 @@ class TestProblem032:
         # 期待される解答の範囲をテスト
         assert 40000 <= result <= 50000
 
-    def test_all_solutions_agree(self):
+    def test_all_solutions_agree(self) -> None:
         """すべての解法が同じ結果を返すことを確認"""
         naive_result = solve_naive()
         optimized_result = solve_optimized()
@@ -81,7 +81,7 @@ class TestProblem032:
         assert naive_result == optimized_result == mathematical_result
 
     @pytest.mark.slow
-    def test_performance_comparison(self):
+    def test_performance_comparison(self) -> None:
         """パフォーマンス比較のテスト（時間測定）"""
         import time
 
@@ -113,7 +113,7 @@ class TestProblem032:
         assert optimized_time < 5.0  # 5秒以内
         assert mathematical_time < 5.0  # 5秒以内
 
-    def test_edge_cases(self):
+    def test_edge_cases(self) -> None:
         """エッジケースのテスト"""
         # パンデジタル判定のエッジケース
         assert is_pandigital_1_to_9("") is False
@@ -124,7 +124,7 @@ class TestProblem032:
         assert is_pandigital_1_to_9("111111111") is False
         assert is_pandigital_1_to_9("123123123") is False
 
-    def test_digit_patterns(self):
+    def test_digit_patterns(self) -> None:
         """桁数パターンのテスト"""
         # 1桁 × 4桁 = 4桁パターンの検証
         # 例: 4 × 1738 = 6952 → "417386952"
@@ -137,4 +137,3 @@ class TestProblem032:
         combined_2 = "391867254"
         assert len(combined_2) == 9
         assert is_pandigital_1_to_9(combined_2)
-
