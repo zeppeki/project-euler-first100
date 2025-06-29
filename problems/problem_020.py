@@ -13,7 +13,6 @@ Answer: 648
 """
 
 import math
-import time
 
 
 def solve_naive(n: int) -> int:
@@ -59,39 +58,3 @@ def solve_mathematical(n: int) -> int:
         digit_sum = sum(int(digit) for digit in str(factorial))
 
     return digit_sum
-
-
-def main() -> None:
-    """メイン関数"""
-    n = 100
-
-    # 各解法の実行と時間測定
-    start_time = time.time()
-    result_naive = solve_naive(n)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(n)
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical(n)
-    math_time = time.time() - start_time
-
-    print("100!の各桁の数字の合計:")
-    print(f"  素直な解法: {result_naive} (実行時間: {naive_time:.6f}秒)")
-    print(f"  最適化解法: {result_optimized} (実行時間: {optimized_time:.6f}秒)")
-    print(f"  数学的解法: {result_math} (実行時間: {math_time:.6f}秒)")
-
-    # 結果の検証
-    if result_naive == result_optimized == result_math:
-        print(f"\n✓ 解答: {result_naive}")
-    else:
-        print("\n✗ 解答が一致しません")
-        print(f"  素直な解法: {result_naive}")
-        print(f"  最適化解法: {result_optimized}")
-        print(f"  数学的解法: {result_math}")
-
-
-if __name__ == "__main__":
-    main()

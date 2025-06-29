@@ -278,21 +278,5 @@ class TestPerformance:
         assert math_time < 1.0
 
 
-class TestMainFunction:
-    """メイン関数のテスト"""
-
-    def test_main_function_exists(self, problem: Any) -> None:
-        """main関数が存在することを確認"""
-        assert hasattr(problem, "main")
-        assert callable(problem.main)
-
-    def test_helper_functions_exist(self, problem: Any) -> None:
-        """ヘルパー関数が存在することを確認"""
-        functions = ["is_leap_year", "days_in_month", "test_solutions"]
-        for func_name in functions:
-            assert hasattr(problem, func_name)
-            assert callable(getattr(problem, func_name))
-
-
 if __name__ == "__main__":
     pytest.main([__file__])
