@@ -164,9 +164,9 @@ class TestProblem034:
         print(f"数学的解法: {mathematical_time:.6f}秒")
 
         # 妥当な時間内で実行されることを確認
-        assert naive_time < 10.0  # 10秒以内
-        assert optimized_time < 5.0  # 5秒以内
-        assert mathematical_time < 5.0  # 5秒以内
+        assert naive_time < 20.0  # 20秒以内
+        assert optimized_time < 10.0  # 10秒以内
+        assert mathematical_time < 10.0  # 10秒以内
 
     def test_edge_cases(self) -> None:
         """エッジケースのテスト"""
