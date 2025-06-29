@@ -85,3 +85,5 @@ temp/
 
 # MkDocs build output
 site/
+.coverage
+coverage.xml
