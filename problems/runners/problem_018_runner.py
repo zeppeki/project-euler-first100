@@ -3,9 +3,14 @@
 Runner for Problem 018: Maximum Path Sum I
 """
 
+import os
+import sys
 import time
 
-from problems.problem_018 import (
+# Add problems directory to path to import problem modules
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+from problem_018 import (
     get_example_triangle,
     get_problem_triangle,
     solve_mathematical,

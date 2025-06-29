@@ -3,9 +3,14 @@
 Runner for Problem 019: Counting Sundays
 """
 
+import os
+import sys
 import time
 
-from problems.problem_019 import (
+# Add problems directory to path to import problem modules
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+from problem_019 import (
     solve_mathematical,
     solve_naive,
     solve_optimized,
