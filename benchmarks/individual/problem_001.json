@@ -1,0 +1,59 @@
+{
+  "problem_number": "001",
+  "problem_title": "Multiples of 3 and 5",
+  "timestamp": "2025-06-29T17:17:47.695494",
+  "config": {
+    "runs": 5,
+    "warmup_runs": 2,
+    "min_time": 0.001,
+    "max_time": 10.0
+  },
+  "input_parameters": {
+    "limit": 1000
+  },
+  "solutions": [
+    {
+      "name": "素直な解法",
+      "function_name": "solve_naive",
+      "algorithm_type": "naive",
+      "result": 233168,
+      "execution_times": [
+        7.669598562642932e-05,
+        5.732499994337559e-05,
+        5.52469864487648e-05,
+        6.361602572724223e-05,
+        5.743600195273757e-05
+      ],
+      "mean_time": 6.20639999397099e-05,
+      "median_time": 5.743600195273757e-05,
+      "std_deviation": 8.758595042156182e-06,
+      "min_time": 5.52469864487648e-05,
+      "max_time": 7.669598562642932e-05,
+      "relative_speed": 52.0839105501226,
+      "complexity_class": "O(n)"
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 233168,
+      "execution_times": [
+        1.8849968910217285e-06,
+        1.219043042510748e-06,
+        9.980285540223122e-07,
+        9.330105967819691e-07,
+        9.229988791048527e-07
+      ],
+      "mean_time": 1.191615592688322e-06,
+      "median_time": 9.980285540223122e-07,
+      "std_deviation": 4.0559749572262705e-07,
+      "min_time": 9.229988791048527e-07,
+      "max_time": 1.8849968910217285e-06,
+      "relative_speed": 1.0,
+      "complexity_class": "O(1)"
+    }
+  ],
+  "fastest_solution": "最適化解法",
+  "verified": true,
+  "total_benchmark_time": 0.0007369460072368383
+}

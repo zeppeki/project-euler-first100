@@ -1,0 +1,59 @@
+{
+  "problem_number": "003",
+  "problem_title": "Largest prime factor",
+  "timestamp": "2025-06-29T17:17:47.793571",
+  "config": {
+    "runs": 5,
+    "warmup_runs": 2,
+    "min_time": 0.001,
+    "max_time": 10.0
+  },
+  "input_parameters": {
+    "n": 600851475143
+  },
+  "solutions": [
+    {
+      "name": "素直な解法",
+      "function_name": "solve_naive",
+      "algorithm_type": "naive",
+      "result": 6857,
+      "execution_times": [
+        0.00016339501598849893,
+        0.00016353401588276029,
+        0.00016366300405934453,
+        0.0001631550258025527,
+        0.00017358397599309683
+      ],
+      "mean_time": 0.00016546620754525064,
+      "median_time": 0.00016353401588276029,
+      "std_deviation": 4.541873719005411e-06,
+      "min_time": 0.0001631550258025527,
+      "max_time": 0.00017358397599309683,
+      "relative_speed": 1.0,
+      "complexity_class": "O(n)"
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 6857,
+      "execution_times": [
+        0.013674894988071173,
+        0.013594790012575686,
+        0.01359465200221166,
+        0.013655459973961115,
+        0.01350729598198086
+      ],
+      "mean_time": 0.013605418591760099,
+      "median_time": 0.013594790012575686,
+      "std_deviation": 6.555158707619954e-05,
+      "min_time": 0.01350729598198086,
+      "max_time": 0.013674894988071173,
+      "relative_speed": 82.22475630282017,
+      "complexity_class": "O(√n)"
+    }
+  ],
+  "fastest_solution": "素直な解法",
+  "verified": true,
+  "total_benchmark_time": 0.0967032560147345
+}

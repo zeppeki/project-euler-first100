@@ -1,0 +1,18 @@
+Problem 005: Smallest multiple
+============================================================
+Benchmark Timestamp: 2025-06-29T17:38:52.934864
+
+SUMMARY STATISTICS
+--------------------
+Stages Completed:
+Input Values Tested: 0
+Algorithms Tested:
+Total Benchmark Time: 0.37 seconds
+
+TIMEOUT ANALYSIS
+----------------
+Total Measurements: 0
+Timeout Rate: 0.0%
+
+DETAILED RESULTS BY STAGE
+--------------------------
