@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 027: Quadratic primes
+Problem 027 Runner: Quadratic primes
+実行・表示・パフォーマンス測定を担当
 """
 
 import time
 
-from ..problem_027 import solve_naive, solve_optimized
+from problems.problem_027 import solve_naive, solve_optimized
 
 
 def main() -> None:

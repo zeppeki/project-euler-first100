@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 029: Distinct powers
+Problem 029 Runner: Distinct powers
+実行・表示・パフォーマンス測定を担当
 """
 
 import time
 
-from ..problem_029 import solve_naive, solve_optimized
+from problems.problem_029 import solve_naive, solve_optimized
 
 
 def main() -> None:

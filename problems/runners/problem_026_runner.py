@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 026: Reciprocal cycles
+Problem 026 Runner: Reciprocal cycles
+実行・表示・パフォーマンス測定を担当
 """
 
 import time
 
-from ..problem_026 import solve_naive, solve_optimized
+from problems.problem_026 import solve_naive, solve_optimized
 
 
 def main() -> None:

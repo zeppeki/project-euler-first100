@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 031: Coin sums
+Problem 031 Runner: Coin sums
+実行・表示・パフォーマンス測定を担当
 """
 
 import time
 
-from ..problem_031 import solve_naive, solve_optimized
+from problems.problem_031 import solve_naive, solve_optimized
 
 
 def test_solutions() -> None:

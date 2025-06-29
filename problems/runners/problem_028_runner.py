@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 028: Number spiral diagonals
+Problem 028 Runner: Number spiral diagonals
+実行・表示・パフォーマンス測定を担当
 """
 
 import time
 
-from ..problem_028 import solve_mathematical, solve_naive, solve_optimized
+from problems.problem_028 import solve_mathematical, solve_naive, solve_optimized
 
 
 def test_solutions() -> None:

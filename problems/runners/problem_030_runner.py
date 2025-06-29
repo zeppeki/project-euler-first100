@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 030: Digit fifth powers
+Problem 030 Runner: Digit fifth powers
+実行・表示・パフォーマンス測定を担当
 """
 
 import time
 
-from ..problem_030 import solve
+from problems.problem_030 import solve
 
 
 def main() -> None:
