@@ -599,7 +599,25 @@ pr-create: ## Create pull request for issue (use: make pr-create ISSUE=123 TITLE
 	git push -u origin $$current_branch; \
 	pr_url=$$(gh pr create \
 		--title "$$title" \
-		--body "$$(cat <<'EOF'\n## 概要\n問題の解決と実装\n\n## 変更内容\n- [ ] 問題解法の実装\n- [ ] テストケースの追加\n- [ ] ドキュメントの更新\n\n## テスト計画\n- [ ] 単体テストの実行\n- [ ] パフォーマンステスト\n- [ ] コード品質チェック\n\nCloses #$(ISSUE)\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\nEOF\n)" \
+		--body "$$(cat <<'EOF'
+	## 概要
+	問題の解決と実装
+
+	## 変更内容
+	- [ ] 問題解法の実装
+	- [ ] テストケースの追加
+	- [ ] ドキュメントの更新
+
+	## テスト計画
+	- [ ] 単体テストの実行
+	- [ ] パフォーマンステスト
+	- [ ] コード品質チェック
+
+	Closes #$(ISSUE)
+
+	🤖 Generated with [Claude Code](https://claude.ai/code)
+	EOF
+	)" \
 		--assignee @me); \
 	echo "$(GREEN)Pull request created: $$pr_url$(RESET)"
 
