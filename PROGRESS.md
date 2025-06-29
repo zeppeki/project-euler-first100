@@ -26,16 +26,26 @@
 | 018 | Maximum path sum I | 🟢 完了 | Python | 2025-06-25 |
 | 019 | Counting Sundays | 🟢 完了 | Python | 2025-06-25 |
 | 020 | Factorial digit sum | 🟢 完了 | Python | 2025-06-25 |
-| 021 | ... | 🔴 未着手 | ... | ... |
-| 022 | ... | 🔴 未着手 | ... | ... |
+| 021 | Amicable numbers | 🟢 完了 | Python | 2025-06-26 |
+| 022 | Names scores | 🟢 完了 | Python | 2025-06-26 |
 | 023 | Non-Abundant Sums | 🟢 完了 | Python | 2025-06-26 |
 | 024 | Lexicographic permutations | 🟢 完了 | Python | 2025-06-27 |
 | 025 | 1000-digit Fibonacci number | 🟢 完了 | Python | 2025-06-28 |
 | 026 | Reciprocal cycles | 🟢 完了 | Python | 2025-06-28 |
 | 027 | Quadratic primes | 🟢 完了 | Python | 2025-06-28 |
+| 028 | Number spiral diagonals | 🟢 完了 | Python | 2025-06-28 |
 | 029 | Distinct powers | 🟢 完了 | Python | 2025-06-27 |
 | 030 | Digit fifth powers | 🟢 完了 | Python | 2025-06-28 |
-| ... | ... | ... | ... | ... |
+| 031 | Coin sums | 🟢 完了 | Python | 2025-06-28 |
+| 032 | Pandigital products | 🟢 完了 | Python | 2025-06-28 |
+| 033 | Digit cancelling fractions | 🟢 完了 | Python | 2025-06-29 |
+| 034 | Digit factorials | 🟢 完了 | Python | 2025-06-29 |
+| 035 | Circular primes | 🟢 完了 | Python | 2025-06-29 |
+| 036 | Double-base palindromes | 🟢 完了 | Python | 2025-06-29 |
+| 037 | Truncatable primes | 🟢 完了 | Python | 2025-06-29 |
+| 038 | Pandigital multiples | 🟢 完了 | Python | 2025-06-29 |
+| 039 | Integer right triangles | 🟢 完了 | Python | 2025-06-29 |
+| 040 | Champernowne's constant | 🟢 完了 | Python | 2025-06-29 |
 
 ## 凡例
 
@@ -46,14 +56,15 @@
 
 ## 統計
 
-- 完了: 25/100
+- 完了: 40/100
 - 作業中: 0/100
-- 未着手: 75/100
+- 未着手: 60/100
 
 ## 目標
 
 - [x] 最初の10問を完了 (10/10)
-- [x] 最初の25問を完了 (25/25) - 100%進捗
+- [x] 最初の25問を完了 (25/25)
+- [x] 最初の40問を完了 (40/40) - 100%進捗
 - [ ] 最初の50問を完了
 - [ ] 最初の100問を完了
 
@@ -215,6 +226,72 @@
   - `problems/problem_017.py`
   - `docs/solutions/solution_017.md`
 
+### Problem 018: Maximum path sum I
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(2^n)) - 全ての経路を探索
+  - 最適化解法 (O(n²)) - 動的プログラミングで最大パス和を計算
+- **ファイル**:
+  - `problems/problem_018.py`
+  - `docs/solutions/solution_018.md`
+- **学習ポイント**: 動的プログラミング、三角形の経路問題
+
+### Problem 019: Counting Sundays
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - 各年月の1日が日曜日かチェック
+  - 最適化解法 (O(1)) - ツェラーの公式による効率的な曜日計算
+- **ファイル**:
+  - `problems/problem_019.py`
+  - `docs/solutions/solution_019.md`
+- **学習ポイント**: 日付計算、モジュロ演算
+
+### Problem 020: Factorial digit sum
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n!)) - 階乗を計算し各桁の和を求める
+  - 最適化解法 (O(n)) - math.factorialとstr変換による効率的計算
+- **ファイル**:
+  - `problems/problem_020.py`
+  - `docs/solutions/solution_020.md`
+- **学習ポイント**: 大数の桁和計算、階乗の性質
+
+### Problem 021: Amicable numbers
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 各数の真約数の和を計算
+  - 最適化解法 (O(n × √n)) - 平方根まで試し割りで真約数の和を計算
+- **ファイル**:
+  - `problems/problem_021.py`
+  - `docs/solutions/solution_021.md`
+- **学習ポイント**: 真約数の効率的な計算、友愛数の性質
+
+### Problem 022: Names scores
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n log n)) - 名前をソートして順位とスコアを計算
+  - 最適化解法 (O(n log n)) - より効率的なソートとスコア計算
+- **ファイル**:
+  - `problems/problem_022.py`
+  - `docs/solutions/solution_022.md`
+- **学習ポイント**: 文字列処理、ソートアルゴリズム
+
+### Problem 023: Non-abundant sums
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 全ての過剰数を見つけて非過剰数和を判定
+  - 最適化解法 (O(n × √n)) - 効率的な約数和計算で過剰数を特定
+- **ファイル**:
+  - `problems/problem_023.py`
+  - `docs/solutions/solution_023.md`
+- **学習ポイント**: 過剰数の性質、集合演算
+
 ### Problem 024: Lexicographic permutations
 - **解答**: [隠匿]
 - **実装言語**: Python
@@ -255,4 +332,147 @@
   - `problems/problem_027.py`
   - `docs/solutions/solution_027.md`
 
-最終更新: 2025-06-28
+### Problem 028: Number spiral diagonals
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - スパイラルを生成して対角線の和を計算
+  - 最適化解法 (O(n)) - 対角線の数列パターンを利用
+- **ファイル**:
+  - `problems/problem_028.py`
+  - `docs/solutions/solution_028.md`
+- **学習ポイント**: 数列パターンの認識、スパイラル構造
+
+### Problem 029: Distinct powers
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 全てのべき乗を計算して重複を除去
+  - 最適化解法 (O(n²)) - 集合を使用して効率的に重複を除去
+- **ファイル**:
+  - `problems/problem_029.py`
+  - `docs/solutions/solution_029.md`
+- **学習ポイント**: べき乗の性質、重複除去
+
+### Problem 030: Digit fifth powers
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - 各数について桁の5乗の和をチェック
+  - 最適化解法 (O(n)) - 上限を数学的に求めて探索範囲を限定
+- **ファイル**:
+  - `problems/problem_030.py`
+  - `docs/solutions/solution_030.md`
+- **学習ポイント**: 桁のべき乗の性質、探索範囲の数学的限定
+
+### Problem 031: Coin sums
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(2^n)) - 再帰で全ての組み合わせを探索
+  - 最適化解法 (O(n × amount)) - 動的プログラミングで組み合わせの数を計算
+- **ファイル**:
+  - `problems/problem_031.py`
+  - `docs/solutions/solution_031.md`
+- **学習ポイント**: 動的プログラミング、コイン問題
+
+### Problem 032: Pandigital products
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n!)) - 全ての数の組み合わせをチェック
+  - 最適化解法 (O(n²)) - 制約を利用して探索範囲を限定
+- **ファイル**:
+  - `problems/problem_032.py`
+  - `docs/solutions/solution_032.md`
+- **学習ポイント**: Pandigital数の性質、探索範囲の限定
+
+### Problem 033: Digit cancelling fractions
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 全ての2桁数の組み合わせをチェック
+  - 最適化解法 (O(n²)) - 制約条件で探索範囲を限定
+- **ファイル**:
+  - `problems/problem_033.py`
+  - `docs/solutions/solution_033.md`
+- **学習ポイント**: 分数の約分、最大公約数
+
+### Problem 034: Digit factorials
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - 各数について桁の階乗の和をチェック
+  - 最適化解法 (O(n)) - 上限を数学的に求めて探索範囲を限定
+- **ファイル**:
+  - `problems/problem_034.py`
+  - `docs/solutions/solution_034.md`
+- **学習ポイント**: 階乗の性質、探索範囲の限定
+
+### Problem 035: Circular primes
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 各素数について全ての回転をチェック
+  - 最適化解法 (O(n log log n)) - エラトステネスの篩で素数を事前計算
+- **ファイル**:
+  - `problems/problem_035.py`
+  - `docs/solutions/solution_035.md`
+- **学習ポイント**: 循環素数の性質、文字列回転
+
+### Problem 036: Double-base palindromes
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - 各数について十進数・二進数の回文判定
+  - 最適化解法 (O(n)) - 効率的な回文判定アルゴリズム
+- **ファイル**:
+  - `problems/problem_036.py`
+  - `docs/solutions/solution_036.md`
+- **学習ポイント**: 回文数の性質、進数変換
+
+### Problem 037: Truncatable primes
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 各素数について全ての切り捨てをチェック
+  - 最適化解法 (O(n log log n)) - エラトステネスの篩で素数を事前計算
+- **ファイル**:
+  - `problems/problem_037.py`
+  - `docs/solutions/solution_037.md`
+- **学習ポイント**: 切断可能素数の性質、文字列操作
+
+### Problem 038: Pandigital multiples
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - 各数について連結積をチェック
+  - 最適化解法 (O(n)) - 制約条件で探索範囲を限定
+- **ファイル**:
+  - `problems/problem_038.py`
+  - `docs/solutions/solution_038.md`
+- **学習ポイント**: Pandigital数の性質、文字列連結
+
+### Problem 039: Integer right triangles
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n³)) - 全ての組み合わせでピタゴラスの定理をチェック
+  - 最適化解法 (O(n²)) - 制約条件で探索範囲を限定
+- **ファイル**:
+  - `problems/problem_039.py`
+  - `docs/solutions/solution_039.md`
+- **学習ポイント**: ピタゴラスの定理、直角三角形の性質
+
+### Problem 040: Champernowne's constant
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - 数列を順次生成して特定位置の桁を取得
+  - 最適化解法 (O(log n)) - 数学的に位置を計算して直接取得
+- **ファイル**:
+  - `problems/problem_040.py`
+  - `docs/solutions/solution_040.md`
+- **学習ポイント**: Champernowne定数の性質、数列の位置計算
+
+最終更新: 2025-06-29
