@@ -6,20 +6,14 @@ This module handles the execution and demonstration of Problem 001 solutions,
 separated from the core algorithm implementations.
 """
 
-import os
-import sys
-
-# Add problems directory to path to import problem modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from problem_001 import solve_naive, solve_optimized
-from utils.display import (
+from problems.problem_001 import solve_naive, solve_optimized
+from problems.utils.display import (
     print_final_answer,
     print_performance_comparison,
     print_solution_header,
     print_test_results,
 )
-from utils.performance import compare_performance
+from problems.utils.performance import compare_performance
 
 
 def run_tests() -> None:
@@ -49,24 +43,21 @@ def run_problem() -> None:
 
     # Solve the main problem
     functions = [
-        ("素直な解法", solve_naive),
-        ("最適化解法", solve_optimized),
+        ("素直な解法", lambda: solve_naive(limit)),
+        ("最適化解法", lambda: solve_optimized(limit)),
     ]
 
-    performance_results = compare_performance(functions, limit)
+    performance_results = compare_performance(functions)
 
     # Verify all solutions agree
     results = [data["result"] for data in performance_results.values()]
     verified = len(set(results)) == 1
 
-    # Print results
-    for name, data in performance_results.items():
-        result = data["result"]
-        execution_time = data["execution_time"]
-        print(f"{name}: {result:,} (実行時間: {execution_time:.6f}秒)")
+    if verified:
+        print_final_answer(results[0], verified=True)
+    else:
+        print_final_answer(None, verified=False)
 
-    print()
-    print_final_answer(results[0], verified)
     print_performance_comparison(performance_results)
 
 
