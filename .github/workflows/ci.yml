@@ -1,10 +1,10 @@
 name: CI/CD Pipeline
 
-# Optimized CI/CD Pipeline (Issue #184)
+# Optimized CI/CD Pipeline (Issues #184, #186)
 # - Conditional execution: Heavy jobs skipped for PRs (60% time reduction)
-# - Parallel quality checks: ruff, mypy, bandit run simultaneously
 # - Enhanced caching: Improved UV cache + pytest cache for faster builds
 # - Smart dependencies: Reduced job dependency chains
+# - Coverage optimization: Exclude slow tests from coverage measurement (faster execution)
 
 on:
   push:
@@ -155,9 +155,9 @@ jobs:
     - name: Install dependencies
       run: uv pip install --system -e .[dev]
 
-    - name: Run tests with coverage (problems only)
+    - name: Run tests with coverage (problems only, exclude slow tests)
       run: |
-        uv run pytest --cov=problems --cov-report=html --cov-report=xml --cov-report=term
+        uv run pytest --cov=problems --cov-report=html --cov-report=xml --cov-report=term -m "not slow"
 
     - name: Upload coverage reports
       uses: actions/upload-artifact@v4
