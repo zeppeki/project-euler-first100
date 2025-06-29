@@ -173,8 +173,8 @@ class ProjectEulerBenchmarkRunner:
 
         try:
             # Convert input_params to args for the function calls
-            args = []
-            kwargs = {}
+            args: list[Any] = []
+            kwargs: dict[str, Any] = {}
 
             # Common parameter patterns
             if "limit" in input_params:
@@ -305,12 +305,15 @@ class ProjectEulerBenchmarkRunner:
                         )
 
             all_solutions.sort(key=lambda x: x[2])  # Sort by execution time
-            for i, (problem, solution, time, complexity) in enumerate(
-                all_solutions[:10]
-            ):
-                f.write(
-                    f"  {i + 1:2d}. {problem} - {solution}: {time:.6f}s ({complexity})\n"
-                )
+            f.writelines(
+                f"  {i + 1:2d}. {problem_name} - {solution_name}: {exec_time:.6f}s ({complexity_class})\n"
+                for i, (
+                    problem_name,
+                    solution_name,
+                    exec_time,
+                    complexity_class,
+                ) in enumerate(all_solutions[:10])
+            )
 
         print(f"Summary report saved to {report_path}")
 

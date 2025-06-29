@@ -15,7 +15,7 @@ from typing import Any
 class DocumentationUpdater:
     """Updates solution documentation with benchmark results."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the documentation updater."""
         self.benchmarks_dir = Path(__file__).parent.parent.parent / "benchmarks"
         self.docs_dir = Path(__file__).parent.parent.parent / "docs" / "solutions"
@@ -28,7 +28,7 @@ class DocumentationUpdater:
 
         try:
             with open(latest_file, encoding="utf-8") as f:
-                return json.load(f)
+                return json.load(f)  # type: ignore[no-any-return]
         except (FileNotFoundError, json.JSONDecodeError):
             return None
 

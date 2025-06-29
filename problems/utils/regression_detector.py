@@ -101,7 +101,7 @@ class PerformanceRegressionDetector:
         """Load benchmark data from JSON file."""
         try:
             with open(file_path, encoding="utf-8") as f:
-                return json.load(f)
+                return json.load(f)  # type: ignore[no-any-return]
         except (FileNotFoundError, json.JSONDecodeError):
             return None
 
@@ -256,7 +256,7 @@ class PerformanceRegressionDetector:
         # Generate summary statistics
         total_comparisons = len(regressions) + len(improvements) + unchanged
 
-        summary = {
+        summary: dict[str, Any] = {
             "total_regressions": len(regressions),
             "total_improvements": len(improvements),
             "unchanged_solutions": unchanged,

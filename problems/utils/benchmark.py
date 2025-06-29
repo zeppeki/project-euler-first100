@@ -292,7 +292,7 @@ class BenchmarkSuite:
             s["mean_time"] for s in all_solutions if s["mean_time"] != float("inf")
         ]
 
-        summary = {
+        summary: dict[str, Any] = {
             "total_problems": total_problems,
             "verified_problems": verified_problems,
             "verification_rate": verified_problems / total_problems

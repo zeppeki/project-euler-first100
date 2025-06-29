@@ -17,20 +17,20 @@ from problems.utils.regression_detector import PerformanceRegressionDetector
 class TestBenchmarkSuite:
     """Test cases for BenchmarkSuite class."""
 
-    def setup_method(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
         self.config = BenchmarkConfig(
             runs=3, warmup_runs=1, min_time=0.0001, max_time=1.0
         )
         self.suite = BenchmarkSuite(self.config)
 
-    def test_benchmark_suite_initialization(self):
+    def test_benchmark_suite_initialization(self) -> None:
         """Test benchmark suite initialization."""
         assert self.suite.config["runs"] == 3
         assert self.suite.config["warmup_runs"] == 1
         assert len(self.suite.results) == 0
 
-    def test_benchmark_simple_function(self):
+    def test_benchmark_simple_function(self) -> None:
         """Test benchmarking a simple function."""
 
         def simple_add(a: int, b: int) -> int:
@@ -50,7 +50,7 @@ class TestBenchmarkSuite:
         assert metrics["mean_time"] > 0
         assert metrics["relative_speed"] == 1.0
 
-    def test_benchmark_slow_function(self):
+    def test_benchmark_slow_function(self) -> None:
         """Test benchmarking a slower function."""
 
         def slow_function() -> int:
@@ -66,7 +66,7 @@ class TestBenchmarkSuite:
         assert metrics["mean_time"] >= 0.001  # Should be at least 1ms
         assert metrics["std_deviation"] >= 0  # Should have some variation
 
-    def test_benchmark_error_handling(self):
+    def test_benchmark_error_handling(self) -> None:
         """Test benchmarking a function that raises an exception."""
 
         def error_function() -> int:
@@ -80,7 +80,7 @@ class TestBenchmarkSuite:
         assert "Error:" in str(metrics["result"])
         assert metrics["mean_time"] == float("inf")
 
-    def test_benchmark_problem_complete(self):
+    def test_benchmark_problem_complete(self) -> None:
         """Test benchmarking a complete problem with multiple solutions."""
 
         def solution_fast(n: int) -> int:
@@ -115,7 +115,7 @@ class TestBenchmarkSuite:
         assert fast_solution["relative_speed"] == 1.0  # Fastest should be 1.0
         assert slow_solution["relative_speed"] > 1.0  # Slower should be > 1.0
 
-    def test_save_and_load_results(self):
+    def test_save_and_load_results(self) -> None:
         """Test saving and loading benchmark results."""
 
         # Create a simple benchmark result
@@ -140,7 +140,7 @@ class TestBenchmarkSuite:
 
             # Verify file exists and has content
             assert temp_path.exists()
-            with open(temp_path, encoding="utf-8") as f:
+            with open(temp_path, encoding="utf-8") as f:  # type: ignore[assignment]
                 data = json.load(f)
 
             assert "benchmark_suite_version" in data
@@ -158,7 +158,7 @@ class TestBenchmarkSuite:
             if temp_path.exists():
                 temp_path.unlink()
 
-    def test_summary_generation(self):
+    def test_summary_generation(self) -> None:
         """Test summary statistics generation."""
 
         def func1(x: int) -> int:
@@ -182,7 +182,7 @@ class TestBenchmarkSuite:
                 )
             )
 
-        summary = self.suite._generate_summary()
+        summary = self.suite._generate_summary()  # noqa: SLF001
 
         assert summary["total_problems"] == 3
         assert summary["verified_problems"] >= 0  # Allow for any verification result
@@ -194,13 +194,13 @@ class TestBenchmarkSuite:
 class TestPerformanceRegressionDetector:
     """Test cases for PerformanceRegressionDetector class."""
 
-    def setup_method(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
         self.detector = PerformanceRegressionDetector(
             regression_threshold=0.2, improvement_threshold=0.2
         )
 
-    def test_performance_metrics_extraction(self):
+    def test_performance_metrics_extraction(self) -> None:
         """Test extraction of performance metrics from benchmark data."""
         benchmark_data = {
             "problems": [
@@ -228,7 +228,7 @@ class TestPerformanceRegressionDetector:
         assert metrics["001"]["Solution B"] == 0.002
         assert metrics["002"]["Solution A"] == 0.003
 
-    def test_regression_detection(self):
+    def test_regression_detection(self) -> None:
         """Test regression detection algorithm."""
         current_metrics = {
             "001": {"Solution A": 0.12, "Solution B": 0.05},  # 20% slower, 50% faster
@@ -259,13 +259,13 @@ class TestPerformanceRegressionDetector:
         # One unchanged (Solution A in 001: exactly 20% threshold)
         assert unchanged == 1
 
-    def test_severity_determination(self):
+    def test_severity_determination(self) -> None:
         """Test regression severity classification."""
-        assert self.detector._determine_severity(0.3) == "minor"  # 30%
-        assert self.detector._determine_severity(0.7) == "major"  # 70%
-        assert self.detector._determine_severity(1.5) == "critical"  # 150%
+        assert self.detector._determine_severity(0.3) == "minor"  # 30%  # noqa: SLF001
+        assert self.detector._determine_severity(0.7) == "major"  # 70%  # noqa: SLF001
+        assert self.detector._determine_severity(1.5) == "critical"  # 150%  # noqa: SLF001
 
-    def test_comprehensive_regression_analysis(self):
+    def test_comprehensive_regression_analysis(self) -> None:
         """Test complete regression analysis workflow."""
         # Create mock benchmark files
         current_data = {
@@ -330,12 +330,12 @@ class TestPerformanceRegressionDetector:
 class TestBenchmarkIntegration:
     """Integration tests for the complete benchmark system."""
 
-    def test_benchmark_runner_integration(self):
+    def test_benchmark_runner_integration(self) -> None:
         """Test the benchmark runner with actual problem modules."""
         # This test requires actual problem modules to exist
         # Skip if running in minimal test environment
         try:
-            from problems.problem_001 import solve_naive, solve_optimized
+            from problems.problem_001 import solve_naive, solve_optimized  # noqa: F401
         except ImportError:
             pytest.skip("Problem modules not available for integration test")
 
@@ -361,7 +361,7 @@ class TestBenchmarkIntegration:
         input_params = runner.determine_problem_input("001", info["module"])
         assert "limit" in input_params
 
-    def test_end_to_end_benchmark(self):
+    def test_end_to_end_benchmark(self) -> None:
         """Test complete end-to-end benchmark workflow."""
         # This is a simplified end-to-end test
         config = BenchmarkConfig(runs=2, warmup_runs=1, min_time=0.0001, max_time=0.1)
@@ -394,7 +394,7 @@ class TestBenchmarkIntegration:
 
         # Add to suite and generate summary
         suite.results.append(result)
-        summary = suite._generate_summary()
+        summary = suite._generate_summary()  # noqa: SLF001
 
         assert summary["total_problems"] == 1
         assert summary["verified_problems"] == 1
