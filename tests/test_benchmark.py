@@ -263,7 +263,9 @@ class TestPerformanceRegressionDetector:
         """Test regression severity classification."""
         assert self.detector._determine_severity(0.3) == "minor"  # 30%  # noqa: SLF001
         assert self.detector._determine_severity(0.7) == "major"  # 70%  # noqa: SLF001
-        assert self.detector._determine_severity(1.5) == "critical"  # 150%  # noqa: SLF001
+        assert (
+            self.detector._determine_severity(1.5) == "critical"  # noqa: SLF001
+        )  # 150%
 
     def test_comprehensive_regression_analysis(self) -> None:
         """Test complete regression analysis workflow."""
