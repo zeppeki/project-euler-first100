@@ -1,0 +1,79 @@
+{
+  "problem_number": "002",
+  "problem_title": "Even Fibonacci numbers",
+  "timestamp": "2025-06-29T17:17:47.696342",
+  "config": {
+    "runs": 5,
+    "warmup_runs": 2,
+    "min_time": 0.001,
+    "max_time": 10.0
+  },
+  "input_parameters": {
+    "limit": 4000000
+  },
+  "solutions": [
+    {
+      "name": "素直な解法",
+      "function_name": "solve_naive",
+      "algorithm_type": "naive",
+      "result": 4613732,
+      "execution_times": [
+        2.7989735826849937e-06,
+        2.789020072668791e-06,
+        2.7710339054465294e-06,
+        2.7159694582223892e-06,
+        2.66998540610075e-06
+      ],
+      "mean_time": 2.7489964850246907e-06,
+      "median_time": 2.7710339054465294e-06,
+      "std_deviation": 5.4586584545624476e-08,
+      "min_time": 2.66998540610075e-06,
+      "max_time": 2.7989735826849937e-06,
+      "relative_speed": 2.214088812211679,
+      "complexity_class": "O(n)"
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 4613732,
+      "execution_times": [
+        1.3489625416696072e-06,
+        1.2840027920901775e-06,
+        1.2200325727462769e-06,
+        1.1909869499504566e-06,
+        1.1639785952866077e-06
+      ],
+      "mean_time": 1.2415926903486253e-06,
+      "median_time": 1.2200325727462769e-06,
+      "std_deviation": 7.479409917732213e-08,
+      "min_time": 1.1639785952866077e-06,
+      "max_time": 1.3489625416696072e-06,
+      "relative_speed": 1.0,
+      "complexity_class": "O(log n)"
+    },
+    {
+      "name": "数学的解法",
+      "function_name": "solve_mathematical",
+      "algorithm_type": "mathematical",
+      "result": 4613732,
+      "execution_times": [
+        7.621012628078461e-06,
+        7.6669966802001e-06,
+        7.333990652114153e-06,
+        7.444992661476135e-06,
+        7.3160044848918915e-06
+      ],
+      "mean_time": 7.476599421352148e-06,
+      "median_time": 7.444992661476135e-06,
+      "std_deviation": 1.6142589042955611e-07,
+      "min_time": 7.3160044848918915e-06,
+      "max_time": 7.6669966802001e-06,
+      "relative_speed": 6.021781119903986,
+      "complexity_class": "O(log n)"
+    }
+  ],
+  "fastest_solution": "最適化解法",
+  "verified": true,
+  "total_benchmark_time": 0.0003273809561505914
+}
