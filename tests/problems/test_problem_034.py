@@ -78,8 +78,9 @@ class TestProblem034:
         # 結果が空でないことを確認
         assert len(digit_factorials) > 0
 
+    @pytest.mark.slow
     def test_solve_naive(self) -> None:
-        """素直な解法のテスト"""
+        """素直な解法のテスト（slow test）"""
         result = solve_naive()
         assert isinstance(result, int)
         assert result > 0
@@ -102,8 +103,9 @@ class TestProblem034:
         # 期待される解答の範囲をテスト
         assert 40000 <= result <= 50000
 
+    @pytest.mark.slow
     def test_all_solutions_agree(self) -> None:
-        """すべての解法が同じ結果を返すことを確認"""
+        """すべての解法が同じ結果を返すことを確認（slow test）"""
         naive_result = solve_naive()
         optimized_result = solve_optimized()
         mathematical_result = solve_mathematical()
@@ -125,8 +127,9 @@ class TestProblem034:
             # 3以上であることを確認（1!, 2!は除外）
             assert number >= 3
 
+    @pytest.mark.slow
     def test_sum_calculation(self) -> None:
-        """和の計算をテスト"""
+        """和の計算をテスト（slow test）"""
         digit_factorials = get_digit_factorials()
         manual_sum = sum(digit_factorials)
 

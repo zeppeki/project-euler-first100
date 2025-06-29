@@ -72,6 +72,7 @@ class TestProblem037:
 
         assert is_truncatable_prime(3797) is True
 
+    @pytest.mark.slow
     def test_solve_naive(self) -> None:
         """Test naive solution"""
         result = solve_naive()
@@ -86,6 +87,7 @@ class TestProblem037:
         assert result > 0
         assert isinstance(result, int)
 
+    @pytest.mark.slow
     def test_solutions_agree(self) -> None:
         """Test that all solutions agree"""
         naive_result = solve_naive()

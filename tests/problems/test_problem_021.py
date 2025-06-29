@@ -113,8 +113,9 @@ class TestSolveNaive:
         result_1000 = problem.solve_naive(1000)
         assert result_1000 == 504  # 220 + 284
 
+    @pytest.mark.slow
     def test_problem_case(self, problem: Any) -> None:
-        """本問題のケース"""
+        """本問題のケース（slow test）"""
         result = problem.solve_naive(10000)
         assert result == 31626
 
@@ -127,8 +128,9 @@ class TestSolveOptimized:
         assert problem.solve_optimized(300) == 504
         assert problem.solve_optimized(1000) == 504  # 220 + 284
 
+    @pytest.mark.slow
     def test_problem_case(self, problem: Any) -> None:
-        """本問題のケース"""
+        """本問題のケース（slow test）"""
         result = problem.solve_optimized(10000)
         assert result == 31626
 
@@ -141,8 +143,9 @@ class TestSolveMathematical:
         assert problem.solve_mathematical(300) == 504
         assert problem.solve_mathematical(1000) == 504  # 220 + 284
 
+    @pytest.mark.slow
     def test_problem_case(self, problem: Any) -> None:
-        """本問題のケース"""
+        """本問題のケース（slow test）"""
         result = problem.solve_mathematical(10000)
         assert result == 31626
 
@@ -159,8 +162,9 @@ class TestSolutionConsistency:
 
         assert naive_result == optimized_result == mathematical_result
 
+    @pytest.mark.slow
     def test_problem_case_consistency(self, problem: Any) -> None:
-        """本問題のケース（10000未満）で全解法が一致することを確認"""
+        """本問題のケース（10000未満）で全解法が一致することを確認（slow test）"""
         naive_result = problem.solve_naive(10000)
         optimized_result = problem.solve_optimized(10000)
         mathematical_result = problem.solve_mathematical(10000)
