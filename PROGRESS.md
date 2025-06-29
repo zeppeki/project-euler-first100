@@ -46,6 +46,7 @@
 | 038 | Pandigital multiples | 🟢 完了 | Python | 2025-06-29 |
 | 039 | Integer right triangles | 🟢 完了 | Python | 2025-06-29 |
 | 040 | Champernowne's constant | 🟢 完了 | Python | 2025-06-29 |
+| 041 | Pandigital prime | 🟢 完了 | Python | 2025-06-30 |
 
 ## 凡例
 
@@ -56,9 +57,9 @@
 
 ## 統計
 
-- 完了: 40/100
+- 完了: 41/100
 - 作業中: 0/100
-- 未着手: 60/100
+- 未着手: 59/100
 
 ## 目標
 
@@ -475,4 +476,16 @@
   - `docs/solutions/solution_040.md`
 - **学習ポイント**: Champernowne定数の性質、数列の位置計算
 
-最終更新: 2025-06-29
+### Problem 041: Pandigital prime
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n! × √max_number)) - 全てのpandigital数を生成して素数判定
+  - 最適化解法 (O(k! × √max_number)) - 大きい桁数から降順で探索し早期終了
+  - 数学的解法 (O(k! × √max_number), k≤7) - 桁数の性質を利用して探索範囲を7桁以下に限定
+- **ファイル**:
+  - `problems/problem_041.py`
+  - `docs/solutions/solution_041.md`
+- **学習ポイント**: pandigital数の性質、桁数の和による数学的洞察、順列生成
+
+最終更新: 2025-06-30
