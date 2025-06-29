@@ -105,43 +105,18 @@ jobs:
     - name: Install dependencies
       run: uv pip install --system -e .[dev]
 
-    - name: Run quality checks in parallel
+    - name: Run ruff linting
+      run: uv run ruff check problems/ tests/
+
+    - name: Run ruff formatting check
+      run: uv run ruff format --check problems/ tests/
+
+    - name: Run mypy type checking
+      run: uv run mypy problems/ tests/
+
+    - name: Run bandit security scan
       run: |
-        # Run all quality checks in parallel for faster execution
-        uv run ruff check problems/ tests/ &
-        RUFF_CHECK_PID=$!
-
-        uv run ruff format --check problems/ tests/ &
-        RUFF_FORMAT_PID=$!
-
-        uv run mypy problems/ tests/ &
-        MYPY_PID=$!
-
-        uv run bandit -r problems/ -f json -o bandit-report.json &
-        BANDIT_PID=$!
-
-        # Wait for all background jobs and capture exit codes
-        wait $RUFF_CHECK_PID
-        RUFF_CHECK_EXIT=$?
-
-        wait $RUFF_FORMAT_PID
-        RUFF_FORMAT_EXIT=$?
-
-        wait $MYPY_PID
-        MYPY_EXIT=$?
-
-        wait $BANDIT_PID
-        BANDIT_EXIT=$?
-
-        # If bandit fails, create empty report file
-        if [ $BANDIT_EXIT -ne 0 ]; then
-          echo '[]' > bandit-report.json
-        fi
-
-        # Fail if any critical checks failed (allow bandit to fail)
-        if [ $RUFF_CHECK_EXIT -ne 0 ] || [ $RUFF_FORMAT_EXIT -ne 0 ] || [ $MYPY_EXIT -ne 0 ]; then
-          exit 1
-        fi
+        uv run bandit -r problems/ -f json -o bandit-report.json || echo '[]' > bandit-report.json
 
     - name: Upload security report
       uses: actions/upload-artifact@v4
