@@ -1,0 +1,463 @@
+{
+  "problem_number": "005",
+  "problem_title": "Smallest multiple",
+  "timestamp": "2025-06-29T17:38:52.934864",
+  "config": {
+    "runs": 3,
+    "warmup_runs": 1,
+    "min_time": 0.001,
+    "max_time": 10.0
+  },
+  "input_parameters": {
+    "test_inputs": [
+      1,
+      2,
+      5,
+      10,
+      15,
+      20
+    ]
+  },
+  "solutions": [
+    {
+      "name": "素直な解法",
+      "function_name": "solve_naive",
+      "algorithm_type": "naive",
+      "result": 1,
+      "execution_times": [
+        6.440095603466034e-07,
+        3.3102696761488914e-07,
+        2.550077624619007e-07
+      ],
+      "mean_time": 4.100147634744644e-07,
+      "median_time": 3.3102696761488914e-07,
+      "std_deviation": 2.061792996652385e-07,
+      "min_time": 2.550077624619007e-07,
+      "max_time": 6.440095603466034e-07,
+      "relative_speed": 1.581026485111477,
+      "complexity_class": "O(result × n)",
+      "input_value": 1
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 1,
+      "execution_times": [
+        3.9802398532629013e-07,
+        3.689783625304699e-07,
+        2.469751052558422e-07
+      ],
+      "mean_time": 3.3799248437086743e-07,
+      "median_time": 3.689783625304699e-07,
+      "std_deviation": 8.015007502570061e-08,
+      "min_time": 2.469751052558422e-07,
+      "max_time": 3.9802398532629013e-07,
+      "relative_speed": 1.303306898099656,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 1
+    },
+    {
+      "name": "数学的解法",
+      "function_name": "solve_mathematical",
+      "algorithm_type": "mathematical",
+      "result": 1,
+      "execution_times": [
+        3.4098047763109207e-07,
+        2.650194801390171e-07,
+        2.469751052558422e-07
+      ],
+      "mean_time": 2.843250210086505e-07,
+      "median_time": 2.650194801390171e-07,
+      "std_deviation": 4.9887678238761124e-08,
+      "min_time": 2.469751052558422e-07,
+      "max_time": 3.4098047763109207e-07,
+      "relative_speed": 1.0963639084243604,
+      "complexity_class": "O(n × log(log(n)))",
+      "input_value": 1
+    },
+    {
+      "name": "標準ライブラリ解法",
+      "function_name": "solve_builtin",
+      "algorithm_type": "builtin",
+      "result": 1,
+      "execution_times": [
+        3.1298259273171425e-07,
+        2.5599729269742966e-07,
+        2.0902371034026146e-07
+      ],
+      "mean_time": 2.593345319231351e-07,
+      "median_time": 2.5599729269742966e-07,
+      "std_deviation": 5.205972705707521e-08,
+      "min_time": 2.0902371034026146e-07,
+      "max_time": 3.1298259273171425e-07,
+      "relative_speed": 1.0,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 1
+    },
+    {
+      "name": "素直な解法",
+      "function_name": "solve_naive",
+      "algorithm_type": "naive",
+      "result": 2,
+      "execution_times": [
+        1.6289995983242989e-06,
+        6.820191629230976e-07,
+        4.6403147280216217e-07
+      ],
+      "mean_time": 9.250167446831862e-07,
+      "median_time": 6.820191629230976e-07,
+      "std_deviation": 6.193331509991843e-07,
+      "min_time": 4.6403147280216217e-07,
+      "max_time": 1.6289995983242989e-06,
+      "relative_speed": 1.0,
+      "complexity_class": "O(result × n)",
+      "input_value": 2
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 2,
+      "execution_times": [
+        1.600012183189392e-06,
+        1.4399993233382702e-06,
+        8.520437404513359e-07
+      ],
+      "mean_time": 1.2973517489929993e-06,
+      "median_time": 1.4399993233382702e-06,
+      "std_deviation": 3.938596776555584e-07,
+      "min_time": 8.520437404513359e-07,
+      "max_time": 1.600012183189392e-06,
+      "relative_speed": 1.4025170424750917,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 2
+    },
+    {
+      "name": "数学的解法",
+      "function_name": "solve_mathematical",
+      "algorithm_type": "mathematical",
+      "result": 2,
+      "execution_times": [
+        3.6939745768904686e-06,
+        3.3809919841587543e-06,
+        2.728018444031477e-06
+      ],
+      "mean_time": 3.2676616683602333e-06,
+      "median_time": 3.3809919841587543e-06,
+      "std_deviation": 4.928495034097314e-07,
+      "min_time": 2.728018444031477e-06,
+      "max_time": 3.6939745768904686e-06,
+      "relative_speed": 3.532543261667541,
+      "complexity_class": "O(n × log(log(n)))",
+      "input_value": 2
+    },
+    {
+      "name": "標準ライブラリ解法",
+      "function_name": "solve_builtin",
+      "algorithm_type": "builtin",
+      "result": 2,
+      "execution_times": [
+        1.3160170055925846e-06,
+        1.2589734978973866e-06,
+        6.249756552278996e-07
+      ],
+      "mean_time": 1.0666553862392902e-06,
+      "median_time": 1.2589734978973866e-06,
+      "std_deviation": 3.8356776328605073e-07,
+      "min_time": 6.249756552278996e-07,
+      "max_time": 1.3160170055925846e-06,
+      "relative_speed": 1.153120083901416,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 2
+    },
+    {
+      "name": "素直な解法",
+      "function_name": "solve_naive",
+      "algorithm_type": "naive",
+      "result": 60,
+      "execution_times": [
+        1.3733981177210808e-05,
+        1.3638986274600029e-05,
+        1.357303699478507e-05
+      ],
+      "mean_time": 1.3648668148865303e-05,
+      "median_time": 1.3638986274600029e-05,
+      "std_deviation": 8.090773437155857e-08,
+      "min_time": 1.357303699478507e-05,
+      "max_time": 1.3733981177210808e-05,
+      "relative_speed": 16.691906129131766,
+      "complexity_class": "O(result × n)",
+      "input_value": 5
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 60,
+      "execution_times": [
+        1.5819678083062172e-06,
+        1.202977728098631e-06,
+        1.127016730606556e-06
+      ],
+      "mean_time": 1.3039874223371346e-06,
+      "median_time": 1.202977728098631e-06,
+      "std_deviation": 2.4371569404254177e-07,
+      "min_time": 1.127016730606556e-06,
+      "max_time": 1.5819678083062172e-06,
+      "relative_speed": 1.5947369669933322,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 5
+    },
+    {
+      "name": "数学的解法",
+      "function_name": "solve_mathematical",
+      "algorithm_type": "mathematical",
+      "result": 60,
+      "execution_times": [
+        5.682988557964563e-06,
+        3.4190015867352486e-06,
+        2.7570058591663837e-06
+      ],
+      "mean_time": 3.9529986679553986e-06,
+      "median_time": 3.4190015867352486e-06,
+      "std_deviation": 1.5343429702906385e-06,
+      "min_time": 2.7570058591663837e-06,
+      "max_time": 5.682988557964563e-06,
+      "relative_speed": 4.834397171535012,
+      "complexity_class": "O(n × log(log(n)))",
+      "input_value": 5
+    },
+    {
+      "name": "標準ライブラリ解法",
+      "function_name": "solve_builtin",
+      "algorithm_type": "builtin",
+      "result": 60,
+      "execution_times": [
+        9.760260581970215e-07,
+        7.950002327561378e-07,
+        6.820191629230976e-07
+      ],
+      "mean_time": 8.176818179587523e-07,
+      "median_time": 7.950002327561378e-07,
+      "std_deviation": 1.4830999409220744e-07,
+      "min_time": 6.820191629230976e-07,
+      "max_time": 9.760260581970215e-07,
+      "relative_speed": 1.0,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 5
+    },
+    {
+      "name": "素直な解法",
+      "function_name": "solve_naive",
+      "algorithm_type": "naive",
+      "result": 2520,
+      "execution_times": [
+        0.0006178129697218537,
+        0.0006229089922271669,
+        0.000601094972807914
+      ],
+      "mean_time": 0.0006139389782523116,
+      "median_time": 0.0006178129697218537,
+      "std_deviation": 1.1411341649229926e-05,
+      "min_time": 0.000601094972807914,
+      "max_time": 0.0006229089922271669,
+      "relative_speed": 480.13981366271133,
+      "complexity_class": "O(result × n)",
+      "input_value": 10
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 2520,
+      "execution_times": [
+        2.4239998310804367e-06,
+        2.168992068618536e-06,
+        2.065033186227083e-06
+      ],
+      "mean_time": 2.2193416953086853e-06,
+      "median_time": 2.168992068618536e-06,
+      "std_deviation": 1.8470402461829696e-07,
+      "min_time": 2.065033186227083e-06,
+      "max_time": 2.4239998310804367e-06,
+      "relative_speed": 1.7356681132590817,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 10
+    },
+    {
+      "name": "数学的解法",
+      "function_name": "solve_mathematical",
+      "algorithm_type": "mathematical",
+      "result": 2520,
+      "execution_times": [
+        4.035013262182474e-06,
+        3.5520060919225216e-06,
+        3.437977284193039e-06
+      ],
+      "mean_time": 3.6749988794326782e-06,
+      "median_time": 3.5520060919225216e-06,
+      "std_deviation": 3.169517456776177e-07,
+      "min_time": 3.437977284193039e-06,
+      "max_time": 4.035013262182474e-06,
+      "relative_speed": 2.874085763709751,
+      "complexity_class": "O(n × log(log(n)))",
+      "input_value": 10
+    },
+    {
+      "name": "標準ライブラリ解法",
+      "function_name": "solve_builtin",
+      "algorithm_type": "builtin",
+      "result": 2520,
+      "execution_times": [
+        1.4589750207960606e-06,
+        1.2310338206589222e-06,
+        1.1459924280643463e-06
+      ],
+      "mean_time": 1.2786670898397763e-06,
+      "median_time": 1.2310338206589222e-06,
+      "std_deviation": 1.6183702322987873e-07,
+      "min_time": 1.1459924280643463e-06,
+      "max_time": 1.4589750207960606e-06,
+      "relative_speed": 1.0,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 10
+    },
+    {
+      "name": "素直な解法",
+      "function_name": "solve_naive",
+      "algorithm_type": "naive",
+      "result": 360360,
+      "execution_times": [
+        0.09101758000906557,
+        0.09117271797731519,
+        0.09207667602458969
+      ],
+      "mean_time": 0.09142232467032348,
+      "median_time": 0.09117271797731519,
+      "std_deviation": 0.0005719691586271665,
+      "min_time": 0.09101758000906557,
+      "max_time": 0.09207667602458969,
+      "relative_speed": 50621.187299234,
+      "complexity_class": "O(result × n)",
+      "input_value": 15
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 360360,
+      "execution_times": [
+        3.2579991966485977e-06,
+        3.0120136216282845e-06,
+        2.8989743441343307e-06
+      ],
+      "mean_time": 3.056329054137071e-06,
+      "median_time": 3.0120136216282845e-06,
+      "std_deviation": 1.8356907242112818e-07,
+      "min_time": 2.8989743441343307e-06,
+      "max_time": 3.2579991966485977e-06,
+      "relative_speed": 1.6923109979480238,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 15
+    },
+    {
+      "name": "数学的解法",
+      "function_name": "solve_mathematical",
+      "algorithm_type": "mathematical",
+      "result": 360360,
+      "execution_times": [
+        4.9539958126842976e-06,
+        3.969005774706602e-06,
+        3.864988684654236e-06
+      ],
+      "mean_time": 4.262663424015045e-06,
+      "median_time": 3.969005774706602e-06,
+      "std_deviation": 6.009660909511378e-07,
+      "min_time": 3.864988684654236e-06,
+      "max_time": 4.9539958126842976e-06,
+      "relative_speed": 2.3602668643439584,
+      "complexity_class": "O(n × log(log(n)))",
+      "input_value": 15
+    },
+    {
+      "name": "標準ライブラリ解法",
+      "function_name": "solve_builtin",
+      "algorithm_type": "builtin",
+      "result": 360360,
+      "execution_times": [
+        2.036977093666792e-06,
+        1.7330166883766651e-06,
+        1.6480335034430027e-06
+      ],
+      "mean_time": 1.8060090951621532e-06,
+      "median_time": 1.7330166883766651e-06,
+      "std_deviation": 2.0448764676697794e-07,
+      "min_time": 1.6480335034430027e-06,
+      "max_time": 2.036977093666792e-06,
+      "relative_speed": 1.0,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 15
+    },
+    {
+      "name": "最適化解法",
+      "function_name": "solve_optimized",
+      "algorithm_type": "optimized",
+      "result": 232792560,
+      "execution_times": [
+        4.3289619497954845e-06,
+        4.196015652269125e-06,
+        3.99700365960598e-06
+      ],
+      "mean_time": 4.173993753890197e-06,
+      "median_time": 4.196015652269125e-06,
+      "std_deviation": 1.6707124112947666e-07,
+      "min_time": 3.99700365960598e-06,
+      "max_time": 4.3289619497954845e-06,
+      "relative_speed": 1.8155778173501338,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 20
+    },
+    {
+      "name": "数学的解法",
+      "function_name": "solve_mathematical",
+      "algorithm_type": "mathematical",
+      "result": 232792560,
+      "execution_times": [
+        5.256966687738895e-06,
+        4.489964339882135e-06,
+        4.517962224781513e-06
+      ],
+      "mean_time": 4.754964417467515e-06,
+      "median_time": 4.517962224781513e-06,
+      "std_deviation": 4.349720449729212e-07,
+      "min_time": 4.489964339882135e-06,
+      "max_time": 5.256966687738895e-06,
+      "relative_speed": 2.0682848196879036,
+      "complexity_class": "O(n × log(log(n)))",
+      "input_value": 20
+    },
+    {
+      "name": "標準ライブラリ解法",
+      "function_name": "solve_builtin",
+      "algorithm_type": "builtin",
+      "result": 232792560,
+      "execution_times": [
+        2.529006451368332e-06,
+        2.216955181211233e-06,
+        2.1510059013962746e-06
+      ],
+      "mean_time": 2.2989891779919467e-06,
+      "median_time": 2.216955181211233e-06,
+      "std_deviation": 2.019115806873346e-07,
+      "min_time": 2.1510059013962746e-06,
+      "max_time": 2.529006451368332e-06,
+      "relative_speed": 1.0,
+      "complexity_class": "O(n × log(max_value))",
+      "input_value": 20
+    }
+  ],
+  "fastest_solution": "標準ライブラリ解法",
+  "verified": true,
+  "total_benchmark_time": 0.3708462715148926
+}
