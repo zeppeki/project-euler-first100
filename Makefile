@@ -101,13 +101,9 @@ test-slow: ## Run slow tests only
 	@echo "$(BOLD)$(GREEN)Running slow tests...$(RESET)"
 	$(PYTEST) -m "slow"
 
-test-cov: ## Run tests with coverage report
-	@echo "$(BOLD)$(GREEN)Running tests with coverage...$(RESET)"
-	$(PYTEST) --cov=problems --cov=solutions --cov-report=html --cov-report=term
-
-test-cov-clean: ## Run tests with coverage report (exclude runners/utils)
-	@echo "$(BOLD)$(GREEN)Running tests with coverage (exclude runners/utils)...$(RESET)"
-	COVERAGE_RCFILE=.coveragerc-clean $(PYTEST) --cov=problems --cov=solutions --cov-report=html --cov-report=term
+test-cov: ## Run tests with coverage report (problems only, excludes runners/utils)
+	@echo "$(BOLD)$(GREEN)Running tests with coverage (problems only)...$(RESET)"
+	$(PYTEST) --cov=problems --cov-report=html --cov-report=term
 
 test-problem: ## Run tests for specific problem (use: make test-problem PROBLEM=001)
 	@if [ -z "$(PROBLEM)" ]; then \
@@ -139,8 +135,8 @@ security: ## Run security scan with bandit
 	@echo "$(BOLD)$(YELLOW)Running security scan...$(RESET)"
 	$(BANDIT) -r problems/ tests/ -f json || true
 
-coverage: ## Generate test coverage report
-	@echo "$(BOLD)$(YELLOW)Generating coverage report...$(RESET)"
+coverage: ## Generate test coverage report (problems only, excludes runners/utils)
+	@echo "$(BOLD)$(YELLOW)Generating coverage report (problems only)...$(RESET)"
 	$(PYTEST) --cov=problems --cov-report=html --cov-report=xml --cov-report=term
 
 dependency-check: ## Run dependency security scan

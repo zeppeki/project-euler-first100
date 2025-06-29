@@ -200,3 +200,31 @@ markers = [
     "unit: marks tests as unit tests",
     "fast: marks tests as fast",
 ]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["problems"]
+omit = [
+    "problems/runners/*",
+    "problems/utils/*",
+    "*/test_*",
+    "*/tests/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+ignore_errors = true
+
+[tool.coverage.html]
+directory = "htmlcov"
