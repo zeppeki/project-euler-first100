@@ -228,3 +228,9 @@ ignore_errors = true
 
 [tool.coverage.html]
 directory = "htmlcov"
+
+# Bandit configuration
+[tool.bandit]
+exclude_dirs = ["tests", "problems/runners"]
+skips = ["B101"]  # Skip assert_used warnings
+targets = ["problems"]
