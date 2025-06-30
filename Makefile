@@ -642,25 +642,7 @@ pr-create: ## Create pull request for issue (use: make pr-create ISSUE=123 TITLE
 		exit 1; \
 	fi; \
 	git push -u origin $$current_branch; \
-	pr_body=$$(cat <<'EOF'
-	## Summary
-	Problem solution and implementation
-
-	## Changes
-	- [ ] Problem solution implementation
-	- [ ] Test case additions
-	- [ ] Documentation updates
-
-	## Test Plan
-	- [ ] Unit test execution
-	- [ ] Performance testing
-	- [ ] Code quality checks
-
-	Closes #$(ISSUE)
-
-	🤖 Generated with [Claude Code](https://claude.ai/code)
-	EOF
-	); \
+	pr_body="## Summary\nProblem solution and implementation\n\n## Changes\n- [ ] Problem solution implementation\n- [ ] Test case additions\n- [ ] Documentation updates\n\n## Test Plan\n- [ ] Unit test execution\n- [ ] Performance testing\n- [ ] Code quality checks\n\nCloses #$(ISSUE)\n\n🤖 Generated with [Claude Code](https://claude.ai/code)"; \
 	pr_url=$$(gh pr create \
 		--title "$$title" \
 		--body "$$pr_body" \
