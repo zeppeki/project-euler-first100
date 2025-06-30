@@ -642,28 +642,27 @@ pr-create: ## Create pull request for issue (use: make pr-create ISSUE=123 TITLE
 		exit 1; \
 	fi; \
 	git push -u origin $$current_branch; \
+	echo "## 概要" > /tmp/pr_body.md; \
+	echo "問題の解決と実装" >> /tmp/pr_body.md; \
+	echo "" >> /tmp/pr_body.md; \
+	echo "## 変更内容" >> /tmp/pr_body.md; \
+	echo "- [ ] 問題解法の実装" >> /tmp/pr_body.md; \
+	echo "- [ ] テストケースの追加" >> /tmp/pr_body.md; \
+	echo "- [ ] ドキュメントの更新" >> /tmp/pr_body.md; \
+	echo "" >> /tmp/pr_body.md; \
+	echo "## テスト計画" >> /tmp/pr_body.md; \
+	echo "- [ ] 単体テストの実行" >> /tmp/pr_body.md; \
+	echo "- [ ] パフォーマンステスト" >> /tmp/pr_body.md; \
+	echo "- [ ] コード品質チェック" >> /tmp/pr_body.md; \
+	echo "" >> /tmp/pr_body.md; \
+	echo "Closes #$(ISSUE)" >> /tmp/pr_body.md; \
+	echo "" >> /tmp/pr_body.md; \
+	echo "🤖 Generated with [Claude Code](https://claude.ai/code)" >> /tmp/pr_body.md; \
 	pr_url=$$(gh pr create \
 		--title "$$title" \
-		--body "$$(cat <<EOF
-	## 概要
-	問題の解決と実装
-
-	## 変更内容
-	- [ ] 問題解法の実装
-	- [ ] テストケースの追加
-	- [ ] ドキュメントの更新
-
-	## テスト計画
-	- [ ] 単体テストの実行
-	- [ ] パフォーマンステスト
-	- [ ] コード品質チェック
-
-	Closes #$(ISSUE)
-
-	🤖 Generated with [Claude Code](https://claude.ai/code)
-	EOF
-	)" \
+		--body-file /tmp/pr_body.md \
 		--assignee @me); \
+	rm -f /tmp/pr_body.md; \
 	echo "$(GREEN)Pull request created: $$pr_url$(RESET)"
 
 pr-status: ## Check pull request status (use: make pr-status PR=123)
