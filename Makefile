@@ -643,23 +643,23 @@ pr-create: ## Create pull request for issue (use: make pr-create ISSUE=123 TITLE
 	fi; \
 	git push -u origin $$current_branch; \
 	pr_body=$$(cat <<'EOF'
-## 概要
-問題の解決と実装
+	## Summary
+	Problem solution and implementation
 
-## 変更内容
-- [ ] 問題解法の実装
-- [ ] テストケースの追加
-- [ ] ドキュメントの更新
+	## Changes
+	- [ ] Problem solution implementation
+	- [ ] Test case additions
+	- [ ] Documentation updates
 
-## テスト計画
-- [ ] 単体テストの実行
-- [ ] パフォーマンステスト
-- [ ] コード品質チェック
+	## Test Plan
+	- [ ] Unit test execution
+	- [ ] Performance testing
+	- [ ] Code quality checks
 
-Closes #$(ISSUE)
+	Closes #$(ISSUE)
 
-🤖 Generated with [Claude Code](https://claude.ai/code)
-EOF
+	🤖 Generated with [Claude Code](https://claude.ai/code)
+	EOF
 	); \
 	pr_url=$$(gh pr create \
 		--title "$$title" \
