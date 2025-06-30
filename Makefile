@@ -634,9 +634,9 @@ pr-create: ## Create pull request for issue (use: make pr-create ISSUE=123 TITLE
 		title="Solve Problem"; \
 	else \
 		title="$(TITLE)"; \
-	fi
-	@echo "$(BOLD)$(MAGENTA)Creating pull request for issue #$(ISSUE)...$(RESET)"
-	@current_branch=$$(git rev-parse --abbrev-ref HEAD); \
+	fi; \
+	echo "$(BOLD)$(MAGENTA)Creating pull request for issue #$(ISSUE) with title: $$title$(RESET)"; \
+	current_branch=$$(git rev-parse --abbrev-ref HEAD); \
 	if [ "$$current_branch" = "main" ]; then \
 		echo "$(RED)Error: Cannot create PR from main branch$(RESET)"; \
 		exit 1; \
