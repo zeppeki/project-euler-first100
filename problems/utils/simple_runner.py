@@ -108,6 +108,30 @@ class SimpleBenchmarkRunner:
         Returns:
             Tuple of (args, kwargs) for the problem
         """
+        # Handle special cases that require data import
+        if problem_number == "011":
+            # Import grid data for Problem 011
+            try:
+                problem_module = importlib.import_module(
+                    f"problems.problem_{problem_number.zfill(3)}"
+                )
+                grid_data = problem_module.GRID_DATA
+                return ((grid_data,), {})
+            except (ImportError, AttributeError):
+                return ((), {})
+
+        if problem_number == "018":
+            # Import triangle data for Problem 018
+            try:
+                problem_module = importlib.import_module(
+                    f"problems.problem_{problem_number.zfill(3)}"
+                )
+                triangle_func = problem_module.get_problem_triangle
+                triangle_data = triangle_func()
+                return ((triangle_data,), {})
+            except (ImportError, AttributeError):
+                return ((), {})
+
         # Default arguments for common problems
         problem_args: dict[str, tuple[tuple, dict]] = {
             "001": ((1000,), {}),
@@ -124,7 +148,7 @@ class SimpleBenchmarkRunner:
             "012": ((500,), {}),
             "013": ((), {}),
             "014": ((1000000,), {}),
-            "015": ((20, 20), {}),
+            "015": ((20,), {}),
             "016": ((1000,), {}),
             "017": ((1000,), {}),
             "018": ((), {}),
