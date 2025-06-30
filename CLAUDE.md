@@ -117,6 +117,12 @@ make benchmark
 # Run benchmark for specific problem
 make benchmark-problem PROBLEM=001
 
+# Run simple benchmark (learning-optimized)
+make benchmark-simple
+
+# Run simple benchmark for specific problem
+make benchmark-simple-problem PROBLEM=001
+
 # Show detailed project statistics
 make stats
 
@@ -225,8 +231,9 @@ Each problem follows a consistent structure:
 3. **Performance Analysis**:
    - Time complexity documentation
    - Algorithm correctness verification
-   - Memory usage analysis
+   - Project Euler's one-minute rule verification
    - CI-optimized test execution
+   - Simple learning-focused benchmarks
 
 4. **Documentation**:
    - Detailed problem explanation

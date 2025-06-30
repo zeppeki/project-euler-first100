@@ -312,6 +312,23 @@ benchmark-docs: ## Update solution documentation with benchmark results
 	@$(PYTHON) -m problems.utils.doc_updater
 	@echo "$(BOLD)$(GREEN)Documentation updated with benchmark results!$(RESET)"
 
+benchmark-simple: ## Run simple benchmark for all problems (optimized for learning)
+	@echo "$(BOLD)$(CYAN)Running Simple Benchmark (Learning-Optimized)...$(RESET)"
+	@echo "This benchmark focuses on one-minute rule verification and learning outcomes."
+	@echo
+	@$(PYTHON) -m problems.utils.simple_runner
+	@echo "$(BOLD)$(GREEN)Simple benchmark completed!$(RESET)"
+
+benchmark-simple-problem: ## Run simple benchmark for specific problem (use: make benchmark-simple-problem PROBLEM=001)
+	@if [ -z "$(PROBLEM)" ]; then \
+		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
+		echo "Usage: make benchmark-simple-problem PROBLEM=001"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)$(CYAN)Running Simple Benchmark for Problem $(PROBLEM)...$(RESET)"
+	@$(PYTHON) -m problems.utils.simple_runner $(PROBLEM)
+	@echo "$(BOLD)$(GREEN)Simple benchmark for Problem $(PROBLEM) completed!$(RESET)"
+
 stats: ## Show detailed project statistics
 	@echo "$(BOLD)$(CYAN)Project Euler First 100 - Detailed Statistics$(RESET)"
 	@echo
