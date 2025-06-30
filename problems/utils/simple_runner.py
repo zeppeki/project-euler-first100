@@ -74,25 +74,28 @@ class SimpleBenchmarkRunner:
         """
         solutions: list[tuple[str, Callable]] = []
 
-        # Look for solve_* functions
+        # Look for solve_* functions (and also 'solve' for some problems)
         for name, obj in inspect.getmembers(problem_module):
             if (
-                name.startswith("solve_")
+                (name.startswith("solve_") or name == "solve")
                 and inspect.isfunction(obj)
                 and not name.endswith("_test")
             ):
                 # Create human-readable name
-                solution_type = name.replace("solve_", "").replace("_", " ").title()
-                if solution_type == "Naive":
-                    display_name = "素直な解法 (Naive)"
-                elif solution_type == "Optimized":
-                    display_name = "最適化解法 (Optimized)"
-                elif solution_type == "Mathematical":
-                    display_name = "数学的解法 (Mathematical)"
-                elif solution_type == "Builtin":
-                    display_name = "Built-in解法 (Builtin)"
+                if name == "solve":
+                    display_name = "汎用解法 (General)"
                 else:
-                    display_name = f"{solution_type}解法"
+                    solution_type = name.replace("solve_", "").replace("_", " ").title()
+                    if solution_type == "Naive":
+                        display_name = "素直な解法 (Naive)"
+                    elif solution_type == "Optimized":
+                        display_name = "最適化解法 (Optimized)"
+                    elif solution_type == "Mathematical":
+                        display_name = "数学的解法 (Mathematical)"
+                    elif solution_type == "Builtin":
+                        display_name = "Built-in解法 (Builtin)"
+                    else:
+                        display_name = f"{solution_type}解法"
 
                 solutions.append((display_name, obj))
 
@@ -132,6 +135,18 @@ class SimpleBenchmarkRunner:
             except (ImportError, AttributeError):
                 return ((), {})
 
+        if problem_number == "022":
+            # Import names data for Problem 022
+            try:
+                problem_module = importlib.import_module(
+                    f"problems.problem_{problem_number.zfill(3)}"
+                )
+                names_func = problem_module.create_sample_names
+                names_data = names_func()
+                return ((names_data,), {})
+            except (ImportError, AttributeError):
+                return ((), {})
+
         # Default arguments for common problems
         problem_args: dict[str, tuple[tuple, dict]] = {
             "001": ((1000,), {}),
@@ -157,10 +172,10 @@ class SimpleBenchmarkRunner:
             "021": ((10000,), {}),
             "022": ((), {}),
             "023": ((28123,), {}),
-            "024": ((1000000,), {}),
+            "024": (("0123456789", 1000000), {}),
             "025": ((1000,), {}),
             "026": ((1000,), {}),
-            "027": ((-999, 1000), {}),
+            "027": ((1000,), {}),
             "028": ((1001,), {}),
             "029": ((100,), {}),
             "030": ((5,), {}),
