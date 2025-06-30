@@ -11,7 +11,6 @@ from pathlib import Path
 import pytest
 
 from problems.utils.benchmark import BenchmarkConfig, BenchmarkSuite
-from problems.utils.regression_detector import PerformanceRegressionDetector
 
 
 class TestBenchmarkSuite:
@@ -191,141 +190,8 @@ class TestBenchmarkSuite:
         assert "performance_stats" in summary
 
 
-class TestPerformanceRegressionDetector:
-    """Test cases for PerformanceRegressionDetector class."""
-
-    def setup_method(self) -> None:
-        """Set up test fixtures."""
-        self.detector = PerformanceRegressionDetector(
-            regression_threshold=0.2, improvement_threshold=0.2
-        )
-
-    def test_performance_metrics_extraction(self) -> None:
-        """Test extraction of performance metrics from benchmark data."""
-        benchmark_data = {
-            "problems": [
-                {
-                    "problem_number": "001",
-                    "solutions": [
-                        {"name": "Solution A", "mean_time": 0.001},
-                        {"name": "Solution B", "mean_time": 0.002},
-                    ],
-                },
-                {
-                    "problem_number": "002",
-                    "solutions": [
-                        {"name": "Solution A", "mean_time": 0.003},
-                    ],
-                },
-            ]
-        }
-
-        metrics = self.detector.extract_performance_metrics(benchmark_data)
-
-        assert "001" in metrics
-        assert "002" in metrics
-        assert metrics["001"]["Solution A"] == 0.001
-        assert metrics["001"]["Solution B"] == 0.002
-        assert metrics["002"]["Solution A"] == 0.003
-
-    def test_regression_detection(self) -> None:
-        """Test regression detection algorithm."""
-        current_metrics = {
-            "001": {"Solution A": 0.12, "Solution B": 0.05},  # 20% slower, 50% faster
-            "002": {"Solution A": 0.03},  # 50% slower
-        }
-
-        baseline_metrics = {
-            "001": {"Solution A": 0.10, "Solution B": 0.10},
-            "002": {"Solution A": 0.02},
-        }
-
-        regressions, improvements, unchanged = self.detector.compare_performance(
-            current_metrics, baseline_metrics
-        )
-
-        # Should detect one regression (Solution A in 001: 20% slower)
-        assert len(regressions) == 1
-        assert regressions[0].problem_number == "002"
-        assert regressions[0].solution_name == "Solution A"
-        assert abs(regressions[0].regression_percent - 50.0) < 0.1
-
-        # Should detect one improvement (Solution B in 001: 50% faster)
-        assert len(improvements) == 1
-        assert improvements[0].problem_number == "001"
-        assert improvements[0].solution_name == "Solution B"
-        assert abs(improvements[0].regression_percent - (-50.0)) < 0.1
-
-        # One unchanged (Solution A in 001: exactly 20% threshold)
-        assert unchanged == 1
-
-    def test_severity_determination(self) -> None:
-        """Test regression severity classification."""
-        assert self.detector._determine_severity(0.3) == "minor"  # 30%  # noqa: SLF001
-        assert self.detector._determine_severity(0.7) == "major"  # 70%  # noqa: SLF001
-        assert (
-            self.detector._determine_severity(1.5) == "critical"  # noqa: SLF001
-        )  # 150%
-
-    def test_comprehensive_regression_analysis(self) -> None:
-        """Test complete regression analysis workflow."""
-        # Create mock benchmark files
-        current_data = {
-            "problems": [
-                {
-                    "problem_number": "001",
-                    "solutions": [
-                        {"name": "Solution A", "mean_time": 0.12},
-                        {"name": "Solution B", "mean_time": 0.05},
-                    ],
-                }
-            ]
-        }
-
-        baseline_data = {
-            "problems": [
-                {
-                    "problem_number": "001",
-                    "solutions": [
-                        {"name": "Solution A", "mean_time": 0.10},
-                        {"name": "Solution B", "mean_time": 0.10},
-                    ],
-                }
-            ]
-        }
-
-        with (
-            tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f1,
-            tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f2,
-        ):
-            current_file = Path(f1.name)
-            baseline_file = Path(f2.name)
-
-        try:
-            # Write test data
-            with open(current_file, "w", encoding="utf-8") as f:
-                json.dump(current_data, f)
-            with open(baseline_file, "w", encoding="utf-8") as f:
-                json.dump(baseline_data, f)
-
-            # Perform analysis
-            analysis = self.detector.analyze_regression(current_file, baseline_file)
-
-            assert analysis is not None
-            assert analysis.total_comparisons == 2
-            assert len(analysis.improvements) == 1  # Solution B improved
-            assert analysis.unchanged == 1  # Solution A within threshold
-
-            # Test report generation
-            report = self.detector.generate_alert_report(analysis)
-            assert "PERFORMANCE REGRESSION ANALYSIS REPORT" in report
-            assert "Solution B" in report
-
-        finally:
-            if current_file.exists():
-                current_file.unlink()
-            if baseline_file.exists():
-                baseline_file.unlink()
+# TestPerformanceRegressionDetector class removed as regression_detector.py was deleted
+# in the simple benchmark framework refactor
 
 
 @pytest.mark.slow
