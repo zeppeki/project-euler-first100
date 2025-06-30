@@ -40,7 +40,7 @@ def run_tests() -> None:
     labels = ["d₂d₃d₄", "d₃d₄d₅", "d₄d₅d₆", "d₅d₆d₇", "d₆d₇d₈", "d₇d₈d₉", "d₈d₉d₁₀"]
 
     for i, (prime, label) in enumerate(zip(primes, labels, strict=False)):
-        substring = example[i+1:i+4]
+        substring = example[i + 1 : i + 4]
         divisible = int(substring) % prime == 0
         print(f"    {label} = {substring} ÷ {prime}: {'✓' if divisible else '✗'}")
 

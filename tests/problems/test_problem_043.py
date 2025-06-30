@@ -111,4 +111,4 @@ class TestProblem043:
 
         # Test strings with wrong length
         assert not has_substring_divisibility("12345678901")  # 11 digits
-        assert not has_substring_divisibility("123456789")    # 9 digits
+        assert not has_substring_divisibility("123456789")  # 9 digits

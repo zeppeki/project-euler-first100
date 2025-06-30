@@ -46,7 +46,7 @@ def has_substring_divisibility(num_str: str) -> bool:
 
     for i, prime in enumerate(primes):
         # d(i+2)d(i+3)d(i+4) が prime で割り切れるかチェック
-        substring = num_str[i+1:i+4]  # インデックス i+1 から 3文字
+        substring = num_str[i + 1 : i + 4]  # インデックス i+1 から 3文字
         if int(substring) % prime != 0:
             return False
 
@@ -123,11 +123,9 @@ def solve_optimized() -> int:
             results = []
             for digit in "0123456789":
                 if digit not in used_digits and (pos > 0 or digit != "0"):
-                    results.extend(build_number(
-                        current + digit,
-                        pos + 1,
-                        used_digits | {digit}
-                    ))
+                    results.extend(
+                        build_number(current + digit, pos + 1, used_digits | {digit})
+                    )
             return results
 
         # pos >= 3: 部分文字列条件をチェック
@@ -137,11 +135,9 @@ def solve_optimized() -> int:
             results = []
             for digit in "0123456789":
                 if digit not in used_digits:
-                    results.extend(build_number(
-                        current + digit,
-                        pos + 1,
-                        used_digits | {digit}
-                    ))
+                    results.extend(
+                        build_number(current + digit, pos + 1, used_digits | {digit})
+                    )
             return results
 
         # 現在の位置での有効な選択肢を計算
@@ -152,22 +148,26 @@ def solve_optimized() -> int:
                 if substring[0] == current[1] and substring[1] == current[2]:
                     next_digit = substring[2]
                     if next_digit not in used_digits:
-                        results.extend(build_number(
-                            current + next_digit,
-                            pos + 1,
-                            used_digits | {next_digit}
-                        ))
+                        results.extend(
+                            build_number(
+                                current + next_digit,
+                                pos + 1,
+                                used_digits | {next_digit},
+                            )
+                        )
         else:
             # 既存の部分文字列と整合性を保つ
             for substring in valid_substrings[prime_idx]:
                 if len(current) >= 2 and substring[:2] == current[-2:]:
                     next_digit = substring[2]
                     if next_digit not in used_digits:
-                        results.extend(build_number(
-                            current + next_digit,
-                            pos + 1,
-                            used_digits | {next_digit}
-                        ))
+                        results.extend(
+                            build_number(
+                                current + next_digit,
+                                pos + 1,
+                                used_digits | {next_digit},
+                            )
+                        )
 
         return results
 
@@ -201,7 +201,9 @@ def solve_mathematical() -> int:
 
         for i, prime in enumerate(primes):
             # 部分文字列を整数として解釈
-            substring_val = int(perm[i+1]) * 100 + int(perm[i+2]) * 10 + int(perm[i+3])
+            substring_val = (
+                int(perm[i + 1]) * 100 + int(perm[i + 2]) * 10 + int(perm[i + 3])
+            )
             if substring_val % prime != 0:
                 valid = False
                 break

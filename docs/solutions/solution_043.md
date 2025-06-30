@@ -6,7 +6,7 @@
 
 $d_1$を1桁目、$d_2$を2桁目、...として、以下のように表記する：
 - $d_2d_3d_4=406$ は2で割り切れる
-- $d_3d_4d_5=063$ は3で割り切れる  
+- $d_3d_4d_5=063$ は3で割り切れる
 - $d_4d_5d_6=635$ は5で割り切れる
 - $d_5d_6d_7=357$ は7で割り切れる
 - $d_6d_7d_8=572$ は11で割り切れる
@@ -30,18 +30,18 @@ Project Euler公式サイトで確認してください。
 2. 各数について部分文字列の割り切れ条件をチェック
 3. 条件を満たす数の合計を計算
 
-**時間計算量：** O(10!) = O(3,628,800)  
+**時間計算量：** O(10!) = O(3,628,800)
 **空間計算量：** O(10!)
 
 ```python
 def solve_naive() -> int:
     total_sum = 0
     pandigitals = generate_all_pandigital_0_to_9()
-    
+
     for num_str in pandigitals:
         if has_substring_divisibility(num_str):
             total_sum += int(num_str)
-    
+
     return total_sum
 ```
 
@@ -57,7 +57,7 @@ def solve_naive() -> int:
 2. バックトラッキングで有効な10桁数を段階的に構築
 3. 早期枝刈りで無効な組み合わせを排除
 
-**時間計算量：** O(k) where k << 10! (有効な組み合わせのみ)  
+**時間計算量：** O(k) where k << 10! (有効な組み合わせのみ)
 **空間計算量：** O(k)
 
 ```python
@@ -65,7 +65,7 @@ def solve_optimized() -> int:
     # 各素数で割り切れる3桁数を事前計算
     primes = [2, 3, 5, 7, 11, 13, 17]
     valid_substrings = []
-    
+
     for prime in primes:
         valid_for_prime = []
         for num in range(1000):
@@ -74,7 +74,7 @@ def solve_optimized() -> int:
                 if len(set(num_str)) == 3:  # 重複なし
                     valid_for_prime.append(num_str)
         valid_substrings.append(valid_for_prime)
-    
+
     # バックトラッキングで構築
     valid_numbers = build_number('', 0, set())
     return sum(int(num) for num in valid_numbers)
@@ -90,31 +90,31 @@ def solve_optimized() -> int:
 **アルゴリズム：**
 各順列について直接計算で割り切れ条件をチェックし、早期終了を利用。
 
-**時間計算量：** O(10!) ただし早期終了による最適化  
+**時間計算量：** O(10!) ただし早期終了による最適化
 **空間計算量：** O(1)
 
 ```python
 def solve_mathematical() -> int:
     total_sum = 0
     primes = [2, 3, 5, 7, 11, 13, 17]
-    
+
     for perm in itertools.permutations('0123456789'):
         if perm[0] == '0':  # 先頭0はスキップ
             continue
-        
+
         # 早期終了での最適化
         valid = True
         for i, prime in enumerate(primes):
-            substring_val = (int(perm[i+1]) * 100 + 
-                           int(perm[i+2]) * 10 + 
+            substring_val = (int(perm[i+1]) * 100 +
+                           int(perm[i+2]) * 10 +
                            int(perm[i+3]))
             if substring_val % prime != 0:
                 valid = False
                 break
-        
+
         if valid:
             total_sum += int(''.join(perm))
-    
+
     return total_sum
 ```
 
