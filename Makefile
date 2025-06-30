@@ -621,15 +621,8 @@ issue-develop: ## Create development branch for issue (use: make issue-develop I
 		exit 1; \
 	fi
 	@echo "$(BOLD)$(MAGENTA)Creating development branch for issue #$(ISSUE)...$(RESET)"
-	@branch_name=$$(gh issue develop $(ISSUE) --dry-run --json headRefName --jq '.headRefName'); \
-	if [ -z "$$branch_name" ]; then \
-		echo "$(RED)Error: Failed to get branch name for issue #$(ISSUE)$(RESET)"; \
-		exit 1; \
-	fi; \
-	echo "$(CYAN)Branch name: $$branch_name$(RESET)"; \
-	gh issue develop $(ISSUE); \
-	git checkout $$branch_name; \
-	echo "$(GREEN)Development branch created and checked out: $$branch_name$(RESET)"
+	@gh issue develop $(ISSUE) --checkout; \
+	echo "$(GREEN)Development branch created and checked out$(RESET)"
 
 pr-create: ## Create pull request for issue (use: make pr-create ISSUE=123 TITLE="Problem Title")
 	@if [ -z "$(ISSUE)" ]; then \
@@ -651,7 +644,7 @@ pr-create: ## Create pull request for issue (use: make pr-create ISSUE=123 TITLE
 	git push -u origin $$current_branch; \
 	pr_url=$$(gh pr create \
 		--title "$$title" \
-		--body "$$(cat <<'EOF'
+		--body "$$(cat <<EOF
 	## 概要
 	問題の解決と実装
 
