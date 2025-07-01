@@ -1,6 +1,10 @@
 """
-Runners package for Project Euler solutions.
+Problem Euler Problem Runners Package.
 
-This package contains runner modules that handle execution and demonstration
-of problem solutions, separated from the core algorithm implementations.
+This package contains the base runner infrastructure and problem-specific runners
+for executing and analyzing Project Euler solutions.
 """
+
+from .base_runner import BaseProblemRunner
+
+__all__ = ["BaseProblemRunner"]

@@ -6,105 +6,103 @@ This module contains the execution code for Problem 004, separated from the
 algorithm implementations for better test coverage and code organization.
 """
 
+from collections.abc import Callable
+from typing import Any
+
 from problems.problem_004 import (
     is_palindrome,
     solve_mathematical,
     solve_naive,
     solve_optimized,
 )
-from problems.utils.display import (
-    print_final_answer,
-    print_performance_comparison,
-    print_solution_header,
-)
-from problems.utils.performance import compare_performance
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def run_tests() -> None:
-    """Run test cases to verify the solutions."""
-    test_cases = [
-        (1, 1, (9, 3, 3)),  # 1桁の場合: 3 * 3 = 9
-        (2, 2, (9009, 91, 99)),  # 2桁の場合: 91 * 99 = 9009
-    ]
+class Problem004Runner(BaseProblemRunner):
+    """Runner for Problem 004: Largest palindrome product."""
 
-    print("=== テストケース ===")
-    for min_digits, max_digits, expected in test_cases:
-        expected_palindrome, expected_factor1, expected_factor2 = expected
+    def __init__(self) -> None:
+        super().__init__("004", "Largest palindrome product")
 
-        result_naive = solve_naive(min_digits, max_digits)
-        result_optimized = solve_optimized(min_digits, max_digits)
-        result_math = solve_mathematical(min_digits, max_digits)
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 004."""
+        return [
+            (1, 1, (9, 3, 3)),  # 1桁の場合: 3 * 3 = 9
+            (2, 2, (9009, 91, 99)),  # 2桁の場合: 91 * 99 = 9009
+        ]
 
-        print(f"Digits: {min_digits}-{max_digits}")
-        print(
-            f"  Expected: {expected_palindrome} = "
-            f"{expected_factor1} × {expected_factor2}"
-        )
-        print(
-            f"  Naive: {result_naive[0]} = {result_naive[1]} × {result_naive[2]} "
-            f"{'✓' if result_naive[0] == expected_palindrome else '✗'}"
-        )
-        print(
-            f"  Optimized: {result_optimized[0]} = "
-            f"{result_optimized[1]} × {result_optimized[2]} "
-            f"{'✓' if result_optimized[0] == expected_palindrome else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math[0]} = "
-            f"{result_math[1]} × {result_math[2]} "
-            f"{'✓' if result_math[0] == expected_palindrome else '✗'}"
-        )
-        print()
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 004."""
+        return [
+            ("素直な解法", lambda min_d, max_d: solve_naive(min_d, max_d)),
+            ("最適化解法", lambda min_d, max_d: solve_optimized(min_d, max_d)),
+            ("数学的解法", lambda min_d, max_d: solve_mathematical(min_d, max_d)),
+        ]
 
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get main problem parameters."""
+        return (3, 3)
 
-def run_problem() -> None:
-    """Run the main problem with performance comparison."""
-    min_digits = 3
-    max_digits = 3
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 004."""
+        return [self._demonstrate_palindrome_verification]
 
-    print_solution_header(
-        "004", "Largest palindrome product", f"product of {min_digits}-digit numbers"
-    )
-
-    # Run tests first
-    run_tests()
-
-    # Run main problem with performance measurement
-    functions = [
-        ("素直な解法", lambda: solve_naive(min_digits, max_digits)),
-        ("最適化解法", lambda: solve_optimized(min_digits, max_digits)),
-        ("数学的解法", lambda: solve_mathematical(min_digits, max_digits)),
-    ]
-
-    performance_results = compare_performance(functions)
-
-    # Verify all solutions agree
-    results = [data["result"] for data in performance_results.values()]
-    palindromes = [result[0] for result in results]
-    all_agree = len(set(palindromes)) == 1
-
-    print("=== 本問題の解答 ===")
-    if all_agree:
-        result = results[0]
+    def _demonstrate_palindrome_verification(self) -> None:
+        """Demonstrate palindrome verification for the solution."""
+        min_digits, max_digits = self.get_main_parameters()
+        result = solve_optimized(min_digits, max_digits)
         palindrome, factor1, factor2 = result
-        print(f"✓ 解答: {palindrome:,} = {factor1} × {factor2}")
-        print()
-        print_performance_comparison(performance_results)
 
-        # 回文の検証
-        print("\n=== 回文の検証 ===")
+        print("=== 回文の検証 ===")
         print(f"数値: {palindrome}")
         print(f"文字列: {palindrome!s}")
         print(f"逆順: {str(palindrome)[::-1]}")
         print(f"回文: {'✓' if is_palindrome(palindrome) else '✗'}")
-    else:
-        print_final_answer(None, verified=False)
-        print("Results:", palindromes)
+        print(f"因子: {factor1} × {factor2} = {palindrome}")
+
+    def run_tests(self) -> bool:
+        """Run custom test cases for Problem 004."""
+        test_cases = self.get_test_cases()
+        functions = self.get_solution_functions()
+
+        if not test_cases or not functions:
+            print("警告: テストケースまたは解法関数が定義されていません")
+            return False
+
+        print("=== テストケース ===")
+        all_passed = True
+
+        for test_case in test_cases:
+            min_digits, max_digits, expected = test_case
+            expected_palindrome, expected_factor1, expected_factor2 = expected
+
+            print(f"Digits: {min_digits}-{max_digits}")
+            print(
+                f"  Expected: {expected_palindrome} = "
+                f"{expected_factor1} × {expected_factor2}"
+            )
+
+            for name, func in functions:
+                try:
+                    result = func(min_digits, max_digits)
+                    palindrome = result[0]
+                    status = "✓" if palindrome == expected_palindrome else "✗"
+                    print(f"  {name}: {result[0]} = {result[1]} × {result[2]} {status}")
+                    if palindrome != expected_palindrome:
+                        all_passed = False
+                except Exception as e:
+                    print(f"  {name}: エラー - {e}")
+                    all_passed = False
+
+            print()
+
+        return all_passed
 
 
 def main() -> None:
-    """Main function for standalone execution."""
-    run_problem()
+    """Main entry point."""
+    runner = Problem004Runner()
+    runner.main()
 
 
 if __name__ == "__main__":
