@@ -1,0 +1,1521 @@
+{
+  "001": {
+    "problem_number": "001",
+    "problem_title": "Multiples of 3 and 5",
+    "timestamp": "2025-06-30T23:43:59",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 233168,
+        "execution_time": 6.23689847998321e-05,
+        "relative_speed": 23.06563482154389,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 233168,
+        "execution_time": 2.703978680074215e-06,
+        "relative_speed": 1.0,
+        "complexity_class": "O(1)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "002": {
+    "problem_number": "002",
+    "problem_title": "Even Fibonacci numbers",
+    "timestamp": "2025-06-30T23:43:59",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 4613732,
+        "execution_time": 1.6039994079619646e-05,
+        "relative_speed": 8.280944796706434,
+        "complexity_class": "O(log n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 4613732,
+        "execution_time": 4.022032953798771e-06,
+        "relative_speed": 2.0764491991465577,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 4613732,
+        "execution_time": 1.936976332217455e-06,
+        "relative_speed": 1.0,
+        "complexity_class": "O(log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "003": {
+    "problem_number": "003",
+    "problem_title": "Largest prime factor",
+    "timestamp": "2025-06-30T23:43:59",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 6857,
+        "execution_time": 0.00018660601926967502,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 6857,
+        "execution_time": 0.014843114011455327,
+        "relative_speed": 79.54252531374507,
+        "complexity_class": "O(\u221an)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+    "verified": true
+  },
+  "004": {
+    "problem_number": "004",
+    "problem_title": "Largest palindrome product",
+    "timestamp": "2025-06-30T23:43:59",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": [
+          906609,
+          993,
+          913
+        ],
+        "execution_time": 0.0002810639562085271,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": [
+          906609,
+          993,
+          913
+        ],
+        "execution_time": 0.0022152269957587123,
+        "relative_speed": 7.881576227850398,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": [
+          906609,
+          993,
+          913
+        ],
+        "execution_time": 0.0019808359793387353,
+        "relative_speed": 7.047634303806329,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "005": {
+    "problem_number": "005",
+    "problem_title": "Smallest multiple",
+    "timestamp": "2025-06-30T23:45:02",
+    "solutions": [
+      {
+        "name": "Built-in\u89e3\u6cd5 (Builtin)",
+        "function_name": "solve_builtin",
+        "algorithm_type": "builtin",
+        "result": 232792560,
+        "execution_time": 8.15759995020926e-05,
+        "relative_speed": 2.269340069466372,
+        "complexity_class": "O(n * log(max_value)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 232792560,
+        "execution_time": 5.0655973609536886e-05,
+        "relative_speed": 1.4091844583161286,
+        "complexity_class": "O(n * log(log(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 232792560,
+        "execution_time": 61.61157610703958,
+        "relative_speed": 1713955.3208795835,
+        "complexity_class": "O(result * n)",
+        "one_minute_rule": false
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 232792560,
+        "execution_time": 3.59470141120255e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n * log(max_value)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "006": {
+    "problem_number": "006",
+    "problem_title": "Sum square difference",
+    "timestamp": "2025-06-30T23:45:02",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 25164150,
+        "execution_time": 2.841989044100046e-06,
+        "relative_speed": 2.5812846946867567,
+        "complexity_class": "O(1)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 25164150,
+        "execution_time": 1.5249999705702066e-05,
+        "relative_speed": 13.851070578905631,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 25164150,
+        "execution_time": 1.100997906178236e-06,
+        "relative_speed": 1.0,
+        "complexity_class": "O(1)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "007": {
+    "problem_number": "007",
+    "problem_title": "10001st prime",
+    "timestamp": "2025-06-30T23:45:02",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 104743,
+        "execution_time": 0.04521704203216359,
+        "relative_speed": 5.051236989936318,
+        "complexity_class": "O(n * sqrt(m)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 104743,
+        "execution_time": 0.14410296303685755,
+        "relative_speed": 16.097873379984375,
+        "complexity_class": "O(n * sqrt(m)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 104743,
+        "execution_time": 0.00895167700946331,
+        "relative_speed": 1.0,
+        "complexity_class": "O(m * log(log(m)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "008": {
+    "problem_number": "008",
+    "problem_title": "Largest product in a series",
+    "timestamp": "2025-06-30T23:45:02",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 23514624000,
+        "execution_time": 0.0009902839665301144,
+        "relative_speed": 1.4453177147141736,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 23514624000,
+        "execution_time": 0.0027812719927169383,
+        "relative_speed": 4.059261602101218,
+        "complexity_class": "O(n * k)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 23514624000,
+        "execution_time": 0.000685166975017637,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "009": {
+    "problem_number": "009",
+    "problem_title": "Special Pythagorean triplet",
+    "timestamp": "2025-06-30T23:45:02",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 31875000,
+        "execution_time": 8.562987204641104e-06,
+        "relative_speed": 1.0,
+        "complexity_class": "O(sqrt(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 31875000,
+        "execution_time": 0.009014053037390113,
+        "relative_speed": 1052.676224075698,
+        "complexity_class": "O(n\u00b3)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 31875000,
+        "execution_time": 0.008627838979009539,
+        "relative_speed": 1007.5734989225823,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "010": {
+    "problem_number": "010",
+    "problem_title": "Summation of primes",
+    "timestamp": "2025-06-30T23:45:10",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 142913828922,
+        "execution_time": 0.0759277640026994,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n * log(log(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 142913828922,
+        "execution_time": 7.292989140027203,
+        "relative_speed": 96.05167801027197,
+        "complexity_class": "O(n * sqrt(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 142913828922,
+        "execution_time": 0.18005296896444634,
+        "relative_speed": 2.3713719392295687,
+        "complexity_class": "O(n * log(log(n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "011": {
+    "problem_number": "011",
+    "problem_title": "Largest product in a grid",
+    "timestamp": "2025-06-30T23:45:10",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 70600674,
+        "execution_time": 0.0009647679980844259,
+        "relative_speed": 1.0,
+        "complexity_class": "O(rows \u00d7 cols \u00d7 directions)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 70600674,
+        "execution_time": 0.0018100920133292675,
+        "relative_speed": 1.8761940869963103,
+        "complexity_class": "O(rows \u00d7 cols \u00d7 directions \u00d7 length)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 70600674,
+        "execution_time": 0.001459118037018925,
+        "relative_speed": 1.512403023230502,
+        "complexity_class": "O(rows \u00d7 cols \u00d7 directions \u00d7 length)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "012": {
+    "problem_number": "012",
+    "problem_title": "Highly divisible triangular number",
+    "timestamp": "2025-06-30T23:45:12",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 76576500,
+        "execution_time": 0.04953664302593097,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n * log(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 76576500,
+        "execution_time": 2.5549924279912375,
+        "relative_speed": 51.577827481239986,
+        "complexity_class": "O(n * sqrt(T_n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 76576500,
+        "execution_time": 0.1392604790162295,
+        "relative_speed": 2.8112619368117207,
+        "complexity_class": "O(n * sqrt(T_n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "013": {
+    "problem_number": "013",
+    "problem_title": "Large sum",
+    "timestamp": "2025-06-30T23:45:12",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": "5537376230",
+        "execution_time": 0.0001234880182892084,
+        "relative_speed": 4.126171087153974,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": "5537376230",
+        "execution_time": 2.992799272760749e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": "5537376230",
+        "execution_time": 0.0009094669949263334,
+        "relative_speed": 30.38850627918601,
+        "complexity_class": "O(n * m)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+    "verified": true
+  },
+  "014": {
+    "problem_number": "014",
+    "problem_title": "Longest Collatz sequence",
+    "timestamp": "2025-06-30T23:45:23",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 837799,
+        "execution_time": 8.81902136397548,
+        "relative_speed": 6.723822781045739,
+        "complexity_class": "O(n * L)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 837799,
+        "execution_time": 1.3116082400083542,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n * log L)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "015": {
+    "problem_number": "015",
+    "problem_title": "Lattice paths",
+    "timestamp": "2025-06-30T23:45:23",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 137846528820,
+        "execution_time": 8.368049748241901e-06,
+        "relative_speed": 1.8682763908562814,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "Mathematical Factorial\u89e3\u6cd5",
+        "function_name": "solve_mathematical_factorial",
+        "algorithm_type": "mathematical",
+        "result": 137846528820,
+        "execution_time": 4.4790212996304035e-06,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 137846528820,
+        "execution_time": 4.1652005165815353e-05,
+        "relative_speed": 9.299354117662348,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 137846528820,
+        "execution_time": 2.5025045033544302e-05,
+        "relative_speed": 5.587168124342097,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "Mathematical Factorial\u89e3\u6cd5",
+    "verified": true
+  },
+  "016": {
+    "problem_number": "016",
+    "problem_title": "Power Digit Sum",
+    "timestamp": "2025-06-30T23:45:23",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 1366,
+        "execution_time": 8.988496847450733e-05,
+        "relative_speed": 1.68760067931902,
+        "complexity_class": "O(power * log(2^power)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 1366,
+        "execution_time": 5.3261988796293736e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(power * log(2^power)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "017": {
+    "problem_number": "017",
+    "problem_title": "Number Letter Counts",
+    "timestamp": "2025-06-30T23:45:23",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 21124,
+        "execution_time": 0.00014509999891743064,
+        "relative_speed": 1.0122573005757296,
+        "complexity_class": "O(1)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 21124,
+        "execution_time": 0.0006784590077586472,
+        "relative_speed": 4.7331157055064255,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 21124,
+        "execution_time": 0.00014334300067275763,
+        "relative_speed": 1.0,
+        "complexity_class": "O(1)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "018": {
+    "problem_number": "018",
+    "problem_title": "Maximum Path Sum I",
+    "timestamp": "2025-06-30T23:45:23",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 1074,
+        "execution_time": 3.6379031371325254e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n^2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 1074,
+        "execution_time": 0.006401701015420258,
+        "relative_speed": 175.97227782337873,
+        "complexity_class": "O(2^n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 1074,
+        "execution_time": 7.505499524995685e-05,
+        "relative_speed": 2.0631389132893965,
+        "complexity_class": "O(n^2)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "019": {
+    "problem_number": "019",
+    "problem_title": "Counting Sundays",
+    "timestamp": "2025-06-30T23:45:23",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 171,
+        "execution_time": 0.0003083519986830652,
+        "relative_speed": 1.6776772164245848,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 171,
+        "execution_time": 0.000183796975761652,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 171,
+        "execution_time": 0.000248853990342468,
+        "relative_speed": 1.3539612896851034,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+    "verified": true
+  },
+  "020": {
+    "problem_number": "020",
+    "problem_title": "Factorial digit sum",
+    "timestamp": "2025-06-30T23:45:23",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 648,
+        "execution_time": 0.0011395820183679461,
+        "relative_speed": 38.87236049201322,
+        "complexity_class": "O(n log n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 648,
+        "execution_time": 2.9315997380763292e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n log n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 648,
+        "execution_time": 3.255699994042516e-05,
+        "relative_speed": 1.1105540608960676,
+        "complexity_class": "O(n log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+    "verified": true
+  },
+  "021": {
+    "problem_number": "021",
+    "problem_title": "Amicable Numbers",
+    "timestamp": "2025-06-30T23:45:27",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 31626,
+        "execution_time": 0.005790969997178763,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n\u221an)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 31626,
+        "execution_time": 3.3968398370197974,
+        "relative_speed": 586.5752781787274,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 31626,
+        "execution_time": 0.06330212199827656,
+        "relative_speed": 10.931177683378777,
+        "complexity_class": "O(n\u221an)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "022": {
+    "problem_number": "022",
+    "problem_title": "Names Scores",
+    "timestamp": "2025-06-30T23:45:27",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 327495,
+        "execution_time": 0.00012983905617147684,
+        "relative_speed": 1.581340250548176,
+        "complexity_class": "O(n log n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 327495,
+        "execution_time": 9.352801134809852e-05,
+        "relative_speed": 1.1390995379937572,
+        "complexity_class": "O(n log n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 327495,
+        "execution_time": 8.210696978494525e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "023": {
+    "problem_number": "023",
+    "problem_title": "Non-Abundant Sums",
+    "timestamp": "2025-06-30T23:45:29",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 4179871,
+        "execution_time": 1.136682351003401,
+        "relative_speed": 1.4778707726276765,
+        "complexity_class": "O(n\u00b2 \u00d7 \u221an)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 4179871,
+        "execution_time": 0.7691351450048387,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n \u00d7 \u221an + A\u00b2)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "024": {
+    "problem_number": "024",
+    "problem_title": "Lexicographic permutations",
+    "timestamp": "2025-06-30T23:45:30",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": "2783915460",
+        "execution_time": 1.2244119080132805,
+        "relative_speed": 91909.1030148119,
+        "complexity_class": "O(d! * d)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": "2783915460",
+        "execution_time": 1.3321987353265285e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(d^2)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "025": {
+    "problem_number": "025",
+    "problem_title": "1000-digit Fibonacci number",
+    "timestamp": "2025-06-30T23:45:30",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 4782,
+        "execution_time": 0.0005276629817672074,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 4782,
+        "execution_time": 0.0005742330104112625,
+        "relative_speed": 1.088257145665376,
+        "complexity_class": "O(log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+    "verified": true
+  },
+  "026": {
+    "problem_number": "026",
+    "problem_title": "Reciprocal cycles",
+    "timestamp": "2025-06-30T23:45:30",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 983,
+        "execution_time": 0.0124795560259372,
+        "relative_speed": 2.197822693394037,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 983,
+        "execution_time": 0.005678145040292293,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n \u00d7 log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "027": {
+    "problem_number": "027",
+    "problem_title": "Quadratic primes",
+    "timestamp": "2025-06-30T23:45:31",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": -59231,
+        "execution_time": 0.6557897300226614,
+        "relative_speed": 7.396573378214415,
+        "complexity_class": "O(p \u00d7 limit \u00d7 k)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": -59231,
+        "execution_time": 0.08866128901718184,
+        "relative_speed": 1.0,
+        "complexity_class": "O(p \u00d7 limit \u00d7 k)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "028": {
+    "problem_number": "028",
+    "problem_title": "Number spiral diagonals",
+    "timestamp": "2025-06-30T23:45:31",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 669171001,
+        "execution_time": 1.8179998733103275e-06,
+        "relative_speed": 1.0,
+        "complexity_class": "O(1)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 669171001,
+        "execution_time": 0.1702496839570813,
+        "relative_speed": 93646.69737137003,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 669171001,
+        "execution_time": 0.00022344995522871614,
+        "relative_speed": 122.90977491755515,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "029": {
+    "problem_number": "029",
+    "problem_title": "Distinct powers",
+    "timestamp": "2025-06-30T23:45:31",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 9183,
+        "execution_time": 0.004155826987698674,
+        "relative_speed": 1.03617927280777,
+        "complexity_class": "O(n^2 * log(b)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 9183,
+        "execution_time": 0.004010721982922405,
+        "relative_speed": 1.0,
+        "complexity_class": "O(?)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "030": {
+    "problem_number": "030",
+    "problem_title": "Digit fifth powers",
+    "timestamp": "2025-06-30T23:45:31",
+    "solutions": [
+      {
+        "name": "\u6c4e\u7528\u89e3\u6cd5 (General)",
+        "function_name": "solve",
+        "algorithm_type": "unknown",
+        "result": 443839,
+        "execution_time": 0.6230051169986837,
+        "relative_speed": 1.0,
+        "complexity_class": "O(?)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6c4e\u7528\u89e3\u6cd5 (General)",
+    "verified": true
+  },
+  "031": {
+    "problem_number": "031",
+    "problem_title": "Coin sums",
+    "timestamp": "2025-06-30T23:45:35",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 73682,
+        "execution_time": 3.6354413499939255,
+        "relative_speed": 55103.31081696285,
+        "complexity_class": "O(8^target)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 73682,
+        "execution_time": 6.597500760108232e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(target * coins)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "032": {
+    "problem_number": "032",
+    "problem_title": "Pandigital products",
+    "timestamp": "2025-06-30T23:45:35",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 45228,
+        "execution_time": 0.02938059699954465,
+        "relative_speed": 1.0129083183131014,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 45228,
+        "execution_time": 0.02900617604609579,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n^2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 45228,
+        "execution_time": 0.029790328990202397,
+        "relative_speed": 1.0270339993407078,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+    "verified": true
+  },
+  "033": {
+    "problem_number": "033",
+    "problem_title": "Digit cancelling fractions",
+    "timestamp": "2025-06-30T23:45:35",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 100,
+        "execution_time": 5.0736009143292904e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(1)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 100,
+        "execution_time": 0.0012361450353637338,
+        "relative_speed": 24.364254426723022,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 100,
+        "execution_time": 0.00021692697191610932,
+        "relative_speed": 4.275601797994121,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "034": {
+    "problem_number": "034",
+    "problem_title": "Digit factorials",
+    "timestamp": "2025-06-30T23:45:40",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 40730,
+        "execution_time": 1.2610816810047254,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 40730,
+        "execution_time": 2.272029858955648,
+        "relative_speed": 1.8016516242988183,
+        "complexity_class": "O(n * log n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 40730,
+        "execution_time": 1.2976111179450527,
+        "relative_speed": 1.0289667493315926,
+        "complexity_class": "O(n * log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "035": {
+    "problem_number": "035",
+    "problem_title": "Circular primes",
+    "timestamp": "2025-06-30T23:45:46",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 55,
+        "execution_time": 5.592568927968387,
+        "relative_speed": 18.42070483797586,
+        "complexity_class": "O(n * log(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 55,
+        "execution_time": 0.3036023310269229,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n log log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "036": {
+    "problem_number": "036",
+    "problem_title": "Double-base palindromes",
+    "timestamp": "2025-06-30T23:45:46",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 872187,
+        "execution_time": 0.36696563998702914,
+        "relative_speed": 83.08149323671081,
+        "complexity_class": "O(n * log n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 872187,
+        "execution_time": 0.004416936018969864,
+        "relative_speed": 1.0,
+        "complexity_class": "O(\u221an * log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "037": {
+    "problem_number": "037",
+    "problem_title": "Truncatable primes",
+    "timestamp": "2025-06-30T23:45:48",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 748317,
+        "execution_time": 2.216261400957592,
+        "relative_speed": 96.65585330749903,
+        "complexity_class": "O(n * d * \u221an)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 748317,
+        "execution_time": 0.02292940701590851,
+        "relative_speed": 1.0,
+        "complexity_class": "O(k * d * \u221ak)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "038": {
+    "problem_number": "038",
+    "problem_title": "Pandigital multiples",
+    "timestamp": "2025-06-30T23:45:48",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 932718654,
+        "execution_time": 0.017096163996029645,
+        "relative_speed": 2.0614381357532507,
+        "complexity_class": "O(n * m)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 932718654,
+        "execution_time": 0.008293318969663233,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n * log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "039": {
+    "problem_number": "039",
+    "problem_title": "Integer right triangles",
+    "timestamp": "2025-06-30T23:45:48",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 840,
+        "execution_time": 0.00016142299864441156,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n\u221an)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 840,
+        "execution_time": 0.02393197501078248,
+        "relative_speed": 148.25629068817327,
+        "complexity_class": "O(n\u00b3)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 840,
+        "execution_time": 0.017903730971738696,
+        "relative_speed": 110.91189683062254,
+        "complexity_class": "O(n\u00b2)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "040": {
+    "problem_number": "040",
+    "problem_title": "Champernowne's constant",
+    "timestamp": "2025-06-30T23:45:51",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 210,
+        "execution_time": 1.878377499000635,
+        "relative_speed": 124116.46042692308,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 210,
+        "execution_time": 1.5133991837501526e-05,
+        "relative_speed": 1.0,
+        "complexity_class": "O(log n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "041": {
+    "problem_number": "041",
+    "problem_title": "Pandigital prime",
+    "timestamp": "2025-06-30T23:45:52",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 7652413,
+        "execution_time": 0.0014791770372539759,
+        "relative_speed": 1.0,
+        "complexity_class": "O(k! \u00d7 \u221amax_number)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 7652413,
+        "execution_time": 0.4981969289947301,
+        "relative_speed": 336.8068300462599,
+        "complexity_class": "O(n! \u00d7 \u221amax_number)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 7652413,
+        "execution_time": 0.5478033969993703,
+        "relative_speed": 370.34336201996626,
+        "complexity_class": "O(k! \u00d7 \u221amax_number)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+    "verified": true
+  },
+  "042": {
+    "problem_number": "042",
+    "problem_title": "Coded triangle numbers",
+    "timestamp": "2025-06-30T23:45:52",
+    "solutions": [
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 162,
+        "execution_time": 0.003979438974056393,
+        "relative_speed": 1.5715615666256908,
+        "complexity_class": "O(n + \u221amax_value)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 162,
+        "execution_time": 0.002532155951485038,
+        "relative_speed": 1.0,
+        "complexity_class": "O(n)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  },
+  "043": {
+    "problem_number": "043",
+    "problem_title": "Sub-string divisibility",
+    "timestamp": "2025-06-30T23:46:00",
+    "solutions": [
+      {
+        "name": "\u6570\u5b66\u7684\u89e3\u6cd5 (Mathematical)",
+        "function_name": "solve_mathematical",
+        "algorithm_type": "mathematical",
+        "result": 16695334890,
+        "execution_time": 4.300317517947406,
+        "relative_speed": 9.488084353116713,
+        "complexity_class": "O(k)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u7d20\u76f4\u306a\u89e3\u6cd5 (Naive)",
+        "function_name": "solve_naive",
+        "algorithm_type": "naive",
+        "result": 16695334890,
+        "execution_time": 3.601566374010872,
+        "relative_speed": 7.946381963040384,
+        "complexity_class": "O(10!)",
+        "one_minute_rule": true
+      },
+      {
+        "name": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+        "function_name": "solve_optimized",
+        "algorithm_type": "optimized",
+        "result": 16695334890,
+        "execution_time": 0.45323348295642063,
+        "relative_speed": 1.0,
+        "complexity_class": "O(k)",
+        "one_minute_rule": true
+      }
+    ],
+    "fastest_solution": "\u6700\u9069\u5316\u89e3\u6cd5 (Optimized)",
+    "verified": true
+  }
+}
