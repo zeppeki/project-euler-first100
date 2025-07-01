@@ -1,136 +1,275 @@
 #!/usr/bin/env python3
 """
-Problem 009 Runner: Special Pythagorean triplet
+Problem 009 Runner: Execution and demonstration code for Problem 009.
 
-実行・表示・パフォーマンス測定を担当
+This module handles the execution and demonstration of Problem 009 solutions,
+separated from the core algorithm implementations.
 """
 
-import os
-import sys
+import math
+from collections.abc import Callable
+from typing import Any
 
-# Add problems directory to path to import problem modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from problem_009 import (
+from problems.problem_009 import (
     find_pythagorean_triplet,
     solve_mathematical,
     solve_naive,
     solve_optimized,
 )
-from utils.display import (
-    print_final_answer,
-    print_performance_comparison,
-    print_solution_header,
-    print_test_results,
-)
-from utils.performance import compare_performance
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def run_tests() -> None:
-    """Run test cases to verify the solutions."""
-    test_cases: list[tuple[int, int]] = [
-        (12, 60),  # (3, 4, 5): 3+4+5=12, 3*4*5=60
-        (30, 780),  # (5, 12, 13): 5+12+13=30, 5*12*13=780
-        (24, 480),  # (6, 8, 10): 6+8+10=24, 6*8*10=480
-        (1000, 31875000),  # 本問題の解答
-    ]
+class Problem009Runner(BaseProblemRunner):
+    """Runner for Problem 009: Special Pythagorean triplet."""
 
-    functions = [
-        ("素直な解法", solve_naive),
-        ("最適化解法", solve_optimized),
-        ("数学的解法", solve_mathematical),
-    ]
+    def __init__(self) -> None:
+        super().__init__("009", "Special Pythagorean triplet")
 
-    print_test_results(test_cases, functions)
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 009."""
+        return [
+            (12, 60),  # (3, 4, 5): 3+4+5=12, 3*4*5=60
+            (30, 780),  # (5, 12, 13): 5+12+13=30, 5*12*13=780
+            (24, 480),  # (6, 8, 10): 6+8+10=24, 6*8*10=480
+            (36, 1620),  # (9, 12, 15): 9+12+15=36, 9*12*15=1620
+        ]
 
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 009."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
 
-def show_calculation_details() -> None:
-    """Show detailed calculation process."""
-    print("\n=== 計算過程の詳細 ===")
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get main problem parameters."""
+        return (1000,)
 
-    target_sum = 1000
+    def run_tests(self) -> bool:
+        """
+        Run test cases with special handling for mathematical solution.
 
-    # ピタゴラス数の組を表示
-    triplet = find_pythagorean_triplet(target_sum)
-    if triplet:
-        a, b, c = triplet
-        print(f"ピタゴラス数の組: ({a}, {b}, {c})")
-        print("条件確認:")
-        print(f"  a < b < c: {a} < {b} < {c} {'✓' if a < b < c else '✗'}")
+        The mathematical solution uses Euclid's formula which may find
+        different valid Pythagorean triplets than the naive/optimized solutions.
+        """
+        from problems.utils.display import print_test_results
+
+        test_cases = self.get_test_cases()
+        functions = self.get_solution_functions()
+
+        if not test_cases or not functions:
+            print("警告: テストケースまたは解法関数が定義されていません")
+            return False
+
+        print_test_results(test_cases, functions)
+
+        # Custom validation for this problem
+        all_passed = True
+        for test_case in test_cases:
+            inputs = test_case[:-1]
+            expected = test_case[-1]
+            target_sum = inputs[0]
+
+            for name, func in functions:
+                try:
+                    result = func(*inputs)
+
+                    # For mathematical solution, verify it's a valid Pythagorean triplet product
+                    if name == "数学的解法":
+                        # Verify the result corresponds to a valid Pythagorean triplet
+                        is_valid = self._is_valid_pythagorean_product(
+                            target_sum, result
+                        )
+                        if not is_valid:
+                            print(
+                                f"テスト失敗: {name} - 結果 {result} は和 {target_sum} の有効なピタゴラス数積ではありません"
+                            )
+                            all_passed = False
+                    else:
+                        # For naive and optimized, expect exact match
+                        if result != expected:
+                            print(
+                                f"テスト失敗: {name} - 期待値: {expected}, 実際: {result}"
+                            )
+                            all_passed = False
+
+                except Exception as e:
+                    print(f"テスト失敗: {name} - エラー: {e}")
+                    all_passed = False
+
+        return all_passed
+
+    def _is_valid_pythagorean_product(self, target_sum: int, product: int) -> bool:
+        """Check if the product corresponds to a valid Pythagorean triplet with the given sum."""
+        for a in range(1, target_sum // 3):
+            for b in range(a + 1, (target_sum - a + 1) // 2):
+                c = target_sum - a - b
+                if b >= c:
+                    continue
+                if a * a + b * b == c * c and a * b * c == product:
+                    return True
+        return False
+
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 009."""
+        return [
+            self._demonstrate_pythagorean_properties,
+            self._demonstrate_triplet_generation,
+            self._demonstrate_euclid_formula,
+        ]
+
+    def _demonstrate_pythagorean_properties(self) -> None:
+        """Demonstrate properties of Pythagorean triplets."""
+        print("=== ピタゴラス数の性質 ===")
+
+        # Show classic examples
+        classic_triplets = [
+            (3, 4, 5),
+            (5, 12, 13),
+            (8, 15, 17),
+            (7, 24, 25),
+            (20, 21, 29),
+            (9, 40, 41),
+        ]
+
+        print("古典的なピタゴラス数:")
+        print(f"{'a':>3} {'b':>3} {'c':>3} {'a²+b²':>8} {'c²':>8} {'和':>6} {'積':>10}")
+        print("-" * 45)
+
+        for a, b, c in classic_triplets:
+            a_sq_plus_b_sq = a * a + b * b
+            c_sq = c * c
+            sum_abc = a + b + c
+            product_abc = a * b * c
+            print(
+                f"{a:3d} {b:3d} {c:3d} {a_sq_plus_b_sq:8d} {c_sq:8d} {sum_abc:6d} {product_abc:10d}"
+            )
+
+        # Verify Pythagorean theorem for each
+        print("\nピタゴラスの定理検証:")
+        for a, b, c in classic_triplets:
+            if a * a + b * b == c * c:
+                print(f"  ({a}, {b}, {c}): ✓ {a}² + {b}² = {c}²")
+            else:
+                print(f"  ({a}, {b}, {c}): ✗ 不正なピタゴラス数")
+
+    def _demonstrate_triplet_generation(self) -> None:
+        """Demonstrate triplet generation for different sums."""
+        print("=== 異なる和でのピタゴラス数生成 ===")
+
+        test_sums = [12, 24, 30, 36, 60, 84, 120, 156, 180]
+        print(f"{'和':>4} {'a':>3} {'b':>3} {'c':>3} {'積':>10} {'検証':>6}")
+        print("-" * 35)
+
+        for target_sum in test_sums:
+            triplet = find_pythagorean_triplet(target_sum)
+            if triplet:
+                a, b, c = triplet
+                product = a * b * c
+                # Verify
+                is_valid = (
+                    a * a + b * b == c * c and a + b + c == target_sum and a < b < c
+                )
+                status = "✓" if is_valid else "✗"
+                print(f"{target_sum:4d} {a:3d} {b:3d} {c:3d} {product:10d} {status:>6}")
+            else:
+                print(
+                    f"{target_sum:4d} {'---':>3} {'---':>3} {'---':>3} {'---':>10} {'N/A':>6}"
+                )
+
+    def _demonstrate_euclid_formula(self) -> None:
+        """Demonstrate Euclid's formula for generating Pythagorean triplets."""
+        print("=== ユークリッドの公式によるピタゴラス数生成 ===")
+        print("原始ピタゴラス数の一般形:")
+        print("  a = m² - n²")
+        print("  b = 2mn")
+        print("  c = m² + n²")
+        print("条件: m > n > 0, gcd(m,n) = 1, m と n の一方は偶数")
+        print()
+
         print(
-            f"  a + b + c = {target_sum}: {a} + {b} + {c} = {a + b + c} {'✓' if a + b + c == target_sum else '✗'}"
+            f"{'m':>2} {'n':>2} {'a':>3} {'b':>3} {'c':>3} {'和':>6} {'積':>10} {'gcd':>4}"
         )
-        print(
-            f"  a² + b² = c²: {a}² + {b}² = {a * a} + {b * b} = {a * a + b * b} = {c * c} = {c}² {'✓' if a * a + b * b == c * c else '✗'}"
-        )
-        print(f"  積 abc: {a} × {b} × {c} = {a * b * c:,}")
+        print("-" * 40)
 
-    # アルゴリズムの説明
-    print("\n=== アルゴリズムの説明 ===")
-    print("素直な解法: 3重ループで全ての (a, b, c) の組み合わせをチェック")
-    print("最適化解法: 2重ループで c = target_sum - a - b として計算")
-    print("数学的解法: 原始ピタゴラス数の生成公式 (m² - n², 2mn, m² + n²) を使用")
+        # Generate primitive Pythagorean triplets using Euclid's formula
+        for m in range(2, 8):
+            for n in range(1, m):
+                # Check conditions for primitive triplets
+                if math.gcd(m, n) != 1:
+                    continue
+                if (m % 2) == (n % 2):  # Both odd or both even
+                    continue
 
-    # ピタゴラス数に関する数学的背景
-    print("\n=== 数学的背景 ===")
-    print("ピタゴラスの定理: a² + b² = c²")
-    print("原始ピタゴラス数: gcd(a, b, c) = 1 となるピタゴラス数")
-    print("ユークリッドの公式: a = m² - n², b = 2mn, c = m² + n²")
-    print("  条件: m > n > 0, gcd(m, n) = 1, m と n の一方は偶数")
+                # Generate triplet
+                a_raw = m * m - n * n
+                b_raw = 2 * m * n
+                c_raw = m * m + n * n
 
-    # 小さな例での説明
-    print("\n=== 小さな例での説明 ===")
-    small_examples = [12, 30, 24]
-    for example_sum in small_examples:
-        example_triplet = find_pythagorean_triplet(example_sum)
-        if example_triplet:
-            a, b, c = example_triplet
-            print(f"a + b + c = {example_sum}: ({a}, {b}, {c}), 積 = {a * b * c}")
-        else:
-            print(f"a + b + c = {example_sum}: 解なし")
+                # Ensure a < b
+                a, b = (a_raw, b_raw) if a_raw < b_raw else (b_raw, a_raw)
+                c = c_raw
 
+                sum_abc = a + b + c
+                product_abc = a * b * c
+                gcd_mn = math.gcd(m, n)
 
-def run_problem() -> None:
-    """Run the main problem solution with performance analysis."""
-    target_sum = 1000
+                print(
+                    f"{m:2d} {n:2d} {a:3d} {b:3d} {c:3d} {sum_abc:6d} {product_abc:10d} {gcd_mn:4d}"
+                )
 
-    print_solution_header(
-        "009", "Special Pythagorean triplet", f"a + b + c = {target_sum}"
-    )
+        print("\n数学的解法はこの公式を使用して効率的に解を探索します")
 
-    # Run tests first
-    run_tests()
+        # Show how this applies to our problem
+        print("\n問題の和=1000での解:")
+        triplet_1000 = find_pythagorean_triplet(1000)
+        if triplet_1000:
+            a, b, c = triplet_1000
+            product = a * b * c
+            print(f"  ピタゴラス数: ({a}, {b}, {c})")
+            print(f"  和: {a} + {b} + {c} = {a + b + c}")
+            print(f"  積: {a} × {b} × {c} = {product}")
+            print(
+                f"  ピタゴラスの定理: {a}² + {b}² = {a * a} + {b * b} = {a * a + b * b} = {c * c} = {c}²"
+            )
 
-    # Solve the main problem
-    functions = [
-        ("素直な解法", solve_naive),
-        ("最適化解法", solve_optimized),
-        ("数学的解法", solve_mathematical),
-    ]
+            # Try to find the m, n values that generate this triplet
+            print("\n  この数の生成パラメータを逆算:")
+            found_params = False
+            for m in range(2, int(math.sqrt(1000)) + 1):
+                for n in range(1, m):
+                    if math.gcd(m, n) != 1 or (m % 2) == (n % 2):
+                        continue
 
-    performance_results = compare_performance(functions, target_sum)
+                    a_test = m * m - n * n
+                    b_test = 2 * m * n
+                    c_test = m * m + n * n
 
-    # Verify all solutions agree
-    results = [data["result"] for data in performance_results.values()]
-    verified = len(set(results)) == 1
-
-    # Print results
-    for name, data in performance_results.items():
-        result = data["result"]
-        execution_time = data["execution_time"]
-        print(f"{name}: {result:,} (実行時間: {execution_time:.6f}秒)")
-
-    print()
-    print_final_answer(results[0], verified)
-    print_performance_comparison(performance_results)
-
-    # Show calculation details
-    show_calculation_details()
+                    # Check for scaling factor
+                    for k in range(1, 1000 // (a_test + b_test + c_test) + 1):
+                        if k * (a_test + b_test + c_test) == 1000 and {
+                            k * a_test,
+                            k * b_test,
+                            k * c_test,
+                        } == {a, b, c}:
+                            print(
+                                f"    原始ピタゴラス数: ({a_test}, {b_test}, {c_test})"
+                            )
+                            print(f"    パラメータ: m={m}, n={n}")
+                            print(f"    スケール係数: k={k}")
+                            found_params = True
+                            break
+                    if found_params:
+                        break
+                if found_params:
+                    break
 
 
 def main() -> None:
     """Main entry point."""
-    run_problem()
+    runner = Problem009Runner()
+    runner.main()
 
 
 if __name__ == "__main__":

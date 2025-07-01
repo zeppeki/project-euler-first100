@@ -1,121 +1,217 @@
 #!/usr/bin/env python3
 """
-Problem 010 Runner: Summation of primes
+Problem 010 Runner: Execution and demonstration code for Problem 010.
 
-実行・表示・パフォーマンス測定を担当
+This module handles the execution and demonstration of Problem 010 solutions,
+separated from the core algorithm implementations.
 """
 
 import math
-import os
-import sys
+from collections.abc import Callable
+from typing import Any
 
-# Add problems directory to path to import problem modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from problem_010 import (
+from problems.problem_010 import (
+    is_prime_naive,
     sieve_of_eratosthenes,
     solve_mathematical,
     solve_naive,
     solve_optimized,
 )
-from utils.display import (
-    print_final_answer,
-    print_performance_comparison,
-    print_solution_header,
-    print_test_results,
-)
-from utils.performance import compare_performance
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def run_tests() -> None:
-    """Run test cases to verify the solutions."""
-    test_cases: list[tuple[int, int]] = [
-        (2, 0),  # 2未満の素数はなし
-        (3, 2),  # 3未満の素数は2のみ
-        (10, 17),  # 問題例: 2 + 3 + 5 + 7 = 17
-        (30, 129),  # 2 + 3 + 5 + 7 + 11 + 13 + 17 + 19 + 23 + 29 = 129
-        (100, 1060),  # 100未満の素数の和
-    ]
+class Problem010Runner(BaseProblemRunner):
+    """Runner for Problem 010: Summation of primes."""
 
-    functions = [
-        ("素直な解法", solve_naive),
-        ("最適化解法", solve_optimized),
-        ("数学的解法", solve_mathematical),
-    ]
+    def __init__(self) -> None:
+        super().__init__("010", "Summation of primes")
 
-    print_test_results(test_cases, functions)
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 010."""
+        return [
+            (2, 0),  # No primes below 2
+            (3, 2),  # Only 2 is below 3
+            (10, 17),  # Problem example: 2 + 3 + 5 + 7 = 17
+            (11, 17),  # Same as above, 11 is not included
+            (30, 129),  # 2 + 3 + 5 + 7 + 11 + 13 + 17 + 19 + 23 + 29 = 129
+            (100, 1060),  # Sum of primes below 100
+        ]
 
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 010."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
 
-def show_calculation_details() -> None:
-    """Show detailed calculation process."""
-    print("\n=== 計算過程の詳細 ===")
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get main problem parameters."""
+        return (2000000,)
 
-    limit = 2000000
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 010."""
+        return [
+            self._demonstrate_prime_properties,
+            self._demonstrate_sieve_algorithm,
+            self._demonstrate_prime_distribution,
+        ]
 
-    # 最初の100までの素数の合計を表示
-    small_limit = 100
-    small_primes = sieve_of_eratosthenes(small_limit - 1)
-    print(f"100未満の素数: {', '.join(map(str, small_primes))}")
-    print(f"100未満の素数の和: {sum(small_primes)}")
+    def _demonstrate_prime_properties(self) -> None:
+        """Demonstrate properties of prime numbers."""
+        print("=== 素数の性質 ===")
 
-    # アルゴリズムの説明
-    print("\n=== アルゴリズムの説明 ===")
-    print("素直な解法: 各数を順次チェックして素数判定し合計")
-    print("最適化解法: エラトステネスの篩で効率的に素数を生成し合計")
-    print("数学的解法: メモリ最適化されたエラトステネスの篩（奇数のみ）")
+        # Show first several primes
+        first_primes = sieve_of_eratosthenes(100)
+        print(f"100未満の素数 ({len(first_primes)}個):")
+        print(f"{', '.join(map(str, first_primes))}")
 
-    # 素数の密度
-    prime_count = len(sieve_of_eratosthenes(limit - 1))
-    density = prime_count / limit * 100
-    print(f"\n{limit:,}未満の素数の個数: {prime_count:,}")
-    print(f"素数の密度: {density:.3f}%")
+        # Verify prime checking function
+        print("\n素数判定関数の検証:")
+        test_numbers = [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            15,
+            17,
+            19,
+            21,
+            23,
+            25,
+            29,
+            31,
+        ]
+        print(f"{'数':>3} {'素数?':>6} {'判定結果':>8}")
+        print("-" * 20)
 
-    # 素数定理による近似
-    approx_count = limit / math.log(limit)
-    print(f"素数定理による近似個数: {approx_count:.0f}")
-    print(f"実際の個数: {prime_count}")
-    print(f"誤差: {abs(prime_count - approx_count):.0f}")
+        for num in test_numbers:
+            is_prime = is_prime_naive(num)
+            expected_prime = num in first_primes
+            status = "✓" if is_prime == expected_prime else "✗"
+            print(f"{num:3d} {expected_prime!s:>6} {is_prime!s:>8} {status}")
 
+        # Show small prime gaps
+        print("\n素数ギャップ (連続する素数の差):")
+        gaps = []
+        for i in range(1, min(20, len(first_primes))):
+            gap = first_primes[i] - first_primes[i - 1]
+            gaps.append(gap)
+            print(f"  {first_primes[i - 1]} → {first_primes[i]}: gap = {gap}")
 
-def run_problem() -> None:
-    """Run the main problem solution with performance analysis."""
-    limit = 2000000
+        print(f"\n最初の19個の素数ギャップの平均: {sum(gaps) / len(gaps):.2f}")
 
-    print_solution_header("010", "Summation of primes", "2,000,000未満の素数の和")
+    def _demonstrate_sieve_algorithm(self) -> None:
+        """Demonstrate the Sieve of Eratosthenes algorithm."""
+        print("=== エラトステネスの篩アルゴリズム ===")
 
-    # Run tests first
-    run_tests()
+        # Demonstrate with small numbers
+        demo_limit = 30
+        print("30までの数でのエラトステネスの篩の実行過程:")
+        print("初期状態: 2から30までの数を素数候補とする")
 
-    # Solve the main problem
-    functions = [
-        ("素直な解法", solve_naive),
-        ("最適化解法", solve_optimized),
-        ("数学的解法", solve_mathematical),
-    ]
+        # Start with all numbers marked as potential primes
+        is_prime = [True] * (demo_limit + 1)
+        is_prime[0] = is_prime[1] = False
 
-    performance_results = compare_performance(functions, limit)
+        print(f"候補: {[i for i in range(2, demo_limit + 1) if is_prime[i]]}")
 
-    # Verify all solutions agree
-    results = [data["result"] for data in performance_results.values()]
-    verified = len(set(results)) == 1
+        # Apply sieve step by step
+        for p in range(2, int(math.sqrt(demo_limit)) + 1):
+            if is_prime[p]:
+                print(f"\n素数 {p} の倍数を除去:")
+                multiples = []
+                for i in range(p * p, demo_limit + 1, p):
+                    if is_prime[i]:
+                        is_prime[i] = False
+                        multiples.append(i)
 
-    # Print results
-    for name, data in performance_results.items():
-        result = data["result"]
-        execution_time = data["execution_time"]
-        print(f"{name}: {result:,} (実行時間: {execution_time:.6f}秒)")
+                if multiples:
+                    print(f"  除去: {multiples}")
+                else:
+                    print(f"  除去する数なし ({p}² = {p * p} > {demo_limit})")
 
-    print()
-    print_final_answer(results[0], verified)
-    print_performance_comparison(performance_results)
+                remaining = [i for i in range(2, demo_limit + 1) if is_prime[i]]
+                print(f"  残り: {remaining}")
 
-    # Show calculation details
-    show_calculation_details()
+        final_primes = [i for i in range(2, demo_limit + 1) if is_prime[i]]
+        print(f"\n最終結果: {final_primes}")
+
+        # Verify against our function
+        expected_primes = sieve_of_eratosthenes(demo_limit)
+        print(f"関数結果:   {expected_primes}")
+        print(f"一致: {'✓' if final_primes == expected_primes else '✗'}")
+
+    def _demonstrate_prime_distribution(self) -> None:
+        """Demonstrate prime number distribution and the Prime Number Theorem."""
+        print("=== 素数分布と素数定理 ===")
+
+        # Show prime counts for different ranges
+        test_limits = [10, 100, 1000, 10000, 100000]
+        print(
+            f"{'範囲':>10} {'素数個数':>10} {'密度(%)':>10} {'定理予測':>10} {'誤差':>8}"
+        )
+        print("-" * 55)
+
+        for limit in test_limits:
+            primes = sieve_of_eratosthenes(limit - 1)
+            prime_count = len(primes)
+            density = (prime_count / limit) * 100
+
+            # Prime Number Theorem approximation: π(x) ≈ x / ln(x)
+            if limit > 1:
+                pnt_estimate = limit / math.log(limit)
+                error = abs(prime_count - pnt_estimate)
+            else:
+                pnt_estimate = 0
+                error = 0
+
+            print(
+                f"{limit:10,} {prime_count:10,} {density:10.3f} {pnt_estimate:10.0f} {error:8.0f}"
+            )
+
+        # Show prime gaps in larger ranges
+        print("\n素数ギャップの分析 (100未満):")
+        primes_100 = sieve_of_eratosthenes(99)
+        gap_counts: dict[int, int] = {}
+
+        for i in range(1, len(primes_100)):
+            gap = primes_100[i] - primes_100[i - 1]
+            gap_counts[gap] = gap_counts.get(gap, 0) + 1
+
+        print("ギャップ   出現回数")
+        for gap in sorted(gap_counts.keys()):
+            print(f"{gap:6d} {gap_counts[gap]:10d}")
+
+        # Example calculation for the main problem
+        print("\n2,000,000未満での予測:")
+        main_limit = 2000000
+        pnt_prediction = main_limit / math.log(main_limit)
+        print(f"素数定理による素数個数予測: {pnt_prediction:.0f}")
+
+        # Show memory usage estimation for different sieve methods
+        print("\nメモリ使用量比較 (2,000,000未満):")
+        standard_memory = main_limit  # boolean array
+        optimized_memory = main_limit // 2  # odd numbers only
+
+        print(f"標準的な篩: {standard_memory:,} bytes (全数)")
+        print(f"最適化篩:   {optimized_memory:,} bytes (奇数のみ)")
+        print(
+            f"メモリ削減: {((standard_memory - optimized_memory) / standard_memory) * 100:.1f}%"
+        )
 
 
 def main() -> None:
     """Main entry point."""
-    run_problem()
+    runner = Problem010Runner()
+    runner.main()
 
 
 if __name__ == "__main__":
