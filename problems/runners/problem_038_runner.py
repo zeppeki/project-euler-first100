@@ -9,7 +9,7 @@ separated from the core algorithm implementations.
 from collections.abc import Callable
 from typing import Any
 
-from problems.problem_038 import (
+from problems.problem_038 import solve_naive, solve_optimized
 from problems.runners.base_runner import BaseProblemRunner
 
 
@@ -25,14 +25,11 @@ class Problem038Runner(BaseProblemRunner):
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 038."""
-        return [
-            ("素直な解法", solve_naive),
-            ("最適化解法", solve_optimized)
-        ]
+        return [("素直な解法", solve_naive), ("最適化解法", solve_optimized)]
 
     def get_main_parameters(self) -> tuple[Any, ...]:
         """Get parameters for the main problem."""
-        return (= "__main__":,)
+        return ()
 
 
 def main() -> None:

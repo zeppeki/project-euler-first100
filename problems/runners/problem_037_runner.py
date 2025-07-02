@@ -25,14 +25,11 @@ class Problem037Runner(BaseProblemRunner):
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 037."""
-        return [
-            ("素直な解法", solve_naive),
-            ("最適化解法", solve_optimized)
-        ]
+        return [("素直な解法", solve_naive), ("最適化解法", solve_optimized)]
 
     def get_main_parameters(self) -> tuple[Any, ...]:
         """Get parameters for the main problem."""
-        return (= "__main__":,)
+        return ()
 
 
 def main() -> None:

@@ -9,7 +9,7 @@ separated from the core algorithm implementations.
 from collections.abc import Callable
 from typing import Any
 
-from problems.problem_043 import (
+from problems.problem_043 import solve_mathematical, solve_naive, solve_optimized
 from problems.runners.base_runner import BaseProblemRunner
 
 
@@ -28,12 +28,12 @@ class Problem043Runner(BaseProblemRunner):
         return [
             ("素直な解法", solve_naive),
             ("最適化解法", solve_optimized),
-            ("数学的解法", solve_mathematical)
+            ("数学的解法", solve_mathematical),
         ]
 
     def get_main_parameters(self) -> tuple[Any, ...]:
         """Get parameters for the main problem."""
-        return (= "__main__":,)
+        return ()
 
 
 def main() -> None:

@@ -22,9 +22,9 @@ class Problem028Runner(BaseProblemRunner):
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 028."""
         return [
-(1, 1),
-        (3, 25),  # 1 + 3 + 5 + 7 + 9 = 25
-        (5, 101),  # 問題文の例
+            (1, 1),
+            (3, 25),  # 1 + 3 + 5 + 7 + 9 = 25
+            (5, 101),  # 問題文の例
         ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
@@ -32,12 +32,12 @@ class Problem028Runner(BaseProblemRunner):
         return [
             ("素直な解法", solve_naive),
             ("最適化解法", solve_optimized),
-            ("数学的解法", solve_mathematical)
+            ("数学的解法", solve_mathematical),
         ]
 
     def get_main_parameters(self) -> tuple[Any, ...]:
         """Get parameters for the main problem."""
-        return (=="),)
+        return (1001,)
 
 
 def main() -> None:
