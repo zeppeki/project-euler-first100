@@ -1,39 +1,47 @@
 #!/usr/bin/env python3
 """
-Problem 026 Runner: Reciprocal cycles
-実行・表示・パフォーマンス測定を担当
+Problem 026 Runner: Execution and demonstration code for Problem 026.
+
+This module handles the execution and demonstration of Problem 026 solutions,
+separated from the core algorithm implementations.
 """
 
-import time
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_026 import solve_naive, solve_optimized
+from problems.runners.base_runner import BaseProblemRunner
+
+
+class Problem026Runner(BaseProblemRunner):
+    """Runner for Problem 026: Reciprocal cycles."""
+
+    def __init__(self) -> None:
+        super().__init__("026", "Reciprocal cycles")
+
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 026."""
+        return [
+            (10, 7),  # 1/7 has the longest recurring cycle for d < 10
+            (100, 97),  # Known result for d < 100
+        ]
+
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 026."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+        ]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (1000,)
 
 
 def main() -> None:
-    """Main function to run and compare solutions."""
-    limit = 1000
-
-    print("Solving Problem 026...")
-
-    # --- Naive Solution ---
-    start_time = time.time()
-    naive_answer = solve_naive(limit)
-    naive_time = time.time() - start_time
-    print(f"Naive solution: {naive_answer} (took {naive_time:.6f} seconds)")
-
-    # --- Optimized Solution ---
-    start_time = time.time()
-    optimized_answer = solve_optimized(limit)
-    optimized_time = time.time() - start_time
-    print(f"Optimized solution: {optimized_answer} (took {optimized_time:.6f} seconds)")
-
-    # Verify solutions match
-    if naive_answer == optimized_answer:
-        print(f"✓ Both solutions agree: {naive_answer}")
-    else:
-        print(
-            f"✗ Solutions disagree: naive={naive_answer}, optimized={optimized_answer}"
-        )
+    """メイン関数"""
+    runner = Problem026Runner()
+    runner.main()
 
 
 if __name__ == "__main__":

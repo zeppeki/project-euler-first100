@@ -1,91 +1,83 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 020: Factorial digit sum
+Problem 020 Runner: Execution and demonstration code for Problem 020.
+
+This module handles the execution and demonstration of Problem 020 solutions,
+separated from the core algorithm implementations.
 """
 
-import math
-import time
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_020 import solve_mathematical, solve_naive, solve_optimized
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def test_solutions() -> None:
-    """テストケースで解答を検証"""
-    test_cases = [
-        (0, 1),  # 0! = 1 → 1
-        (1, 1),  # 1! = 1 → 1
-        (5, 3),  # 5! = 120 → 1+2+0 = 3
-        (10, 27),  # 10! = 3628800 → 3+6+2+8+8+0+0 = 27
-    ]
+class Problem020Runner(BaseProblemRunner):
+    """Runner for Problem 020: Factorial digit sum."""
 
-    print("=== テストケース ===")
-    for n, expected in test_cases:
-        result_naive = solve_naive(n)
-        result_optimized = solve_optimized(n)
-        result_math = solve_mathematical(n)
+    def __init__(self) -> None:
+        super().__init__("020", "Factorial digit sum")
 
-        print(f"{n}! の桁の和:")
-        print(f"  Expected: {expected}")
-        print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
-        print(
-            f"  Optimized: {result_optimized} {'✓' if result_optimized == expected else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
-        )
-        print(f"  ({n}! = {math.factorial(n)})")
-        print()
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 020."""
+        return [
+            (0, 1),  # 0! = 1 → 1
+            (1, 1),  # 1! = 1 → 1
+            (5, 3),  # 5! = 120 → 1+2+0 = 3
+            (10, 27),  # 10! = 3628800 → 3+6+2+8+8+0+0 = 27
+        ]
+
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 020."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (100,)
+
+    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+        """Get demonstration functions for Problem 020."""
+        return [("階乗の桁数分析", self._demonstrate_factorial_analysis)]
+
+    def _demonstrate_factorial_analysis(self) -> None:
+        """階乗の桁数分析を表示"""
+        import math
+
+        n = 100
+        result = solve_optimized(n)
+        factorial_100 = math.factorial(n)
+
+        print(f"{n}! の桁の和: {result}")
+        print(f"{n}! の桁数: {len(str(factorial_100))}")
+        print(f"{n}! の最初の20桁: {str(factorial_100)[:20]}...")
+        print(f"{n}! の最後の20桁: ...{str(factorial_100)[-20:]}")
+
+        print("\n小さな階乗の桁数と桁の和:")
+        for i in range(1, 21):
+            factorial = math.factorial(i)
+            digit_sum = sum(int(digit) for digit in str(factorial))
+            print(
+                f"{i:2d}! = {factorial:>15} → 桁数: {len(str(factorial)):2d}, 桁の和: {digit_sum:2d}"
+            )
+
+        print("\n階乗の成長:")
+        milestones = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+        for milestone in milestones:
+            factorial = math.factorial(milestone)
+            digit_count = len(str(factorial))
+            digit_sum = sum(int(digit) for digit in str(factorial))
+            print(f"{milestone:3d}! → 桁数: {digit_count:3d}, 桁の和: {digit_sum:4d}")
 
 
 def main() -> None:
     """メイン関数"""
-    # テストケース
-    test_solutions()
-
-    # 本問題の解答
-    print("=== 本問題の解答 ===")
-    n = 100
-
-    # 各解法の実行と時間測定
-    start_time = time.time()
-    result_naive = solve_naive(n)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(n)
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical(n)
-    math_time = time.time() - start_time
-
-    print("100!の各桁の数字の合計:")
-    print(f"  素直な解法: {result_naive} (実行時間: {naive_time:.6f}秒)")
-    print(f"  最適化解法: {result_optimized} (実行時間: {optimized_time:.6f}秒)")
-    print(f"  数学的解法: {result_math} (実行時間: {math_time:.6f}秒)")
-
-    # 結果の検証
-    if result_naive == result_optimized == result_math:
-        print(f"\n✓ 解答: {result_naive}")
-    else:
-        print("\n✗ 解答が一致しません")
-        print(f"  素直な解法: {result_naive}")
-        print(f"  最適化解法: {result_optimized}")
-        print(f"  数学的解法: {result_math}")
-
-    # パフォーマンス比較
-    print("\n=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
-
-    # 追加情報
-    print("\n=== 追加情報 ===")
-    factorial_100 = math.factorial(100)
-    print(f"100! の桁数: {len(str(factorial_100))}")
-    print(f"100! の最初の20桁: {str(factorial_100)[:20]}...")
-    print(f"100! の最後の20桁: ...{str(factorial_100)[-20:]}")
+    runner = Problem020Runner()
+    runner.main()
 
 
 if __name__ == "__main__":

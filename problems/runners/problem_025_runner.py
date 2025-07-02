@@ -1,30 +1,41 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 025: 1000-digit Fibonacci number
+Problem 025 Runner: Execution and demonstration code for Problem 025.
+
+This module handles the execution and demonstration of Problem 025 solutions,
+separated from the core algorithm implementations.
 """
 
-import time
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_025 import solve_naive, solve_optimized
+from problems.runners.base_runner import BaseProblemRunner
+
+
+class Problem025Runner(BaseProblemRunner):
+    """Runner for Problem 025: 1000-digit Fibonacci number."""
+
+    def __init__(self) -> None:
+        super().__init__("025", "1000-digit Fibonacci number")
+
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 025."""
+        return []  # TODO: Add test cases
+
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 025."""
+        return [("素直な解法", solve_naive), ("最適化解法", solve_optimized)]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (1000,)
 
 
 def main() -> None:
-    """Main function to run and compare solutions."""
-    target_digits = 1000
-
-    print("Solving Problem 025...")
-
-    # --- Naive Solution ---
-    start_time = time.time()
-    naive_answer = solve_naive(target_digits)
-    naive_time = time.time() - start_time
-    print(f"Naive solution: {naive_answer} (took {naive_time:.6f} seconds)")
-
-    # --- Optimized Solution ---
-    start_time = time.time()
-    optimized_answer = solve_optimized(target_digits)
-    optimized_time = time.time() - start_time
-    print(f"Optimized solution: {optimized_answer} (took {optimized_time:.6f} seconds)")
+    """メイン関数"""
+    runner = Problem025Runner()
+    runner.main()
 
 
 if __name__ == "__main__":
