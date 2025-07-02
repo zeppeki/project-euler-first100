@@ -1,31 +1,41 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 024: Lexicographic permutations
+Problem 024 Runner: Execution and demonstration code for Problem 024.
+
+This module handles the execution and demonstration of Problem 024 solutions,
+separated from the core algorithm implementations.
 """
 
-import time
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_024 import solve_naive, solve_optimized
+from problems.runners.base_runner import BaseProblemRunner
+
+
+class Problem024Runner(BaseProblemRunner):
+    """Runner for Problem 024: Lexicographic permutations."""
+
+    def __init__(self) -> None:
+        super().__init__("024", "Lexicographic permutations")
+
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 024."""
+        return []  # TODO: Add test cases
+
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 024."""
+        return [("素直な解法", solve_naive), ("最適化解法", solve_optimized)]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return ("0123456789",)
 
 
 def main() -> None:
-    """Main function to run and compare solutions."""
-    digits = "0123456789"
-    n = 1_000_000
-
-    print("Solving Problem 024...")
-
-    # --- Naive Solution ---
-    start_time = time.time()
-    naive_answer = solve_naive(digits, n)
-    naive_time = time.time() - start_time
-    print(f"Naive solution: {naive_answer} (took {naive_time:.6f} seconds)")
-
-    # --- Optimized Solution ---
-    start_time = time.time()
-    optimized_answer = solve_optimized(digits, n)
-    optimized_time = time.time() - start_time
-    print(f"Optimized solution: {optimized_answer} (took {optimized_time:.6f} seconds)")
+    """メイン関数"""
+    runner = Problem024Runner()
+    runner.main()
 
 
 if __name__ == "__main__":

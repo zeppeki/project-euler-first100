@@ -1,31 +1,47 @@
 #!/usr/bin/env python3
 """
-Problem 029 Runner: Distinct powers
-実行・表示・パフォーマンス測定を担当
+Problem 029 Runner: Execution and demonstration code for Problem 029.
+
+This module handles the execution and demonstration of Problem 029 solutions,
+separated from the core algorithm implementations.
 """
 
-import time
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_029 import solve_naive, solve_optimized
+from problems.runners.base_runner import BaseProblemRunner
+
+
+class Problem029Runner(BaseProblemRunner):
+    """Runner for Problem 029: Distinct powers."""
+
+    def __init__(self) -> None:
+        super().__init__("029", "Distinct powers")
+
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 029."""
+        return [
+            (5, 15),  # a^b for 2 ≤ a ≤ 5 and 2 ≤ b ≤ 5
+            (10, 69),  # Known result for a, b ≤ 10
+        ]
+
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 029."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+        ]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (100,)
 
 
 def main() -> None:
-    """Main function to run and compare solutions."""
-    limit = 100
-
-    print(f"Solving Problem 029 for limit = {limit}...")
-
-    # --- Naive Solution ---
-    start_time = time.time()
-    naive_answer = solve_naive(limit)
-    naive_time = time.time() - start_time
-    print(f"Naive solution: {naive_answer} (took {naive_time:.6f} seconds)")
-
-    # --- Optimized Solution ---
-    start_time = time.time()
-    optimized_answer = solve_optimized(limit)
-    optimized_time = time.time() - start_time
-    print(f"Optimized solution: {optimized_answer} (took {optimized_time:.6f} seconds)")
+    """メイン関数"""
+    runner = Problem029Runner()
+    runner.main()
 
 
 if __name__ == "__main__":
