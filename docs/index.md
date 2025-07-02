@@ -28,9 +28,9 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 <div id="stats-dashboard" class="dashboard"></div>
 
 ### 詳細統計
-- **完了問題**: 31/100 (31%)
-- **最新完了**: Problem 031: Coin sums
-- **実装済み解法**: 各問題3つの異なるアプローチ（計93解法）
+- **完了問題**: 50/100 (50%)
+- **最新完了**: Problem 050: Consecutive prime sum
+- **実装済み解法**: 各問題3つの異なるアプローチ（計150解法）
 - **テストカバレッジ**: 95%以上
 
 ### 完了した問題
@@ -68,6 +68,25 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 | 029 | Distinct powers | [隠匿] | 冪の重複除去と集合操作 |
 | 030 | Digit fifth powers | [隠匿] | 桁の冪乗と数値の性質 |
 | 031 | Coin sums | [隠匿] | 動的プログラミングと硬貨問題 |
+| 032 | Pandigital products | [隠匿] | Pandigital数の性質と探索範囲の限定 |
+| 033 | Digit cancelling fractions | [隠匿] | 分数の約分と最大公約数 |
+| 034 | Digit factorials | [隠匿] | 階乗の性質と探索範囲の限定 |
+| 035 | Circular primes | [隠匿] | 循環素数の性質と文字列回転 |
+| 036 | Double-base palindromes | [隠匿] | 回文数の性質と進数変換 |
+| 037 | Truncatable primes | [隠匿] | 切断可能素数の性質と文字列操作 |
+| 038 | Pandigital multiples | [隠匿] | Pandigital数の性質と文字列連結 |
+| 039 | Integer right triangles | [隠匿] | ピタゴラスの定理と直角三角形の性質 |
+| 040 | Champernowne's constant | [隠匿] | Champernowne定数の性質と数列の位置計算 |
+| 041 | Pandigital prime | [隠匿] | Pandigital数の性質と桁数の数学的洞察 |
+| 042 | Coded triangle numbers | [隠匿] | 三角数の性質と文字列処理 |
+| 043 | Sub-string divisibility | [隠匿] | Pandigital数の性質と部分文字列の除算判定 |
+| 044 | Pentagon numbers | [隠匿] | 五角数の性質と数式による判定アルゴリズム |
+| 045 | Triangular, pentagonal, and hexagonal | [隠匿] | 三角数・五角数・六角数の関係性と数学的最適化 |
+| 046 | Goldbach's other conjecture | 5777 | ゴールドバッハの予想と反例探索 |
+| 047 | Distinct primes factors | 134043 | 連続する数の素因数分解とキャッシュ最適化 |
+| 048 | Self powers | [隠匿] | モジュラー算術と大きな数の処理 |
+| 049 | Prime permutations | [隠匿] | 順列、算術数列、素数生成 |
+| 050 | Consecutive prime sum | 997651 | 累積和と連続する素数の和 |
 
 ## 🚀 特徴
 
