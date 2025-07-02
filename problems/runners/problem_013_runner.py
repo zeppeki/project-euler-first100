@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 013: Large sum
+Problem 013 Runner: Execution and demonstration code for Problem 013.
+
+This module handles the execution and demonstration of Problem 013 solutions,
+separated from the core algorithm implementations.
 """
 
-import time
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_013 import (
     get_fifty_digit_numbers,
@@ -11,107 +15,61 @@ from problems.problem_013 import (
     solve_naive,
     solve_optimized,
 )
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def test_solutions() -> None:
-    """テストケースで解答を検証"""
-    print("=== テストケース ===")
+class Problem013Runner(BaseProblemRunner):
+    """Runner for Problem 013: Large sum."""
 
-    # 小さなテストケース
-    test_numbers = [
-        "12345678901234567890123456789012345678901234567890",
-        "98765432109876543210987654321098765432109876543210",
-        "11111111111111111111111111111111111111111111111111",
-    ]
+    def __init__(self) -> None:
+        super().__init__("013", "Large sum")
 
-    # テスト用の小さな関数
-    def test_small_sum() -> str:
-        total = sum(int(num) for num in test_numbers)
-        return str(total)[:10]
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 013."""
+        # テスト用の小さな数値リスト
+        test_numbers = [
+            "12345678901234567890123456789012345678901234567890",
+            "98765432109876543210987654321098765432109876543210",
+            "11111111111111111111111111111111111111111111111111",
+        ]
+        expected = str(sum(int(num) for num in test_numbers))[:10]
+        return [
+            (test_numbers, expected),
+        ]
 
-    small_result = test_small_sum()
-    print(f"小さなテストケース結果: {small_result}")
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 013."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
 
-    # 本問題の解答
-    result_naive = solve_naive()
-    result_optimized = solve_optimized()
-    result_math = solve_mathematical()
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return ()
 
-    print(f"Naive: {result_naive}")
-    print(f"Optimized: {result_optimized}")
-    print(f"Mathematical: {result_math}")
+    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+        """Get demonstration functions for Problem 013."""
+        return [("50桁数の分析", self._demonstrate_large_numbers)]
 
-    # 検証
-    if result_naive == result_optimized == result_math:
-        print(f"✓ 全解法一致: {result_naive}")
-    else:
-        print("✗ 解法間で結果が異なります")
+    def _demonstrate_large_numbers(self) -> None:
+        """50桁数の分析を表示"""
+        numbers = get_fifty_digit_numbers()
+        total = sum(numbers)
+
+        print(f"50桁の数値の個数: {len(numbers)}")
+        print(f"最初の数値: {numbers[0]}")
+        print(f"最後の数値: {numbers[-1]}")
+        print(f"全数値の合計: {total}")
+        print(f"合計の桁数: {len(str(total))}")
+        print(f"上位10桁: {str(total)[:10]}")
 
 
 def main() -> None:
     """メイン関数"""
-    print("=== Problem 013: Large sum ===")
-    print("100個の50桁数字の合計の最初の10桁を求める")
-    print()
-
-    # テストケース
-    test_solutions()
-
-    # 本問題の解答
-    print("\n=== 本問題の解答 ===")
-
-    # 各解法の実行時間測定
-    start_time = time.time()
-    result_naive = solve_naive()
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized()
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical()
-    math_time = time.time() - start_time
-
-    print(f"素直な解法: {result_naive} (実行時間: {naive_time:.6f}秒)")
-    print(f"最適化解法: {result_optimized} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math} (実行時間: {math_time:.6f}秒)")
-    print()
-
-    # 結果の検証
-    if result_naive == result_optimized:
-        print(f"✓ 解答: {result_naive}")
-    else:
-        print("✗ 解答が一致しません")
-        print(f"  Naive: {result_naive}")
-        print(f"  Optimized: {result_optimized}")
-        print(f"  Mathematical: {result_math}")
-        return
-
-    # パフォーマンス比較
-    print("\n=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
-
-    # 詳細な計算過程の表示
-    print("\n=== 計算過程の詳細 ===")
-
-    numbers = get_fifty_digit_numbers()
-    total_sum = sum(int(num) for num in numbers)
-
-    print(f"数字の個数: {len(numbers)}")
-    print(f"各数字の桁数: {len(numbers[0])}")
-    print(f"合計値: {total_sum}")
-    print(f"合計値の桁数: {len(str(total_sum))}")
-    print(f"最初の10桁: {str(total_sum)[:10]}")
-
-    # アルゴリズムの説明
-    print("\n=== アルゴリズムの説明 ===")
-    print("素直な解法: Pythonの大整数演算を使用して直接合計計算")
-    print("最適化解法: 桁ごとに加算してキャリーオーバーを手動処理")
-    print("数学的解法: 上位桁のみを使用した近似計算（最適化されたアプローチ）")
+    runner = Problem013Runner()
+    runner.main()
 
 
 if __name__ == "__main__":
