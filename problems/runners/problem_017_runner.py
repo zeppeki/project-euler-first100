@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 017: Number Letter Counts
+Problem 017 Runner: Execution and demonstration code for Problem 017.
+
+This module handles the execution and demonstration of Problem 017 solutions,
+separated from the core algorithm implementations.
 """
 
-import time
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_017 import (
     count_letters,
@@ -12,107 +16,91 @@ from problems.problem_017 import (
     solve_naive,
     solve_optimized,
 )
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def test_solutions() -> None:
-    """テストケースで解答を検証"""
-    # 基本的なテストケース
-    test_cases = [
-        (1, "one", 3),
-        (2, "two", 3),
-        (5, "five", 4),
-        (12, "twelve", 6),
-        (21, "twenty one", 9),
-        (42, "forty two", 8),
-        (115, "one hundred and fifteen", 20),
-        (342, "three hundred and forty two", 23),
-        (1000, "one thousand", 11),
-    ]
+class Problem017Runner(BaseProblemRunner):
+    """Runner for Problem 017: Number Letter Counts."""
 
-    print("=== 個別テストケース ===")
-    for num, expected_words, expected_letters in test_cases:
-        actual_words = number_to_words(num)
-        actual_letters = count_letters(actual_words)
+    def __init__(self) -> None:
+        super().__init__("017", "Number Letter Counts")
 
-        print(f"{num}: '{actual_words}' ({actual_letters} letters)")
-        print(f"  Expected: '{expected_words}' ({expected_letters} letters)")
-        print(f"  Words: {'✓' if actual_words == expected_words else '✗'}")
-        print(f"  Letters: {'✓' if actual_letters == expected_letters else '✗'}")
-        print()
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 017."""
+        test_cases = []
+        numbers_words = [
+            (1, "one"),
+            (2, "two"),
+            (5, "five"),
+            (12, "twelve"),
+            (21, "twenty one"),
+            (42, "forty two"),
+            (115, "one hundred and fifteen"),
+            (342, "three hundred and forty two"),
+            (1000, "one thousand"),
+        ]
 
-    # 範囲テストケース
-    range_test_cases = [
-        (5, 19),  # 1-5: one(3) + two(3) + three(5) + four(4) + five(4) = 19
-        (20, 112),  # 予想される値
-    ]
+        for num, words in numbers_words:
+            expected = count_letters(words)
+            test_cases.append((num, expected))
 
-    print("=== 範囲テストケース ===")
-    for limit, expected in range_test_cases:
-        result_naive = solve_naive(limit)
-        result_optimized = solve_optimized(limit)
-        result_math = solve_mathematical(limit)
+        return test_cases
 
-        print(f"1-{limit} の文字数合計:")
-        print(f"  Expected: {expected}")
-        print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
-        print(
-            f"  Optimized: {result_optimized} {'✓' if result_optimized == expected else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
-        )
-        print()
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 017."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (1000,)
+
+    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+        """Get demonstration functions for Problem 017."""
+        return [("数値の英単語変換例", self._demonstrate_number_words)]
+
+    def _demonstrate_number_words(self) -> None:
+        """数値の英単語変換例を表示"""
+        examples = [1, 5, 12, 21, 42, 115, 342, 1000]
+
+        print("数値から英単語への変換例:")
+        for num in examples:
+            words = number_to_words(num)
+            letter_count = count_letters(words)
+            print(f"{num:4d}: '{words}' → {letter_count} letters")
+
+        print(f"\n1から1000までの文字数合計: {solve_optimized(1000)}")
+
+        print("\n各桁数別の分析:")
+        ranges = [
+            (1, 9, "1桁"),
+            (10, 19, "10代"),
+            (20, 99, "2桁"),
+            (100, 999, "3桁"),
+            (1000, 1000, "1000"),
+        ]
+
+        for start, end, description in ranges:
+            if start == end:
+                count = count_letters(number_to_words(start))
+                print(f"{description}: {count} letters")
+            else:
+                total = sum(
+                    count_letters(number_to_words(i)) for i in range(start, end + 1)
+                )
+                average = total / (end - start + 1)
+                print(
+                    f"{description} ({start}-{end}): 総計 {total}, 平均 {average:.1f} letters"
+                )
 
 
 def main() -> None:
     """メイン関数"""
-    # テストケース
-    test_solutions()
-
-    # 本問題の解答
-    print("=== 本問題の解答 ===")
-    limit = 1000
-
-    # 各解法の実行時間測定
-    start_time = time.time()
-    result_naive = solve_naive(limit)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(limit)
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical(limit)
-    math_time = time.time() - start_time
-
-    print(f"1-{limit} の文字数合計:")
-    print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
-    print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
-    print()
-
-    # 結果の検証
-    if result_naive == result_optimized == result_math:
-        print(f"✓ 解答: {result_optimized:,}")
-    else:
-        print("✗ 解答が一致しません")
-        return
-
-    # パフォーマンス比較
-    print("=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
-
-    # 追加情報
-    print("\n=== 追加情報 ===")
-    print("イギリス式表記の特徴:")
-    print("- 100以上の数では 'and' を使用")
-    print("- 例: 115 = 'one hundred and fifteen'")
-    print("- 例: 342 = 'three hundred and forty two'")
-    print(f"- 1000 = 'one thousand' ({count_letters(number_to_words(1000))} letters)")
+    runner = Problem017Runner()
+    runner.main()
 
 
 if __name__ == "__main__":
