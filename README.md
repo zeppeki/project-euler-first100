@@ -4,9 +4,9 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 
 ## 📊 進捗状況
 
-- **完了問題**: 20/100 (Problems 001-020)
-- **最新完了**: Problem 020: Factorial digit sum (解答: 648)
-- **次回予定**: Problem 021: Amicable numbers
+- **完了問題**: 45/100 (Problems 001-045)
+- **最新完了**: Problem 045: Triangular, pentagonal, and hexagonal
+- **次回予定**: Problem 046: Goldbach's other conjecture
 
 ### 完了した問題
 
@@ -18,7 +18,11 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 | 004 | Largest palindrome product | 906,609 | 2024-12-19 | 回文数の性質 |
 | 005 | Smallest multiple | 232,792,560 | 2024-12-19 | 最小公倍数と素因数分解 |
 | ... | ... | ... | ... | ... |
-| 020 | Factorial digit sum | 648 | 2025-06-26 | 大きな数の桁和計算 |
+| 041 | Pandigital prime | [隠匿] | 2025-07-02 | パンデジタル数と素数判定 |
+| 042 | Coded triangle numbers | [隠匿] | 2025-07-02 | 単語の数値化と三角数 |
+| 043 | Sub-string divisibility | [隠匿] | 2025-07-02 | パンデジタル数の性質 |
+| 044 | Pentagon numbers | [隠匿] | 2025-07-02 | 五角数の性質と最適化 |
+| 045 | Triangular, pentagonal, and hexagonal | [隠匿] | 2025-07-02 | 多角数の共通解 |
 
 ## 🎯 プロジェクトの目的
 
@@ -349,9 +353,9 @@ uv run pytest --cov=problems --cov-report=html
 
 ### 進捗統計
 - **総問題数**: 100
-- **完了問題数**: 20
-- **完了率**: 20%
-- **実装済み解法数**: 56 (16問題×3解法 + 4問題×2解法)
+- **完了問題数**: 45
+- **完了率**: 45%
+- **実装済み解法数**: 90+ (多くの問題で2-3の解法を実装)
 - **平均解答時間**: 約2時間/問題
 - **テストカバレッジ**: 100%
 

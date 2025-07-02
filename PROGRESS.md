@@ -47,6 +47,10 @@
 | 039 | Integer right triangles | 🟢 完了 | Python | 2025-06-29 |
 | 040 | Champernowne's constant | 🟢 完了 | Python | 2025-06-29 |
 | 041 | Pandigital prime | 🟢 完了 | Python | 2025-06-30 |
+| 042 | Coded triangle numbers | 🟢 完了 | Python | 2025-06-30 |
+| 043 | Sub-string divisibility | 🟢 完了 | Python | 2025-06-30 |
+| 044 | Pentagon numbers | 🟢 完了 | Python | 2025-06-30 |
+| 045 | Triangular, pentagonal, and hexagonal | 🟢 完了 | Python | 2025-06-30 |
 
 ## 凡例
 
@@ -57,16 +61,16 @@
 
 ## 統計
 
-- 完了: 41/100
+- 完了: 45/100
 - 作業中: 0/100
-- 未着手: 59/100
+- 未着手: 55/100
 
 ## 目標
 
 - [x] 最初の10問を完了 (10/10)
 - [x] 最初の25問を完了 (25/25)
 - [x] 最初の40問を完了 (40/40) - 100%進捗
-- [ ] 最初の50問を完了
+- [ ] 最初の50問を完了 (45/50) - 90%進捗
 - [ ] 最初の100問を完了
 
 ## 完了した問題の詳細
@@ -487,5 +491,49 @@
   - `problems/problem_041.py`
   - `docs/solutions/solution_041.md`
 - **学習ポイント**: pandigital数の性質、桁数の和による数学的洞察、順列生成
+
+### Problem 042: Coded triangle numbers
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n × m)) - 各単語について三角数かどうかを個別にチェック
+  - 最適化解法 (O(n + m log m)) - 三角数を事前計算してセット検索
+- **ファイル**:
+  - `problems/problem_042.py`
+  - `docs/solutions/solution_042.md`
+- **学習ポイント**: 三角数の性質、文字列処理、セット検索
+
+### Problem 043: Sub-string divisibility
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n!)) - 全てのpandigital順列について条件をチェック
+  - 最適化解法 (O(n)) - 制約条件を利用した効率的な構築アルゴリズム
+- **ファイル**:
+  - `problems/problem_043.py`
+  - `docs/solutions/solution_043.md`
+- **学習ポイント**: pandigital数の性質、部分文字列の除算判定、制約満足問題
+
+### Problem 044: Pentagon numbers
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 全ての五角数のペアについて条件をチェック
+  - 最適化解法 (O(n)) - 効率的な五角数判定と探索範囲の限定
+- **ファイル**:
+  - `problems/problem_044.py`
+  - `docs/solutions/solution_044.md`
+- **学習ポイント**: 五角数の性質、数式による判定アルゴリズム
+
+### Problem 045: Triangular, pentagonal, and hexagonal
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n × log n)) - 各数について全ての条件をチェック
+  - 最適化解法 (O(n)) - 六角数を基準とした効率的な探索
+- **ファイル**:
+  - `problems/problem_045.py`
+  - `docs/solutions/solution_045.md`
+- **学習ポイント**: 三角数・五角数・六角数の関係性、数学的最適化
 
 最終更新: 2025-06-30
