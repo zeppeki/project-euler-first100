@@ -142,16 +142,12 @@ def solve_optimized(target_factors: int) -> int:
         for i in range(target_factors):
             if count_distinct_prime_factors_cached(n + i) != target_factors:
                 consecutive_found = False
-                # 次の候補位置まで飛ばす
-                n += i + 1
                 break
 
         if consecutive_found:
             return n
 
-        if not consecutive_found and i == 0:
-            # 最初の数で失敗した場合は単純に次へ
-            n += 1
+        n += 1
 
 
 def solve_mathematical(target_factors: int) -> int:
