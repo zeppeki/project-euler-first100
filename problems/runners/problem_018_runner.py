@@ -1,125 +1,83 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 018: Maximum Path Sum I
+Problem 018 Runner: Execution and demonstration code for Problem 018.
+
+This module handles the execution and demonstration of Problem 018 solutions,
+separated from the core algorithm implementations.
 """
 
-import os
-import sys
-import time
+from collections.abc import Callable
+from typing import Any
 
-# Add problems directory to path to import problem modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from problem_018 import (
+from problems.problem_018 import (
     get_example_triangle,
     get_problem_triangle,
     solve_mathematical,
     solve_naive,
     solve_optimized,
 )
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def test_solutions() -> None:
-    """テストケースで解答を検証"""
-    print("=== 例題テスト ===")
-    example_triangle = get_example_triangle()
-    expected_example = 23
+class Problem018Runner(BaseProblemRunner):
+    """Runner for Problem 018: Maximum Path Sum I."""
 
-    result_naive = solve_naive(example_triangle)
-    result_optimized = solve_optimized(example_triangle)
-    result_math = solve_mathematical(example_triangle)
+    def __init__(self) -> None:
+        super().__init__("018", "Maximum Path Sum I")
 
-    print("例題三角形の最大パス合計:")
-    print(f"  Expected: {expected_example}")
-    print(f"  Naive: {result_naive} {'✓' if result_naive == expected_example else '✗'}")
-    print(
-        f"  Optimized: {result_optimized} {'✓' if result_optimized == expected_example else '✗'}"
-    )
-    print(
-        f"  Mathematical: {result_math} {'✓' if result_math == expected_example else '✗'}"
-    )
-    print()
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 018."""
+        example_triangle = get_example_triangle()
+        return [
+            (example_triangle, 23),  # 例題の三角形: 期待値 23
+        ]
 
-    # 小さなテストケース
-    print("=== 追加テストケース ===")
-    small_triangles = [
-        # 単一要素
-        ([[5]], 5),
-        # 2行
-        ([[1], [2, 3]], 4),  # 1 + 3 = 4
-        # 3行
-        ([[1], [2, 3], [4, 5, 6]], 10),  # 1 + 3 + 6 = 10
-    ]
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 018."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
 
-    for i, (triangle, expected) in enumerate(small_triangles, 1):
-        result_naive = solve_naive(triangle)
-        result_optimized = solve_optimized(triangle)
-        result_math = solve_mathematical(triangle)
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (get_problem_triangle(),)
 
-        print(f"テストケース {i}:")
-        print(f"  Expected: {expected}")
-        print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
-        print(
-            f"  Optimized: {result_optimized} {'✓' if result_optimized == expected else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
-        )
-        print()
+    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+        """Get demonstration functions for Problem 018."""
+        return [("三角形経路の動的計画法", self._demonstrate_path_analysis)]
+
+    def _demonstrate_path_analysis(self) -> None:
+        """三角形経路の動的計画法を表示"""
+        example_triangle = get_example_triangle()
+        problem_triangle = get_problem_triangle()
+
+        print("例題三角形:")
+        for row in example_triangle:
+            print("  " + " ".join(f"{num:2d}" for num in row))
+
+        example_result = solve_optimized(example_triangle)
+        print(f"例題の最大経路和: {example_result}")
+
+        print("\n本問題の三角形:")
+        print(f"行数: {len(problem_triangle)}")
+        print(f"最初の行: {problem_triangle[0]}")
+        print(f"最後の行の要素数: {len(problem_triangle[-1])}")
+
+        problem_result = solve_optimized(problem_triangle)
+        print(f"本問題の最大経路和: {problem_result}")
+
+        print("\n動的計画法の説明:")
+        print("- 下から上へ計算")
+        print("- 各位置で左下と右下の最大値を選択")
+        print("- 時間計算量: O(n²), 空間計算量: O(n)")
 
 
 def main() -> None:
     """メイン関数"""
-    # テストケース
-    test_solutions()
-
-    # 本問題の解答
-    print("=== 本問題の解答 ===")
-    triangle = get_problem_triangle()
-
-    # 各解法の実行時間測定
-    start_time = time.time()
-    result_naive = solve_naive(triangle)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(triangle)
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical(triangle)
-    math_time = time.time() - start_time
-
-    print("15行三角形の最大パス合計:")
-    print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
-    print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
-    print()
-
-    # 結果の検証
-    if result_naive == result_optimized == result_math:
-        print(f"✓ 解答: {result_optimized:,}")
-    else:
-        print("✗ 解答が一致しません")
-        return
-
-    # パフォーマンス比較
-    print("=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
-
-    # 追加情報
-    print("\n=== アルゴリズム解説 ===")
-    print("1. 素直な解法: 全経路を再帰的に探索（指数時間）")
-    print("2. 最適化解法: メモ化による動的プログラミング（O(n²)）")
-    print("3. 数学的解法: ボトムアップDP、空間効率的（O(n²)時間、O(n)空間）")
-    print()
-    print("ボトムアップDPの利点:")
-    print("- 底辺から計算するため、各位置で最適解が確定")
-    print("- 再帰オーバーヘッドがない")
-    print("- メモリ使用量が少ない")
+    runner = Problem018Runner()
+    runner.main()
 
 
 if __name__ == "__main__":

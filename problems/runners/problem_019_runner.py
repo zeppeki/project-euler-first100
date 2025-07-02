@@ -1,113 +1,95 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 019: Counting Sundays
+Problem 019 Runner: Execution and demonstration code for Problem 019.
+
+This module handles the execution and demonstration of Problem 019 solutions,
+separated from the core algorithm implementations.
 """
 
-import os
-import sys
-import time
+from collections.abc import Callable
+from typing import Any
 
-# Add problems directory to path to import problem modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from problem_019 import (
+from problems.problem_019 import (
     solve_mathematical,
     solve_naive,
     solve_optimized,
     validate_days_in_month_calculation,
     validate_leap_year_calculation,
 )
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def test_solutions() -> None:
-    """テストケースで解答を検証"""
-    print("=== 基本検証 ===")
-    validate_leap_year_calculation()
-    validate_days_in_month_calculation()
+class Problem019Runner(BaseProblemRunner):
+    """Runner for Problem 019: Counting Sundays."""
 
-    # 小さな範囲でのテスト
-    print("=== 小範囲テスト ===")
-    test_ranges = [
-        (1901, 1901),  # 1年だけ
-        (1901, 1905),  # 5年
-        (1901, 1910),  # 10年
-    ]
+    def __init__(self) -> None:
+        super().__init__("019", "Counting Sundays")
 
-    for start, end in test_ranges:
-        result_naive = solve_naive(start, end)
-        result_optimized = solve_optimized(start, end)
-        result_math = solve_mathematical(start, end)
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 019."""
+        return [
+            ((1901, 1), (1901, 12), 2),  # 1901年の1年間
+            ((1900, 1), (1900, 12), 2),  # 1900年の1年間（うるう年ではない）
+            ((2000, 1), (2000, 12), 2),  # 2000年の1年間（うるう年）
+        ]
 
-        print(f"{start}-{end}年の月初日曜日数:")
-        print(f"  Naive: {result_naive}")
-        print(
-            f"  Optimized: {result_optimized} {'✓' if result_optimized == result_naive else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == result_naive else '✗'}"
-        )
-        print()
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 019."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return ((1901, 1), (2000, 12))
+
+    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+        """Get demonstration functions for Problem 019."""
+        return [("カレンダー計算の検証", self._demonstrate_calendar_validation)]
+
+    def _demonstrate_calendar_validation(self) -> None:
+        """カレンダー計算の検証を表示"""
+        print("=== 基本検証 ===")
+        validate_leap_year_calculation()
+        validate_days_in_month_calculation()
+
+        result = solve_optimized(((1901, 1), (2000, 12)))
+        print(f"\n20世紀中の月初日曜日数: {result}")
+
+        print("\n各年代別の分析:")
+        decades = [
+            (1901, 1910, "1900年代"),
+            (1911, 1920, "1910年代"),
+            (1921, 1930, "1920年代"),
+            (1931, 1940, "1930年代"),
+            (1941, 1950, "1940年代"),
+            (1951, 1960, "1950年代"),
+            (1961, 1970, "1960年代"),
+            (1971, 1980, "1970年代"),
+            (1981, 1990, "1980年代"),
+            (1991, 2000, "1990年代"),
+        ]
+
+        for start_year, end_year, description in decades:
+            count = solve_optimized(((start_year, 1), (end_year, 12)))
+            print(f"{description} ({start_year}-{end_year}): {count}回")
+
+        print("\nうるう年の分析:")
+        leap_years = [
+            year
+            for year in range(1901, 2001)
+            if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+        ]
+        print(f"期間内のうるう年: {leap_years}")
+        print(f"うるう年の数: {len(leap_years)}")
 
 
 def main() -> None:
     """メイン関数"""
-    # テストケース
-    test_solutions()
-
-    # 本問題の解答
-    print("=== 本問題の解答 ===")
-    start_year, end_year = 1901, 2000
-
-    # 各解法の実行時間測定
-    start_time = time.time()
-    result_naive = solve_naive(start_year, end_year)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(start_year, end_year)
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical(start_year, end_year)
-    math_time = time.time() - start_time
-
-    print(f"{start_year}-{end_year}年の月初日曜日数:")
-    print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
-    print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
-    print()
-
-    # 結果の検証
-    if result_naive == result_optimized == result_math:
-        print(f"✓ 解答: {result_optimized:,}")
-    else:
-        print("✗ 解答が一致しません")
-        return
-
-    # パフォーマンス比較
-    print("=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
-
-    # 追加情報
-    print("\n=== アルゴリズム解説 ===")
-    print("1. 素直な解法: 日付を順次カウントして曜日を追跡")
-    print("2. 最適化解法: Zellerの公式を使用した直接計算")
-    print("3. 数学的解法: Python datetimeモジュールを活用")
-    print()
-    print("日付計算の要点:")
-    print("- うるう年の正確な判定（400年ルール）")
-    print("- 各月の日数の正確な計算")
-    print("- 曜日計算の効率的な実装")
-
-    # 検証情報
-    print("\n=== 検証情報 ===")
-    print("基準日: 1900年1月1日は月曜日")
-    print("対象期間: 1901年1月1日〜2000年12月31日")
-    print("計算対象: 各月の1日が日曜日だった回数")
-    print(f"総月数: {(end_year - start_year + 1) * 12} ヶ月")
+    runner = Problem019Runner()
+    runner.main()
 
 
 if __name__ == "__main__":

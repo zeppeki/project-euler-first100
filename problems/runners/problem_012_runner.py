@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 012: Highly divisible triangular number
+Problem 012 Runner: Execution and demonstration code for Problem 012.
+
+This module handles the execution and demonstration of Problem 012 solutions,
+separated from the core algorithm implementations.
 """
 
-import time
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_012 import (
     count_divisors_optimized,
@@ -13,120 +17,66 @@ from problems.problem_012 import (
     solve_naive,
     solve_optimized,
 )
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def test_solutions() -> None:
-    """テストケースで解答を検証"""
-    test_cases = [
-        (0, 1),  # 0個より多い約数を持つ最初の三角数は1
-        (1, 3),  # 1個より多い約数を持つ最初の三角数は3
-        (2, 6),  # 2個より多い約数を持つ最初の三角数は6
-        (3, 6),  # 3個より多い約数を持つ最初の三角数は6
-        (4, 28),  # 4個より多い約数を持つ最初の三角数は28
-        (5, 28),  # 5個より多い約数を持つ最初の三角数は28（問題例）
-    ]
+class Problem012Runner(BaseProblemRunner):
+    """Runner for Problem 012: Highly divisible triangular number."""
 
-    print("=== テストケース ===")
-    for target, expected in test_cases:
-        result_naive = solve_naive(target)
-        result_optimized = solve_optimized(target)
-        result_math = solve_mathematical(target)
+    def __init__(self) -> None:
+        super().__init__("012", "Highly divisible triangular number")
 
-        print(f"target_divisors = {target}")
-        print(f"  Expected: {expected}")
-        print(f"  Naive: {result_naive} {'✓' if result_naive == expected else '✗'}")
-        print(
-            f"  Optimized: {result_optimized} {'✓' if result_optimized == expected else '✗'}"
-        )
-        print(
-            f"  Mathematical: {result_math} {'✓' if result_math == expected else '✗'}"
-        )
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 012."""
+        return [
+            (0, 1),  # 0個より多い約数を持つ最初の三角数は1
+            (1, 3),  # 1個より多い約数を持つ最初の三角数は3
+            (2, 6),  # 2個より多い約数を持つ最初の三角数は6
+            (3, 6),  # 3個より多い約数を持つ最初の三角数は6
+            (4, 28),  # 4個より多い約数を持つ最初の三角数は28
+            (5, 28),  # 5個より多い約数を持つ最初の三角数は28（問題例）
+        ]
 
-        # 約数の詳細表示（小さい数の場合）
-        if expected <= 100:
-            divisors = get_divisors(expected)
-            print(f"  Divisors of {expected}: {divisors} (count: {len(divisors)})")
-        print()
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 012."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (500,)
+
+    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+        """Get demonstration functions for Problem 012."""
+        return [("三角数と約数の分析", self._demonstrate_triangular_analysis)]
+
+    def _demonstrate_triangular_analysis(self) -> None:
+        """三角数と約数の分析を表示"""
+        triangular_num = solve_optimized(500)
+        n = 1
+        while get_triangular_number(n) != triangular_num:
+            n += 1
+
+        divisor_count = count_divisors_optimized(triangular_num)
+        print(f"{n}番目の三角数: {triangular_num:,}")
+        print(f"約数の個数: {divisor_count}")
+        print(f"三角数公式検証: {n} * ({n} + 1) / 2 = {n * (n + 1) // 2:,}")
+
+        print("\n最初の10個の三角数と約数の個数:")
+        for i in range(1, 11):
+            triangular = get_triangular_number(i)
+            divisor_count = count_divisors_optimized(triangular)
+            divisors = get_divisors(triangular)
+            print(f"T_{i} = {triangular}, divisors: {len(divisors)} {divisors}")
 
 
 def main() -> None:
     """メイン関数"""
-    target_divisors = 500
-
-    print("=== Problem 012: Highly divisible triangular number ===")
-    print(f"Finding the first triangular number with over {target_divisors} divisors")
-    print()
-
-    # テストケース
-    test_solutions()
-
-    # 本問題の解答
-    print("=== 本問題の解答 ===")
-
-    # 各解法の実行時間測定
-    start_time = time.time()
-    result_naive = solve_naive(target_divisors)
-    naive_time = time.time() - start_time
-
-    start_time = time.time()
-    result_optimized = solve_optimized(target_divisors)
-    optimized_time = time.time() - start_time
-
-    start_time = time.time()
-    result_math = solve_mathematical(target_divisors)
-    math_time = time.time() - start_time
-
-    print(f"素直な解法: {result_naive:,} (実行時間: {naive_time:.6f}秒)")
-    print(f"最適化解法: {result_optimized:,} (実行時間: {optimized_time:.6f}秒)")
-    print(f"数学的解法: {result_math:,} (実行時間: {math_time:.6f}秒)")
-    print()
-
-    # 結果の検証
-    if result_naive == result_optimized == result_math:
-        print(f"✓ 解答: {result_optimized:,}")
-
-        # 詳細情報の表示
-        n = 1
-        while get_triangular_number(n) != result_optimized:
-            n += 1
-
-        divisor_count = count_divisors_optimized(result_optimized)
-        print(f"この三角数は {n} 番目の三角数です")
-        print(f"約数の個数: {divisor_count}")
-    else:
-        print("✗ 解答が一致しません")
-        print(f"  Naive: {result_naive}")
-        print(f"  Optimized: {result_optimized}")
-        print(f"  Mathematical: {result_math}")
-        return
-
-    # パフォーマンス比較
-    print("\n=== パフォーマンス比較 ===")
-    fastest_time = min(naive_time, optimized_time, math_time)
-    print(f"素直な解法: {naive_time / fastest_time:.2f}x")
-    print(f"最適化解法: {optimized_time / fastest_time:.2f}x")
-    print(f"数学的解法: {math_time / fastest_time:.2f}x")
-
-    # 詳細な計算過程の表示
-    print("\n=== 計算過程の詳細 ===")
-
-    # 最初の10個の三角数とその約数の個数を表示
-    print("最初の10個の三角数と約数の個数:")
-    for i in range(1, 11):
-        triangular = get_triangular_number(i)
-        divisor_count = count_divisors_optimized(triangular)
-        divisors = get_divisors(triangular)
-        print(f"T_{i} = {triangular}, divisors: {len(divisors)} {divisors}")
-
-    # アルゴリズムの説明
-    print("\n=== アルゴリズムの説明 ===")
-    print("素直な解法: 三角数を順次生成し、各数の約数を直接数える")
-    print("最適化解法: 素因数分解を使用して約数の個数を効率的に計算")
-    print("数学的解法: T_n = n(n+1)/2 の性質を利用してnとn+1から約数を計算")
-
-    # 三角数の公式の説明
-    print("\n三角数の公式: T_n = n(n+1)/2")
-    print(f"答えの三角数 {result_optimized:,} は T_{n} です")
+    runner = Problem012Runner()
+    runner.main()
 
 
 if __name__ == "__main__":
