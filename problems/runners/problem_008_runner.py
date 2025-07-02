@@ -1,126 +1,137 @@
 #!/usr/bin/env python3
 """
-Problem 008 Runner: Largest product in a series
+Problem 008 Runner: Execution and demonstration code for Problem 008.
 
-実行・表示・パフォーマンス測定を担当
+This module handles the execution and demonstration of Problem 008 solutions,
+separated from the core algorithm implementations.
 """
 
-import os
-import sys
+from collections.abc import Callable
+from typing import Any
 
-# Add problems directory to path to import problem modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from problem_008 import (
+from problems.problem_008 import (
     THOUSAND_DIGIT_NUMBER,
     get_max_product_sequence,
     solve_mathematical,
     solve_naive,
     solve_optimized,
 )
-from utils.display import (
-    print_final_answer,
-    print_performance_comparison,
-    print_solution_header,
-    print_test_results,
-)
-from utils.performance import compare_performance
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def run_tests() -> None:
-    """Run test cases to verify the solutions."""
-    test_cases: list[tuple[int, int]] = [
-        (1, 9),  # 1桁の最大値は9
-        (2, 81),  # 2桁の最大積（例：9×9=81）
-        (4, 5832),  # 問題例：4桁の場合は5832
-        (13, 23514624000),  # 本問題：13桁の場合
-    ]
+class Problem008Runner(BaseProblemRunner):
+    """Runner for Problem 008: Largest product in a series."""
 
-    functions = [
-        ("素直な解法", solve_naive),
-        ("最適化解法", solve_optimized),
-        ("数学的解法", solve_mathematical),
-    ]
+    def __init__(self) -> None:
+        super().__init__("008", "Largest product in a series")
 
-    print_test_results(test_cases, functions)
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 008."""
+        return [
+            (1, 9),  # Single digit max is 9
+            (2, 81),  # Two digits: 9×9=81
+            (3, 648),  # Three digits: 9×8×9=648
+            (4, 5832),  # Four digits: 9×9×8×9=5832 (problem example)
+            (5, 40824),  # Five digits: 9×9×8×7×9=40824
+            (6, 285768),  # Six digits: 9×9×8×7×9×7=285768
+        ]
 
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 008."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
 
-def show_calculation_details() -> None:
-    """Show detailed calculation process."""
-    print("\n=== 計算過程の詳細 ===")
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get main problem parameters."""
+        return (13,)
 
-    adjacent_digits = 13
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 008."""
+        return [
+            self._demonstrate_number_properties,
+            self._demonstrate_sequence_analysis,
+            self._demonstrate_optimization_effects,
+        ]
 
-    # 最大積となるシーケンスを表示
-    max_sequence, max_product = get_max_product_sequence(adjacent_digits)
-    print(f"最大積となる{adjacent_digits}桁のシーケンス: {max_sequence}")
-    print(f"各桁: {' × '.join(max_sequence)}")
-    print(f"積: {max_product:,}")
+    def _demonstrate_number_properties(self) -> None:
+        """Demonstrate properties of the 1000-digit number."""
+        print("=== 1000桁数の性質分析 ===")
+        print(f"数字の長さ: {len(THOUSAND_DIGIT_NUMBER)} 桁")
+        print(f"開始部分: {THOUSAND_DIGIT_NUMBER[:50]}...")
+        print(f"終了部分: ...{THOUSAND_DIGIT_NUMBER[-50:]}")
 
-    # 問題例（4桁の場合）も表示
-    print("\n問題例（4桁の場合）:")
-    example_sequence, example_product = get_max_product_sequence(4)
-    print(f"最大積となる4桁のシーケンス: {example_sequence}")
-    print(f"各桁: {' × '.join(example_sequence)} = {example_product}")
+        # Digit frequency analysis
+        digit_counts = {}
+        for digit in "0123456789":
+            digit_counts[digit] = THOUSAND_DIGIT_NUMBER.count(digit)
 
-    # アルゴリズムの説明
-    print("\n=== アルゴリズムの説明 ===")
-    print("素直な解法: 全ての隣接するシーケンスをチェックして積を計算")
-    print("最適化解法: ゼロを含むシーケンスをスキップするスライディングウィンドウ")
-    print("数学的解法: reduce関数を使用した効率的な積計算とゼロスキップ")
+        print("\n各桁の出現頻度:")
+        for digit in "0123456789":
+            count = digit_counts[digit]
+            percentage = (count / 1000) * 100
+            print(f"  桁 {digit}: {count:3d}回 ({percentage:5.1f}%)")
 
-    # 1000桁の数値に関する統計
-    zero_count = THOUSAND_DIGIT_NUMBER.count("0")
-    total_digits = len(THOUSAND_DIGIT_NUMBER)
-    print("\n=== 1000桁数値の統計 ===")
-    print(f"総桁数: {total_digits}")
-    print(f"ゼロの個数: {zero_count}")
-    print(f"ゼロの割合: {zero_count / total_digits * 100:.1f}%")
-    print(f"最大桁: {max(THOUSAND_DIGIT_NUMBER)}")
-    print(f"最小桁: {min(THOUSAND_DIGIT_NUMBER)}")
+        zero_count = digit_counts["0"]
+        print(f"\nゼロの出現: {zero_count}回 (最適化で重要)")
 
+    def _demonstrate_sequence_analysis(self) -> None:
+        """Demonstrate sequence analysis for different lengths."""
+        print("=== 異なる隣接桁数での最大積分析 ===")
 
-def run_problem() -> None:
-    """Run the main problem solution with performance analysis."""
-    adjacent_digits = 13
+        test_lengths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        print(f"{'桁数':>4} {'最大積':>12} {'最大シーケンス':>15}")
+        print("-" * 35)
 
-    print_solution_header(
-        "008", "Largest product in a series", f"{adjacent_digits}桁の隣接する桁"
-    )
+        for length in test_lengths:
+            try:
+                sequence, product = get_max_product_sequence(length)
+                print(f"{length:4d} {product:12,d} {sequence:>15}")
+            except (ValueError, IndexError):
+                print(f"{length:4d} {'N/A':>12} {'N/A':>15}")
 
-    # Run tests first
-    run_tests()
+    def _demonstrate_optimization_effects(self) -> None:
+        """Demonstrate the effects of optimization techniques."""
+        print("=== 最適化技法の効果分析 ===")
 
-    # Solve the main problem
-    functions = [
-        ("素直な解法", solve_naive),
-        ("最適化解法", solve_optimized),
-        ("数学的解法", solve_mathematical),
-    ]
+        # Show how zero-skipping works
+        print("ゼロスキップ最適化の例:")
+        sample_start = 50  # Starting position with some zeros nearby
+        sample_length = 20  # Length of sample to show
 
-    performance_results = compare_performance(functions, adjacent_digits)
+        sample = THOUSAND_DIGIT_NUMBER[sample_start : sample_start + sample_length]
+        print(f"位置 {sample_start}-{sample_start + sample_length - 1}: {sample}")
 
-    # Verify all solutions agree
-    results = [data["result"] for data in performance_results.values()]
-    verified = len(set(results)) == 1
+        # Find zeros in the sample
+        zero_positions = [i for i, digit in enumerate(sample) if digit == "0"]
+        if zero_positions:
+            print(f"ゼロの位置: {[sample_start + pos for pos in zero_positions]}")
+            print("素直な解法: 全シーケンスを計算")
+            print("最適化解法: ゼロを含むシーケンスをスキップ")
+        else:
+            print("この範囲にはゼロがありません")
 
-    # Print results
-    for name, data in performance_results.items():
-        result = data["result"]
-        execution_time = data["execution_time"]
-        print(f"{name}: {result:,} (実行時間: {execution_time:.6f}秒)")
+        # Show actual computation for a few adjacent digits
+        print("\n隣接4桁での計算例 (問題の例):")
+        target_length = 4
+        max_sequence, max_product = get_max_product_sequence(target_length)
 
-    print()
-    print_final_answer(results[0], verified)
-    print_performance_comparison(performance_results)
+        print(f"最大積シーケンス: {max_sequence}")
+        print(f"計算: {' × '.join(max_sequence)} = {max_product}")
 
-    # Show calculation details
-    show_calculation_details()
+        # Verify this is indeed 9×9×8×9=5832 from the problem
+        manual_product = 1
+        for digit in max_sequence:
+            manual_product *= int(digit)
+        print(f"検証: {manual_product} (期待値: 5832)")
 
 
 def main() -> None:
     """Main entry point."""
-    run_problem()
+    runner = Problem008Runner()
+    runner.main()
 
 
 if __name__ == "__main__":

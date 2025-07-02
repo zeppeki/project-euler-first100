@@ -6,6 +6,9 @@ This module contains the execution code for Problem 005, separated from the
 algorithm implementations for better test coverage and code organization.
 """
 
+from collections.abc import Callable
+from typing import Any
+
 from problems.problem_005 import (
     prime_factorization,
     solve_builtin,
@@ -13,67 +16,48 @@ from problems.problem_005 import (
     solve_naive,
     solve_optimized,
 )
-from problems.utils.display import (
-    print_final_answer,
-    print_performance_comparison,
-    print_solution_header,
-    print_test_results,
-)
-from problems.utils.performance import compare_performance
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def run_tests() -> None:
-    """Run test cases to verify the solutions."""
-    test_cases = [
-        (1, 1),  # LCM(1) = 1
-        (2, 2),  # LCM(1,2) = 2
-        (3, 6),  # LCM(1,2,3) = 6
-        (4, 12),  # LCM(1,2,3,4) = 12
-        (5, 60),  # LCM(1,2,3,4,5) = 60
-        (10, 2520),  # 問題例: LCM(1,...,10) = 2520
-    ]
+class Problem005Runner(BaseProblemRunner):
+    """Runner for Problem 005: Smallest multiple."""
 
-    functions = [
-        ("素直な解法", solve_naive),
-        ("最適化解法", solve_optimized),
-        ("数学的解法", solve_mathematical),
-        ("標準ライブラリ解法", solve_builtin),
-    ]
+    def __init__(self) -> None:
+        super().__init__("005", "Smallest multiple")
 
-    print_test_results(test_cases, functions)
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 005."""
+        return [
+            (1, 1),  # LCM(1) = 1
+            (2, 2),  # LCM(1,2) = 2
+            (3, 6),  # LCM(1,2,3) = 6
+            (4, 12),  # LCM(1,2,3,4) = 12
+            (5, 60),  # LCM(1,2,3,4,5) = 60
+            (10, 2520),  # 問題例: LCM(1,...,10) = 2520
+        ]
 
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 005."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+            ("標準ライブラリ解法", solve_builtin),
+        ]
 
-def run_problem() -> None:
-    """Run the main problem with performance comparison."""
-    n = 20
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get main problem parameters."""
+        return (20,)
 
-    print_solution_header(
-        "005", "Smallest multiple", f"divisible by all numbers from 1 to {n}"
-    )
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 005."""
+        return [self._demonstrate_factorization, self._demonstrate_divisibility]
 
-    # Run tests first
-    run_tests()
+    def _demonstrate_factorization(self) -> None:
+        """Demonstrate prime factorization of the result."""
+        n = self.get_main_parameters()[0]
+        answer = solve_optimized(n)
 
-    # Run main problem with performance measurement
-    functions = [
-        ("素直な解法", lambda: solve_naive(n)),
-        ("最適化解法", lambda: solve_optimized(n)),
-        ("数学的解法", lambda: solve_mathematical(n)),
-        ("標準ライブラリ解法", lambda: solve_builtin(n)),
-    ]
-
-    performance_results = compare_performance(functions)
-
-    # Verify all solutions agree
-    results = [data["result"] for data in performance_results.values()]
-    all_agree = len(set(results)) == 1
-
-    if all_agree:
-        answer = results[0]
-        print_final_answer(answer, verified=True)
-        print_performance_comparison(performance_results)
-
-        # 素因数分解の確認
         print("=== 素因数分解の確認 ===")
         print(f"結果: {answer:,}")
 
@@ -81,8 +65,12 @@ def run_problem() -> None:
         factor_str = " × ".join([f"{p}^{e}" if e > 1 else str(p) for p, e in factors])
         print(f"素因数分解: {factor_str}")
 
-        # 検証: 1からnまでの各数で割り切れることを確認
-        print("\n=== 除数確認 ===")
+    def _demonstrate_divisibility(self) -> None:
+        """Demonstrate divisibility verification."""
+        n = self.get_main_parameters()[0]
+        answer = solve_optimized(n)
+
+        print("=== 除数確認 ===")
         verification_failed = False
         for i in range(1, min(n + 1, 11)):  # 表示は最初の10個まで
             if answer % i == 0:
@@ -100,14 +88,12 @@ def run_problem() -> None:
 
         if not verification_failed:
             print("全ての数で割り切れることを確認 ✓")
-    else:
-        print_final_answer(None, verified=False)
-        print("Results:", results)
 
 
 def main() -> None:
-    """Main function for standalone execution."""
-    run_problem()
+    """Main entry point."""
+    runner = Problem005Runner()
+    runner.main()
 
 
 if __name__ == "__main__":
