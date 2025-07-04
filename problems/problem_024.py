@@ -15,8 +15,9 @@ What is the millionth lexicographic permutation of the digits
 Answer: 2783915460
 """
 
-import math
 from itertools import permutations
+
+from .lib import factorial_builtin as factorial
 
 
 def solve_naive(digits: str = "0123456789", n: int = 1_000_000) -> str:
@@ -25,7 +26,7 @@ def solve_naive(digits: str = "0123456789", n: int = 1_000_000) -> str:
     Time complexity: O(d! * d) where d is the number of digits.
     Space complexity: O(d! * d)
     """
-    num_permutations = math.factorial(len(digits))
+    num_permutations = factorial(len(digits))
     if not 1 <= n <= num_permutations:
         return ""
 
@@ -39,7 +40,7 @@ def solve_optimized(digits: str = "0123456789", n: int = 1_000_000) -> str:
     Time complexity: O(d^2) where d is the number of digits.
     Space complexity: O(d)
     """
-    num_permutations = math.factorial(len(digits))
+    num_permutations = factorial(len(digits))
     if not 1 <= n <= num_permutations:
         return ""
 
@@ -48,7 +49,7 @@ def solve_optimized(digits: str = "0123456789", n: int = 1_000_000) -> str:
     n -= 1  # Use 0-based index
 
     for i in range(len(digit_list) - 1, -1, -1):
-        f = math.factorial(i)
+        f = factorial(i)
         index = n // f
         n %= f
         result.append(digit_list.pop(index))

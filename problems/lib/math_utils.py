@@ -88,35 +88,6 @@ def factorial_builtin(n: int) -> int:
     return math.factorial(n)
 
 
-def combination(n: int, r: int) -> int:
-    """
-    組み合わせの数を効率的に計算（オーバーフローを避ける）
-
-    Args:
-        n: 全体の要素数
-        r: 選択する要素数
-
-    Returns:
-        C(n,r) = n! / (r! * (n-r)!)
-
-    時間計算量: O(min(r, n-r))
-    空間計算量: O(1)
-    """
-    if r < 0 or r > n or n < 0:
-        return 0
-    if r == 0 or r == n:
-        return 1
-
-    # C(n,r) = C(n,n-r) なので、計算量を減らすため小さい方を使用
-    r = min(r, n - r)
-
-    result = 1
-    for i in range(r):
-        result = result * (n - i) // (i + 1)
-
-    return result
-
-
 def prime_factorization(n: int) -> dict[int, int]:
     """
     素因数分解を行い、各素因数の指数を返す

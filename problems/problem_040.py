@@ -13,6 +13,8 @@ d1 × d10 × d100 × d1,000 × d10,000 × d100,000 × d1,000,000
 Answer: Check Project Euler official site
 """
 
+from .lib import get_digit_at_position
+
 
 def solve_naive() -> int:
     """
@@ -46,24 +48,7 @@ def solve_optimized() -> int:
     """
     positions = [1, 10, 100, 1000, 10000, 100000, 1000000]
 
-    def get_digit_at_position(pos: int) -> int:
-        if pos <= 9:
-            return pos
-
-        length = 1
-        count = 9
-        start = 1
-
-        while pos > length * count:
-            pos -= length * count
-            length += 1
-            count *= 10
-            start *= 10
-
-        number = start + (pos - 1) // length
-        digit_index = (pos - 1) % length
-
-        return int(str(number)[digit_index])
+    # Use get_digit_at_position from common library
 
     result = 1
     for pos in positions:

@@ -18,99 +18,16 @@ How many, not necessarily distinct, values of C(n,r) for 1 ≤ n ≤ 100, are gr
 import math
 from typing import Any
 
+from .lib import combination_formula
 
-def factorial(n: int) -> int:
-    """
-    階乗を計算
-
-    Args:
-        n: 非負整数
-
-    Returns:
-        n!
-
-    時間計算量: O(n)
-    空間計算量: O(1)
-    """
-    if n < 0:
-        raise ValueError("Factorial is not defined for negative numbers")
-    if n <= 1:
-        return 1
-
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-    return result
-
-
-def combination_formula(n: int, r: int) -> int:
-    """
-    組み合わせの数を階乗を使って計算
-
-    Args:
-        n: 全体の要素数
-        r: 選択する要素数
-
-    Returns:
-        C(n,r) = n! / (r!(n-r)!)
-
-    時間計算量: O(n)
-    空間計算量: O(1)
-    """
-    if r < 0 or r > n or n < 0:
-        return 0
-    if r == 0 or r == n:
-        return 1
-
-    return factorial(n) // (factorial(r) * factorial(n - r))
-
-
-def combination_optimized(n: int, r: int) -> int:
-    """
-    組み合わせの数を効率的に計算（オーバーフローを避ける）
-
-    Args:
-        n: 全体の要素数
-        r: 選択する要素数
-
-    Returns:
-        C(n,r)
-
-    時間計算量: O(min(r, n-r))
-    空間計算量: O(1)
-    """
-    if r < 0 or r > n or n < 0:
-        return 0
-    if r == 0 or r == n:
-        return 1
-
-    # C(n,r) = C(n,n-r) なので、計算量を減らすため小さい方を使用
-    r = min(r, n - r)
-
-    result = 1
-    for i in range(r):
-        result = result * (n - i) // (i + 1)
-
-    return result
+# combination_optimized のエイリアス
+from .lib import combination_formula as combination_optimized
 
 
 def combination_math_lib(n: int, r: int) -> int:
-    """
-    組み合わせの数を数学ライブラリを使って計算
-
-    Args:
-        n: 全体の要素数
-        r: 選択する要素数
-
-    Returns:
-        C(n,r)
-
-    時間計算量: O(min(r, n-r))
-    空間計算量: O(1)
-    """
+    """数学ライブラリを使った組み合わせ計算"""
     if r < 0 or r > n or n < 0:
         return 0
-
     return math.comb(n, r)
 
 

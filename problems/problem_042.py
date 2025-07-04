@@ -18,6 +18,11 @@ Answer: [Hidden]
 
 import os
 
+from .lib import (
+    is_triangle_number,
+    triangle_generator,
+)
+
 
 def get_word_value(word: str) -> int:
     """
@@ -35,35 +40,9 @@ def generate_triangle_numbers(max_value: int) -> set[int]:
     空間計算量: O(√max_value)
     """
     triangle_numbers = set()
-    n = 1
-    while True:
-        triangle_num = n * (n + 1) // 2
-        if triangle_num > max_value:
-            break
+    for triangle_num in triangle_generator(max_value):
         triangle_numbers.add(triangle_num)
-        n += 1
     return triangle_numbers
-
-
-def is_triangle_number(num: int) -> bool:
-    """
-    数値が三角数かどうか判定（数式解法）
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    # tn = n(n+1)/2 = num
-    # n^2 + n - 2*num = 0
-    # n = (-1 + sqrt(1 + 8*num)) / 2
-    import math
-
-    discriminant = 1 + 8 * num
-    if discriminant < 0:
-        return False
-
-    sqrt_discriminant = math.sqrt(discriminant)
-    n = (-1 + sqrt_discriminant) / 2
-
-    return n.is_integer() and n > 0
 
 
 def load_words() -> list[str]:

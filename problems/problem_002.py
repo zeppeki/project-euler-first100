@@ -13,6 +13,8 @@ four million, find the sum of the even-valued terms.
 Answer: 4613732
 """
 
+from .lib import fibonacci
+
 
 def solve_naive(limit: int) -> int:
     """
@@ -92,20 +94,7 @@ def solve_mathematical(limit: int) -> int:
     if limit < 2:
         return 0
 
-    def fibonacci(n: int) -> int:
-        """n番目のフィボナッチ数を計算"""
-        if n <= 0:
-            return 0
-        if n == 1:
-            return 1
-        if n == 2:
-            return 1
-
-        # 動的計画法で計算
-        a, b = 1, 1
-        for _ in range(2, n):
-            a, b = b, a + b
-        return b
+    # Use fibonacci function from common library
 
     total = 0
     n = 3  # 3番目から開始（最初の偶数項）

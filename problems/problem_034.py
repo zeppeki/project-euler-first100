@@ -11,34 +11,8 @@ Note: As 1! = 1 and 2! = 2 are not sums they are not included.
 Answer: 40730
 """
 
-import math
-
-
-def factorial(n: int) -> int:
-    """
-    階乗を計算
-    時間計算量: O(1) - math.factorialを使用
-    空間計算量: O(1)
-    """
-    return math.factorial(n)
-
-
-def digit_factorial_sum(number: int) -> int:
-    """
-    数字の各桁の階乗の和を計算
-    時間計算量: O(log n) - 数字の桁数に比例
-    空間計算量: O(1)
-    """
-    if number == 0:
-        return factorial(0)  # 0! = 1
-
-    total = 0
-    temp = number
-    while temp > 0:
-        digit = temp % 10
-        total += factorial(digit)
-        temp //= 10
-    return total
+from .lib import digit_factorial_sum
+from .lib import factorial_builtin as factorial
 
 
 def is_digit_factorial(number: int) -> bool:
@@ -94,20 +68,8 @@ def solve_optimized() -> int:
     upper_limit = find_upper_bound()
     digit_factorials = []
 
-    # 事前計算した階乗テーブルを使用
-    fact_table = [factorial(i) for i in range(10)]
-
-    def digit_factorial_sum_optimized(number: int) -> int:
-        total = 0
-        temp = number
-        while temp > 0:
-            digit = temp % 10
-            total += fact_table[digit]
-            temp //= 10
-        return total
-
     for number in range(3, upper_limit + 1):
-        if number == digit_factorial_sum_optimized(number):
+        if number == digit_factorial_sum(number):
             digit_factorials.append(number)
 
     return sum(digit_factorials)
@@ -122,14 +84,12 @@ def solve_mathematical() -> int:
     # 数学的分析による上限設定
     # d桁の最大値が d * 9! を超える最初の桁数で打ち切り
 
-    # 階乗テーブルの事前計算
-    factorials = [math.factorial(i) for i in range(10)]
-
     # 上限の計算: d桁の数の最大値 vs d * 9!
     upper_limit = 0
+    factorial_9 = factorial(9)
     for d in range(1, 8):
         max_d_digit = 10**d - 1
-        max_factorial_sum = d * factorials[9]
+        max_factorial_sum = d * factorial_9
         if max_d_digit > max_factorial_sum:
             upper_limit = max_factorial_sum
             break
@@ -139,17 +99,9 @@ def solve_mathematical() -> int:
 
     total_sum = 0
 
-    # 最適化された桁階乗和計算
-    def fast_digit_factorial_sum(n: int) -> int:
-        result = 0
-        while n > 0:
-            result += factorials[n % 10]
-            n //= 10
-        return result
-
     # 3から上限まで検索（1!, 2!は除外）
     for number in range(3, upper_limit + 1):
-        if number == fast_digit_factorial_sum(number):
+        if number == digit_factorial_sum(number):
             total_sum += number
 
     return total_sum
@@ -159,19 +111,11 @@ def get_digit_factorials() -> list[int]:
     """
     桁階乗数のリストを取得（デバッグ用）
     """
-    factorials = [math.factorial(i) for i in range(10)]
-    upper_limit = 7 * factorials[9]  # 2,540,160
-
-    def fast_digit_factorial_sum(n: int) -> int:
-        result = 0
-        while n > 0:
-            result += factorials[n % 10]
-            n //= 10
-        return result
+    upper_limit = 7 * factorial(9)  # 2,540,160
 
     digit_factorials = []
     for number in range(3, upper_limit + 1):
-        if number == fast_digit_factorial_sum(number):
+        if number == digit_factorial_sum(number):
             digit_factorials.append(number)
 
     return digit_factorials

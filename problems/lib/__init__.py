@@ -32,7 +32,6 @@ __all__ = [
     "lcm",
     "factorial",
     "factorial_builtin",
-    "combination",
     "prime_factorization",
     "get_divisors",
     "count_divisors",
