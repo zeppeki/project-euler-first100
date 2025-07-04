@@ -20,8 +20,8 @@ from problems.problem_054 import (
     solve_mathematical,
     solve_naive,
     solve_optimized,
-    test_example_hands,
 )
+from problems.problem_054 import test_example_hands as verify_example_hands
 
 
 class TestCard:
@@ -200,7 +200,9 @@ class TestExampleHands:
 
     def test_example_hands_verification(self) -> None:
         """Test that the example verification function works"""
-        assert test_example_hands() is True
+        # Call the function but use assert instead of return comparison
+        result = verify_example_hands()
+        assert result is True
 
     def test_example_1(self) -> None:
         """Test example 1: Pair of Fives vs Pair of Eights"""

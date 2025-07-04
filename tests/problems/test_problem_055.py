@@ -15,8 +15,8 @@ from problems.problem_055 import (
     reverse_number,
     solve_naive,
     solve_optimized,
-    test_lychrel_examples,
 )
+from problems.problem_055 import test_lychrel_examples as verify_lychrel_examples
 
 
 class TestUtilityFunctions:
@@ -109,7 +109,8 @@ class TestExamplesVerification:
 
     def test_lychrel_examples(self) -> None:
         """Test that the examples verification function works"""
-        assert test_lychrel_examples() is True
+        result = verify_lychrel_examples()
+        assert result is True
 
 
 class TestSolutionFunctions:
