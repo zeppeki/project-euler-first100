@@ -7,13 +7,13 @@ from collections.abc import Callable
 
 import pytest
 
+from problems.lib import factorial
 from problems.problem_053 import (
     analyze_combinatorial_values,
     combination_formula,
     combination_math_lib,
     combination_optimized,
     demonstrate_symmetry,
-    factorial,
     find_first_exceeding_threshold,
     get_combinations_above_threshold,
     pascal_triangle_row,

@@ -8,14 +8,16 @@ Find the sum of all numbers, less than one million, which are palindromic in bas
 Answer: Project Euler公式サイトで確認してください
 """
 
+from .lib import is_palindrome
 
-def is_palindrome(s: str) -> bool:
+
+def is_palindrome_str(s: str) -> bool:
     """
     文字列が回文かどうかをチェック
     時間計算量: O(n)
     空間計算量: O(1)
     """
-    return s == s[::-1]
+    return is_palindrome(s)
 
 
 def solve_naive(limit: int = 1000000) -> int:
@@ -30,7 +32,7 @@ def solve_naive(limit: int = 1000000) -> int:
         decimal_str = str(num)
         binary_str = bin(num)[2:]
 
-        if is_palindrome(decimal_str) and is_palindrome(binary_str):
+        if is_palindrome_str(decimal_str) and is_palindrome_str(binary_str):
             total_sum += num
 
     return total_sum
@@ -49,7 +51,7 @@ def solve_optimized(limit: int = 1000000) -> int:
     for i in range(1, 10):
         if i < limit:
             binary_str = bin(i)[2:]
-            if is_palindrome(binary_str):
+            if is_palindrome_str(binary_str):
                 palindromes_found.add(i)
                 total_sum += i
 
@@ -74,7 +76,7 @@ def solve_optimized(limit: int = 1000000) -> int:
             if palindrome not in palindromes_found:
                 found_any = True
                 binary_str = bin(palindrome)[2:]
-                if is_palindrome(binary_str):
+                if is_palindrome_str(binary_str):
                     palindromes_found.add(palindrome)
                     total_sum += palindrome
 
@@ -96,7 +98,7 @@ def solve_optimized(limit: int = 1000000) -> int:
                     if palindrome not in palindromes_found:
                         found_any = True
                         binary_str = bin(palindrome)[2:]
-                        if is_palindrome(binary_str):
+                        if is_palindrome_str(binary_str):
                             palindromes_found.add(palindrome)
                             total_sum += palindrome
 

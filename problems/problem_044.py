@@ -17,42 +17,12 @@ value of D.
 Answer: [Hidden]
 """
 
-import math
-
-
-def generate_pentagonal(n: int) -> int:
-    """
-    n番目の五角数を生成
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    return n * (3 * n - 1) // 2
-
-
-def is_pentagonal(num: int) -> bool:
-    """
-    数が五角数かどうか判定
-    五角数の逆公式: n = (1 + sqrt(1 + 24*P)) / 6
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    if num <= 0:
-        return False
-
-    # 五角数の逆公式を使用
-    discriminant = 1 + 24 * num
-    sqrt_discriminant = int(math.sqrt(discriminant))
-
-    # 平方根が整数でない場合
-    if sqrt_discriminant * sqrt_discriminant != discriminant:
-        return False
-
-    # n = (1 + sqrt(1 + 24*P)) / 6 が正の整数かチェック
-    if (1 + sqrt_discriminant) % 6 != 0:
-        return False
-
-    n = (1 + sqrt_discriminant) // 6
-    return n > 0 and generate_pentagonal(n) == num
+from .lib import (
+    generate_pentagonal,
+)
+from .lib import (
+    is_pentagonal_number as is_pentagonal,
+)
 
 
 def solve_naive() -> int:

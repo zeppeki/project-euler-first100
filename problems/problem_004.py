@@ -10,11 +10,7 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 Answer: 906609
 """
 
-
-def is_palindrome(n: int) -> bool:
-    """数値が回文かどうかを判定"""
-    s = str(n)
-    return s == s[::-1]
+from .lib import is_palindrome
 
 
 def solve_naive(min_digits: int, max_digits: int) -> tuple[int, int, int]:

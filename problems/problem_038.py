@@ -13,18 +13,17 @@ Example: 192 × (1,2,3) = 192384576 (9-digit pandigital)
 Answer: [Answer here]
 """
 
+from .lib import (
+    concatenated_product,
+)
+from .lib import (
+    is_pandigital_1_to_9 as is_pandigital,
+)
 
-def is_pandigital(num_str: str) -> bool:
+
+def is_pandigital_str(num_str: str) -> bool:
     """Check if a string contains digits 1-9 exactly once."""
-    return len(num_str) == 9 and set(num_str) == set("123456789")
-
-
-def concatenated_product(base: int, n: int) -> str:
-    """Generate concatenated product of base with (1, 2, ..., n)."""
-    result = ""
-    for i in range(1, n + 1):
-        result += str(base * i)
-    return result
+    return is_pandigital(num_str)
 
 
 def solve_naive() -> int:
@@ -42,7 +41,7 @@ def solve_naive() -> int:
             if len(concat_result) > 9:
                 break
 
-            if len(concat_result) == 9 and is_pandigital(concat_result):
+            if len(concat_result) == 9 and is_pandigital_str(concat_result):
                 largest_pandigital = max(largest_pandigital, int(concat_result))
 
     return largest_pandigital

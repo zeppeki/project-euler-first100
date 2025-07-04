@@ -15,112 +15,19 @@ Find the next triangle number that is also pentagonal and hexagonal.
 Answer: [Hidden]
 """
 
-import math
-
-
-def generate_triangle(n: int) -> int:
-    """
-    n番目の三角数を生成
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    return n * (n + 1) // 2
-
-
-def generate_pentagonal(n: int) -> int:
-    """
-    n番目の五角数を生成
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    return n * (3 * n - 1) // 2
-
-
-def generate_hexagonal(n: int) -> int:
-    """
-    n番目の六角数を生成
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    return n * (2 * n - 1)
-
-
-def is_triangle(num: int) -> bool:
-    """
-    数が三角数かどうか判定
-    三角数の逆公式: n = (-1 + sqrt(1 + 8*T)) / 2
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    if num <= 0:
-        return False
-
-    # 三角数の逆公式を使用
-    discriminant = 1 + 8 * num
-    sqrt_discriminant = int(math.sqrt(discriminant))
-
-    # 平方根が整数でない場合
-    if sqrt_discriminant * sqrt_discriminant != discriminant:
-        return False
-
-    # n = (-1 + sqrt(1 + 8*T)) / 2 が正の整数かチェック
-    if (sqrt_discriminant - 1) % 2 != 0:
-        return False
-
-    n = (sqrt_discriminant - 1) // 2
-    return n > 0 and generate_triangle(n) == num
-
-
-def is_pentagonal(num: int) -> bool:
-    """
-    数が五角数かどうか判定
-    五角数の逆公式: n = (1 + sqrt(1 + 24*P)) / 6
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    if num <= 0:
-        return False
-
-    # 五角数の逆公式を使用
-    discriminant = 1 + 24 * num
-    sqrt_discriminant = int(math.sqrt(discriminant))
-
-    # 平方根が整数でない場合
-    if sqrt_discriminant * sqrt_discriminant != discriminant:
-        return False
-
-    # n = (1 + sqrt(1 + 24*P)) / 6 が正の整数かチェック
-    if (1 + sqrt_discriminant) % 6 != 0:
-        return False
-
-    n = (1 + sqrt_discriminant) // 6
-    return n > 0 and generate_pentagonal(n) == num
-
-
-def is_hexagonal(num: int) -> bool:
-    """
-    数が六角数かどうか判定
-    六角数の逆公式: n = (1 + sqrt(1 + 8*H)) / 4
-    時間計算量: O(1)
-    空間計算量: O(1)
-    """
-    if num <= 0:
-        return False
-
-    # 六角数の逆公式を使用
-    discriminant = 1 + 8 * num
-    sqrt_discriminant = int(math.sqrt(discriminant))
-
-    # 平方根が整数でない場合
-    if sqrt_discriminant * sqrt_discriminant != discriminant:
-        return False
-
-    # n = (1 + sqrt(1 + 8*H)) / 4 が正の整数かチェック
-    if (1 + sqrt_discriminant) % 4 != 0:
-        return False
-
-    n = (1 + sqrt_discriminant) // 4
-    return n > 0 and generate_hexagonal(n) == num
+from .lib import (
+    generate_hexagonal,
+    generate_triangle,
+)
+from .lib import (
+    is_hexagonal_number as is_hexagonal,
+)
+from .lib import (
+    is_pentagonal_number as is_pentagonal,
+)
+from .lib import (
+    is_triangle_number as is_triangle,
+)
 
 
 def solve_naive() -> int:

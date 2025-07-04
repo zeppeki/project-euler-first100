@@ -13,17 +13,7 @@ Answer: 232792560
 
 import math
 
-
-def gcd(a: int, b: int) -> int:
-    """ユークリッドの互除法による最大公約数の計算"""
-    while b:
-        a, b = b, a % b
-    return a
-
-
-def lcm(a: int, b: int) -> int:
-    """最小公倍数の計算: LCM(a,b) = a*b / GCD(a,b)"""
-    return abs(a * b) // gcd(a, b)
+from .lib import lcm
 
 
 def solve_naive(n: int) -> int:

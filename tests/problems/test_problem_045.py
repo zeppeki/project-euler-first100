@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
 """Tests for Problem 045"""
 
-from problems.problem_045 import (
-    generate_hexagonal,
-    generate_pentagonal,
-    generate_triangle,
-    is_hexagonal,
-    is_pentagonal,
-    is_triangle,
-    solve_mathematical,
-    solve_naive,
-    solve_optimized,
-)
+from problems.lib import generate_hexagonal, generate_pentagonal, generate_triangle
+from problems.lib import is_hexagonal_number as is_hexagonal
+from problems.lib import is_pentagonal_number as is_pentagonal
+from problems.lib import is_triangle_number as is_triangle
+from problems.problem_045 import solve_mathematical, solve_naive, solve_optimized
 
 
 class TestProblem045:

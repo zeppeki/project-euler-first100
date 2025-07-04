@@ -3,11 +3,16 @@
 
 import pytest
 
+# Import functions from common library
+from problems.lib import (
+    get_digit_signature,
+    is_prime,
+)
+from problems.lib import (
+    get_permutations_4digit as get_permutations,
+)
 from problems.problem_049 import (
     find_arithmetic_sequences,
-    get_digit_signature,
-    get_permutations,
-    is_prime,
     solve_mathematical,
     solve_naive,
     solve_optimized,

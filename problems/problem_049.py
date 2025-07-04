@@ -11,51 +11,10 @@ What 12-digit number do you get by concatenating the three terms of this sequenc
 Answer: [Hidden]
 """
 
-from itertools import permutations
-
-
-def is_prime(n: int) -> bool:
-    """
-    素数判定関数
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    return all(n % i != 0 for i in range(3, int(n**0.5) + 1, 2))
-
-
-def get_digit_signature(n: int) -> str:
-    """
-    数の桁を並び替えたシグネチャを返す
-    時間計算量: O(d log d) where d is number of digits
-    空間計算量: O(d)
-    """
-    return "".join(sorted(str(n)))
-
-
-def get_permutations(n: int) -> list[int]:
-    """
-    数のすべての順列を4桁の数として返す
-    時間計算量: O(d!)
-    空間計算量: O(d!)
-    """
-    digits = str(n)
-    perms = set()
-
-    for perm in permutations(digits):
-        # 先頭が0でない4桁の数のみ
-        if perm[0] != "0" and len(perm) == 4:
-            num = int("".join(perm))
-            if 1000 <= num <= 9999:  # 4桁の数のみ
-                perms.add(num)
-
-    return sorted(perms)
+from .lib import (
+    get_digit_signature,
+    is_prime,
+)
 
 
 def find_arithmetic_sequences(numbers: list[int]) -> list[tuple[int, int, int]]:

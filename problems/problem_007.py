@@ -11,6 +11,8 @@ Answer: 104743
 
 import math
 
+from .lib import is_prime, is_prime_optimized, sieve_of_eratosthenes
+
 
 def solve_naive(n: int) -> int:
     """
@@ -27,24 +29,12 @@ def solve_naive(n: int) -> int:
     candidate = 3  # 次の候補は3
 
     while count < n:
-        if is_prime_naive(candidate):
+        if is_prime(candidate):
             count += 1
         if count < n:
             candidate += 2  # 奇数のみをチェック
 
     return candidate
-
-
-def is_prime_naive(num: int) -> bool:
-    """素数判定（素直な方法）"""
-    if num < 2:
-        return False
-    if num == 2:
-        return True
-    if num % 2 == 0:
-        return False
-
-    return all(num % i != 0 for i in range(3, int(math.sqrt(num)) + 1, 2))
 
 
 def solve_optimized(n: int) -> int:
@@ -62,33 +52,18 @@ def solve_optimized(n: int) -> int:
     limit = 12 if n < 6 else int(n * (math.log(n) + math.log(math.log(n))))
 
     # エラトステネスの篩
-    primes = sieve_of_eratosthenes(limit)
+    primes_result = sieve_of_eratosthenes(limit, "list")
+    assert isinstance(primes_result, list)
+    primes = primes_result
 
     # 必要な数の素数が見つからない場合、範囲を拡張
     while len(primes) < n:
         limit *= 2
-        primes = sieve_of_eratosthenes(limit)
+        primes_result = sieve_of_eratosthenes(limit, "list")
+        assert isinstance(primes_result, list)
+        primes = primes_result
 
     return primes[n - 1]
-
-
-def sieve_of_eratosthenes(limit: int) -> list[int]:
-    """エラトステネスの篩で指定された範囲の素数を全て求める"""
-    if limit < 2:
-        return []
-
-    # 篩を初期化
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-
-    # 篩を実行
-    for i in range(2, int(math.sqrt(limit)) + 1):
-        if is_prime[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime[j] = False
-
-    # 素数のリストを作成
-    return [i for i in range(2, limit + 1) if is_prime[i]]
 
 
 def solve_mathematical(n: int) -> int:
@@ -117,22 +92,3 @@ def solve_mathematical(n: int) -> int:
             increment = 6 - increment  # 2と4を交互に
 
     return candidate
-
-
-def is_prime_optimized(num: int) -> bool:
-    """最適化された素数判定（6k±1の形を利用）"""
-    if num <= 1:
-        return False
-    if num <= 3:
-        return True
-    if num % 2 == 0 or num % 3 == 0:
-        return False
-
-    # 5から始めて6k±1の形の数のみをチェック
-    i = 5
-    while i * i <= num:
-        if num % i == 0 or num % (i + 2) == 0:
-            return False
-        i += 6
-
-    return True

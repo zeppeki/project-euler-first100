@@ -22,35 +22,8 @@ Find the sum of all the positive integers which cannot be written as the sum of 
 Answer: 4179871
 """
 
-
-def get_divisor_sum(n: int) -> int:
-    """
-    nの真の約数の和を計算する
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n <= 1:
-        return 0
-
-    divisor_sum = 1  # 1は常に真の約数
-    i = 2
-    while i * i <= n:
-        if n % i == 0:
-            divisor_sum += i
-            # i != n//iの場合のみ、n//iも追加
-            if i != n // i:
-                divisor_sum += n // i
-        i += 1
-    return divisor_sum
-
-
-def is_abundant(n: int) -> bool:
-    """
-    nが過剰数かどうかを判定
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    return get_divisor_sum(n) > n
+from .lib import get_proper_divisors_sum as get_divisor_sum
+from .lib import is_abundant
 
 
 def solve_naive(limit: int = 28123) -> int:

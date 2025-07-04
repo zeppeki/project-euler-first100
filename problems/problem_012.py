@@ -21,7 +21,8 @@ What is the value of the first triangle number to have over five hundred divisor
 """
 
 import math
-from collections import defaultdict
+
+from .lib import count_divisors, get_triangular_number
 
 
 def solve_naive(target_divisors: int) -> int:
@@ -35,8 +36,8 @@ def solve_naive(target_divisors: int) -> int:
 
     n = 1
     while True:
-        triangular = n * (n + 1) // 2
-        divisor_count = count_divisors_naive(triangular)
+        triangular = get_triangular_number(n)
+        divisor_count = count_divisors(triangular)
 
         if divisor_count > target_divisors:
             return triangular
@@ -44,21 +45,7 @@ def solve_naive(target_divisors: int) -> int:
         n += 1
 
 
-def count_divisors_naive(num: int) -> int:
-    """約数の個数を数える（素直な方法）"""
-    if num <= 0:
-        return 0
-
-    count = 0
-    sqrt_num = int(math.sqrt(num))
-
-    for i in range(1, sqrt_num + 1):
-        if num % i == 0:
-            count += 1
-            if i != num // i:  # 平方数でない場合、対応する約数も数える
-                count += 1
-
-    return count
+# count_divisors_naive は lib.count_divisors を使用
 
 
 def solve_optimized(target_divisors: int) -> int:
@@ -72,55 +59,13 @@ def solve_optimized(target_divisors: int) -> int:
 
     n = 1
     while True:
-        triangular = n * (n + 1) // 2
-        divisor_count = count_divisors_optimized(triangular)
+        triangular = get_triangular_number(n)
+        divisor_count = count_divisors(triangular)
 
         if divisor_count > target_divisors:
             return triangular
 
         n += 1
-
-
-def count_divisors_optimized(num: int) -> int:
-    """素因数分解を使用して約数の個数を効率的に計算"""
-    if num <= 0:
-        return 0
-
-    factors = prime_factorization(num)
-    divisor_count = 1
-
-    for exponent in factors.values():
-        divisor_count *= exponent + 1
-
-    return divisor_count
-
-
-def prime_factorization(num: int) -> dict[int, int]:
-    """素因数分解を行い、各素因数の指数を返す"""
-    factors: defaultdict[int, int] = defaultdict(int)
-
-    # 0以下の場合は空の辞書を返す
-    if num <= 1:
-        return factors
-
-    # 2で割り切れる回数を数える
-    while num % 2 == 0:
-        factors[2] += 1
-        num //= 2
-
-    # 3以上の奇数で割り切れる回数を数える
-    factor = 3
-    while factor * factor <= num:
-        while num % factor == 0:
-            factors[factor] += 1
-            num //= factor
-        factor += 2
-
-    # 残りが1より大きい場合、それも素因数
-    if num > 1:
-        factors[num] += 1
-
-    return factors
 
 
 def solve_mathematical(target_divisors: int) -> int:
@@ -139,24 +84,19 @@ def solve_mathematical(target_divisors: int) -> int:
         # nとn+1は互いに素なので、約数の計算を分離できる
         if n % 2 == 0:
             # nが偶数の場合: T_n = (n/2) * (n+1)
-            divisors_n_half = count_divisors_optimized(n // 2)
-            divisors_n_plus_1 = count_divisors_optimized(n + 1)
+            divisors_n_half = count_divisors(n // 2)
+            divisors_n_plus_1 = count_divisors(n + 1)
             total_divisors = divisors_n_half * divisors_n_plus_1
         else:
             # nが奇数の場合: T_n = n * ((n+1)/2)
-            divisors_n = count_divisors_optimized(n)
-            divisors_n_plus_1_half = count_divisors_optimized((n + 1) // 2)
+            divisors_n = count_divisors(n)
+            divisors_n_plus_1_half = count_divisors((n + 1) // 2)
             total_divisors = divisors_n * divisors_n_plus_1_half
 
         if total_divisors > target_divisors:
-            return n * (n + 1) // 2
+            return get_triangular_number(n)
 
         n += 1
-
-
-def get_triangular_number(n: int) -> int:
-    """n番目の三角数を計算"""
-    return n * (n + 1) // 2
 
 
 def get_divisors(num: int) -> list[int]:

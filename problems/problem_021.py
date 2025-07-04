@@ -13,47 +13,11 @@ Evaluate the sum of all the amicable numbers under 10000.
 Answer: 31626
 """
 
+from .lib import get_proper_divisors_sum
 
-def get_proper_divisors_naive(n: int) -> int:
-    """
-    素直な解法: 1からn-1まで全てをチェックして真約数の和を求める
-
-    時間計算量: O(n)
-    空間計算量: O(1)
-    """
-    if n <= 1:
-        return 0
-
-    divisor_sum = 1  # 1は常に真約数
-    for i in range(2, n):
-        if n % i == 0:
-            divisor_sum += i
-
-    return divisor_sum
-
-
-def get_proper_divisors_optimized(n: int) -> int:
-    """
-    最適化解法: 平方根まで試し割りで真約数の和を求める
-
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n <= 1:
-        return 0
-
-    divisor_sum = 1  # 1は常に真約数
-    i = 2
-
-    while i * i <= n:
-        if n % i == 0:
-            divisor_sum += i
-            # 平方根でない場合は対応する約数も追加
-            if i * i != n:
-                divisor_sum += n // i
-        i += 1
-
-    return divisor_sum
+# 関数名のエイリアス
+get_proper_divisors_naive = get_proper_divisors_sum
+get_proper_divisors_optimized = get_proper_divisors_sum
 
 
 def solve_naive(limit: int) -> int:
