@@ -9,12 +9,19 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems"))
 
 # Import after path modification
-from problems.problem_012 import (
-    count_divisors_naive,
-    count_divisors_optimized,
-    get_divisors,
+# Import functions from common library
+from problems.lib import (
+    count_divisors as count_divisors_naive,
+)
+from problems.lib import (
+    count_divisors as count_divisors_optimized,
+)
+from problems.lib import (
     get_triangular_number,
     prime_factorization,
+)
+from problems.problem_012 import (
+    get_divisors,
     solve_mathematical,
     solve_naive,
     solve_optimized,

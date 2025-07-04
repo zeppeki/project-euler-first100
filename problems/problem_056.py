@@ -12,14 +12,7 @@ what is the maximum digital sum?
 
 from typing import Any, cast
 
-
-def digit_sum(n: int) -> int:
-    """
-    計算数値の各桁の合計
-    時間計算量: O(log n)
-    空間計算量: O(1)
-    """
-    return sum(int(digit) for digit in str(n))
+from .lib import sum_of_digits as digit_sum
 
 
 def solve_naive(limit_a: int = 100, limit_b: int = 100) -> int:

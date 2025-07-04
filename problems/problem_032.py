@@ -14,18 +14,7 @@ as a 1 through 9 pandigital.
 Answer: 45228
 """
 
-
-def is_pandigital_1_to_9(digits_str: str) -> bool:
-    """
-    1から9のパンデジタル数かどうか判定
-    時間計算量: O(1) - 最大9文字の固定長
-    空間計算量: O(1)
-    """
-    if len(digits_str) != 9:
-        return False
-
-    digit_set = set(digits_str)
-    return digit_set == {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+from .lib import is_pandigital_1_to_9
 
 
 def solve_naive() -> int:

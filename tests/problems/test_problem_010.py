@@ -9,9 +9,8 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems"))
 
 # Import after path modification
+from problems.lib import is_prime, sieve_of_eratosthenes
 from problems.problem_010 import (
-    is_prime_naive,
-    sieve_of_eratosthenes,
     solve_mathematical,
     solve_naive,
     solve_optimized,
@@ -120,7 +119,7 @@ class TestProblem010:
         # Test known primes
         primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
         for prime in primes:
-            assert is_prime_naive(prime), f"{prime} should be prime"
+            assert is_prime(prime), f"{prime} should be prime"
 
         # Test known composites
         composites = [
@@ -145,28 +144,28 @@ class TestProblem010:
             30,
         ]
         for composite in composites:
-            assert not is_prime_naive(composite), f"{composite} should not be prime"
+            assert not is_prime(composite), f"{composite} should not be prime"
 
         # Test edge cases
-        assert not is_prime_naive(0)
-        assert not is_prime_naive(1)
+        assert not is_prime(0)
+        assert not is_prime(1)
 
     def test_sieve_of_eratosthenes(self) -> None:
         """Test the Sieve of Eratosthenes function."""
         # Test small range
-        primes_10 = sieve_of_eratosthenes(9)  # primes up to 9
+        primes_10 = sieve_of_eratosthenes(9, "list")  # primes up to 9
         expected_10 = [2, 3, 5, 7]
         assert primes_10 == expected_10
 
         # Test medium range
-        primes_30 = sieve_of_eratosthenes(29)  # primes up to 29
+        primes_30 = sieve_of_eratosthenes(29, "list")  # primes up to 29
         expected_30 = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
         assert primes_30 == expected_30
 
         # Test edge cases
-        assert sieve_of_eratosthenes(1) == []
-        assert sieve_of_eratosthenes(2) == [2]
-        assert sieve_of_eratosthenes(3) == [2, 3]
+        assert sieve_of_eratosthenes(1, "list") == []
+        assert sieve_of_eratosthenes(2, "list") == [2]
+        assert sieve_of_eratosthenes(3, "list") == [2, 3]
 
     def test_manual_calculation_verification(self) -> None:
         """Test manual calculation verification for small ranges."""
@@ -179,7 +178,7 @@ class TestProblem010:
         expected_primes = [2, 3, 5, 7]
 
         # Get primes below 10
-        primes = sieve_of_eratosthenes(limit - 1)
+        primes = sieve_of_eratosthenes(limit - 1, "list")
         assert primes == expected_primes
         assert sum(primes) == expected_sum
 
@@ -198,7 +197,7 @@ class TestProblem010:
         ]
 
         for limit, expected_primes, expected_sum in test_cases:
-            primes = sieve_of_eratosthenes(limit - 1)
+            primes = sieve_of_eratosthenes(limit - 1, "list")
             assert primes == expected_primes
             assert sum(primes) == expected_sum
 
@@ -309,14 +308,14 @@ class TestProblem010:
         """Test specific implementation details of the sieve."""
         # Test that sieve correctly marks composites
         limit = 50
-        primes = sieve_of_eratosthenes(limit)
+        primes = sieve_of_eratosthenes(limit, "list")
 
         # Verify all returned numbers are actually prime
         for prime in primes:
-            assert is_prime_naive(prime), f"{prime} should be prime"
+            assert is_prime(prime), f"{prime} should be prime"
 
         # Verify no primes are missing (check against naive prime checking)
-        expected_primes = [i for i in range(2, limit + 1) if is_prime_naive(i)]
+        expected_primes = [i for i in range(2, limit + 1) if is_prime(i)]
         assert primes == expected_primes
 
     def test_memory_optimization_verification(self) -> None:
@@ -355,7 +354,7 @@ class TestProblem010:
                 new_prime = current_sum - previous_sum
                 primes_found.append(new_prime)
                 # Verify the new prime is actually prime and below limit
-                assert is_prime_naive(new_prime), (
+                assert is_prime(new_prime), (
                     f"New prime {new_prime} is not actually prime"
                 )
                 assert new_prime < limit, (

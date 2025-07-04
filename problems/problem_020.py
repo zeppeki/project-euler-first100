@@ -12,7 +12,7 @@ Find the sum of the digits in the number 100!
 Answer: 648
 """
 
-import math
+from .lib import factorial_builtin as lib_factorial
 
 
 def solve_naive(n: int) -> int:
@@ -22,8 +22,8 @@ def solve_naive(n: int) -> int:
     時間計算量: O(n log n) - 階乗計算
     空間計算量: O(log n) - 階乗の結果を格納
     """
-    factorial = math.factorial(n)
-    return sum(int(digit) for digit in str(factorial))
+    factorial_result = lib_factorial(n)
+    return sum(int(digit) for digit in str(factorial_result))
 
 
 def solve_optimized(n: int) -> int:

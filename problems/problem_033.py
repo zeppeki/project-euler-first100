@@ -19,16 +19,7 @@ Answer: 100
 
 from fractions import Fraction
 
-
-def gcd(a: int, b: int) -> int:
-    """
-    最大公約数を求める（ユークリッドの互除法）
-    時間計算量: O(log(min(a, b)))
-    空間計算量: O(1)
-    """
-    while b:
-        a, b = b, a % b
-    return a
+from .lib import gcd
 
 
 def is_digit_cancelling_fraction(numerator: int, denominator: int) -> bool:

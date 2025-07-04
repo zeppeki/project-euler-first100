@@ -28,24 +28,7 @@ How many Lychrel numbers are there below ten thousand?
 
 from typing import Any
 
-
-def is_palindrome(n: int) -> bool:
-    """
-    回文数かどうかを判定する
-    時間計算量: O(log n)
-    空間計算量: O(1)
-    """
-    s = str(n)
-    return s == s[::-1]
-
-
-def reverse_number(n: int) -> int:
-    """
-    数値を逆転させる
-    時間計算量: O(log n)
-    空間計算量: O(1)
-    """
-    return int(str(n)[::-1])
+from .lib import is_palindrome, reverse_number
 
 
 def is_lychrel_number(n: int, max_iterations: int = 50) -> bool:

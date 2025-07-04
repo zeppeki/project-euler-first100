@@ -10,7 +10,7 @@ How many such routes are there through a 20×20 grid?
 Answer: 137846528820
 """
 
-import math
+from .lib import factorial_builtin as factorial
 
 
 def solve_naive(n: int) -> int:
@@ -95,4 +95,4 @@ def solve_mathematical_factorial(n: int) -> int:
     if n == 0:
         return 1
 
-    return math.factorial(2 * n) // (math.factorial(n) * math.factorial(n))
+    return factorial(2 * n) // (factorial(n) * factorial(n))
