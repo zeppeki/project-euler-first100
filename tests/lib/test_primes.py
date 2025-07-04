@@ -167,8 +167,9 @@ class TestTruncatablePrimes:
 
     def test_truncatable_primes_examples(self) -> None:
         """Test known truncatable primes."""
-        # Known left-to-right truncatable primes
-        assert is_truncatable_prime(2357)
+        # Known truncatable primes
+        assert is_truncatable_prime(23)
+        assert is_truncatable_prime(37)
         assert is_truncatable_prime(3797)
 
         # Non-truncatable primes

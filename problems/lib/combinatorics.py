@@ -153,7 +153,9 @@ def multinomial_coefficient(*args: int) -> int:
     時間計算量: O(n)
     空間計算量: O(1)
     """
-    if not args or any(k < 0 for k in args):
+    if not args:
+        return 1  # Empty multinomial coefficient is 1
+    if any(k < 0 for k in args):
         return 0
 
     n = sum(args)
