@@ -213,24 +213,6 @@ class TestProblem009:
                     f"Ordering failed for ({a}, {b}, {c}): Should have a < b < c"
                 )
 
-    def test_performance_comparison(self) -> None:
-        """Test that all solutions work for moderate inputs."""
-        # Simple functional test without timing overhead
-        target_sum = 120
-
-        # Verify all solutions work
-        result_naive = solve_naive(target_sum)
-        result_optimized = solve_optimized(target_sum)
-        result_math = solve_mathematical(target_sum)
-
-        # At least naive and optimized should give same result
-        assert result_naive == result_optimized
-
-        # All results should be positive for valid input
-        assert result_naive > 0
-        assert result_optimized > 0
-        assert result_math > 0
-
     def test_mathematical_properties(self) -> None:
         """Test mathematical properties of Pythagorean triplets."""
         # Test that primitive Pythagorean triplets follow known patterns

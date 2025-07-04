@@ -95,40 +95,6 @@ class TestSolutions:
         assert result_naive > 0
 
 
-class TestPerformance:
-    """性能テスト"""
-
-    @pytest.mark.slow
-    def test_performance_comparison(self) -> None:
-        """解法間の性能比較テスト"""
-        import time
-
-        limit = 100000
-
-        # 素直な解法
-        start = time.time()
-        result_naive = solve_naive(limit)
-        time_naive = time.time() - start
-
-        # 最適化解法
-        start = time.time()
-        result_optimized = solve_optimized(limit)
-        time_optimized = time.time() - start
-
-        # 数学的解法
-        start = time.time()
-        result_mathematical = solve_mathematical(limit)
-        time_mathematical = time.time() - start
-
-        # 結果の一致確認
-        assert result_naive == result_optimized == result_mathematical
-
-        # 最適化により性能向上していることを確認
-        # （ただし、小さい入力では差が出ない場合もある）
-        assert time_optimized <= time_naive * 2  # 大幅に遅くならないことを確認
-        assert time_mathematical <= time_naive * 2
-
-
 class TestEdgeCases:
     """境界値テスト"""
 

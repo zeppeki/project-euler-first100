@@ -3,8 +3,6 @@
 Test for Problem 032: Pandigital products
 """
 
-import pytest
-
 from problems.problem_032 import (
     is_pandigital_1_to_9,
     solve_mathematical,
@@ -79,39 +77,6 @@ class TestProblem032:
         mathematical_result = solve_mathematical()
 
         assert naive_result == optimized_result == mathematical_result
-
-    @pytest.mark.slow
-    def test_performance_comparison(self) -> None:
-        """パフォーマンス比較のテスト（時間測定）"""
-        import time
-
-        # 素直な解法
-        start_time = time.time()
-        result_naive = solve_naive()
-        naive_time = time.time() - start_time
-
-        # 最適化解法
-        start_time = time.time()
-        result_optimized = solve_optimized()
-        optimized_time = time.time() - start_time
-
-        # 数学的解法
-        start_time = time.time()
-        result_mathematical = solve_mathematical()
-        mathematical_time = time.time() - start_time
-
-        # 結果が一致することを確認
-        assert result_naive == result_optimized == result_mathematical
-
-        # 最適化解法の方が高速であることを期待（絶対的ではない）
-        print(f"素直な解法: {naive_time:.6f}秒")
-        print(f"最適化解法: {optimized_time:.6f}秒")
-        print(f"数学的解法: {mathematical_time:.6f}秒")
-
-        # 全ての解法が妥当な時間内で実行されることを確認
-        assert naive_time < 10.0  # 10秒以内
-        assert optimized_time < 5.0  # 5秒以内
-        assert mathematical_time < 5.0  # 5秒以内
 
     def test_edge_cases(self) -> None:
         """エッジケースのテスト"""

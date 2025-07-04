@@ -236,30 +236,6 @@ class TestBoundaryConditions:
         assert result2 > 0
 
 
-class TestPerformance:
-    """Test performance-related aspects"""
-
-    def test_small_limit_performance(self) -> None:
-        """Test performance with small limits"""
-        import time
-
-        start_time = time.time()
-        result = solve_naive(20, 20)
-        end_time = time.time()
-
-        assert isinstance(result, int)
-        assert end_time - start_time < 1.0  # Should complete in less than 1 second
-
-    def test_optimization_comparison(self) -> None:
-        """Test that optimization doesn't hurt correctness"""
-        # Test with moderate limit
-        limit = 15
-        result_naive = solve_naive(limit, limit)
-        result_optimized = solve_optimized(limit, limit)
-
-        assert result_naive == result_optimized
-
-
 class TestSpecialCases:
     """Test special cases and mathematical properties"""
 

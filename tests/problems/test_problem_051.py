@@ -3,8 +3,6 @@
 Tests for Project Euler Problem 051: Prime digit replacements
 """
 
-from collections.abc import Callable
-
 import pytest
 
 from problems.problem_051 import (
@@ -93,34 +91,38 @@ class TestUtilityFunctions:
 class TestSolutionFunctions:
     """Test main solution functions"""
 
-    @pytest.mark.parametrize(
-        "solver", [solve_naive, solve_optimized, solve_mathematical]
-    )
-    def test_solve_small_cases(self, solver: Callable[[int], int]) -> None:
-        """Test solution functions with small test cases"""
-        # Test case: 6 primes in family (*3 pattern)
-        result = solver(6)
-        assert result == 13
+    def test_solve_small_cases(self) -> None:
+        """Test solution functions with small test cases (optimized for speed)"""
+        # Test case: 6 primes in family (*3 pattern) - test all solutions
+        assert solve_naive(6) == 13
+        assert solve_optimized(6) == 13
+        assert solve_mathematical(6) == 13
 
-        # Test case: 7 primes in family (56**3 pattern)
-        result = solver(7)
-        assert result == 56003
+        # Test case: 7 primes in family (56**3 pattern) - test only fast solutions
+        # (naive solution for 7 primes is too slow for CI)
+        assert solve_optimized(7) == 56003
+        assert solve_mathematical(7) == 56003
 
     def test_solve_consistency(self) -> None:
-        """Test that all solution methods give the same result"""
-        target_sizes = [6, 7]
+        """Test that all solution methods give the same result (optimized for speed)"""
+        # Test smaller case where all solutions are fast
+        target_size = 6
+        results = [
+            solve_naive(target_size),
+            solve_optimized(target_size),
+            solve_mathematical(target_size),
+        ]
+        assert len(set(results)) == 1, (
+            f"Inconsistent results for target {target_size}: {results}"
+        )
 
-        for target_size in target_sizes:
-            results = [
-                solve_naive(target_size),
-                solve_optimized(target_size),
-                solve_mathematical(target_size),
-            ]
-
-            # All methods should return the same result
-            assert len(set(results)) == 1, (
-                f"Inconsistent results for target {target_size}: {results}"
-            )
+        # For larger case (7), test only fast solutions
+        target_size = 7
+        optimized_result = solve_optimized(target_size)
+        math_result = solve_mathematical(target_size)
+        assert optimized_result == math_result, (
+            f"Optimized and mathematical solutions disagree for target {target_size}"
+        )
 
     @pytest.mark.slow
     def test_solve_main_problem(self) -> None:

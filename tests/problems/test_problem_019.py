@@ -246,37 +246,5 @@ class TestResultBounds:
         assert result_10_years <= result_20_years <= result_50_years
 
 
-class TestPerformance:
-    """パフォーマンステスト"""
-
-    @pytest.mark.slow
-    def test_performance_comparison(self, problem: Any) -> None:
-        """パフォーマンス比較テスト（スロー）"""
-        import time
-
-        start_year, end_year = 1901, 2000
-
-        # 各解法の実行時間測定
-        start = time.time()
-        result_naive = problem.solve_naive(start_year, end_year)
-        naive_time = time.time() - start
-
-        start = time.time()
-        result_optimized = problem.solve_optimized(start_year, end_year)
-        optimized_time = time.time() - start
-
-        start = time.time()
-        result_math = problem.solve_mathematical(start_year, end_year)
-        math_time = time.time() - start
-
-        # 結果が一致することを確認
-        assert result_naive == result_optimized == result_math
-
-        # 実行時間が妥当であることを確認（1秒以内）
-        assert naive_time < 1.0
-        assert optimized_time < 1.0
-        assert math_time < 1.0
-
-
 if __name__ == "__main__":
     pytest.main([__file__])

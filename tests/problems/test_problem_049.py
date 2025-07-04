@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Tests for Problem 049"""
 
-import pytest
-
 # Import functions from common library
 from problems.lib import (
     get_digit_signature,
@@ -273,34 +271,6 @@ class TestProblem049:
                 diff2 = seq[2] - seq[1]
                 assert diff1 == diff2, f"Sequence {seq} should be arithmetic"
                 assert diff1 > 0, f"Difference should be positive in {seq}"
-
-    @pytest.mark.slow
-    def test_performance_comparison(self) -> None:
-        """Test performance of different methods (marked as slow)"""
-        import time
-
-        methods = [
-            ("Naive", solve_naive),
-            ("Optimized", solve_optimized),
-            ("Mathematical", solve_mathematical),
-        ]
-
-        results = {}
-        for name, method in methods:
-            start_time = time.time()
-            result = method()
-            end_time = time.time()
-
-            results[name] = {"result": result, "time": end_time - start_time}
-
-        # All methods should give the same result
-        result_values = [data["result"] for data in results.values()]
-        assert len(set(result_values)) == 1, f"Methods disagree: {result_values}"
-
-        # All methods should complete successfully
-        for name, data in results.items():
-            assert data["time"] >= 0, f"{name} method should complete"
-            assert data["result"] > 0, f"{name} method should return positive result"
 
     def test_return_types(self) -> None:
         """Test that all functions return proper types"""

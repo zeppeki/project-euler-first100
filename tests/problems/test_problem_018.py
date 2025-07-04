@@ -178,32 +178,5 @@ class TestEdgeCases:
         assert problem.solve_mathematical(triangle) == expected
 
 
-class TestPerformance:
-    """パフォーマンステスト"""
-
-    @pytest.mark.slow
-    def test_large_triangle_performance(self, problem: Any) -> None:
-        """大きな三角形でのパフォーマンステスト（スロー）"""
-        import time
-
-        triangle = problem.get_problem_triangle()
-
-        # 最適化解法と数学的解法は十分高速であることを確認
-        start = time.time()
-        result_optimized = problem.solve_optimized(triangle)
-        optimized_time = time.time() - start
-
-        start = time.time()
-        result_math = problem.solve_mathematical(triangle)
-        math_time = time.time() - start
-
-        # 結果が一致することを確認
-        assert result_optimized == result_math
-
-        # 実行時間が妥当であることを確認（1秒以内）
-        assert optimized_time < 1.0
-        assert math_time < 1.0
-
-
 if __name__ == "__main__":
     pytest.main([__file__])

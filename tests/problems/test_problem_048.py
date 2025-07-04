@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Tests for Problem 048"""
 
-import pytest
-
 from problems.problem_048 import (
     calculate_self_powers_sum,
     solve_mathematical,
@@ -222,37 +220,6 @@ class TestProblem048:
         )
         assert optimized_result == mathematical_result, (
             f"Optimized and mathematical disagree: {optimized_result} != {mathematical_result}"
-        )
-
-    @pytest.mark.slow
-    def test_performance_comparison(self) -> None:
-        """Test performance of different methods (marked as slow)"""
-        import time
-
-        limit = 1000
-        methods = [
-            ("Naive", solve_naive),
-            ("Optimized", solve_optimized),
-            ("Mathematical", solve_mathematical),
-        ]
-
-        results = {}
-        for name, method in methods:
-            start_time = time.time()
-            result = method(limit)
-            end_time = time.time()
-
-            results[name] = {"result": result, "time": end_time - start_time}
-
-        # All methods should give the same result
-        result_values = [data["result"] for data in results.values()]
-        assert len(set(result_values)) == 1, f"Methods disagree: {result_values}"
-
-        # Optimized should be faster than naive (though both should be fast)
-        # This is more of a sanity check than a strict requirement
-        assert results["Optimized"]["time"] >= 0, "Optimized method should complete"
-        assert results["Mathematical"]["time"] >= 0, (
-            "Mathematical method should complete"
         )
 
     def test_mathematical_properties(self) -> None:

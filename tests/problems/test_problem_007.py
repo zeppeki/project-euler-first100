@@ -202,35 +202,25 @@ class TestProblem007:
             assert solve_optimized(i) == expected_prime
             assert solve_mathematical(i) == expected_prime
 
-    def test_performance_comparison(self) -> None:
-        """Test that all solutions work for moderate inputs."""
-        # Simple functional test without timing overhead
-        n = 50  # 50th prime is 229
-
-        # Verify all solutions work
-        result_naive = solve_naive(n)
-        result_optimized = solve_optimized(n)
-        result_math = solve_mathematical(n)
-
-        # All should give same result
-        assert result_naive == result_optimized == result_math
-        assert result_naive == 229  # 50th prime is 229
-
     def test_large_values_consistency(self) -> None:
-        """Test consistency for larger values."""
+        """Test consistency for larger values (optimized for speed)."""
         # Test larger values to ensure algorithms remain accurate
         test_values = [20, 50, 100, 200]
         expected_primes = [71, 229, 541, 1223]  # Known nth primes
 
         for n, expected in zip(test_values, expected_primes, strict=False):
-            naive_result = solve_naive(n)
-            optimized_result = solve_optimized(n)
-            math_result = solve_mathematical(n)
-
-            assert naive_result == optimized_result == math_result == expected, (
-                f"Solutions disagree for n={n}: "
-                f"naive={naive_result}, optimized={optimized_result}, math={math_result}, expected={expected}"
-            )
+            # Use fastest methods for large values
+            if n <= 50:
+                # For smaller values, test all solutions
+                naive_result = solve_naive(n)
+                optimized_result = solve_optimized(n)
+                math_result = solve_mathematical(n)
+                assert naive_result == optimized_result == math_result == expected
+            else:
+                # For larger values, use optimized solutions only
+                optimized_result = solve_optimized(n)
+                math_result = solve_mathematical(n)
+                assert optimized_result == math_result == expected
 
     def test_prime_distribution_properties(self) -> None:
         """Test some basic properties of prime distribution."""

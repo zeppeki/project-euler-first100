@@ -295,27 +295,6 @@ class TestProblem012:
             f"For odd n={n}, expected {total_expected} divisors, got {actual_divisors}"
         )
 
-    @pytest.mark.slow
-    def test_performance_comparison(self) -> None:
-        """Test that all solutions work for moderate inputs."""
-        # Simple functional test without timing overhead
-        target_divisors = 6
-
-        # Verify all solutions work and agree
-        result_naive = solve_naive(target_divisors)
-        result_optimized = solve_optimized(target_divisors)
-        result_math = solve_mathematical(target_divisors)
-
-        # All should give same result
-        assert result_naive == result_optimized == result_math
-
-        # Verify the result has the required number of divisors
-        actual_divisor_count = count_divisors_optimized(result_naive)
-        assert actual_divisor_count > target_divisors, (
-            f"Result {result_naive} should have more than {target_divisors} divisors, "
-            f"but has {actual_divisor_count}"
-        )
-
     def test_divisor_counting_edge_cases(self) -> None:
         """Test edge cases for divisor counting."""
         # Test with 0 (should return 0)

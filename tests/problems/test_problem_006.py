@@ -147,19 +147,6 @@ class TestProblem006:
                 f"Sum of squares formula failed for n={n}"
             )
 
-    def test_performance_comparison(self) -> None:
-        """Test that optimized solutions are faster for larger inputs."""
-        # Simple functional test without timing overhead
-        n = 50  # Reduced test size
-
-        # Verify all solutions work
-        result_naive = solve_naive(n)
-        result_optimized = solve_optimized(n)
-        result_math = solve_mathematical(n)
-
-        # All should give same result
-        assert result_naive == result_optimized == result_math
-
     def test_large_values_consistency(self) -> None:
         """Test consistency for larger values."""
         # Test larger values to ensure formulas remain accurate

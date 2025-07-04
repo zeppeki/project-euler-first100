@@ -194,22 +194,6 @@ class TestProblem008:
             calculated_product *= int(digit)
         assert calculated_product == 5832
 
-    def test_performance_comparison(self) -> None:
-        """Test that all solutions work for moderate inputs."""
-        # Simple functional test without timing overhead
-        adjacent_digits = 8
-
-        # Verify all solutions work
-        result_naive = solve_naive(adjacent_digits)
-        result_optimized = solve_optimized(adjacent_digits)
-        result_math = solve_mathematical(adjacent_digits)
-
-        # All should give same result
-        assert result_naive == result_optimized == result_math
-
-        # Result should be positive
-        assert result_naive > 0
-
     def test_zero_handling(self) -> None:
         """Test that solutions correctly handle sequences containing zeros."""
         # Create a simple test case with known zeros

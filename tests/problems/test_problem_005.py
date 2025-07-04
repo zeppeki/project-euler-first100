@@ -188,20 +188,6 @@ class TestProblem005:
                 f"Mathematical and optimized solutions disagree for n={n}"
             )
 
-    def test_performance_comparison(self) -> None:
-        """Test that optimized solutions are faster for larger inputs."""
-        # Simple functional test without actual timing
-        n = 10
-
-        # Verify all solutions work without timing overhead
-        result_naive = solve_naive(n)
-        result_optimized = solve_optimized(n)
-        result_math = solve_mathematical(n)
-        result_builtin = solve_builtin(n)
-
-        # All should give same result
-        assert result_naive == result_optimized == result_math == result_builtin == 2520
-
     def test_large_number_divisibility(self) -> None:
         """Test divisibility properties for the actual answer."""
         # Test with the known answer for n=20

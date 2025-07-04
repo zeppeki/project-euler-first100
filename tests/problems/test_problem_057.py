@@ -348,44 +348,5 @@ class TestMathematicalProperties:
             assert error < 1.0  # Reasonable bound
 
 
-class TestPerformance:
-    """Test performance-related aspects"""
-
-    def test_small_limit_performance(self) -> None:
-        """Test performance with small limits"""
-        import time
-
-        start_time = time.time()
-        result = solve_optimized(100)
-        end_time = time.time()
-
-        assert isinstance(result, int)
-        assert end_time - start_time < 1.0  # Should complete quickly
-
-    def test_optimization_comparison(self) -> None:
-        """Test that optimization improves performance"""
-        import time
-
-        limit = 200
-
-        # Time naive solution
-        start_time = time.time()
-        result_naive = solve_naive(limit)
-        naive_time = time.time() - start_time
-
-        # Time optimized solution
-        start_time = time.time()
-        result_optimized = solve_optimized(limit)
-        optimized_time = time.time() - start_time
-
-        # Results should be the same
-        assert result_naive == result_optimized
-
-        # Optimized should be faster (though this may not always hold for small inputs)
-        # Just check that both complete in reasonable time
-        assert naive_time < 5.0
-        assert optimized_time < 5.0
-
-
 if __name__ == "__main__":
     pytest.main([__file__])

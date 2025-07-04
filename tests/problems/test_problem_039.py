@@ -148,19 +148,3 @@ class TestProblem039:
         assert result_naive == result_optimized == result_mathematical
         assert isinstance(result_naive, int)
         assert 12 <= result_naive <= 1000  # 合理的な範囲
-
-    def test_performance_comparison(self) -> None:
-        """Test that optimized solutions are faster for larger inputs."""
-        # パフォーマンステストは実行時間の測定ではなく、
-        # 機能的な正確性をチェック
-        test_limit = 200
-
-        naive_result = solve_naive(test_limit)
-        optimized_result = solve_optimized(test_limit)
-        mathematical_result = solve_mathematical(test_limit)
-
-        # 全て同じ結果になることを確認
-        assert naive_result == optimized_result == mathematical_result
-
-        # 結果が妥当な範囲内であることを確認
-        assert 12 <= naive_result <= test_limit

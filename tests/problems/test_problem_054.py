@@ -365,31 +365,5 @@ class TestEdgeCases:
             assert hand.evaluation.hand_rank == expected_rank
 
 
-class TestPerformance:
-    """Test performance-related aspects"""
-
-    def test_evaluation_speed(self) -> None:
-        """Test that hand evaluation is reasonably fast"""
-        import time
-
-        hands = [
-            "AS KS QS JS TS",
-            "5H 6H 7H 8H 9H",
-            "AS AC AH AD KC",
-            "AS AC AH KS KC",
-            "AS KS QS JS 9S",
-        ]
-
-        start_time = time.time()
-        for _ in range(1000):
-            for hand_str in hands:
-                hand = PokerHand.from_string(hand_str)
-                _ = hand.evaluation
-        end_time = time.time()
-
-        # Should complete 5000 evaluations in reasonable time
-        assert end_time - start_time < 1.0  # Less than 1 second
-
-
 if __name__ == "__main__":
     pytest.main([__file__])

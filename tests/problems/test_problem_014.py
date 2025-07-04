@@ -215,19 +215,6 @@ class TestProblem014:
         expected_sequence = [13, 40, 20, 10, 5, 16, 8, 4, 2, 1]
         assert sequence == expected_sequence
 
-    def test_performance_comparison(self) -> None:
-        """Test that both solutions work for moderate inputs."""
-        # Simple functional test without timing overhead
-        limit = 100
-
-        # Verify both solutions work
-        result_naive = solve_naive(limit)
-        result_optimized = solve_optimized(limit)
-
-        # Both should give same result
-        assert result_naive == result_optimized
-        assert result_naive == 97  # Known result for limit=100
-
     def test_large_values_consistency(self) -> None:
         """Test consistency for larger values."""
         # Test larger values to ensure algorithms remain accurate

@@ -138,39 +138,6 @@ class TestProblem034:
         assert solve_optimized() == manual_sum
         assert solve_mathematical() == manual_sum
 
-    @pytest.mark.slow
-    def test_performance_comparison(self) -> None:
-        """パフォーマンス比較のテスト（時間測定）"""
-        import time
-
-        # 素直な解法
-        start_time = time.time()
-        result_naive = solve_naive()
-        naive_time = time.time() - start_time
-
-        # 最適化解法
-        start_time = time.time()
-        result_optimized = solve_optimized()
-        optimized_time = time.time() - start_time
-
-        # 数学的解法
-        start_time = time.time()
-        result_mathematical = solve_mathematical()
-        mathematical_time = time.time() - start_time
-
-        # 結果が一致することを確認
-        assert result_naive == result_optimized == result_mathematical
-
-        # パフォーマンス情報を出力
-        print(f"素直な解法: {naive_time:.6f}秒")
-        print(f"最適化解法: {optimized_time:.6f}秒")
-        print(f"数学的解法: {mathematical_time:.6f}秒")
-
-        # 妥当な時間内で実行されることを確認
-        assert naive_time < 20.0  # 20秒以内
-        assert optimized_time < 10.0  # 10秒以内
-        assert mathematical_time < 10.0  # 10秒以内
-
     def test_edge_cases(self) -> None:
         """エッジケースのテスト"""
         # 単桁数

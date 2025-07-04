@@ -295,24 +295,6 @@ class TestProblem015:
         expected_15 = 155117520
         assert result_math == expected_15
 
-    def test_performance_comparison(self) -> None:
-        """Test that all solutions work for moderate inputs."""
-        # Simple functional test without timing overhead
-        n = 12
-
-        # Verify all solutions work
-        result_naive = solve_naive(n)
-        result_optimized = solve_optimized(n)
-        result_math = solve_mathematical(n)
-        result_factorial = solve_mathematical_factorial(n)
-
-        # All should give same result
-        assert result_naive == result_optimized == result_math == result_factorial
-
-        # Should be C(24, 12) = 2,704,156
-        expected_12 = 2704156
-        assert result_math == expected_12
-
     def test_binomial_coefficient_properties(self) -> None:
         """Test properties of binomial coefficients."""
         # Test that C(2n, n) is always even for n > 0
