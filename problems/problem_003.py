@@ -11,24 +11,6 @@ Answer: 6857
 import math
 
 
-def is_prime(n: int) -> bool:
-    """
-    素数判定関数
-
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    # 3から√nまでの奇数で試し割り
-    return all(n % i != 0 for i in range(3, int(math.sqrt(n)) + 1, 2))
-
-
 def solve_naive(n: int) -> int:
     """
     素直な解法: 2から順番に試し割り

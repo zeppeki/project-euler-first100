@@ -9,10 +9,12 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems"))
 
 # Import after path modification
-from problems.problem_007 import (
-    is_prime_naive,
+from problems.lib import (
+    is_prime,
     is_prime_optimized,
     sieve_of_eratosthenes,
+)
+from problems.problem_007 import (
     solve_mathematical,
     solve_naive,
     solve_optimized,
@@ -136,7 +138,7 @@ class TestProblem007:
         # Test known primes
         primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
         for prime in primes:
-            assert is_prime_naive(prime), f"{prime} should be prime (naive)"
+            assert is_prime(prime), f"{prime} should be prime (naive)"
             assert is_prime_optimized(prime), f"{prime} should be prime (optimized)"
 
         # Test known composites
@@ -162,35 +164,33 @@ class TestProblem007:
             30,
         ]
         for composite in composites:
-            assert not is_prime_naive(composite), (
-                f"{composite} should not be prime (naive)"
-            )
+            assert not is_prime(composite), f"{composite} should not be prime (naive)"
             assert not is_prime_optimized(composite), (
                 f"{composite} should not be prime (optimized)"
             )
 
         # Test edge cases
-        assert not is_prime_naive(0)
-        assert not is_prime_naive(1)
+        assert not is_prime(0)
+        assert not is_prime(1)
         assert not is_prime_optimized(0)
         assert not is_prime_optimized(1)
 
     def test_sieve_of_eratosthenes(self) -> None:
         """Test the Sieve of Eratosthenes function."""
         # Test small range
-        primes_10 = sieve_of_eratosthenes(10)
+        primes_10 = sieve_of_eratosthenes(10, "list")
         expected_10 = [2, 3, 5, 7]
         assert primes_10 == expected_10
 
         # Test medium range
-        primes_30 = sieve_of_eratosthenes(30)
+        primes_30 = sieve_of_eratosthenes(30, "list")
         expected_30 = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
         assert primes_30 == expected_30
 
         # Test edge cases
-        assert sieve_of_eratosthenes(1) == []
-        assert sieve_of_eratosthenes(2) == [2]
-        assert sieve_of_eratosthenes(3) == [2, 3]
+        assert sieve_of_eratosthenes(1, "list") == []
+        assert sieve_of_eratosthenes(2, "list") == [2]
+        assert sieve_of_eratosthenes(3, "list") == [2, 3]
 
     def test_manual_calculation_verification(self) -> None:
         """Test manual calculation verification for the first few primes."""
@@ -274,7 +274,7 @@ class TestProblem007:
         # are of the form 6k±1. Test this property.
 
         # Generate primes using sieve for verification
-        primes = sieve_of_eratosthenes(100)
+        primes = sieve_of_eratosthenes(100, "list")
 
         # Check that all primes > 3 are of the form 6k±1
         for prime in primes:

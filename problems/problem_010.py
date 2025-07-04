@@ -11,6 +11,8 @@ Answer: 142913828922
 
 import math
 
+from .lib import is_prime, sieve_of_eratosthenes
+
 
 def solve_naive(limit: int) -> int:
     """
@@ -25,22 +27,10 @@ def solve_naive(limit: int) -> int:
 
     # 3から始めて奇数のみをチェック
     for num in range(3, limit, 2):
-        if is_prime_naive(num):
+        if is_prime(num):
             prime_sum += num
 
     return prime_sum
-
-
-def is_prime_naive(num: int) -> bool:
-    """素数判定（素直な方法）"""
-    if num < 2:
-        return False
-    if num == 2:
-        return True
-    if num % 2 == 0:
-        return False
-
-    return all(num % i != 0 for i in range(3, int(math.sqrt(num)) + 1, 2))
 
 
 def solve_optimized(limit: int) -> int:
@@ -53,27 +43,9 @@ def solve_optimized(limit: int) -> int:
         return 0
 
     # エラトステネスの篩で素数を見つけて合計
-    primes = sieve_of_eratosthenes(limit - 1)
-    return sum(primes)
-
-
-def sieve_of_eratosthenes(limit: int) -> list[int]:
-    """エラトステネスの篩で指定された範囲の素数を全て求める"""
-    if limit < 2:
-        return []
-
-    # 篩を初期化
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-
-    # 篩を実行
-    for i in range(2, int(math.sqrt(limit)) + 1):
-        if is_prime[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime[j] = False
-
-    # 素数のリストを作成
-    return [i for i in range(2, limit + 1) if is_prime[i]]
+    primes_result = sieve_of_eratosthenes(limit - 1, "list")
+    assert isinstance(primes_result, list)
+    return sum(primes_result)
 
 
 def solve_mathematical(limit: int) -> int:
