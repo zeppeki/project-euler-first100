@@ -16,8 +16,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem016Runner(BaseProblemRunner):
     """Runner for Problem 016: Power Digit Sum."""
 
-    def __init__(self) -> None:
-        super().__init__("016", "Power Digit Sum")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "016",
+            "Power Digit Sum",
+            problem_answer=1366,  # Known answer for 2^1000
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 016."""
@@ -43,9 +51,9 @@ class Problem016Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (1000,)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 016."""
-        return [("2の冪乗の桁数分析", self._demonstrate_power_analysis)]
+        return [self._demonstrate_power_analysis]
 
     def _demonstrate_power_analysis(self) -> None:
         """2の冪乗の桁数分析を表示"""
@@ -70,10 +78,23 @@ class Problem016Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem016Runner()
+    """Main entry point."""
+    runner = Problem016Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 016."""
+    print("=== Problem 016 Performance Benchmark ===")
+    runner = Problem016Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

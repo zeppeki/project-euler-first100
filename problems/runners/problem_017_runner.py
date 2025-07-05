@@ -22,29 +22,33 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem017Runner(BaseProblemRunner):
     """Runner for Problem 017: Number Letter Counts."""
 
-    def __init__(self) -> None:
-        super().__init__("017", "Number Letter Counts")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "017",
+            "Number Letter Counts",
+            problem_answer=21124,  # Known answer for 1-1000
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 017."""
-        test_cases = []
-        numbers_words = [
-            (1, "one"),
-            (2, "two"),
-            (5, "five"),
-            (12, "twelve"),
-            (21, "twenty one"),
-            (42, "forty two"),
-            (115, "one hundred and fifteen"),
-            (342, "three hundred and forty two"),
-            (1000, "one thousand"),
+        return [
+            (1, 3),  # "one" = 3 letters
+            (2, 6),  # "one" + "two" = 3 + 3 = 6 letters
+            (
+                5,
+                19,
+            ),  # "one" + "two" + "three" + "four" + "five" = 3+3+5+4+4 = 19 letters
+            (12, 51),  # Sum of letters from 1 to 12
+            (21, 121),  # Sum of letters from 1 to 21
+            (42, 319),  # Sum of letters from 1 to 42
+            (115, 1133),  # Sum of letters from 1 to 115
+            (342, 6117),  # Sum of letters from 1 to 342
+            (1000, 21124),  # Sum of letters from 1 to 1000
         ]
-
-        for num, words in numbers_words:
-            expected = count_letters(words)
-            test_cases.append((num, expected))
-
-        return test_cases
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 017."""
@@ -58,9 +62,9 @@ class Problem017Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (1000,)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 017."""
-        return [("数値の英単語変換例", self._demonstrate_number_words)]
+        return [self._demonstrate_number_words]
 
     def _demonstrate_number_words(self) -> None:
         """数値の英単語変換例を表示"""
@@ -98,10 +102,32 @@ class Problem017Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem017Runner()
+    """Main entry point."""
+    # デフォルト実行（パフォーマンステストのみ無効、デモンストレーションは有効）
+    runner = Problem017Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_with_all_features() -> None:
+    """Run with all features enabled for demonstration."""
+    print("=== 全機能有効 ===")
+    runner = Problem017Runner(enable_performance_test=True, enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 017."""
+    print("=== Problem 017 Performance Benchmark ===")
+    runner = Problem017Runner(enable_performance_test=True, enable_demonstrations=False)
+    # Skip tests and run only the performance benchmark
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

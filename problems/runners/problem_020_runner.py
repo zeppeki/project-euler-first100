@@ -16,8 +16,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem020Runner(BaseProblemRunner):
     """Runner for Problem 020: Factorial digit sum."""
 
-    def __init__(self) -> None:
-        super().__init__("020", "Factorial digit sum")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "020",
+            "Factorial digit sum",
+            problem_answer=648,  # Known answer for 100! digit sum
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 020."""
@@ -40,9 +48,9 @@ class Problem020Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (100,)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 020."""
-        return [("階乗の桁数分析", self._demonstrate_factorial_analysis)]
+        return [self._demonstrate_factorial_analysis]
 
     def _demonstrate_factorial_analysis(self) -> None:
         """階乗の桁数分析を表示"""
@@ -75,10 +83,32 @@ class Problem020Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem020Runner()
+    """Main entry point."""
+    # デフォルト実行（パフォーマンステストのみ無効、デモンストレーションは有効）
+    runner = Problem020Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_with_all_features() -> None:
+    """Run with all features enabled for demonstration."""
+    print("=== 全機能有効 ===")
+    runner = Problem020Runner(enable_performance_test=True, enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 020."""
+    print("=== Problem 020 Performance Benchmark ===")
+    runner = Problem020Runner(enable_performance_test=True, enable_demonstrations=False)
+    # Skip tests and run only the performance benchmark
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

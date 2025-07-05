@@ -17,8 +17,18 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem022Runner(BaseProblemRunner):
     """Runner for Problem 022: Names Scores."""
 
-    def __init__(self) -> None:
-        super().__init__("022", "Names Scores")
+    def __init__(
+        self,
+        enable_performance_test: bool = True,
+        enable_demonstrations: bool = True,
+    ) -> None:
+        super().__init__(
+            "022",
+            "Names Scores",
+            871198282,
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 022."""
@@ -36,11 +46,21 @@ class Problem022Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (Path(__file__).parent.parent.parent / "data" / "p022_names.txt",)
 
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 022."""
+        return None
+
 
 def main() -> None:
     """メイン関数"""
-    runner = Problem022Runner()
+    runner = Problem022Runner(enable_demonstrations=True)
     runner.main()
+
+
+def run_benchmark() -> None:
+    """Run benchmark for Problem 022."""
+    runner = Problem022Runner(enable_demonstrations=False)
+    runner.run_problem()
 
 
 if __name__ == "__main__":

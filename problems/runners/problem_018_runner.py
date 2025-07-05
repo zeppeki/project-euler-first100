@@ -22,8 +22,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem018Runner(BaseProblemRunner):
     """Runner for Problem 018: Maximum Path Sum I."""
 
-    def __init__(self) -> None:
-        super().__init__("018", "Maximum Path Sum I")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "018",
+            "Maximum Path Sum I",
+            problem_answer=1074,  # Known answer for maximum path sum
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 018."""
@@ -44,9 +52,9 @@ class Problem018Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (get_problem_triangle(),)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 018."""
-        return [("三角形経路の動的計画法", self._demonstrate_path_analysis)]
+        return [self._demonstrate_path_analysis]
 
     def _demonstrate_path_analysis(self) -> None:
         """三角形経路の動的計画法を表示"""
@@ -75,10 +83,32 @@ class Problem018Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem018Runner()
+    """Main entry point."""
+    # デフォルト実行（パフォーマンステストのみ無効、デモンストレーションは有効）
+    runner = Problem018Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_with_all_features() -> None:
+    """Run with all features enabled for demonstration."""
+    print("=== 全機能有効 ===")
+    runner = Problem018Runner(enable_performance_test=True, enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 018."""
+    print("=== Problem 018 Performance Benchmark ===")
+    runner = Problem018Runner(enable_performance_test=True, enable_demonstrations=False)
+    # Skip tests and run only the performance benchmark
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
