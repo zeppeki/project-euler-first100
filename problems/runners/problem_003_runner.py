@@ -16,8 +16,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem003Runner(BaseProblemRunner):
     """Runner for Problem 003: Largest prime factor."""
 
-    def __init__(self) -> None:
-        super().__init__("003", "Largest prime factor")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "003",
+            "Largest prime factor",
+            problem_answer=6857,  # Known answer for number 600851475143
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 003."""
@@ -43,9 +51,31 @@ class Problem003Runner(BaseProblemRunner):
 
 def main() -> None:
     """Main entry point."""
-    runner = Problem003Runner()
+    # デフォルト実行（パフォーマンステストのみ無効、デモンストレーションは有効）
+    runner = Problem003Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_with_all_features() -> None:
+    """Run with all features enabled for demonstration."""
+    print("=== 全機能有効 ===")
+    runner = Problem003Runner(enable_performance_test=True, enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 003."""
+    print("=== Problem 003 Performance Benchmark ===")
+    runner = Problem003Runner(enable_performance_test=True, enable_demonstrations=False)
+    # Skip tests and run only the performance benchmark
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

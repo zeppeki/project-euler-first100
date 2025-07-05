@@ -220,114 +220,22 @@ run-problem: ## Run specific problem (use: make run-problem PROBLEM=001)
 	fi
 
 ## Performance & Analysis
-benchmark: ## Run comprehensive performance benchmarks for all problems
-	@echo "$(BOLD)$(CYAN)Running comprehensive benchmarks for all problems...$(RESET)"
-	@echo "$(YELLOW)This will analyze multiple solution approaches with statistical analysis...$(RESET)"
-	@echo "$(YELLOW)This may take a while...$(RESET)"
-	@$(PYTHON) -m problems.utils.benchmark_runner
-	@echo "$(BOLD)$(GREEN)Enhanced benchmark completed!$(RESET)"
-	@echo "Results saved to:"
-	@echo "  - benchmarks/aggregated/latest.json (complete results)"
-	@echo "  - benchmarks/individual/problem_*.json (per-problem details)"
-	@echo "  - benchmarks/reports/performance_summary.txt (human-readable summary)"
 
-benchmark-problem: ## Run comprehensive benchmark for specific problem (use: make benchmark-problem PROBLEM=001)
+benchmark-problem: ## Run performance benchmark for specific problem (use: make benchmark-problem PROBLEM=001)
 	@if [ -z "$(PROBLEM)" ]; then \
 		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
 		echo "Usage: make benchmark-problem PROBLEM=001"; \
 		exit 1; \
 	fi
-	@if [ ! -f "problems/problem_$(PROBLEM).py" ]; then \
-		echo "$(RED)Error: problems/problem_$(PROBLEM).py not found$(RESET)"; \
+	@if [ -f "problems/runners/problem_$(PROBLEM)_runner.py" ]; then \
+		echo "$(BOLD)$(CYAN)Running performance benchmark for Problem $(PROBLEM) (using runner)...$(RESET)"; \
+		$(PYTHON) problems/runners/problem_$(PROBLEM)_runner.py benchmark; \
+	else \
+		echo "$(RED)Error: problems/runners/problem_$(PROBLEM)_runner.py not found$(RESET)"; \
+		echo "Please create a runner for Problem $(PROBLEM) first."; \
 		exit 1; \
 	fi
-	@echo "$(BOLD)$(CYAN)Running comprehensive benchmark for Problem $(PROBLEM)...$(RESET)"
-	@$(PYTHON) -m problems.utils.benchmark_runner $(PROBLEM)
 	@echo "$(BOLD)$(GREEN)Benchmark completed for Problem $(PROBLEM)$(RESET)"
-	@echo "Results saved to benchmarks/individual/problem_$(PROBLEM).json"
-
-benchmark-legacy: ## Run legacy benchmark (simple timing) for all problems
-	@echo "$(BOLD)$(CYAN)Running legacy benchmarks for all problems...$(RESET)"
-	@echo "$(YELLOW)This may take a while...$(RESET)"
-	@mkdir -p benchmarks
-	@echo '{"timestamp": "'$$(date -Iseconds)'", "benchmarks": [' > benchmarks/benchmark-results-legacy.json
-	@first=true; \
-	for file in problems/problem_*.py; do \
-		if [ -f "$$file" ]; then \
-			problem=$$(basename "$$file" .py | sed 's/problem_//'); \
-			echo "$(CYAN)Benchmarking Problem $$problem...$(RESET)"; \
-			if [ "$$first" = true ]; then first=false; else echo ',' >> benchmarks/benchmark-results-legacy.json; fi; \
-			echo -n '  {"problem": "'$$problem'", "timestamp": "'$$(date -Iseconds)'", ' >> benchmarks/benchmark-results-legacy.json; \
-			start_time=$$(date +%s%N); \
-			$(PYTHON) "problems/runners/problem_$${problem}_runner.py" > /dev/null 2>&1; \
-			end_time=$$(date +%s%N); \
-			duration=$$(($$end_time - $$start_time)); \
-			duration_ms=$$(($$duration / 1000000)); \
-			echo '"duration_ms": '$$duration_ms', "status": "success"}' >> benchmarks/benchmark-results-legacy.json; \
-		fi; \
-	done
-	@echo ']}' >> benchmarks/benchmark-results-legacy.json
-	@echo "$(BOLD)$(GREEN)Legacy benchmark completed! Results saved to benchmarks/benchmark-results-legacy.json$(RESET)"
-
-benchmark-report: ## Generate comprehensive benchmark analysis report
-	@echo "$(BOLD)$(CYAN)Generating benchmark analysis report...$(RESET)"
-	@if [ ! -f "benchmarks/aggregated/latest.json" ]; then \
-		echo "$(RED)Error: No benchmark results found. Run 'make benchmark' first.$(RESET)"; \
-		exit 1; \
-	fi
-	@$(PYTHON) -c "import json; from pathlib import Path; from datetime import datetime; data = json.load(open('benchmarks/aggregated/latest.json', 'r')); report_path = Path('benchmarks/reports/detailed_analysis.txt'); report_path.parent.mkdir(parents=True, exist_ok=True); f = open(report_path, 'w'); f.write('PROJECT EULER BENCHMARK ANALYSIS REPORT\\n'); f.write('=' * 50 + '\\n\\n'); f.write(f'Generated: {datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\")}\\n'); f.write(f'Benchmark Timestamp: {data.get(\"timestamp\", \"Unknown\")}\\n\\n'); summary = data.get('summary', {}); f.write('SUMMARY STATISTICS\\n'); f.write('-' * 20 + '\\n'); f.write(f'Total Problems: {summary.get(\"total_problems\", 0)}\\n'); f.write(f'Verified Solutions: {summary.get(\"verified_problems\", 0)}\\n'); f.write(f'Verification Rate: {summary.get(\"verification_rate\", 0):.1%}\\n'); f.write(f'Total Solutions: {summary.get(\"total_solutions\", 0)}\\n\\n'); algo_dist = summary.get('algorithm_distribution', {}); f.write('ALGORITHM TYPE DISTRIBUTION\\n'); f.write('-' * 30 + '\\n'); [f.write(f'{algo_type}: {count}\\n') for algo_type, count in algo_dist.items()]; f.write('\\n'); perf_stats = summary.get('performance_stats', {}); f.write('PERFORMANCE STATISTICS\\n') if perf_stats else None; f.write('-' * 25 + '\\n') if perf_stats else None; f.write(f'Mean Execution Time: {perf_stats.get(\"mean_execution_time\", 0):.6f}s\\n') if perf_stats else None; f.write(f'Median Execution Time: {perf_stats.get(\"median_execution_time\", 0):.6f}s\\n') if perf_stats else None; f.write(f'Fastest Solution: {perf_stats.get(\"fastest_execution_time\", 0):.6f}s\\n') if perf_stats else None; f.write(f'Slowest Solution: {perf_stats.get(\"slowest_execution_time\", 0):.6f}s\\n\\n') if perf_stats else None; f.close(); print('Report generated: benchmarks/reports/detailed_analysis.txt')"
-	@echo "$(BOLD)$(GREEN)Detailed analysis report generated!$(RESET)"
-
-benchmark-regression: ## Detect performance regressions compared to baseline
-	@echo "$(BOLD)$(CYAN)Analyzing performance regressions...$(RESET)"
-	@$(PYTHON) -m problems.utils.regression_detector
-	@echo "$(BOLD)$(GREEN)Regression analysis completed!$(RESET)"
-
-benchmark-archive: ## Archive current benchmark results as historical baseline
-	@echo "$(BOLD)$(CYAN)Archiving current benchmark results...$(RESET)"
-	@if [ ! -f "benchmarks/aggregated/latest.json" ]; then \
-		echo "$(RED)Error: No current results found. Run 'make benchmark' first.$(RESET)"; \
-		exit 1; \
-	fi
-	@mkdir -p benchmarks/aggregated/historical
-	@timestamp=$$(date +'%Y-%m-%d_%H-%M-%S'); \
-	cp "benchmarks/aggregated/latest.json" "benchmarks/aggregated/historical/$$timestamp.json"
-	@echo "$(BOLD)$(GREEN)Results archived as historical baseline$(RESET)"
-
-benchmark-visualize: ## Generate visual performance reports and analysis
-	@echo "$(BOLD)$(CYAN)Generating performance visualizations...$(RESET)"
-	@if [ ! -f "benchmarks/aggregated/latest.json" ]; then \
-		echo "$(RED)Error: No benchmark results found. Run 'make benchmark' first.$(RESET)"; \
-		exit 1; \
-	fi
-	@$(PYTHON) -m problems.utils.visualizer
-	@echo "$(BOLD)$(GREEN)Performance visualizations generated!$(RESET)"
-
-benchmark-docs: ## Update solution documentation with benchmark results
-	@echo "$(BOLD)$(CYAN)Updating solution documentation with benchmark results...$(RESET)"
-	@if [ ! -f "benchmarks/aggregated/latest.json" ]; then \
-		echo "$(RED)Error: No benchmark results found. Run 'make benchmark' first.$(RESET)"; \
-		exit 1; \
-	fi
-	@$(PYTHON) -m problems.utils.doc_updater
-	@echo "$(BOLD)$(GREEN)Documentation updated with benchmark results!$(RESET)"
-
-benchmark-simple: ## Run simple benchmark for all problems (optimized for learning)
-	@echo "$(BOLD)$(CYAN)Running Simple Benchmark (Learning-Optimized)...$(RESET)"
-	@echo "This benchmark focuses on one-minute rule verification and learning outcomes."
-	@echo
-	@$(PYTHON) -m problems.utils.simple_runner
-	@echo "$(BOLD)$(GREEN)Simple benchmark completed!$(RESET)"
-
-benchmark-simple-problem: ## Run simple benchmark for specific problem (use: make benchmark-simple-problem PROBLEM=001)
-	@if [ -z "$(PROBLEM)" ]; then \
-		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
-		echo "Usage: make benchmark-simple-problem PROBLEM=001"; \
-		exit 1; \
-	fi
-	@echo "$(BOLD)$(CYAN)Running Simple Benchmark for Problem $(PROBLEM)...$(RESET)"
-	@$(PYTHON) -m problems.utils.simple_runner $(PROBLEM)
-	@echo "$(BOLD)$(GREEN)Simple benchmark for Problem $(PROBLEM) completed!$(RESET)"
 
 stats: ## Show detailed project statistics
 	@echo "$(BOLD)$(CYAN)Project Euler First 100 - Detailed Statistics$(RESET)"

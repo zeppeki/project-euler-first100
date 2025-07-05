@@ -368,6 +368,184 @@ class SimpleBenchmarkRunner:
 - **学習進捗追跡**: 解法理解度の可視化
 - **カスタム問題対応**: ユーザー定義問題のベンチマーク
 
+## Runner-Based Benchmarks (2025-07)
+
+### 概要
+
+2025年7月に、BaseProblemRunnerアーキテクチャを基盤とした新しいベンチマークシステムを導入しました。このシステムは、統一された実行インターフェースと柔軟な設定オプションを提供します。
+
+### 新しいアーキテクチャの特徴
+
+- **統一されたインターフェース**: BaseProblemRunnerクラスによる一貫した実行パターン
+- **柔軟な実行モード**: デフォルト実行、パフォーマンス測定、デモンストレーション機能
+- **解答検証**: 期待値との自動比較による正確性確認
+- **Makefile統合**: `make benchmark-problem PROBLEM=XXX`によるシームレスな実行
+
+### 対応済み問題
+
+#### 完全対応問題（Runner-Based）
+
+以下の問題は新しいBaseProblemRunnerアーキテクチャに完全対応しています：
+
+| Problem | Title | Known Answer | Performance Test | Demonstrations |
+|---------|-------|--------------|------------------|----------------|
+| 001 | Multiples of 3 and 5 | 233,168 | ✅ | ✅ |
+| 002 | Even Fibonacci numbers | 4,613,732 | ✅ | ✅ |
+| 003 | Largest prime factor | 6,857 | ✅ | ✅ |
+
+#### 実行例
+
+```bash
+# デフォルト実行（テスト + 解答検証 + デモンストレーション）
+uv run python problems/runners/problem_001_runner.py
+
+# パフォーマンス測定のみ（ベンチマーク用）
+uv run python problems/runners/problem_001_runner.py benchmark
+
+# Makefile経由でのベンチマーク実行
+make benchmark-problem PROBLEM=001
+```
+
+### BaseProblemRunnerクラス
+
+#### 主要機能
+
+1. **初期化パラメータ**
+   ```python
+   def __init__(
+       self,
+       problem_number: str,
+       problem_title: str,
+       problem_answer: Any = None,
+       enable_performance_test: bool = False,
+       enable_demonstrations: bool = False
+   ):
+   ```
+
+2. **実行モード**
+   - **デフォルト実行**: テスト実行 + 解答検証 + デモンストレーション（パフォーマンス測定無効）
+   - **ベンチマーク実行**: パフォーマンス測定のみ（テスト・デモンストレーション無効）
+   - **全機能実行**: 全機能を有効化
+
+3. **解答検証**
+   - 実行結果と期待値の自動比較
+   - 一致時: `✓ 解答が期待値と一致: [expected_answer]`
+   - 不一致時: `✗ 解答が期待値と不一致: 期待値=[expected], 実際=[actual]`
+
+#### 実装パターン
+
+各問題のランナーは以下のパターンに従います：
+
+```python
+class Problem001Runner(BaseProblemRunner):
+    def __init__(
+        self,
+        enable_performance_test: bool = False,
+        enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "001",
+            "Multiples of 3 and 5",
+            problem_answer=233168,  # 既知の解答
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations
+        )
+
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        # テストケースを返す
+
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        # 解法関数を返す
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        # メイン実行時のパラメータを返す
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem XXX."""
+    print("=== Problem XXX Performance Benchmark ===")
+    runner = Problem001Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
+```
+
+### パフォーマンス比較結果
+
+#### Problem 001: Multiples of 3 and 5
+```
+=== パフォーマンス比較 ===
+素直な解法: 0.000060秒 (28.89x)
+最適化解法: 0.000002秒 (1.00x)
+```
+
+#### Problem 002: Even Fibonacci numbers
+```
+=== パフォーマンス比較 ===
+素直な解法: 0.000005秒 (2.71x)
+最適化解法: 0.000002秒 (1.00x)
+数学的解法: 0.000013秒 (7.86x)
+```
+
+#### Problem 003: Largest prime factor
+```
+=== パフォーマンス比較 ===
+素直な解法: 0.000189秒 (1.00x)
+最適化解法: 0.014751秒 (78.12x)
+```
+
+**注目点**: Problem 003では「素直な解法」が「最適化解法」より高速です。これは、素直な解法が完全な因数分解を見つけた時点で早期終了するため、特定の大きな数値（600851475143）に対してより効率的だからです。
+
+### 今後の拡張計画
+
+#### 未対応問題のRunner化
+
+以下の問題をRunner-Basedアーキテクチャに移行予定：
+
+- Problem 004: Largest palindrome product
+- Problem 005: Smallest multiple
+- Problem 006: Sum square difference
+- Problem 007: 10001st prime
+- Problem 008: Largest product in a series
+- Problem 009: Special Pythagorean triplet
+- Problem 010: Summation of primes
+- 以下、Problem 066まで順次対応
+
+#### 拡張機能
+
+- **メモリ使用量測定**: パフォーマンス測定時のメモリプロファイリング
+- **複雑度検証**: docstringの計算量表記と実測値の比較
+- **カスタムデモンストレーション**: 問題固有の可視化・分析機能
+- **バッチ処理**: 複数問題の一括ベンチマーク実行
+
+### 移行ガイド
+
+#### 既存問題の移行手順
+
+1. **BaseProblemRunner継承**: 既存ランナーをBaseProblemRunnerから継承
+2. **初期化の更新**: 問題解答と設定フラグを追加
+3. **ベンチマーク関数追加**: `run_benchmark()`関数を実装
+4. **コマンドライン対応**: 引数処理を追加
+5. **テスト実行**: 全モードでの動作確認
+
+#### 品質チェック
+
+```bash
+# 各問題の実行確認
+uv run python problems/runners/problem_XXX_runner.py
+uv run python problems/runners/problem_XXX_runner.py benchmark
+make benchmark-problem PROBLEM=XXX
+
+# コード品質チェック
+make lint
+make typecheck
+```
+
 ## 参考文献・リンク
 
 - [Project Euler公式サイト](https://projecteuler.net/)
