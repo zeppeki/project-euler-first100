@@ -16,8 +16,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem007Runner(BaseProblemRunner):
     """Runner for Problem 007: 10001st prime."""
 
-    def __init__(self) -> None:
-        super().__init__("007", "10001st prime")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "007",
+            "10001st prime",
+            problem_answer=104743,  # Known answer for 10001st prime
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 007."""
@@ -84,9 +92,22 @@ class Problem007Runner(BaseProblemRunner):
 
 def main() -> None:
     """Main entry point."""
-    runner = Problem007Runner()
+    runner = Problem007Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 007."""
+    print("=== Problem 007 Performance Benchmark ===")
+    runner = Problem007Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

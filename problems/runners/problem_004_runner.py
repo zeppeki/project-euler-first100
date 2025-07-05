@@ -21,14 +21,22 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem004Runner(BaseProblemRunner):
     """Runner for Problem 004: Largest palindrome product."""
 
-    def __init__(self) -> None:
-        super().__init__("004", "Largest palindrome product")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "004",
+            "Largest palindrome product",
+            problem_answer=906609,  # Known answer for 3-digit numbers
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 004."""
         return [
-            (1, 1, (9, 3, 3)),  # 1桁の場合: 3 * 3 = 9
-            (2, 2, (9009, 91, 99)),  # 2桁の場合: 91 * 99 = 9009
+            (1, 1, (9, 9, 1)),  # 1桁の場合: 9 * 1 = 9
+            (2, 2, (9009, 99, 91)),  # 2桁の場合: 99 * 91 = 9009
         ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
@@ -60,50 +68,25 @@ class Problem004Runner(BaseProblemRunner):
         print(f"回文: {'✓' if is_palindrome(palindrome) else '✗'}")
         print(f"因子: {factor1} × {factor2} = {palindrome}")
 
-    def run_tests(self) -> bool:
-        """Run custom test cases for Problem 004."""
-        test_cases = self.get_test_cases()
-        functions = self.get_solution_functions()
-
-        if not test_cases or not functions:
-            print("警告: テストケースまたは解法関数が定義されていません")
-            return False
-
-        print("=== テストケース ===")
-        all_passed = True
-
-        for test_case in test_cases:
-            min_digits, max_digits, expected = test_case
-            expected_palindrome, expected_factor1, expected_factor2 = expected
-
-            print(f"Digits: {min_digits}-{max_digits}")
-            print(
-                f"  Expected: {expected_palindrome} = "
-                f"{expected_factor1} × {expected_factor2}"
-            )
-
-            for name, func in functions:
-                try:
-                    result = func(min_digits, max_digits)
-                    palindrome = result[0]
-                    status = "✓" if palindrome == expected_palindrome else "✗"
-                    print(f"  {name}: {result[0]} = {result[1]} × {result[2]} {status}")
-                    if palindrome != expected_palindrome:
-                        all_passed = False
-                except Exception as e:
-                    print(f"  {name}: エラー - {e}")
-                    all_passed = False
-
-            print()
-
-        return all_passed
-
 
 def main() -> None:
     """Main entry point."""
-    runner = Problem004Runner()
+    runner = Problem004Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 004."""
+    print("=== Problem 004 Performance Benchmark ===")
+    runner = Problem004Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

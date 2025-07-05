@@ -15,8 +15,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem006Runner(BaseProblemRunner):
     """Runner for Problem 006: Sum square difference."""
 
-    def __init__(self) -> None:
-        super().__init__("006", "Sum square difference")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "006",
+            "Sum square difference",
+            problem_answer=25164150,  # Known answer for n=100
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 006."""
@@ -89,9 +97,22 @@ class Problem006Runner(BaseProblemRunner):
 
 def main() -> None:
     """Main entry point."""
-    runner = Problem006Runner()
+    runner = Problem006Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 006."""
+    print("=== Problem 006 Performance Benchmark ===")
+    runner = Problem006Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
