@@ -10,9 +10,8 @@ import math
 from collections.abc import Callable
 from typing import Any
 
+from problems.lib import is_prime, sieve_of_eratosthenes
 from problems.problem_010 import (
-    is_prime_naive,
-    sieve_of_eratosthenes,
     solve_mathematical,
     solve_naive,
     solve_optimized,
@@ -23,8 +22,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem010Runner(BaseProblemRunner):
     """Runner for Problem 010: Summation of primes."""
 
-    def __init__(self) -> None:
-        super().__init__("010", "Summation of primes")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "010",
+            "Summation of primes",
+            problem_answer=142913828922,  # Known answer for primes below 2 million
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 010."""
@@ -93,10 +100,10 @@ class Problem010Runner(BaseProblemRunner):
         print("-" * 20)
 
         for num in test_numbers:
-            is_prime = is_prime_naive(num)
+            is_prime_result = is_prime(num)
             expected_prime = num in first_primes
-            status = "✓" if is_prime == expected_prime else "✗"
-            print(f"{num:3d} {expected_prime!s:>6} {is_prime!s:>8} {status}")
+            status = "✓" if is_prime_result == expected_prime else "✗"
+            print(f"{num:3d} {expected_prime!s:>6} {is_prime_result!s:>8} {status}")
 
         # Show small prime gaps
         print("\n素数ギャップ (連続する素数の差):")
@@ -210,9 +217,22 @@ class Problem010Runner(BaseProblemRunner):
 
 def main() -> None:
     """Main entry point."""
-    runner = Problem010Runner()
+    runner = Problem010Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 010."""
+    print("=== Problem 010 Performance Benchmark ===")
+    runner = Problem010Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
