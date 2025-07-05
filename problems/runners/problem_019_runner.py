@@ -22,15 +22,23 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem019Runner(BaseProblemRunner):
     """Runner for Problem 019: Counting Sundays."""
 
-    def __init__(self) -> None:
-        super().__init__("019", "Counting Sundays")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "019",
+            "Counting Sundays",
+            problem_answer=171,  # Known answer for counting Sundays in 20th century
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 019."""
         return [
-            ((1901, 1), (1901, 12), 2),  # 1901年の1年間
-            ((1900, 1), (1900, 12), 2),  # 1900年の1年間（うるう年ではない）
-            ((2000, 1), (2000, 12), 2),  # 2000年の1年間（うるう年）
+            (1901, 1901, 2),  # 1901年の1年間
+            (1900, 1900, 2),  # 1900年の1年間（うるう年ではない）
+            (2000, 2000, 1),  # 2000年の1年間（うるう年）
         ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
@@ -43,11 +51,11 @@ class Problem019Runner(BaseProblemRunner):
 
     def get_main_parameters(self) -> tuple[Any, ...]:
         """Get parameters for the main problem."""
-        return ((1901, 1), (2000, 12))
+        return (1901, 2000)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 019."""
-        return [("カレンダー計算の検証", self._demonstrate_calendar_validation)]
+        return [self._demonstrate_calendar_validation]
 
     def _demonstrate_calendar_validation(self) -> None:
         """カレンダー計算の検証を表示"""
@@ -55,7 +63,7 @@ class Problem019Runner(BaseProblemRunner):
         validate_leap_year_calculation()
         validate_days_in_month_calculation()
 
-        result = solve_optimized(((1901, 1), (2000, 12)))
+        result = solve_optimized(1901, 2000)
         print(f"\n20世紀中の月初日曜日数: {result}")
 
         print("\n各年代別の分析:")
@@ -73,7 +81,7 @@ class Problem019Runner(BaseProblemRunner):
         ]
 
         for start_year, end_year, description in decades:
-            count = solve_optimized(((start_year, 1), (end_year, 12)))
+            count = solve_optimized(start_year, end_year)
             print(f"{description} ({start_year}-{end_year}): {count}回")
 
         print("\nうるう年の分析:")
@@ -87,10 +95,32 @@ class Problem019Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem019Runner()
+    """Main entry point."""
+    # デフォルト実行（パフォーマンステストのみ無効、デモンストレーションは有効）
+    runner = Problem019Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_with_all_features() -> None:
+    """Run with all features enabled for demonstration."""
+    print("=== 全機能有効 ===")
+    runner = Problem019Runner(enable_performance_test=True, enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 019."""
+    print("=== Problem 019 Performance Benchmark ===")
+    runner = Problem019Runner(enable_performance_test=True, enable_demonstrations=False)
+    # Skip tests and run only the performance benchmark
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

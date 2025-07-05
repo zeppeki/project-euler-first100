@@ -10,7 +10,7 @@ from collections.abc import Callable
 from typing import Any
 
 from problems.problem_012 import (
-    count_divisors_optimized,
+    count_divisors,
     get_divisors,
     get_triangular_number,
     solve_mathematical,
@@ -23,8 +23,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem012Runner(BaseProblemRunner):
     """Runner for Problem 012: Highly divisible triangular number."""
 
-    def __init__(self) -> None:
-        super().__init__("012", "Highly divisible triangular number")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "012",
+            "Highly divisible triangular number",
+            problem_answer=76576500,  # Known answer for first triangular number with >500 divisors
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 012."""
@@ -49,9 +57,9 @@ class Problem012Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (500,)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 012."""
-        return [("三角数と約数の分析", self._demonstrate_triangular_analysis)]
+        return [self._demonstrate_triangular_analysis]
 
     def _demonstrate_triangular_analysis(self) -> None:
         """三角数と約数の分析を表示"""
@@ -60,7 +68,7 @@ class Problem012Runner(BaseProblemRunner):
         while get_triangular_number(n) != triangular_num:
             n += 1
 
-        divisor_count = count_divisors_optimized(triangular_num)
+        divisor_count = count_divisors(triangular_num)
         print(f"{n}番目の三角数: {triangular_num:,}")
         print(f"約数の個数: {divisor_count}")
         print(f"三角数公式検証: {n} * ({n} + 1) / 2 = {n * (n + 1) // 2:,}")
@@ -68,16 +76,29 @@ class Problem012Runner(BaseProblemRunner):
         print("\n最初の10個の三角数と約数の個数:")
         for i in range(1, 11):
             triangular = get_triangular_number(i)
-            divisor_count = count_divisors_optimized(triangular)
+            divisor_count = count_divisors(triangular)
             divisors = get_divisors(triangular)
             print(f"T_{i} = {triangular}, divisors: {len(divisors)} {divisors}")
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem012Runner()
+    """Main entry point."""
+    runner = Problem012Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 012."""
+    print("=== Problem 012 Performance Benchmark ===")
+    runner = Problem012Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
