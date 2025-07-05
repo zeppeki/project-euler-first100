@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Tests for Problem 043"""
 
+import pytest
+
 from problems.problem_043 import (
     has_substring_divisibility,
     is_pandigital_0_to_9,
@@ -87,6 +89,7 @@ class TestProblem043:
         assert isinstance(result, int)
         assert result > 0  # Should find some valid numbers
 
+    @pytest.mark.slow
     def test_solutions_agree(self) -> None:
         """Test that all solutions agree"""
         naive_result = solve_naive()

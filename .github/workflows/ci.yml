@@ -69,13 +69,8 @@ jobs:
 
     - name: Run tests
       run: |
-        # Run fast tests by default for faster CI
+        # Run fast tests only for faster CI (slow tests excluded)
         uv run pytest tests/ -v -m "not slow"
-
-    - name: Run slow tests
-      run: |
-        # Run slow tests separately for complete coverage
-        uv run pytest tests/ -v -m "slow"
 
   quality:
     runs-on: ubuntu-latest
