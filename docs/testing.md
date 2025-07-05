@@ -8,7 +8,6 @@
 
 - **単体テスト**: 各関数の動作を個別にテスト
 - **統合テスト**: 複数の関数の組み合わせテスト
-- **パフォーマンステスト**: 実行時間とメモリ使用量のテスト
 - **回帰テスト**: 既存機能が壊れていないことを確認
 
 ## テストの種類
@@ -49,27 +48,7 @@ def test_all_solutions_agree():
         assert naive_result == optimized_result == math_result
 ```
 
-### 3. パフォーマンステスト
-
-実行時間とメモリ使用量をテストします。
-
-```python
-import time
-import pytest
-
-@pytest.mark.slow
-def test_performance():
-    """パフォーマンステスト"""
-    start_time = time.time()
-    result = solve_optimized(1000000)
-    execution_time = time.time() - start_time
-
-    # 実行時間が1秒以内であることを確認
-    assert execution_time < 1.0
-    assert result > 0
-```
-
-### 4. 回帰テスト
+### 3. 回帰テスト
 
 既存機能が壊れていないことを確認します。
 
@@ -99,7 +78,6 @@ Test for Problem 001: Multiples of 3 and 5
 """
 
 import pytest
-import time
 from problems.problem_001 import solve_naive, solve_optimized, solve_mathematical
 
 class TestProblem001:
@@ -170,37 +148,9 @@ class TestProblem001:
         large_inputs = [100000, 1000000]
 
         for input_val in large_inputs:
-            start_time = time.time()
             result = solve_optimized(input_val)
-            execution_time = time.time() - start_time
-
             assert result > 0
             assert isinstance(result, int)
-            assert execution_time < 5.0  # 5秒以内
-
-    def test_performance_comparison(self):
-        """パフォーマンス比較テスト"""
-        input_val = 10000
-
-        # 各解法の実行時間を測定
-        start_time = time.time()
-        naive_result = solve_naive(input_val)
-        naive_time = time.time() - start_time
-
-        start_time = time.time()
-        optimized_result = solve_optimized(input_val)
-        optimized_time = time.time() - start_time
-
-        start_time = time.time()
-        math_result = solve_mathematical(input_val)
-        math_time = time.time() - start_time
-
-        # 結果が一致することを確認
-        assert naive_result == optimized_result == math_result
-
-        # 最適化解法が最も高速であることを確認
-        assert optimized_time <= naive_time
-        assert math_time <= naive_time
 ```
 
 ### フィクスチャの使用
@@ -240,15 +190,12 @@ class TestMathUtils:
         for num in non_primes:
             assert not is_prime(num), f"{num} should not be prime"
 
-    def test_large_input_performance(self, large_numbers):
-        """大きな入力値のパフォーマンステスト"""
+    def test_large_input_results(self, large_numbers):
+        """大きな入力値の結果テスト"""
         for num in large_numbers:
-            start_time = time.time()
             result = solve_optimized(num)
-            execution_time = time.time() - start_time
-
             assert result > 0
-            assert execution_time < 1.0
+            assert isinstance(result, int)
 ```
 
 ### パラメータ化テスト
@@ -298,7 +245,7 @@ import pytest
 
 @pytest.mark.slow
 def test_slow_operation():
-    """時間がかかるテスト"""
+    """時間がかかるテスト（5秒以上）"""
     result = solve_optimized(1000000)
     assert result > 0
 
@@ -346,6 +293,9 @@ uv run pytest -vv
 
 # 出力を表示して実行
 uv run pytest -s
+
+# 実行時間の表示
+uv run pytest --durations=10
 ```
 
 ### マーカーを使用した実行
@@ -354,7 +304,7 @@ uv run pytest -s
 # 高速なテストのみ実行
 uv run pytest -m "fast"
 
-# 時間がかかるテストをスキップ
+# 時間がかかるテストをスキップ（5秒以上のテストを除外）
 uv run pytest -m "not slow"
 
 # 統合テストのみ実行
@@ -362,6 +312,9 @@ uv run pytest -m "integration"
 
 # 単体テストのみ実行
 uv run pytest -m "unit"
+
+# 特定の問題のテストのみ実行
+make test-problem PROBLEM=001
 ```
 
 ### 並列実行
@@ -660,21 +613,28 @@ uv run pytest -n auto
 # 高速なテストのみ実行
 uv run pytest -m "fast"
 
-# 時間がかかるテストをスキップ
+# 時間がかかるテストをスキップ（5秒以上のテストを除外）
 uv run pytest -m "not slow"
+
+# 実行時間の詳細表示
+uv run pytest --durations=10
+
+# タイムアウト設定（デフォルト60秒）
+uv run pytest --timeout=30
 ```
 
 #### 4. モックの設定
 
 ```python
 # モックの設定例
-@patch('problems.problem_001.time.time')
-def test_timing(mock_time):
-    mock_time.side_effect = [0.0, 1.0]  # 開始時刻、終了時刻
+@patch('problems.problem_001.some_external_function')
+def test_with_mock(mock_function):
+    mock_function.return_value = 42
 
     result = solve_optimized(100)
 
     assert result == expected_value
+    mock_function.assert_called_once()
 ```
 
 ## 参考資料

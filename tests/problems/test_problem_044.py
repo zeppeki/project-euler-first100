@@ -143,6 +143,7 @@ class TestProblem044:
         # The result should be a pentagonal number itself
         assert is_pentagonal(result), "The difference should be pentagonal"
 
+    @pytest.mark.slow
     def test_solutions_agree(self) -> None:
         """Test that all solutions agree"""
         # Only test fast solutions by default

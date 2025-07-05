@@ -30,6 +30,7 @@ dev = [
     "pytest>=7.0.0",
     "pytest-xdist>=3.0.0",
     "pytest-cov>=4.0.0",
+    "pytest-timeout>=2.0.0",
     "ruff>=0.1.0",
     "mypy>=1.0.0",
     "bandit>=1.7.0",
@@ -189,6 +190,8 @@ addopts = [
     "-q",
     "--strict-markers",
     "--strict-config",
+    "--timeout=60",
+    "--durations=10",
 ]
 testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
