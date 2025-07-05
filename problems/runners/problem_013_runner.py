@@ -21,8 +21,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem013Runner(BaseProblemRunner):
     """Runner for Problem 013: Large sum."""
 
-    def __init__(self) -> None:
-        super().__init__("013", "Large sum")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "013",
+            "Large sum",
+            problem_answer="5537376230",  # Known answer for first 10 digits of sum
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 013."""
@@ -49,14 +57,14 @@ class Problem013Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return ()
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 013."""
-        return [("50桁数の分析", self._demonstrate_large_numbers)]
+        return [self._demonstrate_large_numbers]
 
     def _demonstrate_large_numbers(self) -> None:
         """50桁数の分析を表示"""
         numbers = get_fifty_digit_numbers()
-        total = sum(numbers)
+        total = sum(int(num) for num in numbers)
 
         print(f"50桁の数値の個数: {len(numbers)}")
         print(f"最初の数値: {numbers[0]}")
@@ -67,10 +75,23 @@ class Problem013Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem013Runner()
+    """Main entry point."""
+    runner = Problem013Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 013."""
+    print("=== Problem 013 Performance Benchmark ===")
+    runner = Problem013Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

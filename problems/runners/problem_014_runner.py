@@ -20,8 +20,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem014Runner(BaseProblemRunner):
     """Runner for Problem 014: Longest Collatz sequence."""
 
-    def __init__(self) -> None:
-        super().__init__("014", "Longest Collatz sequence")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "014",
+            "Longest Collatz sequence",
+            problem_answer=837799,  # Known answer for longest chain under 1 million
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 014."""
@@ -45,9 +53,9 @@ class Problem014Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (1000000,)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 014."""
-        return [("コラッツ数列の分析", self._demonstrate_collatz_analysis)]
+        return [self._demonstrate_collatz_analysis]
 
     def _demonstrate_collatz_analysis(self) -> None:
         """コラッツ数列の分析を表示"""
@@ -73,10 +81,23 @@ class Problem014Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem014Runner()
+    """Main entry point."""
+    runner = Problem014Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 014."""
+    print("=== Problem 014 Performance Benchmark ===")
+    runner = Problem014Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

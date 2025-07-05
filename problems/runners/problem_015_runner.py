@@ -21,8 +21,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem015Runner(BaseProblemRunner):
     """Runner for Problem 015: Lattice paths."""
 
-    def __init__(self) -> None:
-        super().__init__("015", "Lattice paths")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "015",
+            "Lattice paths",
+            problem_answer=137846528820,  # Known answer for 20x20 grid
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 015."""
@@ -49,9 +57,9 @@ class Problem015Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (20,)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 015."""
-        return [("格子経路の数学的分析", self._demonstrate_lattice_analysis)]
+        return [self._demonstrate_lattice_analysis]
 
     def _demonstrate_lattice_analysis(self) -> None:
         """格子経路の数学的分析を表示"""
@@ -74,10 +82,23 @@ class Problem015Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem015Runner()
+    """Main entry point."""
+    runner = Problem015Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 015."""
+    print("=== Problem 015 Performance Benchmark ===")
+    runner = Problem015Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

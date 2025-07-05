@@ -22,8 +22,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem011Runner(BaseProblemRunner):
     """Runner for Problem 011: Largest product in a grid."""
 
-    def __init__(self) -> None:
-        super().__init__("011", "Largest product in a grid")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "011",
+            "Largest product in a grid",
+            problem_answer=70600674,  # Known answer for 4 consecutive numbers
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 011."""
@@ -45,9 +53,9 @@ class Problem011Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (GRID_DATA, 4)
 
-    def get_demonstration_functions(self) -> list[tuple[str, Callable[[], None]]]:
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
         """Get demonstration functions for Problem 011."""
-        return [("最大積のシーケンス詳細", self._demonstrate_max_sequence)]
+        return [self._demonstrate_max_sequence]
 
     def _demonstrate_max_sequence(self) -> None:
         """最大積のシーケンスの詳細を表示"""
@@ -60,10 +68,23 @@ class Problem011Runner(BaseProblemRunner):
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem011Runner()
+    """Main entry point."""
+    runner = Problem011Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 011."""
+    print("=== Problem 011 Performance Benchmark ===")
+    runner = Problem011Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
