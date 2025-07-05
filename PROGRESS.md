@@ -56,6 +56,11 @@
 | 048 | Self powers | 🟢 完了 | Python | 2025-07-02 |
 | 049 | Prime permutations | 🟢 完了 | Python | 2025-07-02 |
 | 050 | Consecutive prime sum | 🟢 完了 | Python | 2025-07-02 |
+| 051 | Prime digit replacements | 🟢 完了 | Python | 2025-07-05 |
+| 052 | Permuted multiples | 🟢 完了 | Python | 2025-07-05 |
+| 053 | Combinatoric selections | 🟢 完了 | Python | 2025-07-05 |
+| 054 | Poker hands | 🟢 完了 | Python | 2025-07-05 |
+| 059 | XOR decryption | 🟢 完了 | Python | 2025-07-05 |
 
 ## 凡例
 
@@ -66,9 +71,9 @@
 
 ## 統計
 
-- 完了: 50/100
+- 完了: 55/100
 - 作業中: 0/100
-- 未着手: 50/100
+- 未着手: 45/100
 
 ## 目標
 
@@ -596,4 +601,64 @@
   - `problems/problem_050.py`
 - **学習ポイント**: 累積和、連続する素数の和、探索範囲の最適化
 
-最終更新: 2025-07-02
+### Problem 051: Prime digit replacements
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n² × log n)) - 全ての素数に対して全ての置換パターンを試す
+  - 最適化解法 (O(n × log n)) - 効率的な探索と早期終了
+  - 数学的解法 (O(n × log n)) - 数学的性質を利用した効率的な探索
+- **ファイル**:
+  - `problems/problem_051.py`
+  - `docs/solutions/solution_051.md`
+- **学習ポイント**: 素数族、数字置換、エラトステネスの篩、組み合わせ最適化
+
+### Problem 052: Permuted multiples
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n × max_multiple × log n)) - 1から順番にチェック
+  - 最適化解法 (O(n × max_multiple × log n)) - 桁数による制約を利用
+  - 数学的解法 (O(n × max_multiple × log n)) - 数学的制約を活用した最適化
+- **ファイル**:
+  - `problems/problem_052.py`
+  - `docs/solutions/solution_052.md`
+- **学習ポイント**: 順列判定、桁操作、数学的制約による最適化
+
+### Problem 053: Combinatoric selections
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n³)) - 全てのC(n,r)を計算して閾値を超える数を数える
+  - 最適化解法 (O(n²)) - 効率的な組み合わせ計算を使用
+  - 数学的解法 (O(n²)) - 対称性と数学ライブラリを活用
+- **ファイル**:
+  - `problems/problem_053.py`
+  - `docs/solutions/solution_053.md`
+- **学習ポイント**: 組み合わせ論、パスカルの三角形、オーバーフロー対策
+
+### Problem 054: Poker hands
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n)) - ポーカーハンドを直接評価してPlayer 1の勝利数を数える
+  - 最適化解法 (O(n)) - より効率的なハンド評価
+  - 数学的解法 (O(n)) - ポーカーハンド評価の数学的最適化
+- **ファイル**:
+  - `problems/problem_054.py`
+  - `docs/solutions/solution_054.md`
+- **学習ポイント**: ポーカー手札評価、列挙型、オブジェクト指向設計
+
+### Problem 059: XOR decryption
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(26³ × n)) - 全てのキーを試して復号する
+  - 最適化解法 (O(n + k)) - 頻度分析を使用した効率的な復号
+  - 数学的解法 (O(26³ + n)) - エントロピー分析による高効率復号
+- **ファイル**:
+  - `problems/problem_059.py`
+  - `docs/solutions/solution_059.md`
+- **学習ポイント**: XOR暗号、頻度分析、カイ二乗検定、暗号解読
+
+最終更新: 2025-07-05
