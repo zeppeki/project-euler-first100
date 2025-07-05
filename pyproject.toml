@@ -190,7 +190,6 @@ addopts = [
     "-q",
     "--strict-markers",
     "--strict-config",
-    "--timeout=60",
     "--durations=10",
 ]
 testpaths = ["tests"]
