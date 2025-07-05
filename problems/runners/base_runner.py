@@ -27,16 +27,29 @@ class BaseProblemRunner(ABC):
     test verification, performance analysis, and result display.
     """
 
-    def __init__(self, problem_number: str, problem_title: str):
+    def __init__(
+        self,
+        problem_number: str,
+        problem_title: str,
+        problem_answer: Any = None,
+        enable_performance_test: bool = False,
+        enable_demonstrations: bool = False,
+    ):
         """
         Initialize the problem runner.
 
         Args:
             problem_number: Problem number (e.g., "001")
             problem_title: Problem title for display
+            problem_answer: Expected answer for the problem (optional)
+            enable_performance_test: Whether to run performance comparison (default: False)
+            enable_demonstrations: Whether to run additional demonstrations (default: False)
         """
         self.problem_number = problem_number
         self.problem_title = problem_title
+        self.problem_answer = problem_answer
+        self.enable_performance_test = enable_performance_test
+        self.enable_demonstrations = enable_demonstrations
 
     @abstractmethod
     def get_test_cases(self) -> list[tuple[Any, ...]]:
@@ -112,7 +125,8 @@ class BaseProblemRunner(ABC):
 
     def run_problem(self) -> Any:
         """
-        Run the main problem with performance analysis.
+        Run the main problem and verify the answer.
+        Optionally run performance analysis and demonstrations.
 
         Returns:
             The problem solution result
@@ -128,25 +142,36 @@ class BaseProblemRunner(ABC):
             print("エラー: 解法関数が定義されていません")
             return None
 
-        # Run performance comparison
-        performance_results = compare_performance(functions, *main_params)
+        # Get the primary solution (first function)
+        primary_function = functions[0][1]
 
-        # Display performance results
-        print_performance_comparison(performance_results)
+        if self.enable_performance_test and len(functions) > 1:
+            # Run performance comparison with all functions
+            performance_results = compare_performance(functions, *main_params)
 
-        # Verify all solutions agree
-        results = [data["result"] for data in performance_results.values()]
+            # Display performance results
+            print_performance_comparison(performance_results)
 
-        # For tuple results, compare the first element (main answer)
-        if results and isinstance(results[0], tuple):
-            comparison_values = [result[0] for result in results]
+            # Verify all solutions agree
+            results = [data["result"] for data in performance_results.values()]
+
+            # For tuple results, compare the first element (main answer)
+            if results and isinstance(results[0], tuple):
+                comparison_values = [result[0] for result in results]
+            else:
+                comparison_values = results
+
+            verified = len(set(comparison_values)) == 1
+            final_result = results[0] if results else None
+
         else:
-            comparison_values = results
-
-        verified = len(set(comparison_values)) == 1
-
-        # Display final answer
-        final_result = results[0] if results else None
+            # Just run the primary function without performance comparison
+            try:
+                final_result = primary_function(*main_params)
+                verified = True
+            except Exception as e:
+                print(f"エラー: 解法実行に失敗しました: {e}")
+                return None
 
         # Handle tuple results (e.g., Problem 004 returns (palindrome, factor1, factor2))
         if isinstance(final_result, tuple):
@@ -154,19 +179,31 @@ class BaseProblemRunner(ABC):
         else:
             display_result = final_result
 
-        print_final_answer(display_result, verified=verified)
+        # Check against expected answer if provided
+        answer_correct = True
+        if self.problem_answer is not None:
+            if display_result == self.problem_answer:
+                print(f"✓ 解答が期待値と一致: {self.problem_answer}")
+            else:
+                print(
+                    f"✗ 解答が期待値と不一致: 期待値={self.problem_answer}, 実際={display_result}"
+                )
+                answer_correct = False
 
-        # Run demonstrations if available
-        demonstrations = self.get_demonstration_functions()
-        if demonstrations:
-            print("=== 追加デモンストレーション ===")
-            for demo_func in demonstrations:
-                try:
-                    demo_func()
-                    print()
-                except Exception as e:
-                    print(f"デモンストレーションエラー: {e}")
-                    print()
+        print_final_answer(display_result, verified=verified and answer_correct)
+
+        # Run demonstrations if enabled and available
+        if self.enable_demonstrations:
+            demonstrations = self.get_demonstration_functions()
+            if demonstrations:
+                print("=== 追加デモンストレーション ===")
+                for demo_func in demonstrations:
+                    try:
+                        demo_func()
+                        print()
+                    except Exception as e:
+                        print(f"デモンストレーションエラー: {e}")
+                        print()
 
         return final_result
 
