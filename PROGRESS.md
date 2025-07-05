@@ -61,6 +61,7 @@
 | 053 | Combinatoric selections | 🟢 完了 | Python | 2025-07-05 |
 | 054 | Poker hands | 🟢 完了 | Python | 2025-07-05 |
 | 059 | XOR decryption | 🟢 完了 | Python | 2025-07-05 |
+| 060 | Prime pair sets | 🟢 完了 | Python | 2025-07-05 |
 
 ## 凡例
 
@@ -71,9 +72,9 @@
 
 ## 統計
 
-- 完了: 55/100
+- 完了: 56/100
 - 作業中: 0/100
-- 未着手: 45/100
+- 未着手: 44/100
 
 ## 目標
 
@@ -660,5 +661,19 @@
   - `problems/problem_059.py`
   - `docs/solutions/solution_059.md`
 - **学習ポイント**: XOR暗号、頻度分析、カイ二乗検定、暗号解読
+
+### Problem 060: Prime pair sets
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(C(n,k) × k² × √(max(concat)))) - 全ての素数の組み合わせをチェック
+  - 最適化解法 (O(n^k × √(max(concat)))) - 段階的に素数ペア集合を構築し枝刈り
+  - 数学的解法 (O(n² + n^k)) - グラフ理論を用いたクリーク探索
+- **ファイル**:
+  - `problems/problem_060.py`
+  - `tests/problems/test_problem_060.py`
+  - `problems/runners/problem_060_runner.py`
+  - `docs/solutions/solution_060.md`
+- **学習ポイント**: 素数ペア、グラフ理論、クリーク探索、組み合わせ最適化、枝刈り技法
 
 最終更新: 2025-07-05
