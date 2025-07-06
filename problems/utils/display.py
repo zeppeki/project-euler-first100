@@ -78,7 +78,11 @@ def print_final_answer(result: Any, verified: bool = True) -> None:
     """
     print("=== 本問題の解答 ===")
     if verified:
-        print(f"✓ 解答: {result:,}")
+        # Handle different result types appropriately
+        if isinstance(result, int | float):
+            print(f"✓ 解答: {result:,}")
+        else:
+            print(f"✓ 解答: {result}")
     else:
         print("✗ 解答が一致しません")
     print()
