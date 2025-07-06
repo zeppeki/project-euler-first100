@@ -1,0 +1,23 @@
+[bandit]
+# Bandit configuration for Project Euler first 100
+# This file configures security scanning for a mathematical computation project
+
+# Skip B101 (assert_used) warnings for Project Euler context
+# Assert statements are used for:
+# - Type checking and validation in mathematical algorithms
+# - Ensuring algorithm correctness and edge case handling
+# - Development-time debugging and verification
+# These are appropriate uses in a computational mathematics context
+skips = B101
+
+# Include all Python files
+include = *.py
+
+# Exclude test files from this specific check (tests have their own assertions)
+exclude_dirs = tests
+
+# Set confidence level
+confidence = HIGH
+
+# Set severity level
+severity = MEDIUM

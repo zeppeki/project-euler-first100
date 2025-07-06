@@ -133,7 +133,7 @@ typecheck: ## Run type checking with mypy
 
 security: ## Run security scan with bandit
 	@echo "$(BOLD)$(YELLOW)Running security scan...$(RESET)"
-	$(BANDIT) -r problems/ tests/ -f json || true
+	$(BANDIT) -r problems/ tests/ --skip B101 -f json || true
 
 coverage: ## Generate test coverage report (problems only, excludes runners/utils)
 	@echo "$(BOLD)$(YELLOW)Generating coverage report (problems only)...$(RESET)"
