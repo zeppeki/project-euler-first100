@@ -387,7 +387,7 @@ class SimpleBenchmarkRunner:
 
 以下の問題は新しいBaseProblemRunnerアーキテクチャに完全対応しています：
 
-**Phase 1-7完了済み（Problems 001-067）**
+**Phase 1-8完了済み（Problems 001-075）**
 
 | Problem | Title | Known Answer | Performance Test | Demonstrations |
 |---------|-------|--------------|------------------|----------------|
@@ -458,15 +458,23 @@ class SimpleBenchmarkRunner:
 | 065 | Convergents of e | 272 | ✅ | ✅ |
 | 066 | Diophantine equation | 661 | ✅ | ✅ |
 | 067 | Maximum path sum II | 7,273 | ✅ | ✅ |
+| 068 | Magic 5-gon ring | 6,531,031,914,842,725 | ✅ | ✅ |
+| 069 | Totient maximum | 510,510 | ✅ | ✅ |
+| 070 | Totient permutation | 8,319,823 | ✅ | ✅ |
+| 071 | Ordered fractions | 428,570 | ✅ | ✅ |
+| 072 | Counting fractions | 303,963,552,391 | ✅ | ✅ |
+| 073 | Counting fractions in a range | 7,295,372 | ✅ | ✅ |
+| 074 | Digit factorial chains | 402 | ✅ | ✅ |
+| 075 | Singular integer right triangles | 161,667 | ✅ | ✅ |
 
 *Problems 058 and 060 use placeholder answers (0) due to test complexity and performance constraints.
 
-**移行進捗**: 67/67 problems (100%) - All Phases Complete ✅
+**移行進捗**: 75/75 problems (100%) - All Phases Complete ✅
 
 ### 2025年7月の移行状況
 
-**完了済み**: 全Phase (Problems 001-067) - 67問題
-**進行率**: 100% (67/67 problems) ✅ **移行完了**
+**完了済み**: 全Phase (Problems 001-075) - 75問題
+**進行率**: 100% (75/75 problems) ✅ **移行完了**
 
 #### Phase別の詳細
 
@@ -478,7 +486,8 @@ class SimpleBenchmarkRunner:
 | Phase 4 | 031-040 (10問題) | ✅ Complete | #253 | 統一アーキテクチャ拡張 |
 | Phase 5 | 041-050 (10問題) | ✅ Complete | #254, #255 | 複雑な問題への対応 |
 | Phase 6 | 051-060 (10問題) | ✅ Complete | #256 | 高度なアルゴリズム対応 |
-| Phase 7 | 061-067 (7問題) | ✅ Complete | #257 | 最終フェーズ完了 |
+| Phase 7 | 061-067 (7問題) | ✅ Complete | #257 | 第7フェーズ完了 |
+| Phase 8 | 068-075 (8問題) | ✅ Complete | #265 | 最終フェーズ完了 |
 
 #### 品質指標
 
@@ -603,19 +612,20 @@ if __name__ == "__main__":
 
 #### BaseProblemRunner移行の達成
 
-2025年7月現在、全67問題のBaseProblemRunnerアーキテクチャへの移行が完了しました：
+2025年7月現在、全75問題のBaseProblemRunnerアーキテクチャへの移行が完了しました：
 
-**✅ 移行完了 (Problems 001-067)**
+**✅ 移行完了 (Problems 001-075)**
 - **Phase 1-3**: 基盤確立とプロセス定着 (30問題)
 - **Phase 4**: 統一アーキテクチャ拡張 (10問題)
 - **Phase 5**: 複雑な問題への対応 (10問題)
 - **Phase 6**: 高度なアルゴリズム対応 (10問題)
-- **Phase 7**: 最終フェーズ完了 (7問題)
+- **Phase 7**: 第7フェーズ完了 (7問題)
+- **Phase 8**: 最終フェーズ完了 (8問題)
 
 #### 移行による成果
 
 **統一されたアーキテクチャ**
-- 全67問題が同一のBaseProblemRunnerインターフェースに準拠
+- 全75問題が同一のBaseProblemRunnerインターフェースに準拠
 - 一貫したテスト実行、ベンチマーク、デモンストレーション機能
 - 標準化された期待値検証システム
 

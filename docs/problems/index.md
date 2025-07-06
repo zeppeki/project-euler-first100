@@ -4,8 +4,8 @@ Project Euler First 100で取り組んでいる問題の一覧です。各問題
 
 ## 📊 進捗概要
 
-- **完了問題数**: 50/100
-- **実装済み解法数**: 150 (各問題3つの異なるアプローチ)
+- **完了問題数**: 75/100
+- **実装済み解法数**: 150+ (各問題2-3つの異なるアプローチ)
 - **解法の種類**: 素直な解法、最適化解法、数学的解法
 
 ## 🟢 完了済み問題
@@ -138,11 +138,11 @@ Project Euler First 100で取り組んでいる問題の一覧です。各問題
     - ゼロスキップ最適化
     - 文字列処理とパターンマッチング
 
-### Problem 009-050: 追加完了問題
-**完了問題**: Problem 009から050まで（42問）
+### Problem 009-075: 追加完了問題
+**完了問題**: Problem 009から075まで（67問）
 
 - **解答**: [隠匿]（各問題の詳細は個別のソリューションページを参照）
-- **実装解法**: 各問題3つの異なるアプローチ
+- **実装解法**: 各問題2-3つの異なるアプローチ
 - **学習ポイント**: 多様なアルゴリズム技法と数学的洞察
 
 === "主要な学習分野"
@@ -165,13 +165,13 @@ Project Euler First 100で取り組んでいる問題の一覧です。各問題
 
 ### 次に取り組む問題
 
-#### Problem 051: Prime digit replacements
-- **目標**: 素数パターンの置換と探索
-- **学習予定**: パターンマッチングと素数生成
+#### Problem 076: Counting summations
+- **目標**: 整数分割の数え上げ
+- **学習予定**: 動的計画法と組み合わせ数学
 
-#### Problem 052: Permuted multiples
-- **目標**: 同じ数字で構成される倍数の探索
-- **学習予定**: 数字の並び替えと倍数の性質
+#### Problem 077: Prime summations
+- **目標**: 素数の和で表現できる数の探索
+- **学習予定**: 素数と動的計画法の組み合わせ
 
 ## 📈 解法パターンの分析
 
@@ -208,4 +208,40 @@ Project Euler First 100で取り組んでいる問題の一覧です。各問題
 
 ---
 
-**最終更新**: 2025年7月2日
+### 最新完了問題 (068-075)
+
+#### Problem 068: Magic 5-gon ring
+- **学習ポイント**: 組み合わせ最適化と制約条件
+- **詳細解説**: [Solution 068](../solutions/solution_068.md)
+
+#### Problem 069: Totient maximum
+- **学習ポイント**: オイラーのトーシェント関数
+- **詳細解説**: [Solution 069](../solutions/solution_069.md)
+
+#### Problem 070: Totient permutation
+- **学習ポイント**: トーシェント関数と順列
+- **詳細解説**: [Solution 070](../solutions/solution_070.md)
+
+#### Problem 071: Ordered fractions
+- **学習ポイント**: ファレイ数列と既約分数
+- **詳細解説**: [Solution 071](../solutions/solution_071.md)
+
+#### Problem 072: Counting fractions
+- **学習ポイント**: オイラーのトーシェント関数応用
+- **詳細解説**: [Solution 072](../solutions/solution_072.md)
+
+#### Problem 073: Counting fractions in a range
+- **学習ポイント**: 分数の範囲カウントと効率化
+- **詳細解説**: [Solution 073](../solutions/solution_073.md)
+
+#### Problem 074: Digit factorial chains
+- **学習ポイント**: 階乗連鎖と循環検出
+- **詳細解説**: [Solution 074](../solutions/solution_074.md)
+
+#### Problem 075: Singular integer right triangles
+- **学習ポイント**: ピタゴラス数と原始三角形
+- **詳細解説**: [Solution 075](../solutions/solution_075.md)
+
+---
+
+**最終更新**: 2025年7月6日

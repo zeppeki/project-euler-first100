@@ -28,9 +28,9 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 <div id="stats-dashboard" class="dashboard"></div>
 
 ### 詳細統計
-- **完了問題**: 50/100 (50%)
-- **最新完了**: Problem 050: Consecutive prime sum
-- **実装済み解法**: 各問題3つの異なるアプローチ（計150解法）
+- **完了問題**: 75/100 (75%)
+- **最新完了**: Problem 075: Singular integer right triangles
+- **実装済み解法**: 各問題2-3つの異なるアプローチ（計225解法）
 - **テストカバレッジ**: 95%以上
 
 ### 完了した問題
@@ -87,6 +87,31 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 | 048 | Self powers | [隠匿] | モジュラー算術と大きな数の処理 |
 | 049 | Prime permutations | [隠匿] | 順列、算術数列、素数生成 |
 | 050 | Consecutive prime sum | 997651 | 累積和と連続する素数の和 |
+| 051 | Prime digit replacements | [隠匿] | パターンマッチングと素数生成 |
+| 052 | Permuted multiples | [隠匿] | 数字の並び替えと倍数の性質 |
+| 053 | Combinatoric selections | [隠匿] | 組み合わせの数学的性質 |
+| 054 | Poker hands | [隠匿] | ポーカーハンドの判定と比較 |
+| 055 | Lychrel numbers | [隠匿] | リクレル数と回文数の性質 |
+| 056 | Powerful digit sum | [隠匿] | 大きな数の累乗と桁和 |
+| 057 | Square root convergents | [隠匿] | 連分数と收束分数 |
+| 058 | Spiral primes | [隠匿] | 螺旋数列と素数の割合 |
+| 059 | XOR decryption | [隠匿] | XOR暗号化とファイル処理 |
+| 060 | Prime pair sets | [隠匿] | 素数ペアの組み合わせ |
+| 061 | Cyclical figurate numbers | [隠匿] | 循環図形数とグラフ探索 |
+| 062 | Cubic permutations | [隠匿] | 立方数の順列と桁ソート |
+| 063 | Powerful digit counts | [隠匿] | n桁のn乗数と数学的制約 |
+| 064 | Odd period square roots | [隠匿] | 連分数と平方根の周期 |
+| 065 | Convergents of e | [隠匿] | 自然対数の底eの連分数展開 |
+| 066 | Diophantine equation | [隠匿] | ペル方程式と連分数解法 |
+| 067 | Maximum path sum II | [隠匿] | 動的計画法と大規模データ |
+| 068 | Magic 5-gon ring | [隠匿] | 組み合わせ最適化と制約条件 |
+| 069 | Totient maximum | [隠匿] | オイラーのトーシェント関数 |
+| 070 | Totient permutation | [隠匿] | トーシェント関数と順列 |
+| 071 | Ordered fractions | [隠匿] | ファレイ数列と既約分数 |
+| 072 | Counting fractions | [隠匿] | オイラーのトーシェント関数応用 |
+| 073 | Counting fractions in a range | [隠匿] | 分数の範囲カウントと効率化 |
+| 074 | Digit factorial chains | [隠匿] | 階乗連鎖と循環検出 |
+| 075 | Singular integer right triangles | [隠匿] | ピタゴラス数と原始三角形 |
 
 ## 🚀 特徴
 
