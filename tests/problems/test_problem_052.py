@@ -100,10 +100,9 @@ class TestSolutionFunctions:
                 f"Inconsistent results for target {target}: {results}"
             )
 
-    @pytest.mark.slow
     def test_solve_main_problem(self) -> None:
         """Test the main problem (6x permutations)"""
-        # This test is marked as slow since it may take longer
+        # Use fast algorithms only for regular tests
         result_optimized = solve_optimized(6)
         result_mathematical = solve_mathematical(6)
 

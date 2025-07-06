@@ -20,7 +20,6 @@ from problems.problem_054 import (
     solve_mathematical,
     solve_naive,
     solve_optimized,
-    test_example_hands,
 )
 
 
@@ -199,8 +198,25 @@ class TestExampleHands:
     """Test the example hands from the problem description"""
 
     def test_example_hands_verification(self) -> None:
-        """Test that the example verification function works"""
-        assert test_example_hands() is True
+        """Test the example hands from the problem description"""
+        examples = [
+            ("5H 5C 6S 7S KD", "2C 3S 8S 8D TD", False),  # Player 2 wins
+            ("5D 8C 9S JS AC", "2C 5C 7D 8S QH", True),  # Player 1 wins
+            ("2D 9C AS AH AC", "3D 6D 7D TD QD", False),  # Player 2 wins
+            ("4D 6S 9H QH QC", "3D 6D 7H QD QS", True),  # Player 1 wins
+            ("2H 2D 4C 4D 4S", "3C 3D 3S 9S 9D", True),  # Player 1 wins
+        ]
+
+        for player1_str, player2_str, expected_player1_wins in examples:
+            player1_hand = PokerHand.from_string(player1_str)
+            player2_hand = PokerHand.from_string(player2_str)
+            actual_player1_wins = player1_hand.beats(player2_hand)
+
+            assert actual_player1_wins == expected_player1_wins, (
+                f"Test failed: {player1_str} vs {player2_str}. "
+                f"Expected Player 1 wins: {expected_player1_wins}, "
+                f"Actual: {actual_player1_wins}"
+            )
 
     def test_example_1(self) -> None:
         """Test example 1: Pair of Fives vs Pair of Eights"""

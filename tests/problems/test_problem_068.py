@@ -5,8 +5,6 @@ Tests for Problem 068: Magic 5-gon ring
 Project Euler Problem 068のテストケース
 """
 
-from collections.abc import Callable
-
 import pytest
 
 from problems.problem_068 import (
@@ -82,7 +80,20 @@ class TestProblem068:
             assert sum(line) == 9
 
     def test_solve_consistency(self) -> None:
-        """全ての解法が同じ結果を返すことをテスト"""
+        """最適化解法が同じ結果を返すことをテスト"""
+        result_optimized = solve_optimized()
+        result_mathematical = solve_mathematical()
+
+        # 最適化解法が同じ結果を返すべき
+        assert result_optimized == result_mathematical
+
+        # 結果が16桁の文字列であることを確認
+        assert len(result_optimized) == 16
+        assert result_optimized.isdigit()
+
+    @pytest.mark.slow
+    def test_solve_consistency_with_naive(self) -> None:
+        """全ての解法が同じ結果を返すことをテスト（素直な解法を含む）"""
         result_naive = solve_naive()
         result_optimized = solve_optimized()
         result_mathematical = solve_mathematical()
@@ -95,8 +106,9 @@ class TestProblem068:
         assert len(result_naive) == 16
         assert result_naive.isdigit()
 
+    @pytest.mark.slow
     def test_solve_naive(self) -> None:
-        """素直な解法のテスト"""
+        """素直な解法のテスト（スロー）"""
         result = solve_naive()
 
         assert isinstance(result, str)
@@ -122,16 +134,22 @@ class TestProblem068:
         assert len(result) == 16
         assert result.isdigit()
 
-    @pytest.mark.parametrize(
-        "solve_func",
-        [solve_naive, solve_optimized, solve_mathematical],
-        ids=["naive", "optimized", "mathematical"],
-    )
-    def test_solution_functions_return_16_digits(
-        self, solve_func: Callable[[], str]
-    ) -> None:
-        """全ての解法が16桁文字列を返すことをテスト"""
-        result = solve_func()
+    def test_solution_functions_return_16_digits_optimized(self) -> None:
+        """最適化解法が16桁文字列を返すことをテスト"""
+        result = solve_optimized()
+        assert len(result) == 16
+        assert result.isdigit()
+
+    def test_solution_functions_return_16_digits_mathematical(self) -> None:
+        """数学的解法が16桁文字列を返すことをテスト"""
+        result = solve_mathematical()
+        assert len(result) == 16
+        assert result.isdigit()
+
+    @pytest.mark.slow
+    def test_solution_functions_return_16_digits_naive(self) -> None:
+        """素直な解法が16桁文字列を返すことをテスト（スロー）"""
+        result = solve_naive()
         assert len(result) == 16
         assert result.isdigit()
 

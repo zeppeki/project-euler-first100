@@ -89,9 +89,19 @@ class TestProblem043:
         assert isinstance(result, int)
         assert result > 0  # Should find some valid numbers
 
-    @pytest.mark.slow
     def test_solutions_agree(self) -> None:
-        """Test that all solutions agree"""
+        """Test that all solutions agree (fast algorithms only)"""
+        # Only test fast solutions by default
+        optimized_result = solve_optimized()
+        mathematical_result = solve_mathematical()
+
+        assert optimized_result == mathematical_result, (
+            f"Optimized and mathematical disagree: {optimized_result} != {mathematical_result}"
+        )
+
+    @pytest.mark.slow
+    def test_all_solutions_agree(self) -> None:
+        """Test that all solutions agree (including slow naive solution)"""
         naive_result = solve_naive()
         optimized_result = solve_optimized()
         mathematical_result = solve_mathematical()
