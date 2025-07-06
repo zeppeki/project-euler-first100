@@ -1,179 +1,110 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 048: Self powers
+Problem 048 Runner: Execution and demonstration code for Problem 048.
 
-This module contains the execution code for Problem 048, separated from the
-algorithm implementations for better test coverage and code organization.
+This module handles the execution and demonstration of Problem 048 solutions,
+separated from the core algorithm implementations.
 """
 
-from __future__ import annotations
+from collections.abc import Callable
+from typing import Any
 
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from collections.abc import Callable
-
-from problems.problem_048 import (
-    calculate_self_powers_sum,
-    solve_mathematical,
-    solve_naive,
-    solve_optimized,
-)
-from problems.utils.display import (
-    print_final_answer,
-    print_performance_comparison,
-    print_solution_header,
-)
-from problems.utils.performance import compare_performance
+from problems.problem_048 import solve_mathematical, solve_naive, solve_optimized
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def run_tests() -> None:
-    """Run test cases to verify the solutions."""
-    print("Testing self power calculations:")
+class Problem048Runner(BaseProblemRunner):
+    """Runner for Problem 048: Self powers."""
 
-    # Test small cases first
-    print("  Small test cases:")
-    test_cases = [
-        (1, 1),  # 1^1 = 1
-        (2, 5),  # 1^1 + 2^2 = 1 + 4 = 5
-        (3, 32),  # 1^1 + 2^2 + 3^3 = 1 + 4 + 27 = 32
-        (4, 288),  # 1^1 + 2^2 + 3^3 + 4^4 = 1 + 4 + 27 + 256 = 288
-    ]
-
-    for limit, expected in test_cases:
-        # Test full calculation for small cases
-        full_result = calculate_self_powers_sum(limit)
-        full_correct = full_result == expected
-
-        # Test modular calculations
-        result_naive = solve_naive(limit)
-        result_optimized = solve_optimized(limit)
-        result_mathematical = solve_mathematical(limit)
-
-        expected_mod = expected % (10**10)
-        naive_correct = result_naive == expected_mod
-        opt_correct = result_optimized == expected_mod
-        math_correct = result_mathematical == expected_mod
-        all_correct = naive_correct and opt_correct and math_correct
-
-        print(f"    Limit {limit}: Expected {expected}")
-        print(f"      Full calculation: {full_result} {'✓' if full_correct else '✗'}")
-        print(f"      Naive (mod): {result_naive} {'✓' if naive_correct else '✗'}")
-        print(
-            f"      Optimized (mod): {result_optimized} {'✓' if opt_correct else '✗'}"
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "048",
+            "Self powers",
+            9110846700,
+            enable_performance_test,
+            enable_demonstrations,
         )
-        print(
-            f"      Mathematical (mod): {result_mathematical} {'✓' if math_correct else '✗'}"
-        )
-        print(f"      All mod results agree: {'✓' if all_correct else '✗'}")
 
-    # Test the example from problem statement
-    print("\n  Testing problem example:")
-    example_limit = 10
-    expected_example = 10405071317
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 048."""
+        return [
+            (1, 1),  # 1^1 = 1 (mod 10^10)
+            (2, 5),  # 1^1 + 2^2 = 5 (mod 10^10)
+            (3, 32),  # 1^1 + 2^2 + 3^3 = 32 (mod 10^10)
+            (4, 288),  # 1^1 + 2^2 + 3^3 + 4^4 = 288 (mod 10^10)
+            (10, 405071317),  # Example from problem statement
+        ]
 
-    # Test full calculation
-    full_example = calculate_self_powers_sum(example_limit)
-    print(f"    1^1 + 2^2 + ... + 10^10 = {expected_example}")
-    print(
-        f"      Full calculation: {full_example} {'✓' if full_example == expected_example else '✗'}"
-    )
-
-    # Test modular calculations
-    result_naive = solve_naive(example_limit)
-    result_optimized = solve_optimized(example_limit)
-    result_mathematical = solve_mathematical(example_limit)
-
-    expected_mod = expected_example % (10**10)
-    print(
-        f"      Naive (mod): {result_naive} {'✓' if result_naive == expected_mod else '✗'}"
-    )
-    print(
-        f"      Optimized (mod): {result_optimized} {'✓' if result_optimized == expected_mod else '✗'}"
-    )
-    print(
-        f"      Mathematical (mod): {result_mathematical} {'✓' if result_mathematical == expected_mod else '✗'}"
-    )
-
-    # Test individual power calculations
-    print("\n  Testing individual powers:")
-    individual_tests = [
-        (1, 1, 1),  # 1^1 = 1
-        (2, 2, 4),  # 2^2 = 4
-        (3, 3, 27),  # 3^3 = 27
-        (4, 4, 256),  # 4^4 = 256
-        (5, 5, 3125),  # 5^5 = 3125
-    ]
-
-    for base, exp, expected in individual_tests:
-        if base == exp:  # Self power case
-            result = pow(base, exp)
-            print(f"    {base}^{exp} = {result} {'✓' if result == expected else '✗'}")
-
-    print("\nTesting solution functions:")
-    # Test that all functions return the same result for various limits
-    test_limits = [5, 10, 50]
-
-    for limit in test_limits:
-        print(f"\n  Testing with limit {limit}:")
-
-        functions: list[tuple[str, Callable[[int], int]]] = [
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 048."""
+        return [
             ("素直な解法", solve_naive),
             ("最適化解法", solve_optimized),
             ("数学的解法", solve_mathematical),
         ]
 
-        results: list[int] = []
-        for name, func in functions:
-            try:
-                func_result = func(limit)
-                results.append(func_result)
-                print(f"    ✓ {name}: {func_result}")
-            except Exception as e:
-                print(f"    ✗ {name}: Error - {e}")
-                return
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (1000,)
 
-        if len(set(results)) == 1:
-            print(f"    ✓ All solutions agree: {results[0]}")
-        else:
-            print(f"    ✗ Solutions disagree: {results}")
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 048."""
+        from problems.problem_048 import calculate_self_powers_sum
 
+        def demonstrate_self_powers() -> None:
+            """自己累乗の計算例を表示"""
+            print("自己累乗の例:")
+            for i in range(1, 11):
+                self_power = pow(i, i)
+                print(f"  {i}^{i} = {self_power:,}")
 
-def run_problem() -> None:
-    """Run the main problem with performance comparison."""
-    print_solution_header(
-        "048", "Self powers", "Modular arithmetic and large number computation"
-    )
+        def demonstrate_modular_arithmetic() -> None:
+            """モジュラー算術の例を表示"""
+            print("モジュラー算術 (下10桁の計算):")
 
-    # Run tests first
-    run_tests()
+            print("小さな例:")
+            for limit in [5, 10]:
+                full_sum = calculate_self_powers_sum(limit)
+                mod_sum = solve_optimized(limit)
+                print(f"  limit={limit}: 完全計算={full_sum:,}, mod計算={mod_sum}")
 
-    print("\nPerformance comparison:")
-    # Run main problem with performance measurement
-    functions = [
-        ("素直な解法 (Direct calculation)", lambda: solve_naive()),
-        ("最適化解法 (Modular arithmetic)", lambda: solve_optimized()),
-        ("数学的解法 (Optimized for multiples)", lambda: solve_mathematical()),
-    ]
+        def demonstrate_large_numbers() -> None:
+            """大きな数の例を表示"""
+            print("大きな自己累乗数の例:")
+            examples = [10, 50, 100]
 
-    performance_results = compare_performance(functions)
+            for base in examples:
+                # 自己累乗が非常に大きくなることを示す
+                if base <= 20:  # 計算可能な範囲
+                    result = pow(base, base)
+                    digits = len(str(result))
+                    print(f"  {base}^{base} = {result:,} ({digits}桁)")
+                else:
+                    # 桁数のみ推定
+                    import math
 
-    # Verify all solutions agree
-    results = [data["result"] for data in performance_results.values()]
-    all_agree = len(set(results)) == 1
+                    digits = int(base * math.log10(base)) + 1
+                    print(f"  {base}^{base} は約{digits}桁の数")
 
-    if all_agree:
-        answer = results[0]
-        print_final_answer(answer, verified=True)
-        print_performance_comparison(performance_results)
-    else:
-        print_final_answer(None, verified=False)
-        print("Results:", results)
+        return [
+            demonstrate_self_powers,
+            demonstrate_modular_arithmetic,
+            demonstrate_large_numbers,
+        ]
 
 
 def main() -> None:
-    """Main function for standalone execution."""
-    run_problem()
+    """メイン関数"""
+    runner = Problem048Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem048Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":

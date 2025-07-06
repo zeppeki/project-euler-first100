@@ -16,8 +16,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem046Runner(BaseProblemRunner):
     """Runner for Problem 046: Goldbach's other conjecture."""
 
-    def __init__(self) -> None:
-        super().__init__("046", "Goldbach's other conjecture")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "046",
+            "Goldbach's other conjecture",
+            5777,
+            enable_performance_test,
+            enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 046."""
@@ -96,8 +104,14 @@ class Problem046Runner(BaseProblemRunner):
 
 def main() -> None:
     """メイン関数"""
-    runner = Problem046Runner()
-    runner.main()
+    runner = Problem046Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem046Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":
