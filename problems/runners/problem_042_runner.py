@@ -16,8 +16,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem042Runner(BaseProblemRunner):
     """Runner for Problem 042: Coded triangle numbers."""
 
-    def __init__(self) -> None:
-        super().__init__("042", "Coded triangle numbers")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "042",
+            "Coded triangle numbers",
+            162,
+            enable_performance_test,
+            enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 042."""
@@ -38,8 +46,14 @@ class Problem042Runner(BaseProblemRunner):
 
 def main() -> None:
     """メイン関数"""
-    runner = Problem042Runner()
-    runner.main()
+    runner = Problem042Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem042Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":
