@@ -301,8 +301,8 @@ make stats
 ```
 
 Quick status check:
-- Completed: 27/100 problems (as of latest update)
-- Next target: Problem 028+
+- Completed: 75/100 problems (as of latest update)
+- Next target: Problem 076+
 
 ### Development Workflow
 The enhanced Makefile provides streamlined commands for the complete development workflow:
