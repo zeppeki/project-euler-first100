@@ -16,8 +16,18 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem024Runner(BaseProblemRunner):
     """Runner for Problem 024: Lexicographic permutations."""
 
-    def __init__(self) -> None:
-        super().__init__("024", "Lexicographic permutations")
+    def __init__(
+        self,
+        enable_performance_test: bool = True,
+        enable_demonstrations: bool = True,
+    ) -> None:
+        super().__init__(
+            "024",
+            "Lexicographic permutations",
+            "2783915460",
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 024."""
@@ -31,11 +41,21 @@ class Problem024Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return ("0123456789",)
 
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 024."""
+        return None
+
 
 def main() -> None:
     """メイン関数"""
-    runner = Problem024Runner()
+    runner = Problem024Runner(enable_demonstrations=True)
     runner.main()
+
+
+def run_benchmark() -> None:
+    """Run benchmark for Problem 024."""
+    runner = Problem024Runner(enable_demonstrations=False)
+    runner.run_problem()
 
 
 if __name__ == "__main__":
