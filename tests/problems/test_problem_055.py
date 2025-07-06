@@ -15,7 +15,6 @@ from problems.problem_055 import (
     reverse_number,
     solve_naive,
     solve_optimized,
-    test_lychrel_examples,
 )
 
 
@@ -108,8 +107,18 @@ class TestExamplesVerification:
     """Test the example verification function"""
 
     def test_lychrel_examples(self) -> None:
-        """Test that the examples verification function works"""
-        assert test_lychrel_examples() is True
+        """Test the Lychrel number examples from the problem description"""
+        # 47は1回で回文数になる（Lychrel数ではない）
+        assert not is_lychrel_number(47), "47 should not be a Lychrel number"
+
+        # 349は3回で回文数になる（Lychrel数ではない）
+        assert not is_lychrel_number(349), "349 should not be a Lychrel number"
+
+        # 196は理論的にはLychrel数（50回では回文数にならない）
+        assert is_lychrel_number(196), "196 should be a Lychrel number"
+
+        # 4994は回文数だがLychrel数
+        assert is_lychrel_number(4994), "4994 should be a Lychrel number"
 
 
 class TestSolutionFunctions:

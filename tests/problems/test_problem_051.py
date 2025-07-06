@@ -122,10 +122,9 @@ class TestSolutionFunctions:
                 f"Inconsistent results for target {target_size}: {results}"
             )
 
-    @pytest.mark.slow
     def test_solve_main_problem(self) -> None:
         """Test the main problem (8 primes in family)"""
-        # This test is marked as slow since it may take longer
+        # Use fast algorithms only for regular tests
         result_optimized = solve_optimized(8)
         result_mathematical = solve_mathematical(8)
 
