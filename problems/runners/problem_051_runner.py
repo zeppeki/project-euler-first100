@@ -21,8 +21,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem051Runner(BaseProblemRunner):
     """Runner for Problem 051: Prime digit replacements."""
 
-    def __init__(self) -> None:
-        super().__init__("051", "Prime digit replacements")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "051",
+            "Prime digit replacements",
+            120383,
+            enable_performance_test,
+            enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 051."""
@@ -96,8 +104,14 @@ class Problem051Runner(BaseProblemRunner):
 
 def main() -> None:
     """メイン関数"""
-    runner = Problem051Runner()
-    runner.main()
+    runner = Problem051Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem051Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":

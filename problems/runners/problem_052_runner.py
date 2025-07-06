@@ -22,8 +22,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem052Runner(BaseProblemRunner):
     """Runner for Problem 052: Permuted multiples."""
 
-    def __init__(self) -> None:
-        super().__init__("052", "Permuted multiples")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "052",
+            "Permuted multiples",
+            142857,
+            enable_performance_test,
+            enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 052."""
@@ -98,8 +106,14 @@ class Problem052Runner(BaseProblemRunner):
 
 def main() -> None:
     """メイン関数"""
-    runner = Problem052Runner()
-    runner.main()
+    runner = Problem052Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem052Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":

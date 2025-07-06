@@ -22,8 +22,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem055Runner(BaseProblemRunner):
     """Runner for Problem 055: Lychrel numbers"""
 
-    def __init__(self) -> None:
-        super().__init__("055", "Lychrel numbers")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "055",
+            "Lychrel numbers",
+            249,
+            enable_performance_test,
+            enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Test cases for Lychrel numbers problem"""
@@ -157,8 +165,14 @@ def main() -> None:
         return
 
     # Run the problem
-    runner = Problem055Runner()
-    runner.main()
+    runner = Problem055Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem055Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":
