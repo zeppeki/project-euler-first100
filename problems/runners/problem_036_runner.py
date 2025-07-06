@@ -14,10 +14,18 @@ from problems.runners.base_runner import BaseProblemRunner
 
 
 class Problem036Runner(BaseProblemRunner):
-    """Runner for Problem 036: [Problem Title]."""
+    """Runner for Problem 036: Double-base palindromes."""
 
-    def __init__(self) -> None:
-        super().__init__("036", "[Problem Title]")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "036",
+            "Double-base palindromes",
+            problem_answer=872187,  # Known answer for sum of palindromic numbers in base 10 and base 2
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 036."""
@@ -29,14 +37,40 @@ class Problem036Runner(BaseProblemRunner):
 
     def get_main_parameters(self) -> tuple[Any, ...]:
         """Get parameters for the main problem."""
-        return ()
+        return (1000000,)
+
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get optional demonstration functions for complex analysis."""
+        return None
 
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem036Runner()
+    """Main entry point."""
+    # デフォルト実行（パフォーマンステストのみ無効、デモンストレーションは有効）
+    runner = Problem036Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_with_all_features() -> None:
+    """Run with all features enabled for demonstration."""
+    print("=== 全機能有効 ===")
+    runner = Problem036Runner(enable_performance_test=True, enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 036."""
+    print("=== Problem 036 Performance Benchmark ===")
+    runner = Problem036Runner(enable_performance_test=True, enable_demonstrations=False)
+    # Skip tests and run only the performance benchmark
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
