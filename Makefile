@@ -29,7 +29,7 @@ RESET := \033[0m
 .PHONY: test test-fast test-slow test-cov test-cov-clean test-problem
 .PHONY: format lint lint-fix typecheck security quality
 .PHONY: coverage dependency-check metrics ci-full ci-check validate
-.PHONY: docs-serve docs-build docs-strict
+.PHONY: docs-serve docs-build docs-strict docs-update-dashboard docs-build-with-data
 .PHONY: pre-commit setup check run-problem
 .PHONY: clean clean-docs clean-all clean-reports
 .PHONY: problems status stats progress new-problem
@@ -190,6 +190,14 @@ docs-build: ## Build documentation
 docs-strict: ## Build documentation in strict mode (warnings as errors)
 	@echo "$(BOLD)$(MAGENTA)Building documentation in strict mode...$(RESET)"
 	$(MKDOCS) build --clean --strict
+
+docs-update-dashboard: ## Update dashboard with latest benchmark data
+	@echo "$(BOLD)$(MAGENTA)Updating dashboard with latest benchmark data...$(RESET)"
+	$(PYTHON) scripts/generate_dashboard_data.py
+	@echo "$(GREEN)Dashboard data updated successfully!$(RESET)"
+
+docs-build-with-data: docs-update-dashboard docs-build ## Build documentation with updated dashboard data
+	@echo "$(BOLD)$(GREEN)Documentation built with latest benchmark data!$(RESET)"
 
 ## Development Workflow
 setup: install ## Complete initial setup for development
