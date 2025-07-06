@@ -4,9 +4,10 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 
 ## 📊 進捗状況
 
-- **完了問題**: 45/100 (Problems 001-045)
-- **最新完了**: Problem 045: Triangular, pentagonal, and hexagonal
-- **次回予定**: Problem 046: Goldbach's other conjecture
+- **完了問題**: 67/100 (Problems 001-067)
+- **最新完了**: Problem 067: Maximum path sum II
+- **進捗率**: 67.0%
+- **BaseProblemRunner移行**: 100% (全67問題統一済み)
 
 ### 完了した問題
 
@@ -23,6 +24,14 @@ Project Eulerの最初の100問を体系的に解決し、学習効果を最大�
 | 043 | Sub-string divisibility | [隠匿] | 2025-07-02 | パンデジタル数の性質 |
 | 044 | Pentagon numbers | [隠匿] | 2025-07-02 | 五角数の性質と最適化 |
 | 045 | Triangular, pentagonal, and hexagonal | [隠匿] | 2025-07-02 | 多角数の共通解 |
+| ... | ... | ... | ... | ... |
+| 061 | Cyclical figurate numbers | [隠匿] | 2025-07-06 | 循環図形数と組み合わせ最適化 |
+| 062 | Cubic permutations | [隠匿] | 2025-07-06 | 立方数の桁順列と効率的な分類 |
+| 063 | Powerful digit counts | [隠匿] | 2025-07-06 | 累乗と桁数の数学的関係 |
+| 064 | Odd period square roots | [隠匿] | 2025-07-06 | 連分数と周期性の理論 |
+| 065 | Convergents of e | [隠匿] | 2025-07-06 | 自然対数の底eの連分数展開 |
+| 066 | Diophantine equation | [隠匿] | 2025-07-06 | ペル方程式と連分数解法 |
+| 067 | Maximum path sum II | [隠匿] | 2025-07-06 | 動的計画法による最適化問題 |
 
 ## 🎯 プロジェクトの目的
 
@@ -133,6 +142,27 @@ project-euler-first100/
 - **mypy**: 型チェッカー
 - **pytest**: テストフレームワーク
 - **pre-commit**: Gitフックによる自動チェック
+
+### アーキテクチャ
+
+#### BaseProblemRunner統一アーキテクチャ ✅
+
+2025年7月に完了した全67問題の統一アーキテクチャ移行:
+
+**移行の成果:**
+- 全問題が一貫したインターフェースで実行可能
+- 標準化されたテスト・ベンチマーク・デモンストレーション機能
+- 期待値との自動比較による品質保証
+- `make benchmark-problem PROBLEM=XXX` による統一されたベンチマーク実行
+
+**実行例:**
+```bash
+# 標準実行（テスト + 解答 + デモンストレーション）
+uv run python problems/runners/problem_001_runner.py
+
+# ベンチマーク実行（パフォーマンス測定のみ）
+make benchmark-problem PROBLEM=001
+```
 
 ### 新しい形式の型ヒント
 

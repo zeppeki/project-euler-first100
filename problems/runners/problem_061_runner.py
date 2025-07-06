@@ -1,61 +1,59 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 061: Cyclical figurate numbers
+Problem 061 Runner: Execution and demonstration code for Problem 061.
 
-This module contains the execution code for Problem 061, separated from the
-algorithm implementations for better test coverage and code organization.
+This module handles the execution and demonstration of Problem 061 solutions,
+separated from the core algorithm implementations.
 """
 
+from collections.abc import Callable
+from typing import Any
+
 from problems.problem_061 import solve_naive, solve_optimized
-from problems.utils.display import (
-    print_final_answer,
-    print_performance_comparison,
-    print_solution_header,
-)
-from problems.utils.performance import compare_performance
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def run_tests() -> None:
-    """Run test cases to verify the solutions."""
-    # Skip runner tests as they are covered by unit tests
-    print("図形数生成とアルゴリズムの検証はunit testで実施済み")
+class Problem061Runner(BaseProblemRunner):
+    """Runner for Problem 061: Cyclical figurate numbers."""
 
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "061",
+            "Cyclical figurate numbers",
+            28684,
+            enable_performance_test,
+            enable_demonstrations,
+        )
 
-def run_problem() -> None:
-    """Run the main problem with performance comparison."""
-    print_solution_header(
-        "061",
-        "Cyclical figurate numbers",
-        "Finding sum of cyclic 4-digit figurate numbers",
-    )
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 061."""
+        # Skip runner tests as they are covered by unit tests
+        return []
 
-    # Run tests first
-    run_tests()
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 061."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+        ]
 
-    # Run main problem with performance measurement
-    functions = [
-        ("素直な解法", lambda: solve_naive()),
-        ("最適化解法", lambda: solve_optimized()),
-    ]
-
-    performance_results = compare_performance(functions)
-
-    # Verify all solutions agree
-    results = [data["result"] for data in performance_results.values()]
-    all_agree = len(set(results)) == 1
-
-    if all_agree:
-        answer = results[0]
-        print_final_answer(answer, verified=True)
-        print_performance_comparison(performance_results)
-    else:
-        print_final_answer(None, verified=False)
-        print("Results:", results)
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return ()
 
 
 def main() -> None:
-    """Main function for standalone execution."""
-    run_problem()
+    """メイン関数"""
+    runner = Problem061Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem061Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":
