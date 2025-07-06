@@ -33,7 +33,7 @@ RESET := \033[0m
 .PHONY: pre-commit setup check run-problem
 .PHONY: clean clean-docs clean-all clean-reports
 .PHONY: problems status stats progress new-problem
-.PHONY: benchmark benchmark-problem
+.PHONY: benchmark benchmark-simple benchmark-simple-problem benchmark-problem benchmark-comprehensive benchmark-problem-timeout benchmark-retry-failed
 .PHONY: issue-create issue-develop pr-create pr-status pr-merge issue-close
 
 ## Help
@@ -59,17 +59,19 @@ help: ## Show this help message
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / && /issue-|pr-/ {printf "  $(MAGENTA)%-20s$(RESET) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo
 	@echo "$(BOLD)Performance & Analysis:$(RESET)"
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / && /benchmark|stats|progress/ {printf "  $(CYAN)%-20s$(RESET) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / && /benchmark|stats|progress/ {printf "  $(CYAN)%-30s$(RESET) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo
 	@echo "$(BOLD)Utilities:$(RESET)"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / && /clean|problems|status|new-problem/ {printf "  $(RED)%-20s$(RESET) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo
 	@echo "$(BOLD)Examples:$(RESET)"
-	@echo "  make test-problem PROBLEM=001    # Test specific problem"
-	@echo "  make run-problem PROBLEM=001     # Run specific problem"
-	@echo "  make new-problem PROBLEM=010     # Create new problem template"
-	@echo "  make issue-create PROBLEM=025    # Create GitHub issue for problem"
-	@echo "  make pr-create ISSUE=123         # Create PR for issue"
+	@echo "  make test-problem PROBLEM=001              # Test specific problem"
+	@echo "  make run-problem PROBLEM=001               # Run specific problem"
+	@echo "  make benchmark-simple-problem PROBLEM=001 # Quick benchmark"
+	@echo "  make benchmark-comprehensive               # Full benchmark with timeout"
+	@echo "  make new-problem PROBLEM=010               # Create new problem template"
+	@echo "  make issue-create PROBLEM=025              # Create GitHub issue for problem"
+	@echo "  make pr-create ISSUE=123                   # Create PR for issue"
 
 ## Dependencies
 install: ## Install all dependencies (recommended)
@@ -221,6 +223,23 @@ run-problem: ## Run specific problem (use: make run-problem PROBLEM=001)
 
 ## Performance & Analysis
 
+benchmark: ## Run simple benchmark for all problems
+	@echo "$(BOLD)$(CYAN)Running simple benchmark for all problems...$(RESET)"
+	$(PYTHON) -m problems.utils.simple_runner
+
+benchmark-simple: ## Run simple benchmark for all problems (alias for backward compatibility)
+	@echo "$(BOLD)$(CYAN)Running simple benchmark for all problems...$(RESET)"
+	$(PYTHON) -m problems.utils.simple_runner
+
+benchmark-simple-problem: ## Run simple benchmark for specific problem (use: make benchmark-simple-problem PROBLEM=001)
+	@if [ -z "$(PROBLEM)" ]; then \
+		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
+		echo "Usage: make benchmark-simple-problem PROBLEM=001"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)$(CYAN)Running simple benchmark for Problem $(PROBLEM)...$(RESET)"
+	$(PYTHON) -m problems.utils.simple_runner $(PROBLEM)
+
 benchmark-problem: ## Run performance benchmark for specific problem (use: make benchmark-problem PROBLEM=001)
 	@if [ -z "$(PROBLEM)" ]; then \
 		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
@@ -236,6 +255,25 @@ benchmark-problem: ## Run performance benchmark for specific problem (use: make 
 		exit 1; \
 	fi
 	@echo "$(BOLD)$(GREEN)Benchmark completed for Problem $(PROBLEM)$(RESET)"
+
+benchmark-comprehensive: ## Run comprehensive benchmark with timeout for all problems
+	@echo "$(BOLD)$(CYAN)Running comprehensive benchmark with timeout for all problems...$(RESET)"
+	@echo "$(YELLOW)Warning: This may take significant time. Solutions exceeding 60s will timeout.$(RESET)"
+	$(PYTHON) -m problems.utils.comprehensive_benchmark
+
+benchmark-problem-timeout: ## Run comprehensive benchmark with timeout for specific problem (use: make benchmark-problem-timeout PROBLEM=001)
+	@if [ -z "$(PROBLEM)" ]; then \
+		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
+		echo "Usage: make benchmark-problem-timeout PROBLEM=001"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)$(CYAN)Running comprehensive benchmark with timeout for Problem $(PROBLEM)...$(RESET)"
+	$(PYTHON) -m problems.utils.comprehensive_benchmark --problems $(PROBLEM)
+
+benchmark-retry-failed: ## Retry benchmarking for previously failed problems
+	@echo "$(BOLD)$(CYAN)Retrying benchmarks for previously failed problems...$(RESET)"
+	@echo "$(YELLOW)Note: This requires a previous comprehensive benchmark run.$(RESET)"
+	$(PYTHON) -c "from problems.utils.comprehensive_benchmark import ComprehensiveBenchmark; cb = ComprehensiveBenchmark(); cb.retry_failed_problems()"
 
 stats: ## Show detailed project statistics
 	@echo "$(BOLD)$(CYAN)Project Euler First 100 - Detailed Statistics$(RESET)"

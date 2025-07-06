@@ -163,5 +163,50 @@ nav:
     - Problem 029: solutions/solution_029.md
     - Problem 030: solutions/solution_030.md
     - Problem 031: solutions/solution_031.md
-  - 問題集:
-    - 概要: problems/index.md
+    - Problem 032: solutions/solution_032.md
+    - Problem 033: solutions/solution_033.md
+    - Problem 034: solutions/solution_034.md
+    - Problem 035: solutions/solution_035.md
+    - Problem 036: solutions/solution_036.md
+    - Problem 037: solutions/solution_037.md
+    - Problem 038: solutions/solution_038.md
+    - Problem 039: solutions/solution_039.md
+    - Problem 040: solutions/solution_040.md
+    - Problem 041: solutions/solution_041.md
+    - Problem 042: solutions/solution_042.md
+    - Problem 043: solutions/solution_043.md
+    - Problem 044: solutions/solution_044.md
+    - Problem 045: solutions/solution_045.md
+    - Problem 046: solutions/solution_046.md
+    - Problem 047: solutions/solution_047.md
+    - Problem 048: solutions/solution_048.md
+    - Problem 049: solutions/solution_049.md
+    - Problem 050: solutions/solution_050.md
+    - Problem 051: solutions/solution_051.md
+    - Problem 052: solutions/solution_052.md
+    - Problem 053: solutions/solution_053.md
+    - Problem 054: solutions/solution_054.md
+    - Problem 055: solutions/solution_055.md
+    - Problem 056: solutions/solution_056.md
+    - Problem 057: solutions/solution_057.md
+    - Problem 058: solutions/solution_058.md
+    - Problem 059: solutions/solution_059.md
+    - Problem 060: solutions/solution_060.md
+    - Problem 061: solutions/solution_061.md
+    - Problem 062: solutions/solution_062.md
+    - Problem 063: solutions/solution_063.md
+    - Problem 064: solutions/solution_064.md
+    - Problem 065: solutions/solution_065.md
+    - Problem 066: solutions/solution_066.md
+    - Problem 067: solutions/solution_067.md
+    - Problem 068: solutions/solution_068.md
+    - Problem 069: solutions/solution_069.md
+    - Problem 070: solutions/solution_070.md
+    - Problem 071: solutions/solution_071.md
+    - Problem 072: solutions/solution_072.md
+    - Problem 073: solutions/solution_073.md
+    - Problem 074: solutions/solution_074.md
+    - Problem 075: solutions/solution_075.md
+  - 開発者向け:
+    - ベンチマーク: benchmarks.md
+    - セキュリティ: security.md
