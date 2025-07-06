@@ -1,140 +1,111 @@
 #!/usr/bin/env python3
 """
-Runner for Problem 050: Consecutive prime sum
+Problem 050 Runner: Execution and demonstration code for Problem 050.
 
-This module provides a runner for executing and testing Problem 050 solutions.
+This module handles the execution and demonstration of Problem 050 solutions,
+separated from the core algorithm implementations.
 """
 
-import time
 from collections.abc import Callable
+from typing import Any
 
 from problems.problem_050 import solve_mathematical, solve_naive, solve_optimized
+from problems.runners.base_runner import BaseProblemRunner
 
 
-def run_solution(func: Callable[[], int], name: str) -> tuple[int, float]:
-    """
-    指定された解法を実行し、結果と実行時間を返す
+class Problem050Runner(BaseProblemRunner):
+    """Runner for Problem 050: Consecutive prime sum."""
 
-    Args:
-        func: 実行する関数
-        name: 解法の名前
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "050",
+            "Consecutive prime sum",
+            997651,
+            enable_performance_test,
+            enable_demonstrations,
+        )
 
-    Returns:
-        結果と実行時間のタプル
-    """
-    print(f"\n{name}を実行中...")
-    start_time = time.time()
-    result = func()
-    end_time = time.time()
-    execution_time = end_time - start_time
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 050."""
+        return [
+            (100, 41),  # Example from problem: sum of first 6 consecutive primes
+        ]
 
-    print(f"結果: {result}")
-    print(f"実行時間: {execution_time:.6f}秒")
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 050."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+        ]
 
-    return result, execution_time
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (1000000,)
 
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 050."""
+        from problems.lib import generate_primes, is_prime
 
-def run_all_solutions() -> dict[str, tuple[int, float]]:
-    """
-    全ての解法を実行し、結果を比較する
+        def demonstrate_consecutive_prime_sums() -> None:
+            """連続する素数の和の例を表示"""
+            print("連続する素数の和の例:")
+            primes = generate_primes(100)
 
-    Returns:
-        各解法の結果と実行時間の辞書
-    """
-    print("Problem 050: Consecutive prime sum")
-    print("=" * 50)
+            # 最初の数個の連続する素数の和を計算
+            for length in range(2, 7):
+                consecutive_sum = sum(primes[:length])
+                is_prime_result = is_prime(consecutive_sum)
+                prime_list = " + ".join(map(str, primes[:length]))
+                status = "素数" if is_prime_result else "合成数"
+                print(f"  {prime_list} = {consecutive_sum} ({status})")
 
-    results = {}
+        def demonstrate_problem_example() -> None:
+            """問題の例を表示"""
+            print("問題の例 (限界値100):")
+            primes = generate_primes(100)
 
-    # 各解法の実行
-    solutions = [
-        (solve_naive, "素直な解法"),
-        (solve_optimized, "最適化解法"),
-        (solve_mathematical, "数学的解法"),
-    ]
+            # 41 = 2 + 3 + 5 + 7 + 11 + 13 (6つの連続する素数)
+            example_primes = primes[:6]
+            example_sum = sum(example_primes)
+            prime_list = " + ".join(map(str, example_primes))
 
-    for func, name in solutions:
-        result, exec_time = run_solution(func, name)
-        results[name] = (result, exec_time)
+            print(f"  最長の連続する素数の和: {prime_list} = {example_sum}")
+            print(f"  これは{len(example_primes)}個の連続する素数の和")
 
-    # 結果の検証
-    print("\n" + "=" * 50)
-    print("結果の検証:")
+        def demonstrate_longer_sequences() -> None:
+            """より長い連続する素数の和を表示"""
+            print("より長い連続する素数の和:")
+            primes = generate_primes(1000)
 
-    all_results = [result for result, _ in results.values()]
-    if len(set(all_results)) == 1:
-        print("✓ 全ての解法で同じ結果が得られました")
-        print(f"答え: {all_results[0]}")
-    else:
-        print("✗ 解法間で結果が異なります")
-        for name, (result, _) in results.items():
-            print(f"  {name}: {result}")
+            # いくつかの長い連続する素数の和を計算
+            test_lengths = [10, 20, 50]
+            for length in test_lengths:
+                if length <= len(primes):
+                    consecutive_sum = sum(primes[:length])
+                    is_prime_result = is_prime(consecutive_sum)
+                    status = "素数" if is_prime_result else "合成数"
+                    print(f"  最初の{length}個の素数の和: {consecutive_sum} ({status})")
 
-    # 性能比較
-    print("\n性能比較:")
-    sorted_results = sorted(results.items(), key=lambda x: x[1][1])
-    fastest_time = sorted_results[0][1][1]
-
-    for name, (_result, exec_time) in sorted_results:
-        if exec_time > 0:
-            speedup = exec_time / fastest_time
-            print(f"  {name}: {exec_time:.6f}秒 (基準の{speedup:.2f}倍)")
-        else:
-            print(f"  {name}: {exec_time:.6f}秒")
-
-    return results
-
-
-def validate_solution() -> bool:
-    """
-    解法の正当性を検証する
-
-    Returns:
-        検証結果
-    """
-    print("解法の検証を実行中...")
-
-    try:
-        # 小さい値での検証
-        test_limit = 100
-
-        # 各解法をテスト
-        result_naive = solve_naive(test_limit)
-        result_optimized = solve_optimized(test_limit)
-        result_mathematical = solve_mathematical(test_limit)
-
-        # 期待値（問題文から）
-        expected = 41  # 41 = 2 + 3 + 5 + 7 + 11 + 13 (6つの連続する素数の和)
-
-        if result_naive == result_optimized == result_mathematical == expected:
-            print(f"✓ 検証成功: 全解法が期待値 {expected} を返しました")
-            return True
-        print("✗ 検証失敗:")
-        print(f"  期待値: {expected}")
-        print(f"  素直な解法: {result_naive}")
-        print(f"  最適化解法: {result_optimized}")
-        print(f"  数学的解法: {result_mathematical}")
-        return False
-
-    except Exception as e:
-        print(f"✗ 検証中にエラーが発生しました: {e}")
-        return False
+        return [
+            demonstrate_consecutive_prime_sums,
+            demonstrate_problem_example,
+            demonstrate_longer_sequences,
+        ]
 
 
 def main() -> None:
     """メイン関数"""
-    # 検証の実行
-    if not validate_solution():
-        print("検証に失敗しました。実装を確認してください。")
-        return
+    runner = Problem050Runner(enable_demonstrations=True)
+    runner.run_problem()
 
-    print("\n" + "=" * 50)
 
-    # 全解法の実行
-    results = run_all_solutions()
-
-    # 最終結果の表示
-    print(f"\n最終結果: {next(iter(results.values()))[0]}")
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem050Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":
