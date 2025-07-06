@@ -24,8 +24,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem056Runner(BaseProblemRunner):
     """Runner for Problem 056: Powerful digit sum"""
 
-    def __init__(self) -> None:
-        super().__init__("056", "Powerful digit sum")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "056",
+            "Powerful digit sum",
+            972,
+            enable_performance_test,
+            enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Test cases for powerful digit sum problem"""
@@ -146,8 +154,14 @@ def main() -> None:
         return
 
     # Run the problem
-    runner = Problem056Runner()
-    runner.main()
+    runner = Problem056Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem056Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":

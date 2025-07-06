@@ -22,8 +22,12 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem060Runner(BaseProblemRunner):
     """Problem 060: Prime pair sets のランナークラス"""
 
-    def __init__(self) -> None:
-        super().__init__("060", "Prime pair sets")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "060", "Prime pair sets", 0, enable_performance_test, enable_demonstrations
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """
@@ -236,8 +240,14 @@ class Problem060Runner(BaseProblemRunner):
 
 def main() -> None:
     """エントリーポイント"""
-    runner = Problem060Runner()
-    runner.main()
+    runner = Problem060Runner(enable_demonstrations=True)
+    runner.run_problem()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmarks for all solution approaches."""
+    runner = Problem060Runner(enable_performance_test=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":
