@@ -15,8 +15,16 @@ from problems.runners.base_runner import BaseProblemRunner
 class Problem039Runner(BaseProblemRunner):
     """Runner for Problem 039: Integer right triangles."""
 
-    def __init__(self) -> None:
-        super().__init__("039", "Integer right triangles")
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
+        super().__init__(
+            "039",
+            "Integer right triangles",
+            problem_answer=840,  # Known answer for value of p ≤ 1000 with maximum number of solutions
+            enable_performance_test=enable_performance_test,
+            enable_demonstrations=enable_demonstrations,
+        )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 039."""
@@ -42,12 +50,38 @@ class Problem039Runner(BaseProblemRunner):
         """Get parameters for the main problem."""
         return (1000,)
 
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get optional demonstration functions for complex analysis."""
+        return None
+
 
 def main() -> None:
-    """メイン関数"""
-    runner = Problem039Runner()
+    """Main entry point."""
+    # デフォルト実行（パフォーマンステストのみ無効、デモンストレーションは有効）
+    runner = Problem039Runner(enable_demonstrations=True)
     runner.main()
 
 
+def run_with_all_features() -> None:
+    """Run with all features enabled for demonstration."""
+    print("=== 全機能有効 ===")
+    runner = Problem039Runner(enable_performance_test=True, enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 039."""
+    print("=== Problem 039 Performance Benchmark ===")
+    runner = Problem039Runner(enable_performance_test=True, enable_demonstrations=False)
+    # Skip tests and run only the performance benchmark
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
