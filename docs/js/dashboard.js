@@ -193,55 +193,114 @@ function createPerformanceChart() {
     return;
   }
 
+  // Check if performance data is available
+  if (typeof performanceData === 'undefined' || !performanceData.problems) {
+    container.innerHTML = `
+      <div class="chart-container">
+        <div class="chart-title">実測パフォーマンス比較</div>
+        <div class="chart-controls">
+          <p>ベンチマークデータが利用できません。</p>
+          <p>データを生成するには: <code>python scripts/generate_dashboard_data.py</code></p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
   container.innerHTML = `
     <div class="chart-container">
-      <div class="chart-title">解法別時間計算量比較</div>
+      <div class="chart-title">実測パフォーマンス比較</div>
+      <div class="chart-controls">
+        <button id="timesModeBtn" class="chart-mode-btn active">実行時間 (ms)</button>
+        <button id="relativeModeBtn" class="chart-mode-btn">相対速度</button>
+        <button id="logModeBtn" class="chart-mode-btn">対数スケール</button>
+      </div>
+      <div class="chart-info">
+        <span id="chartInfo">データ生成: ${performanceData.metadata.generated_from}</span>
+      </div>
       <canvas id="performanceCanvas" class="chart-canvas"></canvas>
     </div>
   `;
 
   const ctx = document.getElementById('performanceCanvas').getContext('2d');
+  let currentChart = null;
+  let currentMode = 'times';
+  let useLogScale = false;
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['001', '002', '003', '004', '005', '006', '007', '008'],
-      datasets: [
-        {
-          label: '素直な解法',
-          data: [1, 1, 1, 2, 2, 1, 3, 2], // Complexity scale (1=excellent, 2=good, 3=fair)
-          backgroundColor: 'rgba(25, 118, 210, 0.6)',
-          borderColor: 'rgba(25, 118, 210, 1)',
-          borderWidth: 1
-        },
-        {
-          label: '最適化解法',
-          data: [0, 0.5, 1, 2, 1.5, 0, 2, 1],
-          backgroundColor: 'rgba(76, 175, 80, 0.6)',
-          borderColor: 'rgba(76, 175, 80, 1)',
-          borderWidth: 1
-        },
-        {
-          label: '数学的解法',
-          data: [0, 0, 1, 1, 1, 0, 2.5, 1],
-          backgroundColor: 'rgba(255, 152, 0, 0.6)',
-          borderColor: 'rgba(255, 152, 0, 1)',
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
+  function getChartData(mode) {
+    const data = mode === 'times' ? performanceData.times : performanceData.relative;
+
+    const datasets = [];
+
+    // Add datasets only if they have data
+    if (data.naive && data.naive.some(v => v !== null)) {
+      datasets.push({
+        label: '素直な解法 (Naive)',
+        data: data.naive,
+        backgroundColor: 'rgba(25, 118, 210, 0.6)',
+        borderColor: 'rgba(25, 118, 210, 1)',
+        borderWidth: 1,
+        skipNull: true
+      });
+    }
+
+    if (data.optimized && data.optimized.some(v => v !== null)) {
+      datasets.push({
+        label: '最適化解法 (Optimized)',
+        data: data.optimized,
+        backgroundColor: 'rgba(76, 175, 80, 0.6)',
+        borderColor: 'rgba(76, 175, 80, 1)',
+        borderWidth: 1,
+        skipNull: true
+      });
+    }
+
+    if (data.mathematical && data.mathematical.some(v => v !== null)) {
+      datasets.push({
+        label: '数学的解法 (Mathematical)',
+        data: data.mathematical,
+        backgroundColor: 'rgba(255, 152, 0, 0.6)',
+        borderColor: 'rgba(255, 152, 0, 1)',
+        borderWidth: 1,
+        skipNull: true
+      });
+    }
+
+    return {
+      labels: performanceData.problems,
+      datasets: datasets
+    };
+  }
+
+  function getChartOptions(mode, logScale = false) {
+    const yAxisTitle = mode === 'times' ?
+      (logScale ? '実行時間 (ms, 対数)' : '実行時間 (ms)') :
+      '相対速度 (最速解法 = 1.0)';
+
+    return {
       responsive: true,
       maintainAspectRatio: false,
+      interaction: {
+        intersect: false,
+        mode: 'index'
+      },
       scales: {
         y: {
-          beginAtZero: true,
-          max: 4,
+          type: logScale ? 'logarithmic' : 'linear',
+          beginAtZero: !logScale,
+          title: {
+            display: true,
+            text: yAxisTitle
+          },
           ticks: {
-            stepSize: 1,
             callback: function(value) {
-              const labels = ['O(1)', 'O(log n)', 'O(n)', 'O(n²)', 'O(n³)'];
-              return labels[value] || value;
+              if (mode === 'relative') {
+                return value.toFixed(1) + 'x';
+              } else if (logScale) {
+                return value < 1 ? value.toFixed(3) : value.toFixed(1);
+              } else {
+                return value < 1 ? value.toFixed(3) : value.toFixed(1);
+              }
             }
           }
         },
@@ -258,13 +317,78 @@ function createPerformanceChart() {
         },
         title: {
           display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const label = context.dataset.label || '';
+              const value = context.parsed.y;
+
+              if (value === null || value === undefined) {
+                return label + ': データなし';
+              }
+
+              if (mode === 'relative') {
+                return label + ': ' + value.toFixed(2) + 'x';
+              } else {
+                if (value < 1) {
+                  return label + ': ' + value.toFixed(3) + ' ms';
+                } else if (value < 1000) {
+                  return label + ': ' + value.toFixed(1) + ' ms';
+                } else {
+                  return label + ': ' + (value / 1000).toFixed(2) + ' s';
+                }
+              }
+            }
+          }
         }
       },
       animation: {
-        duration: 2000,
+        duration: 800,
         easing: 'easeInOutQuart'
       }
+    };
+  }
+
+  function updateChart() {
+    if (currentChart) {
+      currentChart.destroy();
     }
+
+    const chartData = getChartData(currentMode);
+    const chartOptions = getChartOptions(currentMode, useLogScale);
+
+    currentChart = new Chart(ctx, {
+      type: 'bar',
+      data: chartData,
+      options: chartOptions
+    });
+  }
+
+  // Initialize chart
+  updateChart();
+
+  // Add event listeners for mode switching
+  document.getElementById('timesModeBtn').addEventListener('click', () => {
+    currentMode = 'times';
+    useLogScale = false;
+    document.querySelectorAll('.chart-mode-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('timesModeBtn').classList.add('active');
+    updateChart();
+  });
+
+  document.getElementById('relativeModeBtn').addEventListener('click', () => {
+    currentMode = 'relative';
+    useLogScale = false;
+    document.querySelectorAll('.chart-mode-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('relativeModeBtn').classList.add('active');
+    updateChart();
+  });
+
+  document.getElementById('logModeBtn').addEventListener('click', () => {
+    useLogScale = !useLogScale;
+    document.getElementById('logModeBtn').classList.toggle('active', useLogScale);
+    updateChart();
   });
 }
 

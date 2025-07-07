@@ -1,0 +1,552 @@
+{
+  "benchmark_info": {
+    "version": "2.0",
+    "timestamp": "2025-07-06T18:48:04.000172",
+    "timeout_seconds": 60,
+    "total_problems": 12,
+    "total_execution_time": 67.09741530998144
+  },
+  "summary": {
+    "successful_problems": 12,
+    "failed_problems": 0,
+    "problems_with_timeouts": 0,
+    "total_solutions_tested": 35,
+    "total_successful_solutions": 35,
+    "total_timeout_solutions": 0,
+    "one_minute_rule_compliance": 12,
+    "result_consistency_rate": 1.0
+  },
+  "problems": {
+    "001": {
+      "problem_number": "001",
+      "problem_title": "Multiples of 3 and 5",
+      "timestamp": "2025-07-06T18:46:53.266099",
+      "solutions": [
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 5.871499888598919e-05,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 233168
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 1.962995156645775e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 233168
+        }
+      ],
+      "total_solutions": 2,
+      "successful_solutions": 2,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "最適化解法 (Optimized)",
+      "fastest_time": 1.962995156645775e-06,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "002": {
+      "problem_number": "002",
+      "problem_title": "Even Fibonacci numbers",
+      "timestamp": "2025-07-06T18:46:53.267325",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 1.2187054380774498e-05,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 4613732
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 3.517954610288143e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 4613732
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 1.924927346408367e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 4613732
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "最適化解法 (Optimized)",
+      "fastest_time": 1.924927346408367e-06,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "003": {
+      "problem_number": "003",
+      "problem_title": "Largest prime factor",
+      "timestamp": "2025-07-06T18:46:53.281488",
+      "solutions": [
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 0.00020496605429798365,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 6857
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.013754647108726203,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 6857
+        }
+      ],
+      "total_solutions": 2,
+      "successful_solutions": 2,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "素直な解法 (Naive)",
+      "fastest_time": 0.00020496605429798365,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "004": {
+      "problem_number": "004",
+      "problem_title": "Largest palindrome product",
+      "timestamp": "2025-07-06T18:46:53.285440",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 0.0002556570107117295,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": [
+            906609,
+            993,
+            913
+          ]
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 0.0017317000310868025,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": [
+            906609,
+            993,
+            913
+          ]
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.0016865379875525832,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": [
+            906609,
+            993,
+            913
+          ]
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "数学的解法 (Mathematical)",
+      "fastest_time": 0.0002556570107117295,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "005": {
+      "problem_number": "005",
+      "problem_title": "Smallest multiple",
+      "timestamp": "2025-07-06T18:47:54.373248",
+      "solutions": [
+        {
+          "name": "Built-in解法 (Builtin)",
+          "status": "success",
+          "time": 6.497022695839405e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 232792560
+        },
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 1.5078927390277386e-05,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 232792560
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 59.07710366300307,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 232792560
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 1.2085074558854103e-05,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 232792560
+        }
+      ],
+      "total_solutions": 4,
+      "successful_solutions": 4,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "Built-in解法 (Builtin)",
+      "fastest_time": 6.497022695839405e-06,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "006": {
+      "problem_number": "006",
+      "problem_title": "Sum square difference",
+      "timestamp": "2025-07-06T18:47:54.373611",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 1.0869698598980904e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 25164150
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 1.0474002920091152e-05,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 25164150
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 8.770730346441269e-07,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 25164150
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "最適化解法 (Optimized)",
+      "fastest_time": 8.770730346441269e-07,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "007": {
+      "problem_number": "007",
+      "problem_title": "10001st prime",
+      "timestamp": "2025-07-06T18:47:54.568525",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 0.04460073099471629,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 104743
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 0.14142686396371573,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 104743
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.008527140016667545,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 104743
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "最適化解法 (Optimized)",
+      "fastest_time": 0.008527140016667545,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "008": {
+      "problem_number": "008",
+      "problem_title": "Largest product in a series",
+      "timestamp": "2025-07-06T18:47:54.573217",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 0.0009556410368531942,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 23514624000
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 0.0026289160596206784,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 23514624000
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.0006760440301150084,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 23514624000
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "最適化解法 (Optimized)",
+      "fastest_time": 0.0006760440301150084,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "009": {
+      "problem_number": "009",
+      "problem_title": "Special Pythagorean triplet",
+      "timestamp": "2025-07-06T18:47:54.590877",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 8.461996912956238e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 31875000
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 0.008845754084177315,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 31875000
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.008422821993008256,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 31875000
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "数学的解法 (Mathematical)",
+      "fastest_time": 8.461996912956238e-06,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "010": {
+      "problem_number": "010",
+      "problem_title": "Summation of primes",
+      "timestamp": "2025-07-06T18:48:03.665854",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 0.07347335002850741,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 142913828922
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 7.193088033003733,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 142913828922
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.18122623302042484,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 142913828922
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "数学的解法 (Mathematical)",
+      "fastest_time": 0.07347335002850741,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "011": {
+      "problem_number": "011",
+      "problem_title": "Largest product in a grid",
+      "timestamp": "2025-07-06T18:48:03.670498",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 0.0009094369597733021,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 70600674
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 0.001824979088269174,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 70600674
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.001429000054486096,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 70600674
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "数学的解法 (Mathematical)",
+      "fastest_time": 0.0009094369597733021,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    },
+    "012": {
+      "problem_number": "012",
+      "problem_title": "Highly divisible triangular number",
+      "timestamp": "2025-07-06T18:48:04.000126",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 0.05314762191846967,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 76576500
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 0.13754700997378677,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 76576500
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.13844338699709624,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 76576500
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "数学的解法 (Mathematical)",
+      "fastest_time": 0.05314762191846967,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    }
+  }
+}
