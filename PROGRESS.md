@@ -62,6 +62,7 @@
 | 054 | Poker hands | 🟢 完了 | Python | 2025-07-05 |
 | 059 | XOR decryption | 🟢 完了 | Python | 2025-07-05 |
 | 060 | Prime pair sets | 🟢 完了 | Python | 2025-07-05 |
+| 076 | Counting summations | 🟢 完了 | Python | 2025-07-07 |
 
 ## 凡例
 
@@ -72,9 +73,9 @@
 
 ## 統計
 
-- 完了: 56/100
+- 完了: 57/100
 - 作業中: 0/100
-- 未着手: 44/100
+- 未着手: 43/100
 
 ## 目標
 
@@ -676,4 +677,17 @@
   - `docs/solutions/solution_060.md`
 - **学習ポイント**: 素数ペア、グラフ理論、クリーク探索、組み合わせ最適化、枝刈り技法
 
-最終更新: 2025-07-05
+### Problem 076: Counting summations
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 動的計画法（2次元配列）
+  - 最適化解法 (O(n²)) - 動的計画法（1次元配列、空間計算量O(n)）
+- **ファイル**:
+  - `problems/problem_076.py`
+  - `tests/problems/test_problem_076.py`
+  - `problems/runners/problem_076_runner.py`
+  - `docs/solutions/solution_076.md`
+- **学習ポイント**: 整数分割、動的計画法、組合せ論、空間計算量の最適化
+
+最終更新: 2025-07-07
