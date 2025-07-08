@@ -64,6 +64,7 @@
 | 060 | Prime pair sets | 🟢 完了 | Python | 2025-07-05 |
 | 076 | Counting summations | 🟢 完了 | Python | 2025-07-07 |
 | 077 | Prime summations | 🟢 完了 | Python | 2025-07-07 |
+| 078 | Coin partitions | 🟢 完了 | Python | 2025-07-08 |
 
 ## 凡例
 
@@ -74,9 +75,9 @@
 
 ## 統計
 
-- 完了: 58/100
+- 完了: 59/100
 - 作業中: 0/100
-- 未着手: 42/100
+- 未着手: 41/100
 
 ## 目標
 
@@ -704,4 +705,17 @@
   - `docs/solutions/solution_077.md`
 - **学習ポイント**: 素数分割、動的計画法、エラトステネスの篩、Problem 076の応用
 
-最終更新: 2025-07-07
+### Problem 078: Coin partitions
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 動的計画法で分割数を計算
+  - 最適化解法 (O(n√n)) - オイラーの五角数定理を使用
+- **ファイル**:
+  - `problems/problem_078.py`
+  - `tests/problems/test_problem_078.py`
+  - `problems/runners/problem_078_runner.py`
+  - `docs/solutions/solution_078.md`
+- **学習ポイント**: 分割関数、オイラーの五角数定理、一般化五角数、剰余演算の最適化
+
+最終更新: 2025-07-08
