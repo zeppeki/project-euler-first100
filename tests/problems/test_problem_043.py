@@ -71,6 +71,7 @@ class TestProblem043:
         assert int("728") % 13 == 0
         assert int("289") % 17 == 0
 
+    @pytest.mark.slow
     def test_solve_naive(self) -> None:
         """Test naive solution"""
         result = solve_naive()
@@ -83,12 +84,14 @@ class TestProblem043:
         assert isinstance(result, int)
         assert result > 0  # Should find some valid numbers
 
+    @pytest.mark.slow
     def test_solve_mathematical(self) -> None:
         """Test mathematical solution"""
         result = solve_mathematical()
         assert isinstance(result, int)
         assert result > 0  # Should find some valid numbers
 
+    @pytest.mark.slow
     def test_solutions_agree(self) -> None:
         """Test that all solutions agree (fast algorithms only)"""
         # Only test fast solutions by default

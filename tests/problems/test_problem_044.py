@@ -118,6 +118,7 @@ class TestProblem044:
                 assert recovered_n == n
                 assert generate_pentagonal(recovered_n) == pent
 
+    @pytest.mark.slow
     def test_solve_naive(self) -> None:
         """Test naive solution (optimized for CI)"""
         result = solve_naive()
@@ -126,6 +127,7 @@ class TestProblem044:
         # The result should be a pentagonal number itself
         assert is_pentagonal(result), "The difference should be pentagonal"
 
+    @pytest.mark.slow
     def test_solve_optimized(self) -> None:
         """Test optimized solution"""
         result = solve_optimized()
@@ -134,6 +136,7 @@ class TestProblem044:
         # The result should be a pentagonal number itself
         assert is_pentagonal(result), "The difference should be pentagonal"
 
+    @pytest.mark.slow
     def test_solve_mathematical(self) -> None:
         """Test mathematical solution"""
         result = solve_mathematical()
@@ -142,6 +145,7 @@ class TestProblem044:
         # The result should be a pentagonal number itself
         assert is_pentagonal(result), "The difference should be pentagonal"
 
+    @pytest.mark.slow
     def test_solutions_agree(self) -> None:
         """Test that all solutions agree (fast algorithms only)"""
         # Only test fast solutions by default
