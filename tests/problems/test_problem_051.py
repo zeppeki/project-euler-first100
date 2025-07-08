@@ -106,6 +106,7 @@ class TestSolutionFunctions:
         result = solver(7)
         assert result == 56003
 
+    @pytest.mark.slow
     def test_solve_consistency(self) -> None:
         """Test that all solution methods give the same result"""
         target_sizes = [6, 7]
@@ -122,6 +123,7 @@ class TestSolutionFunctions:
                 f"Inconsistent results for target {target_size}: {results}"
             )
 
+    @pytest.mark.slow
     def test_solve_main_problem(self) -> None:
         """Test the main problem (8 primes in family)"""
         # Use fast algorithms only for regular tests

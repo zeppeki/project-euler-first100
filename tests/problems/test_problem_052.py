@@ -144,6 +144,7 @@ class TestAnalysisFunctions:
         demo_false = demonstrate_permutation_check(123, 124)
         assert demo_false["are_permutations"] is False
 
+    @pytest.mark.slow
     def test_find_smallest_permuted_multiple_family(self) -> None:
         """Test finding smallest permuted multiple families"""
         # Find families of size 2 or more
