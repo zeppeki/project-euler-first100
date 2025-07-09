@@ -180,6 +180,11 @@ exclude = "problems/runners/"
 module = ["matplotlib.*", "plotly.*"]
 ignore_missing_imports = true
 
+# Ignore optional numerical computation libraries
+[[tool.mypy.overrides]]
+module = ["numpy", "numpy.*"]
+ignore_missing_imports = true
+
 # No additional overrides needed - runners excluded globally
 
 # Pytest configuration
