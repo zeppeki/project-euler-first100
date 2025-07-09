@@ -211,7 +211,7 @@ def solve_optimized(dice_sides: int = 4) -> str:
     空間計算量：O(n^2) - 遷移行列
     """
     try:
-        import numpy as np
+        import numpy as np  # type: ignore[import-not-found]
     except ImportError:
         # Fallback to naive solution if numpy is not available
         return solve_naive(dice_sides, 1000000)
