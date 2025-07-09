@@ -65,6 +65,12 @@
 | 076 | Counting summations | 🟢 完了 | Python | 2025-07-07 |
 | 077 | Prime summations | 🟢 完了 | Python | 2025-07-07 |
 | 078 | Coin partitions | 🟢 完了 | Python | 2025-07-08 |
+| 079 | Passcode derivation | 🟢 完了 | Python | 2025-07-09 |
+| 080 | Square root digital expansion | 🟢 完了 | Python | 2025-07-09 |
+| 081 | Path sum: two ways | 🟢 完了 | Python | 2025-07-09 |
+| 082 | Path sum: three ways | 🟢 完了 | Python | 2025-07-09 |
+| 083 | Path sum: four ways | 🟢 完了 | Python | 2025-07-09 |
+| 084 | Monopoly odds | 🟢 完了 | Python | 2025-07-09 |
 
 ## 凡例
 
@@ -75,9 +81,9 @@
 
 ## 統計
 
-- 完了: 59/100
+- 完了: 65/100
 - 作業中: 0/100
-- 未着手: 41/100
+- 未着手: 35/100
 
 ## 目標
 
