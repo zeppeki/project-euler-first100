@@ -27,14 +27,41 @@ class TestShortestPathLength:
     @pytest.mark.parametrize(
         "a,b,c,expected",
         [
-            (6, 5, 3, 10.0),   # Problem example: min(sqrt(6² + 8²), sqrt(5² + 9²), sqrt(3² + 11²)) = 10
-            (3, 4, 5, 8.602),  # min(sqrt(3² + 9²), sqrt(4² + 8²), sqrt(5² + 7²)) ≈ 8.602
-            (1, 1, 1, 2.236),  # min(sqrt(1² + 2²), sqrt(1² + 2²), sqrt(1² + 2²)) = sqrt(5) ≈ 2.236
-            (2, 2, 2, 4.472),  # min(sqrt(2² + 4²), sqrt(2² + 4²), sqrt(2² + 4²)) = sqrt(20) ≈ 4.472
-            (5, 12, 13, 21.4), # min(sqrt(5² + 25²), sqrt(12² + 18²), sqrt(13² + 17²)) ≈ 21.4
+            (
+                6,
+                5,
+                3,
+                10.0,
+            ),  # Problem example: min(sqrt(6² + 8²), sqrt(5² + 9²), sqrt(3² + 11²)) = 10
+            (
+                3,
+                4,
+                5,
+                8.602,
+            ),  # min(sqrt(3² + 9²), sqrt(4² + 8²), sqrt(5² + 7²)) ≈ 8.602
+            (
+                1,
+                1,
+                1,
+                2.236,
+            ),  # min(sqrt(1² + 2²), sqrt(1² + 2²), sqrt(1² + 2²)) = sqrt(5) ≈ 2.236
+            (
+                2,
+                2,
+                2,
+                4.472,
+            ),  # min(sqrt(2² + 4²), sqrt(2² + 4²), sqrt(2² + 4²)) = sqrt(20) ≈ 4.472
+            (
+                5,
+                12,
+                13,
+                21.4,
+            ),  # min(sqrt(5² + 25²), sqrt(12² + 18²), sqrt(13² + 17²)) ≈ 21.4
         ],
     )
-    def test_shortest_path_length(self, a: int, b: int, c: int, expected: float) -> None:
+    def test_shortest_path_length(
+        self, a: int, b: int, c: int, expected: float
+    ) -> None:
         """様々な立方体での最短経路長を検証."""
         result = problem_086.shortest_path_length(a, b, c)
         assert abs(result - expected) < 0.1, f"Expected {expected}, got {result}"
@@ -42,9 +69,15 @@ class TestShortestPathLength:
     def test_shortest_path_symmetry(self) -> None:
         """経路長の対称性を検証."""
         # 順序を変えても同じ結果になることを確認
-        assert problem_086.shortest_path_length(3, 4, 5) == problem_086.shortest_path_length(4, 3, 5)
-        assert problem_086.shortest_path_length(3, 4, 5) == problem_086.shortest_path_length(5, 4, 3)
-        assert problem_086.shortest_path_length(6, 5, 3) == problem_086.shortest_path_length(3, 6, 5)
+        assert problem_086.shortest_path_length(
+            3, 4, 5
+        ) == problem_086.shortest_path_length(4, 3, 5)
+        assert problem_086.shortest_path_length(
+            3, 4, 5
+        ) == problem_086.shortest_path_length(5, 4, 3)
+        assert problem_086.shortest_path_length(
+            6, 5, 3
+        ) == problem_086.shortest_path_length(3, 6, 5)
 
 
 class TestIntegerPath:
@@ -53,11 +86,11 @@ class TestIntegerPath:
     @pytest.mark.parametrize(
         "a,b,c,expected",
         [
-            (6, 5, 3, True),   # Problem example: path length = 10
+            (6, 5, 3, True),  # Problem example: path length = 10
             (3, 4, 5, False),  # Not integer path (≈ 8.602)
             (1, 1, 1, False),  # path length = sqrt(5) ≈ 2.236
             (2, 2, 2, False),  # path length = sqrt(20) ≈ 4.472
-            (5, 12, 13, False), # Not integer (≈ 21.4)
+            (5, 12, 13, False),  # Not integer (≈ 21.4)
         ],
     )
     def test_is_integer_path(self, a: int, b: int, c: int, expected: bool) -> None:
@@ -68,8 +101,12 @@ class TestIntegerPath:
     def test_integer_path_symmetry(self) -> None:
         """整数経路判定の対称性を検証."""
         # 順序を変えても同じ結果になることを確認
-        assert problem_086.is_integer_path(6, 5, 3) == problem_086.is_integer_path(3, 5, 6)
-        assert problem_086.is_integer_path(6, 5, 3) == problem_086.is_integer_path(5, 6, 3)
+        assert problem_086.is_integer_path(6, 5, 3) == problem_086.is_integer_path(
+            3, 5, 6
+        )
+        assert problem_086.is_integer_path(6, 5, 3) == problem_086.is_integer_path(
+            5, 6, 3
+        )
 
 
 class TestCountingFunctions:
@@ -84,11 +121,11 @@ class TestCountingFunctions:
         # M=5の場合
         count_5 = problem_086.count_integer_paths_optimized(5)
         assert count_5 > 0
-        
+
         # M=10の場合
         count_10 = problem_086.count_integer_paths_optimized(10)
         assert count_10 > count_5  # 単調増加
-        
+
         # M=20の場合
         count_20 = problem_086.count_integer_paths_optimized(20)
         assert count_20 > count_10  # 単調増加
@@ -99,14 +136,16 @@ class TestCountingFunctions:
         for m in [1, 2, 3, 4, 5]:
             naive_count = problem_086.count_integer_paths_naive(m)
             optimized_count = problem_086.count_integer_paths_optimized(m)
-            assert naive_count == optimized_count, f"Mismatch at M={m}: naive={naive_count}, optimized={optimized_count}"
+            assert naive_count == optimized_count, (
+                f"Mismatch at M={m}: naive={naive_count}, optimized={optimized_count}"
+            )
 
     def test_problem_examples(self) -> None:
         """問題例の数値を検証."""
         # 問題文の例: M=99で1,975個、M=100で2,060個
         count_99 = problem_086.count_integer_paths_optimized(99)
         count_100 = problem_086.count_integer_paths_optimized(100)
-        
+
         # 正確な値は検証が困難なので、合理的な範囲をチェック
         assert 1000 <= count_99 <= 3000, f"M=99 count seems unreasonable: {count_99}"
         assert 1000 <= count_100 <= 3000, f"M=100 count seems unreasonable: {count_100}"
@@ -122,7 +161,7 @@ class TestSolutionFunctions:
         target = 100
         result_naive = problem_086.solve_naive(target)
         result_optimized = problem_086.solve_optimized(target)
-        
+
         # 両方の解法が同じ結果を返すことを確認
         assert result_naive == result_optimized
 
@@ -131,16 +170,20 @@ class TestSolutionFunctions:
         # 小さい目標値での解
         target = 50
         result = problem_086.solve_optimized(target)
-        
+
         # 結果が妥当な範囲にあることを確認
         assert 5 <= result <= 50, f"Result seems unreasonable: {result}"
-        
+
         # 結果が実際に条件を満たすことを確認
         count_at_result = problem_086.count_integer_paths_optimized(result)
         count_at_prev = problem_086.count_integer_paths_optimized(result - 1)
-        
-        assert count_at_result > target, f"Result {result} doesn't exceed target {target}"
-        assert count_at_prev <= target, f"Previous value {result-1} should not exceed target {target}"
+
+        assert count_at_result > target, (
+            f"Result {result} doesn't exceed target {target}"
+        )
+        assert count_at_prev <= target, (
+            f"Previous value {result - 1} should not exceed target {target}"
+        )
 
     def test_mathematical_solution_consistency(self) -> None:
         """数学的解法の整合性を検証."""
@@ -148,7 +191,9 @@ class TestSolutionFunctions:
         for m in [3, 5, 8]:
             math_count = problem_086.count_integer_paths_mathematical(m)
             opt_count = problem_086.count_integer_paths_optimized(m)
-            assert math_count == opt_count, f"Mismatch at M={m}: math={math_count}, opt={opt_count}"
+            assert math_count == opt_count, (
+                f"Mismatch at M={m}: math={math_count}, opt={opt_count}"
+            )
 
     @pytest.mark.slow
     def test_project_euler_answer(self) -> None:
@@ -157,10 +202,12 @@ class TestSolutionFunctions:
         result = problem_086.solve_optimized()
         assert isinstance(result, int)
         assert result > 0
-        
+
         # 結果が妥当な範囲にあることを確認
         assert 1000 <= result <= 2000, f"Result seems unreasonable: {result}"
-        
+
         # 解が実際に条件を満たすことを確認
         count = problem_086.count_integer_paths_optimized(result)
-        assert count > 1000000, f"Result {result} doesn't produce enough cuboids: {count}"
+        assert count > 1000000, (
+            f"Result {result} doesn't produce enough cuboids: {count}"
+        )
