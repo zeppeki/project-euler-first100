@@ -72,6 +72,7 @@
 | 083 | Path sum: four ways | 🟢 完了 | Python | 2025-07-09 |
 | 084 | Monopoly odds | 🟢 完了 | Python | 2025-07-09 |
 | 085 | Counting rectangles | 🟢 完了 | Python | 2025-07-10 |
+| 086 | Cuboid route | 🟢 完了 | Python | 2025-07-10 |
 
 ## 凡例
 
@@ -82,9 +83,9 @@
 
 ## 統計
 
-- 完了: 66/100
+- 完了: 67/100
 - 作業中: 0/100
-- 未着手: 34/100
+- 未着手: 33/100
 
 ## 目標
 
@@ -737,5 +738,19 @@
   - `problems/runners/problem_085_runner.py`
   - `docs/solutions/solution_085.md`
 - **学習ポイント**: 組み合わせ論、二分探索、最適化、対称性
+
+### Problem 086: Cuboid route
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(M⁴)) - Mを1から順に増やして条件を満たす最小値を探索
+  - 最適化解法 (O(log M × M³)) - 二分探索で効率的に最小値を見つける
+  - 数学的解法 (O(M² log M)) - ピタゴラス数の性質を利用した高速計算
+- **ファイル**:
+  - `problems/problem_086.py`
+  - `tests/problems/test_problem_086.py`
+  - `problems/runners/problem_086_runner.py`
+  - `docs/solutions/solution_086.md`
+- **学習ポイント**: 立体幾何学、最適化、二分探索、ピタゴラス数、組み合わせ論
 
 最終更新: 2025-07-10
