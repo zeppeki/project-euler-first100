@@ -71,6 +71,7 @@
 | 082 | Path sum: three ways | 🟢 完了 | Python | 2025-07-09 |
 | 083 | Path sum: four ways | 🟢 完了 | Python | 2025-07-09 |
 | 084 | Monopoly odds | 🟢 完了 | Python | 2025-07-09 |
+| 085 | Counting rectangles | 🟢 完了 | Python | 2025-07-10 |
 
 ## 凡例
 
@@ -81,9 +82,9 @@
 
 ## 統計
 
-- 完了: 65/100
+- 完了: 66/100
 - 作業中: 0/100
-- 未着手: 35/100
+- 未着手: 34/100
 
 ## 目標
 
@@ -724,4 +725,17 @@
   - `docs/solutions/solution_078.md`
 - **学習ポイント**: 分割関数、オイラーの五角数定理、一般化五角数、剰余演算の最適化
 
-最終更新: 2025-07-08
+### Problem 085: Counting rectangles
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(n²)) - 全探索でtargetに最も近い長方形数を持つグリッドを見つける
+  - 最適化解法 (O(n log n)) - 二分探索を活用した効率的な探索
+- **ファイル**:
+  - `problems/problem_085.py`
+  - `tests/problems/test_problem_085.py`
+  - `problems/runners/problem_085_runner.py`
+  - `docs/solutions/solution_085.md`
+- **学習ポイント**: 組み合わせ論、二分探索、最適化、対称性
+
+最終更新: 2025-07-10
