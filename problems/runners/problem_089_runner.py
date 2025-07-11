@@ -47,10 +47,10 @@ def run_tests() -> None:
         print(f"    {roman:6} → {result:4} (期待値: {expected:4}) {status}")
 
     print("\n  10進数 → ローマ数字:")
-    for expected_roman, decimal in test_cases:
-        result = decimal_to_roman(decimal)
+    for expected_roman, decimal_val in test_cases:
+        result = decimal_to_roman(decimal_val)
         status = "✓" if result == expected_roman else "✗"
-        print(f"    {decimal:4} → {result:6} (期待値: {expected_roman:6}) {status}")
+        print(f"    {decimal_val:4} → {result:6} (期待値: {expected_roman:6}) {status}")
 
 
 def run_optimization_examples() -> None:
@@ -120,7 +120,7 @@ def run_problem() -> None:
     print("=== 本問題の解答 ===")
 
     # Check if data file exists
-    data_file = "problems/data/roman.txt"
+    data_file = "data/p089_roman.txt"
     if not os.path.exists(data_file):
         print(f"データファイル {data_file} が見つかりません。")
         print("テスト用のサンプルデータで実行します。")
@@ -157,7 +157,7 @@ def run_performance_comparison() -> None:
     """Compare performance of different solutions."""
     print("=== パフォーマンス比較 ===")
 
-    data_file = "problems/data/roman.txt"
+    data_file = "data/p089_roman.txt"
 
     print("解法               | 実行時間   | 結果")
     print("------------------|-----------|-------")

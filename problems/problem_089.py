@@ -63,8 +63,8 @@ def decimal_to_roman(num: int) -> str:
     Returns:
         最適化されたローマ数字文字列
     """
-    if num <= 0 or num >= 4000:
-        raise ValueError("Number must be between 1 and 3999")
+    if num <= 0 or num >= 5000:
+        raise ValueError("Number must be between 1 and 4999")
 
     # 値と対応するローマ数字のペア（大きい順）
     # 減算記法も含める
@@ -95,7 +95,7 @@ def decimal_to_roman(num: int) -> str:
     return result
 
 
-def solve_naive(filename: str = "problems/data/roman.txt") -> int:
+def solve_naive(filename: str = "data/p089_roman.txt") -> int:
     """
     素直な解法: 各ローマ数字を10進数に変換してから最適化して文字数を比較。
 
@@ -142,7 +142,7 @@ def solve_naive(filename: str = "problems/data/roman.txt") -> int:
     return total_saved
 
 
-def solve_optimized(filename: str = "problems/data/roman.txt") -> int:
+def solve_optimized(filename: str = "data/p089_roman.txt") -> int:
     """
     最適化解法: 効率的な処理で最適化を実行。
 
@@ -159,7 +159,7 @@ def solve_optimized(filename: str = "problems/data/roman.txt") -> int:
     return solve_naive(filename)
 
 
-def solve_mathematical(filename: str = "problems/data/roman.txt") -> int:
+def solve_mathematical(filename: str = "data/p089_roman.txt") -> int:
     """
     数学的解法: 完全なローマ数字変換を使用。
 
@@ -224,7 +224,7 @@ def main() -> None:
     test_solutions()
 
     # 実際の問題を解く
-    filename = "problems/data/roman.txt"
+    filename = "data/p089_roman.txt"
 
     # 各解法で計算
     start = time.time()
