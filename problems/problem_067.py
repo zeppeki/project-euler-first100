@@ -43,7 +43,7 @@ def parse_triangle(triangle_str: str) -> list[list[int]]:
     return triangle
 
 
-def solve_naive(triangle: list[list[int]]) -> int:
+def solve_naive(triangle: list[list[int]] | None = None) -> int:
     """
     素直な解法: 全経路を探索してブルートフォースで最大値を求める
 
@@ -53,11 +53,13 @@ def solve_naive(triangle: list[list[int]]) -> int:
     空間計算量: O(n) - 再帰スタック
 
     Args:
-        triangle: 三角形の数値配列
+        triangle: 三角形の数値配列（Noneの場合はファイルから読み込み）
 
     Returns:
         最大パス合計
     """
+    if triangle is None:
+        triangle = load_triangle()
 
     def max_path_from(row: int, col: int) -> int:
         """指定位置から底辺までの最大パス合計を再帰的に計算"""
@@ -79,7 +81,7 @@ def solve_naive(triangle: list[list[int]]) -> int:
     return max_path_from(0, 0)
 
 
-def solve_optimized(triangle: list[list[int]]) -> int:
+def solve_optimized(triangle: list[list[int]] | None = None) -> int:
     """
     最適化解法: 動的プログラミング（メモ化）で効率的に計算
 
@@ -87,11 +89,13 @@ def solve_optimized(triangle: list[list[int]]) -> int:
     空間計算量: O(n^2)
 
     Args:
-        triangle: 三角形の数値配列
+        triangle: 三角形の数値配列（Noneの場合はファイルから読み込み）
 
     Returns:
         最大パス合計
     """
+    if triangle is None:
+        triangle = load_triangle()
     n = len(triangle)
     memo: dict[tuple[int, int], int] = {}
 
@@ -121,7 +125,7 @@ def solve_optimized(triangle: list[list[int]]) -> int:
     return max_path_from(0, 0)
 
 
-def solve_mathematical(triangle: list[list[int]]) -> int:
+def solve_mathematical(triangle: list[list[int]] | None = None) -> int:
     """
     数学的解法: ボトムアップ動的プログラミングで最適化
 
@@ -129,11 +133,13 @@ def solve_mathematical(triangle: list[list[int]]) -> int:
     空間計算量: O(n) - インプレース更新
 
     Args:
-        triangle: 三角形の数値配列
+        triangle: 三角形の数値配列（Noneの場合はファイルから読み込み）
 
     Returns:
         最大パス合計
     """
+    if triangle is None:
+        triangle = load_triangle()
     # 三角形をコピーして破壊的変更を避ける
     dp = [row[:] for row in triangle]
 
@@ -168,3 +174,69 @@ def get_example_triangle() -> list[list[int]]:
 8 5 9 3"""
 
     return parse_triangle(triangle_str)
+
+
+def load_triangle() -> list[list[int]]:
+    """デフォルトでProblem 067の三角形データを読み込み"""
+    return get_problem_triangle()
+
+
+def test_solutions() -> None:
+    """テストケースで解答を検証"""
+    # 例題の三角形でテスト
+    test_triangle = get_example_triangle()
+    expected = 23
+
+    # 3つの解法をテスト
+    naive_result = solve_naive(test_triangle)
+    optimized_result = solve_optimized(test_triangle)
+    mathematical_result = solve_mathematical(test_triangle)
+
+    print("例題三角形での結果:")
+    print(f"素直な解法: {naive_result}")
+    print(f"最適化解法: {optimized_result}")
+    print(f"数学的解法: {mathematical_result}")
+    print(f"期待値: {expected}")
+    print(
+        f"テスト結果: {'成功' if naive_result == expected == optimized_result == mathematical_result else '失敗'}"
+    )
+
+
+def main() -> None:
+    """メイン関数"""
+    import time
+
+    # テストケースで検証
+    test_solutions()
+    print()
+
+    # 実際の問題を解く
+    try:
+        triangle = get_problem_triangle()
+        print(f"読み込んだ三角形のサイズ: {len(triangle)}行")
+
+        # 数学的解法のみ実行（最も効率的）
+        start = time.time()
+        result = solve_mathematical(triangle)
+        elapsed = time.time() - start
+
+        print(f"\n問題067の解答: {result}")
+        print(f"計算時間: {elapsed:.6f}秒")
+
+    except FileNotFoundError:
+        print("三角形ファイルが見つかりません。例題三角形で実行します。")
+
+        # 例題三角形での実行
+        example_triangle = get_example_triangle()
+        print("\n例題三角形での実行:")
+
+        start = time.time()
+        result = solve_mathematical(example_triangle)
+        elapsed = time.time() - start
+
+        print(f"数学的解法の結果: {result}")
+        print(f"計算時間: {elapsed:.6f}秒")
+
+
+if __name__ == "__main__":
+    main()

@@ -13,22 +13,33 @@ a 31K text file containing an 80 by 80 matrix.
 """
 
 
-def load_matrix(filename: str) -> list[list[int]]:
+def load_matrix(filename: str = "data/p082_matrix.txt") -> list[list[int]]:
     """Load matrix from file."""
+    from pathlib import Path
+
+    file_path = Path(__file__).parent.parent / filename
     matrix = []
-    with open(filename) as f:
+    with open(file_path) as f:
         for line in f:
             row = [int(x) for x in line.strip().split(",")]
             matrix.append(row)
     return matrix
 
 
-def solve_naive(matrix: list[list[int]]) -> int:
+def solve_naive(matrix: list[list[int]] | None = None) -> int:
     """
     素直な解法：再帰的にすべての可能なパスを探索
     時間計算量：O(3^(m*n)) - 各セルで最大3つの選択肢
     空間計算量：O(m*n) - 再帰スタック
+
+    Args:
+        matrix: 2次元配列の行列（Noneの場合はファイルから読み込み）
+
+    Returns:
+        左列から右列への最小経路の合計
     """
+    if matrix is None:
+        matrix = load_matrix()
     if not matrix or not matrix[0]:
         return 0
 
@@ -75,12 +86,20 @@ def solve_naive(matrix: list[list[int]]) -> int:
     return min_sum
 
 
-def solve_optimized(matrix: list[list[int]]) -> int:
+def solve_optimized(matrix: list[list[int]] | None = None) -> int:
     """
     最適化解法：動的計画法を使用して効率的に解く
     時間計算量：O(m*n)
     空間計算量：O(m)
+
+    Args:
+        matrix: 2次元配列の行列（Noneの場合はファイルから読み込み）
+
+    Returns:
+        左列から右列への最小経路の合計
     """
+    if matrix is None:
+        matrix = load_matrix()
     if not matrix or not matrix[0]:
         return 0
 

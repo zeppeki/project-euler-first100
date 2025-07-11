@@ -177,7 +177,7 @@ def simulate_game(dice_sides: int, num_rolls: int) -> dict[int, int]:
     return visit_counts
 
 
-def solve_naive(dice_sides: int = 4, num_simulations: int = 1000000) -> str:
+def solve_naive(dice_sides: int = 4, num_simulations: int = 100000) -> str:
     """
     素直な解法：モンテカルロシミュレーションによる確率計算
     時間計算量：O(n) - シミュレーション回数に比例

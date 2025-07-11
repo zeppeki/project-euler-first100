@@ -192,6 +192,54 @@ class SimpleBenchmarkRunner:
             "041": ((), {}),
             "042": ((), {}),
             "043": ((), {}),
+            # Problems 044-090 argument mappings
+            "044": ((), {}),  # No arguments needed
+            "045": ((), {}),  # No arguments needed
+            "046": ((), {}),  # Uses default limit=10000
+            "047": ((4,), {}),  # target_factors: int
+            "048": ((), {}),  # Uses default limit=1000
+            "049": ((), {}),  # No arguments needed
+            "050": ((), {}),  # Uses default limit=1000000
+            "051": ((8,), {}),  # target_family_size: int
+            "052": ((), {}),  # Uses default max_x=200000
+            "053": ((), {}),  # Uses default n=100
+            "054": ((), {}),  # No arguments needed (uses data file)
+            "055": ((), {}),  # Uses default limit=10000
+            "056": ((), {}),  # Uses default max_base=100, max_exp=100
+            "057": ((), {}),  # Uses default limit=1000
+            "058": ((), {}),  # Uses default target_ratio=0.1
+            "059": ((), {}),  # No arguments needed (uses data file)
+            "060": ((), {}),  # Uses default max_prime=10000
+            "061": ((), {}),  # No arguments needed
+            "062": ((), {}),  # No arguments needed
+            "063": ((), {}),  # No arguments needed
+            "064": ((), {}),  # No arguments needed
+            "065": ((), {}),  # No arguments needed
+            "066": ((), {}),  # No arguments needed
+            "067": ((), {}),  # No arguments needed (uses data file)
+            "068": ((), {}),  # No arguments needed
+            "069": ((1000000,), {}),  # limit: int
+            "070": ((10000000,), {}),  # limit: int
+            "071": ((1000000,), {}),  # limit: int
+            "072": ((1000000,), {}),  # limit: int
+            "073": ((12000,), {}),  # limit: int
+            "074": ((1000000,), {}),  # limit: int
+            "075": ((1500000,), {}),  # limit: int
+            "076": ((100,), {}),  # target: int
+            "077": ((5000,), {}),  # target: int
+            "078": ((1000000,), {}),  # target_divisor: int
+            "079": ((), {}),  # No arguments needed (uses data file)
+            "080": ((), {}),  # Uses default limit=100
+            "081": ((), {}),  # No arguments needed (uses data file)
+            "082": ((), {}),  # No arguments needed (uses data file)
+            "083": ((), {}),  # No arguments needed (uses data file)
+            "084": ((), {}),  # Uses default dice_sides=4, num_simulations=1000000
+            "085": ((), {}),  # Uses default target=2000000
+            "086": ((), {}),  # Uses default max_m=2000
+            "087": ((), {}),  # Uses default limit=50000000
+            "088": ((), {}),  # Uses default max_k=12000
+            "089": ((), {}),  # Uses default filename
+            "090": ((), {}),  # No arguments needed
         }
 
         return problem_args.get(problem_number, ((), {}))

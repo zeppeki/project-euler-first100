@@ -16,22 +16,33 @@ import heapq
 from collections import deque
 
 
-def load_matrix(filename: str) -> list[list[int]]:
+def load_matrix(filename: str = "data/p083_matrix.txt") -> list[list[int]]:
     """Load matrix from file."""
+    from pathlib import Path
+
+    file_path = Path(__file__).parent.parent / filename
     matrix = []
-    with open(filename) as f:
+    with open(file_path) as f:
         for line in f:
             row = [int(x) for x in line.strip().split(",")]
             matrix.append(row)
     return matrix
 
 
-def solve_naive(matrix: list[list[int]]) -> int:
+def solve_naive(matrix: list[list[int]] | None = None) -> int:
     """
     素直な解法：BFSを使用してすべての可能なパスを探索
     時間計算量：O(4^(m*n)) - 最悪の場合
     空間計算量：O(m*n)
+
+    Args:
+        matrix: 2次元配列の行列（Noneの場合はファイルから読み込み）
+
+    Returns:
+        左上から右下への最小経路の合計
     """
+    if matrix is None:
+        matrix = load_matrix()
     if not matrix or not matrix[0]:
         return 0
 
@@ -68,12 +79,20 @@ def solve_naive(matrix: list[list[int]]) -> int:
     return visited.get((rows - 1, cols - 1), 0)
 
 
-def solve_optimized(matrix: list[list[int]]) -> int:
+def solve_optimized(matrix: list[list[int]] | None = None) -> int:
     """
     最適化解法：ダイクストラ法を使用した最短経路探索
     時間計算量：O(m*n*log(m*n))
     空間計算量：O(m*n)
+
+    Args:
+        matrix: 2次元配列の行列（Noneの場合はファイルから読み込み）
+
+    Returns:
+        左上から右下への最小経路の合計
     """
+    if matrix is None:
+        matrix = load_matrix()
     if not matrix or not matrix[0]:
         return 0
 
