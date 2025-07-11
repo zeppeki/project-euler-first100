@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
 """Runner for Problem 091: Right triangles with integer coordinates"""
 
-import sys
 from collections.abc import Callable
-from pathlib import Path
 from typing import Any
-
-# Add parent directory to path to allow imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from problems.problem_091 import (
     is_right_triangle,

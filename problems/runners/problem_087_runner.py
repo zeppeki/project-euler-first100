@@ -2,12 +2,6 @@
 Runner for Problem 087: Prime power triples
 """
 
-import os
-import sys
-
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
-
 from problems.problem_087 import (
     sieve_of_eratosthenes,
     solve_mathematical,
