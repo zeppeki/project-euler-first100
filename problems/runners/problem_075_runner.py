@@ -6,16 +6,40 @@ This module handles the execution and demonstration of Problem 075 solutions,
 separated from the core algorithm implementations.
 """
 
+import sys
+from pathlib import Path
+
+# Add parent directory to path to allow imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from collections.abc import Callable
 from typing import Any
 
 from problems.problem_075 import (
     analyze_perimeter_distribution,
+    find_triangles_with_perimeter,
     get_examples_by_triangle_count,
     solve_naive,
     solve_optimized,
-    verify_small_examples,
 )
+
+
+def verify_small_examples() -> dict[int, list[tuple[int, int, int]]]:
+    """
+    小さな例での検証
+    返り値: 周長ごとの三角形リスト
+    """
+    examples = {}
+
+    # テストケースを追加
+    test_perimeters = [12, 30, 120]
+
+    for perimeter in test_perimeters:
+        examples[perimeter] = find_triangles_with_perimeter(perimeter)
+
+    return examples
+
+
 from problems.runners.base_runner import BaseProblemRunner
 
 

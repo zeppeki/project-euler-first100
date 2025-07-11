@@ -19,8 +19,25 @@ from problems.problem_057 import (
     has_numerator_more_digits,
     solve_naive,
     solve_optimized,
-    verify_known_convergents,
 )
+
+
+def verify_known_convergents() -> bool:
+    """
+    既知の連分数展開を検証
+    """
+    # 初期の経験的に知られている値をチェック
+    # 1番目: 1 + 1/2 = 3/2
+    convergent_1 = generate_sqrt2_convergent(1)
+    if convergent_1 != Fraction(3, 2):
+        return False
+
+    # 2番目: 1 + 1/(2 + 1/2) = 7/5
+    convergent_2 = generate_sqrt2_convergent(2)
+    if convergent_2 != Fraction(7, 5):
+        return False
+
+    return True
 
 
 class TestUtilityFunctions:

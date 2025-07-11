@@ -15,8 +15,15 @@ from problems.problem_071 import (
     solve_mathematical,
     solve_mediant,
     solve_optimized,
-    verify_farey_neighbor,
 )
+
+
+def verify_farey_neighbor(a: int, b: int, c: int, d: int) -> bool:
+    """
+    ファレー数列で隣接する分数かどうかを検証
+    隣接する分数a/bとc/dは ad - bc = 1 を満たす
+    """
+    return c * b - d * a == 1
 
 
 class TestProblem071:

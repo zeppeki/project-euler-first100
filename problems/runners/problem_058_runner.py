@@ -124,9 +124,6 @@ class Problem058Runner(BaseProblemRunner):
         side_length = 7
         diagonal_values = get_all_diagonal_values(side_length)
 
-        # 期待される対角線の値 (問題文から)
-        expected_diagonal = [1, 3, 5, 7, 9, 13, 17, 21, 25, 31, 37, 43, 49]
-
         # 素数の数をカウント
         prime_count = sum(
             1 for value in diagonal_values if value > 1 and is_prime(value)

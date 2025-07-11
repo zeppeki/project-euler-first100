@@ -189,26 +189,6 @@ def demonstrate_special_cases() -> list[dict[str, Any]]:
     return results
 
 
-def verify_examples() -> bool:
-    """
-    問題で示された例を検証
-    """
-    # 10^100 (googol) の桁数の合計は1
-    googol = 10**100
-    googol_digit_sum = digit_sum(googol)
-
-    if googol_digit_sum != 1:
-        return False
-
-    # 100^100 も非常に大きいが桁数の合計は小さい
-    hundred_to_hundred = 100**100
-    hundred_digit_sum = digit_sum(hundred_to_hundred)
-
-    # 100^100は1で始まり、後は0が続く数値ではないが、
-    # 桁数の合計が比較的小さいことを確認
-    return hundred_digit_sum < 1000  # 過度に大きくないことを確認
-
-
 def get_digit_sum_statistics(limit_a: int = 100, limit_b: int = 100) -> dict[str, Any]:
     """
     桁数の合計に関する統計情報を取得

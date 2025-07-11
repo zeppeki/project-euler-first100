@@ -4,6 +4,7 @@ Tests for Project Euler Problem 058: Spiral primes
 """
 
 from collections.abc import Callable
+from typing import Any
 
 import pytest
 
@@ -25,7 +26,7 @@ def verify_example_spiral() -> bool:
     return prime_count == 8 and total_count == 13
 
 
-def get_spiral_layer_info(side_length: int) -> dict[str, any]:
+def get_spiral_layer_info(side_length: int) -> dict[str, Any]:
     """Get information about a specific spiral layer."""
     if side_length == 1:
         return {
@@ -58,7 +59,7 @@ def get_spiral_layer_info(side_length: int) -> dict[str, any]:
     }
 
 
-def analyze_spiral_pattern(max_side_length: int) -> list[dict[str, any]]:
+def analyze_spiral_pattern(max_side_length: int) -> list[dict[str, Any]]:
     """Analyze spiral pattern up to given side length."""
     analysis = []
     for side_length in range(1, max_side_length + 1, 2):

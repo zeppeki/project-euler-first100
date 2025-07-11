@@ -119,15 +119,3 @@ def get_digit_factorials() -> list[int]:
             digit_factorials.append(number)
 
     return digit_factorials
-
-
-def verify_examples() -> bool:
-    """
-    問題の例を検証
-    """
-    # 145 = 1! + 4! + 5! = 1 + 24 + 120 = 145
-    example = 145
-    expected_sum = factorial(1) + factorial(4) + factorial(5)
-    calculated_sum = digit_factorial_sum(example)
-
-    return expected_sum == 145 and calculated_sum == 145 and is_digit_factorial(example)

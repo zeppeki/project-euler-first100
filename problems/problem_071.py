@@ -183,23 +183,6 @@ def find_fraction_left_of_target(
     return a, b
 
 
-def verify_farey_neighbor(p: int, q: int, target_num: int, target_den: int) -> bool:
-    """
-    ファレー数列での隣接関係を検証
-
-    Args:
-        p: 分子
-        q: 分母
-        target_num: 目標分数の分子
-        target_den: 目標分数の分母
-
-    Returns:
-        隣接関係があるかどうか
-    """
-    # ad - bc = 1 (determinant property)
-    return target_num * q - target_den * p == 1
-
-
 def analyze_fraction_sequence(limit: int) -> list[tuple[int, int, float]]:
     """
     3/7付近の分数を分析

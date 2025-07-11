@@ -18,8 +18,20 @@ from problems.problem_072 import (
     solve_naive,
     solve_optimized,
     solve_sieve_optimized,
-    verify_small_example,
 )
+
+
+def verify_small_example() -> tuple[int, list[tuple[int, int]]]:
+    """
+    問題文の小さな例 (d ≤ 8) を検証
+    返り値: (count, fractions)
+    """
+    fractions = []
+    for d in range(2, 9):
+        for n in range(1, d):
+            if gcd(n, d) == 1:
+                fractions.append((n, d))
+    return len(fractions), fractions
 
 
 class TestEulerTotientFunctions:

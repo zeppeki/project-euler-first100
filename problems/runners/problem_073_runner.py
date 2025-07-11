@@ -6,6 +6,12 @@ This module handles the execution and demonstration of Problem 073 solutions,
 separated from the core algorithm implementations.
 """
 
+import sys
+from pathlib import Path
+
+# Add parent directory to path to allow imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from collections.abc import Callable
 from typing import Any
 
@@ -16,9 +22,26 @@ from problems.problem_073 import (
     solve_mathematical,
     solve_naive,
     solve_optimized,
-    verify_small_example,
 )
 from problems.runners.base_runner import BaseProblemRunner
+
+
+def verify_small_example() -> tuple[int, list[tuple[int, int]]]:
+    """
+    問題文の小さな例 (d ≤ 8) を検証
+    1/3 < n/d < 1/2 の範囲の既約分数を返す
+    """
+    from math import gcd
+
+    fractions = []
+    for d in range(2, 9):
+        for n in range(1, d):
+            if gcd(n, d) == 1 and 1 / 3 < n / d < 1 / 2:
+                fractions.append((n, d))
+
+    # Sort by value
+    fractions.sort(key=lambda x: x[0] / x[1])
+    return len(fractions), fractions
 
 
 class Problem073Runner(BaseProblemRunner):

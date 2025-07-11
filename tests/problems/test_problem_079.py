@@ -8,8 +8,22 @@ from problems.problem_079 import (
     solve_naive,
     solve_optimized,
     topological_sort,
-    verify_passcode,
 )
+
+
+def verify_passcode(passcode: str, attempts: list[str]) -> bool:
+    """
+    パスコードがすべてのログイン試行を満たすか検証
+    """
+    for attempt in attempts:
+        # attemptの文字がパスコード中に正しい順序で含まれているかチェック
+        pos = -1
+        for char in attempt:
+            new_pos = passcode.find(char, pos + 1)
+            if new_pos == -1:
+                return False
+            pos = new_pos
+    return True
 
 
 class TestUtilityFunctions:

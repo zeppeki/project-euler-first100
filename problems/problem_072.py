@@ -255,26 +255,6 @@ def analyze_totient_distribution(limit: int) -> dict[str, int | float]:
     }
 
 
-def verify_small_example() -> tuple[int, list[tuple[int, int]]]:
-    """
-    小さな例（d ≤ 8）での検証
-
-    Returns:
-        (総数, 分数のリスト)
-    """
-    fractions = []
-
-    for d in range(2, 9):  # d = 2 to 8
-        for n in range(1, d):
-            if gcd(n, d) == 1:
-                fractions.append((n, d))
-
-    # 分数値でソート
-    fractions.sort(key=lambda x: x[0] / x[1])
-
-    return len(fractions), fractions
-
-
 def get_mathematical_properties(n: int) -> dict[str, Any]:
     """
     指定された数値nの数学的性質を取得
