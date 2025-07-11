@@ -138,14 +138,14 @@ class TestRomanNumeralConversion:
         """境界値のテスト."""
         # 有効な範囲
         assert problem_089.decimal_to_roman(1) == "I"
-        assert problem_089.decimal_to_roman(3999) == "MMMCMXCIX"
+        assert problem_089.decimal_to_roman(4999) == "MMMMCMXCIX"
 
         # 無効な値
         with pytest.raises(ValueError):
             problem_089.decimal_to_roman(0)
 
         with pytest.raises(ValueError):
-            problem_089.decimal_to_roman(4000)
+            problem_089.decimal_to_roman(5000)
 
         with pytest.raises(ValueError):
             problem_089.decimal_to_roman(-1)
@@ -174,6 +174,7 @@ class TestRomanNumeralConversion:
             1990,
             2021,
             3999,
+            4999,
         ]
 
         for num in test_numbers:
@@ -375,7 +376,8 @@ class TestEdgeCases:
         large_test_cases = [
             (3000, "MMM"),
             (3900, "MMMCM"),
-            (3999, "MMMCMXCIX"),  # 最大値
+            (4000, "MMMM"),
+            (4999, "MMMMCMXCIX"),  # 最大値
         ]
 
         for decimal, expected in large_test_cases:
