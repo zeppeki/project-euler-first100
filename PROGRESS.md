@@ -73,6 +73,7 @@
 | 084 | Monopoly odds | 🟢 完了 | Python | 2025-07-09 |
 | 085 | Counting rectangles | 🟢 完了 | Python | 2025-07-10 |
 | 086 | Cuboid route | 🟢 完了 | Python | 2025-07-10 |
+| 087 | Prime power triples | 🟢 完了 | Python | 2025-07-11 |
 
 ## 凡例
 
@@ -83,9 +84,9 @@
 
 ## 統計
 
-- 完了: 67/100
+- 完了: 68/100
 - 作業中: 0/100
-- 未着手: 33/100
+- 未着手: 32/100
 
 ## 目標
 
@@ -753,4 +754,18 @@
   - `docs/solutions/solution_086.md`
 - **学習ポイント**: 立体幾何学、最適化、二分探索、ピタゴラス数、組み合わせ論
 
-最終更新: 2025-07-10
+### Problem 087: Prime power triples
+- **解答**: [隠匿]
+- **実装言語**: Python
+- **解法**:
+  - 素直な解法 (O(p³)) - 全ての素数の組み合わせを試す
+  - 最適化解法 (O(p³)) - 早期終了を活用した効率的な探索
+  - 数学的解法 (O(p³)) - 事前計算でべき乗を保存し高速化
+- **ファイル**:
+  - `problems/problem_087.py`
+  - `tests/problems/test_problem_087.py`
+  - `problems/runners/problem_087_runner.py`
+  - `docs/solutions/solution_087.md`
+- **学習ポイント**: 素数生成、探索範囲の制限、早期終了、重複除去、事前計算
+
+最終更新: 2025-07-11
