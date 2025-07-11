@@ -1,0 +1,292 @@
+#!/usr/bin/env python3
+"""
+Problem 096: Su Doku
+
+Su Doku (Japanese meaning number place) is the name given to a popular puzzle concept.
+Its origin is unclear, but credit must be attributed to Leonhard Euler who invented a
+similar, and much more difficult, puzzle idea called Latin Squares. The objective of
+Su Doku puzzles, however, is to replace the blanks (or zeros) in a 9 by 9 grid in
+such that each row, column, and 3 by 3 box contains each of the digits 1 to 9.
+
+Below, I include an example of a typical starting puzzle grid and its solution grid.
+
+A well constructed Su Doku puzzle has a unique solution and can be solved by logic,
+although it may be necessary to employ "guess and test" methods in order to eliminate
+options (there is much contested opinion over this). The complexity of the search
+determines the difficulty of the puzzle; the example above is considered Easy because
+it can be solved by straight forward direct deduction.
+
+The 6K text file, sudoku.txt, contains fifty different Su Doku puzzles ranging in
+difficulty, but all with unique solutions.
+
+By solving all fifty puzzles find the sum of the 3-digit numbers found in the top
+left corner of each solution grid.
+"""
+
+import os
+
+
+def load_sudoku_puzzles(filename: str = "p096_sudoku.txt") -> list[list[list[int]]]:
+    """
+    数独パズルをファイルから読み込む
+    時間計算量: O(n) where n is number of puzzles
+    空間計算量: O(n)
+    """
+    puzzles = []
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(os.path.dirname(current_dir), "data")
+    file_path = os.path.join(data_dir, filename)
+
+    with open(file_path) as f:
+        lines = f.readlines()
+
+    i = 0
+    while i < len(lines):
+        line = lines[i].strip()
+        if line.startswith("Grid"):
+            # Read the 9x9 grid
+            grid = []
+            for j in range(1, 10):
+                if i + j < len(lines):
+                    row = [int(digit) for digit in lines[i + j].strip()]
+                    grid.append(row)
+            puzzles.append(grid)
+            i += 10  # Skip to next grid
+        else:
+            i += 1
+
+    return puzzles
+
+
+def is_valid_move(grid: list[list[int]], row: int, col: int, num: int) -> bool:
+    """
+    数独の配置が有効かどうかを判定
+    時間計算量: O(1) - 固定サイズの9x9グリッド
+    空間計算量: O(1)
+    """
+    # Check row
+    for j in range(9):
+        if grid[row][j] == num:
+            return False
+
+    # Check column
+    for i in range(9):
+        if grid[i][col] == num:
+            return False
+
+    # Check 3x3 box
+    box_row = (row // 3) * 3
+    box_col = (col // 3) * 3
+    for i in range(box_row, box_row + 3):
+        for j in range(box_col, box_col + 3):
+            if grid[i][j] == num:
+                return False
+
+    return True
+
+
+def find_empty_cell(grid: list[list[int]]) -> tuple[int, int] | None:
+    """
+    空のセル（0）を見つける
+    時間計算量: O(1) - 固定サイズの9x9グリッド
+    空間計算量: O(1)
+    """
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j] == 0:
+                return (i, j)
+    return None
+
+
+def solve_sudoku_backtrack(grid: list[list[int]]) -> bool:
+    """
+    バックトラッキングを使用した数独解法
+    時間計算量: O(9^(n*n)) worst case where n=9
+    空間計算量: O(n*n) for recursion stack
+    """
+    empty_cell = find_empty_cell(grid)
+    if empty_cell is None:
+        return True  # All cells filled
+
+    row, col = empty_cell
+
+    for num in range(1, 10):
+        if is_valid_move(grid, row, col, num):
+            grid[row][col] = num
+
+            if solve_sudoku_backtrack(grid):
+                return True
+
+            # Backtrack
+            grid[row][col] = 0
+
+    return False
+
+
+def solve_sudoku_optimized(grid: list[list[int]]) -> bool:
+    """
+    最適化されたバックトラッキング解法（最小残可能値ヒューリスティック）
+    時間計算量: O(9^(n*n)) but typically much faster
+    空間計算量: O(n*n)
+    """
+
+    def get_possible_values(row: int, col: int) -> set[int]:
+        """指定されたセルに配置可能な値を取得"""
+        possible = set(range(1, 10))
+
+        # Remove values in same row
+        for j in range(9):
+            possible.discard(grid[row][j])
+
+        # Remove values in same column
+        for i in range(9):
+            possible.discard(grid[i][col])
+
+        # Remove values in same 3x3 box
+        box_row = (row // 3) * 3
+        box_col = (col // 3) * 3
+        for i in range(box_row, box_row + 3):
+            for j in range(box_col, box_col + 3):
+                possible.discard(grid[i][j])
+
+        return possible
+
+    def find_best_cell() -> tuple[int, int, set[int]] | None:
+        """最小残可能値を持つ空のセルを見つける"""
+        best_cell = None
+        min_possibilities = 10
+
+        for i in range(9):
+            for j in range(9):
+                if grid[i][j] == 0:
+                    possible = get_possible_values(i, j)
+                    if len(possible) < min_possibilities:
+                        min_possibilities = len(possible)
+                        best_cell = (i, j, possible)
+                        if min_possibilities == 0:
+                            return best_cell  # Impossible to fill
+
+        return best_cell
+
+    cell_info = find_best_cell()
+    if cell_info is None:
+        return True  # All cells filled
+
+    row, col, possible_values = cell_info
+    if not possible_values:
+        return False  # No valid values
+
+    for num in possible_values:
+        grid[row][col] = num
+
+        if solve_sudoku_optimized(grid):
+            return True
+
+        # Backtrack
+        grid[row][col] = 0
+
+    return False
+
+
+def get_top_left_number(grid: list[list[int]]) -> int:
+    """
+    グリッドの左上3桁の数字を取得
+    時間計算量: O(1)
+    空間計算量: O(1)
+    """
+    return grid[0][0] * 100 + grid[0][1] * 10 + grid[0][2]
+
+
+def solve_naive(filename: str = "p096_sudoku.txt") -> int:
+    """
+    素直な解法: 基本的なバックトラッキング
+    時間計算量: O(k * 9^(n*n)) where k is number of puzzles
+    空間計算量: O(n*n)
+    """
+    puzzles = load_sudoku_puzzles(filename)
+    total_sum = 0
+
+    for puzzle in puzzles:
+        # Create a copy to avoid modifying original
+        grid = [row[:] for row in puzzle]
+
+        if solve_sudoku_backtrack(grid):
+            total_sum += get_top_left_number(grid)
+        # Skip unsolvable puzzles (some may have issues)
+
+    return total_sum
+
+
+def solve_optimized(filename: str = "p096_sudoku.txt") -> int:
+    """
+    最適化解法: 最小残可能値ヒューリスティック
+    時間計算量: O(k * 9^(n*n)) but typically much faster
+    空間計算量: O(n*n)
+    """
+    puzzles = load_sudoku_puzzles(filename)
+    total_sum = 0
+
+    for puzzle in puzzles:
+        # Create a copy to avoid modifying original
+        grid = [row[:] for row in puzzle]
+
+        if solve_sudoku_optimized(grid):
+            total_sum += get_top_left_number(grid)
+        # Skip unsolvable puzzles (some may have issues)
+
+    return total_sum
+
+
+def solve_mathematical(filename: str = "p096_sudoku.txt") -> int:
+    """
+    数学的解法: この問題では最適化解法と同じ（数独は組み合わせ問題）
+    時間計算量: O(k * 9^(n*n)) but typically much faster
+    空間計算量: O(n*n)
+    """
+    return solve_optimized(filename)
+
+
+def solve_single_puzzle(puzzle: list[list[int]]) -> list[list[int]]:
+    """
+    単一の数独パズルを解く（テスト用）
+    時間計算量: O(9^(n*n))
+    空間計算量: O(n*n)
+    """
+    grid = [row[:] for row in puzzle]
+    if solve_sudoku_optimized(grid):
+        return grid
+    raise ValueError("Puzzle has no solution")
+
+
+def main() -> None:
+    """メイン実行関数"""
+    import time
+
+    # Small example with first few puzzles
+    puzzles = load_sudoku_puzzles()
+    print(f"Loaded {len(puzzles)} puzzles")
+
+    # Solve first puzzle as example
+    if puzzles:
+        print("\nFirst puzzle:")
+        for row in puzzles[0]:
+            print("".join(map(str, row)))
+
+        solved = solve_single_puzzle(puzzles[0])
+        print("\nSolved:")
+        for row in solved:
+            print("".join(map(str, row)))
+
+        top_left = get_top_left_number(solved)
+        print(f"\nTop-left 3-digit number: {top_left}")
+
+    # Solve all puzzles
+    print("\nSolving all 50 puzzles...")
+    start_time = time.time()
+    result = solve_optimized()
+    print(f"Sum of all top-left 3-digit numbers: {result}")
+    print(f"Time: {time.time() - start_time:.3f}s")
+
+
+if __name__ == "__main__":
+    main()
