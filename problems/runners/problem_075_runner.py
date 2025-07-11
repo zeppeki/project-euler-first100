@@ -22,6 +22,7 @@ from problems.problem_075 import (
     solve_naive,
     solve_optimized,
 )
+from problems.runners.base_runner import BaseProblemRunner
 
 
 def verify_small_examples() -> dict[int, list[tuple[int, int, int]]]:
@@ -38,9 +39,6 @@ def verify_small_examples() -> dict[int, list[tuple[int, int, int]]]:
         examples[perimeter] = find_triangles_with_perimeter(perimeter)
 
     return examples
-
-
-from problems.runners.base_runner import BaseProblemRunner
 
 
 class Problem075Runner(BaseProblemRunner):

@@ -22,6 +22,7 @@ from problems.problem_074 import (
     solve_naive,
     solve_optimized,
 )
+from problems.runners.base_runner import BaseProblemRunner
 
 
 def verify_known_chains() -> dict[int, tuple[int, list[int]]]:
@@ -43,9 +44,6 @@ def verify_known_chains() -> dict[int, tuple[int, list[int]]]:
     known_chains[871] = (len(chain_871), chain_871)
 
     return known_chains
-
-
-from problems.runners.base_runner import BaseProblemRunner
 
 
 class Problem074Runner(BaseProblemRunner):

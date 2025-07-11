@@ -29,15 +29,9 @@ def verify_known_convergents() -> bool:
     # 初期の経験的に知られている値をチェック
     # 1番目: 1 + 1/2 = 3/2
     convergent_1 = generate_sqrt2_convergent(1)
-    if convergent_1 != Fraction(3, 2):
-        return False
-
     # 2番目: 1 + 1/(2 + 1/2) = 7/5
     convergent_2 = generate_sqrt2_convergent(2)
-    if convergent_2 != Fraction(7, 5):
-        return False
-
-    return True
+    return convergent_1 == Fraction(3, 2) and convergent_2 == Fraction(7, 5)
 
 
 class TestUtilityFunctions:

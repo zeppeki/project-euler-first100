@@ -21,14 +21,8 @@ def verify_examples() -> bool:
     既知の例を検証 (145, 40585)
     """
     # 145: 1! + 4! + 5! = 1 + 24 + 120 = 145
-    if digit_factorial_sum(145) != 145:
-        return False
-
     # 40585: 4! + 0! + 5! + 8! + 5! = 24 + 1 + 120 + 40320 + 120 = 40585
-    if digit_factorial_sum(40585) != 40585:
-        return False
-
-    return True
+    return digit_factorial_sum(145) == 145 and digit_factorial_sum(40585) == 40585
 
 
 class TestProblem034:
