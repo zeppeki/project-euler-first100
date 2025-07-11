@@ -2,12 +2,6 @@
 Runner for Problem 082: Path sum: three ways
 """
 
-import os
-import sys
-
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
-
 from problems.problem_082 import load_matrix, solve_naive, solve_optimized
 from problems.utils.display import (
     print_final_answer,

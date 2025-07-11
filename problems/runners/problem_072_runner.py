@@ -6,11 +6,8 @@ This module provides a runner for Problem 072 that demonstrates the mathematical
 concepts behind counting reduced proper fractions using Euler's totient function.
 """
 
-import sys
-from pathlib import Path
-
-# Add parent directory to path to allow imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from collections.abc import Callable
+from typing import Any
 
 from problems.problem_072 import (
     analyze_totient_distribution,
@@ -49,21 +46,37 @@ class Problem072Runner(BaseProblemRunner):
     The solution involves computing the sum of Euler's totient function φ(d) for d from 2 to 1,000,000.
     """
 
-    def __init__(self) -> None:
+    def __init__(
+        self, enable_performance_test: bool = False, enable_demonstrations: bool = False
+    ) -> None:
         super().__init__(
-            problem_number=72,
-            problem_title="Counting fractions",
-            expected_answer=303963552391,
+            "072",
+            "Counting fractions",
+            303963552391,
+            enable_performance_test,
+            enable_demonstrations,
         )
 
-    def solve(self) -> int:
-        """
-        Solve Problem 072 using the mathematical approach.
+    def get_test_cases(self) -> list[tuple[Any, ...]]:
+        """Get test cases for Problem 072."""
+        return [
+            (8, 21),  # d ≤ 8の場合、21個の既約真分数
+            (100, 3043),  # d ≤ 100の場合
+            (1000, 304193),  # d ≤ 1000の場合
+        ]
 
-        Returns:
-            The number of reduced proper fractions with denominator ≤ 1,000,000
-        """
-        return solve_mathematical(1000000)
+    def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
+        """Get solution functions for Problem 072."""
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+            ("数学的解法", solve_mathematical),
+            ("篩最適化解法", solve_sieve_optimized),
+        ]
+
+    def get_main_parameters(self) -> tuple[Any, ...]:
+        """Get parameters for the main problem."""
+        return (1000000,)
 
     def demonstrate_problem_overview(self) -> None:
         """Problem 072の概要を説明"""
@@ -283,8 +296,8 @@ class Problem072Runner(BaseProblemRunner):
 
 def main() -> None:
     """Main function for Problem 072 runner"""
-    runner = Problem072Runner()
-    runner.run_demonstration()
+    runner = Problem072Runner(enable_demonstrations=True)
+    runner.run_problem()
 
 
 if __name__ == "__main__":

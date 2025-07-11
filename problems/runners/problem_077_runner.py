@@ -3,20 +3,15 @@ Runner for Problem 77: Prime summations
 """
 
 import sys
-from pathlib import Path
 
-# プロジェクトルートをパスに追加
-project_root = Path(__file__).resolve().parent.parent.parent
-sys.path.insert(0, str(project_root))
-
-from problems.problem_077 import (  # noqa: E402
+from problems.problem_077 import (
     count_prime_partitions,
     generate_primes,
     solve_naive,
     solve_optimized,
 )
-from problems.utils.display import print_final_answer  # noqa: E402
-from problems.utils.performance import measure_performance  # noqa: E402
+from problems.utils.display import print_final_answer
+from problems.utils.performance import measure_performance
 
 
 def test_solutions() -> None:

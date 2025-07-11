@@ -3,10 +3,6 @@ Runner for Problem 089: Roman numerals
 """
 
 import os
-import sys
-
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 from problems.problem_089 import (
     decimal_to_roman,
@@ -47,10 +43,10 @@ def run_tests() -> None:
         print(f"    {roman:6} → {result:4} (期待値: {expected:4}) {status}")
 
     print("\n  10進数 → ローマ数字:")
-    for expected_roman, decimal_val in test_cases:
-        result = decimal_to_roman(decimal_val)
-        status = "✓" if result == expected_roman else "✗"
-        print(f"    {decimal_val:4} → {result:6} (期待値: {expected_roman:6}) {status}")
+    for roman, decimal_val in test_cases:
+        roman_result = decimal_to_roman(decimal_val)
+        status = "✓" if roman_result == roman else "✗"
+        print(f"    {decimal_val:4} → {roman_result:6} (期待値: {roman:6}) {status}")
 
 
 def run_optimization_examples() -> None:
