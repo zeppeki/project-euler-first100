@@ -290,8 +290,8 @@ class TestSolutionMethods:
         # Should be a positive number
         assert result > 0
 
-        # Expected answer for Project Euler Problem 96 (48 solvable puzzles)
-        assert result == 24057
+        # Expected answer for Project Euler Problem 96 (all 50 puzzles)
+        assert result == 24702
 
     def test_solver_properties(self) -> None:
         """Test properties of the solvers."""
@@ -302,11 +302,7 @@ class TestSolutionMethods:
             sample_puzzles = puzzles[:5]  # Test first 5 for speed
 
             for i, puzzle in enumerate(sample_puzzles):
-                try:
-                    solved = solve_single_puzzle(puzzle)
-                except ValueError:
-                    # Skip unsolvable puzzles (known issue with puzzles 4 and 11)
-                    continue
+                solved = solve_single_puzzle(puzzle)
 
                 # Solution should be complete
                 assert find_empty_cell(solved) is None, (
@@ -369,9 +365,9 @@ class TestProblem096:
 
     def test_main_problem_result(self) -> None:
         """Test the main problem result."""
-        # The expected answer for 48 solvable puzzles is 24057
+        # The expected answer for all 50 puzzles is 24702
         result = solve_mathematical()
-        assert result == 24057
+        assert result == 24702
 
     def test_performance_characteristics(self) -> None:
         """Test performance characteristics of different approaches."""

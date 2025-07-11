@@ -30,7 +30,7 @@ class Problem096Runner(BaseProblemRunner):
         super().__init__(
             "096",
             "Su Doku",
-            24057,  # Expected answer (48 solvable puzzles from 50)
+            24702,  # Expected answer for all 50 puzzles (corrected data)
             enable_performance_test,
             enable_demonstrations,
         )

@@ -206,13 +206,14 @@ def solve_naive(filename: str = "p096_sudoku.txt") -> int:
     puzzles = load_sudoku_puzzles(filename)
     total_sum = 0
 
-    for puzzle in puzzles:
+    for i, puzzle in enumerate(puzzles):
         # Create a copy to avoid modifying original
         grid = [row[:] for row in puzzle]
 
         if solve_sudoku_backtrack(grid):
             total_sum += get_top_left_number(grid)
-        # Skip unsolvable puzzles (some may have issues)
+        else:
+            raise ValueError(f"Puzzle {i + 1} has no solution")
 
     return total_sum
 
@@ -226,13 +227,14 @@ def solve_optimized(filename: str = "p096_sudoku.txt") -> int:
     puzzles = load_sudoku_puzzles(filename)
     total_sum = 0
 
-    for puzzle in puzzles:
+    for i, puzzle in enumerate(puzzles):
         # Create a copy to avoid modifying original
         grid = [row[:] for row in puzzle]
 
         if solve_sudoku_optimized(grid):
             total_sum += get_top_left_number(grid)
-        # Skip unsolvable puzzles (some may have issues)
+        else:
+            raise ValueError(f"Puzzle {i + 1} has no solution")
 
     return total_sum
 
