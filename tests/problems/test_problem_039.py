@@ -10,12 +10,38 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems
 
 # Import after path modification
 from problems.problem_039 import (
-    count_solutions,
-    get_solutions,
     solve_mathematical,
     solve_naive,
     solve_optimized,
 )
+
+
+def count_solutions(perimeter: int) -> int:
+    """Count the number of right triangles with given perimeter."""
+    if perimeter <= 0:
+        return 0
+
+    count = 0
+    for a in range(1, perimeter // 3 + 1):
+        for b in range(a, (perimeter - a) // 2 + 1):
+            c = perimeter - a - b
+            if c > b and a * a + b * b == c * c:
+                count += 1
+    return count
+
+
+def get_solutions(perimeter: int) -> list[tuple[int, int, int]]:
+    """Get all right triangle solutions for given perimeter."""
+    if perimeter <= 0:
+        return []
+
+    solutions = []
+    for a in range(1, perimeter // 3 + 1):
+        for b in range(a, (perimeter - a) // 2 + 1):
+            c = perimeter - a - b
+            if c > b and a * a + b * b == c * c:
+                solutions.append((a, b, c))
+    return solutions
 
 
 class TestProblem039:

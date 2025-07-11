@@ -6,6 +6,12 @@ This module provides a runner for Problem 072 that demonstrates the mathematical
 concepts behind counting reduced proper fractions using Euler's totient function.
 """
 
+import sys
+from pathlib import Path
+
+# Add parent directory to path to allow imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from problems.problem_072 import (
     analyze_totient_distribution,
     count_reduced_fractions_range,
@@ -16,9 +22,23 @@ from problems.problem_072 import (
     solve_naive,
     solve_optimized,
     solve_sieve_optimized,
-    verify_small_example,
 )
-from problems.runners.base_problem_runner import BaseProblemRunner
+from problems.runners.base_runner import BaseProblemRunner
+
+
+def verify_small_example() -> tuple[int, list[tuple[int, int]]]:
+    """
+    問題文の小さな例 (d ≤ 8) を検証
+    返り値: (count, fractions)
+    """
+    from math import gcd
+
+    fractions = []
+    for d in range(2, 9):
+        for n in range(1, d):
+            if gcd(n, d) == 1:
+                fractions.append((n, d))
+    return len(fractions), fractions
 
 
 class Problem072Runner(BaseProblemRunner):

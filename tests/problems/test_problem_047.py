@@ -12,12 +12,23 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "problems
 from problems.problem_047 import (
     count_distinct_prime_factors,
     count_distinct_prime_factors_cached,
-    get_consecutive_with_factors,
     get_prime_factors,
     solve_mathematical,
     solve_naive,
     solve_optimized,
 )
+
+
+def get_consecutive_with_factors(
+    start_num: int, target_factors: int
+) -> list[tuple[int, set[int]]]:
+    """Get consecutive numbers with their prime factors for verification."""
+    result = []
+    for i in range(target_factors):
+        num = start_num + i
+        factors = get_prime_factors(num)
+        result.append((num, factors))
+    return result
 
 
 class TestProblem047:
@@ -416,8 +427,8 @@ class TestProblem047:
         ]
 
         # Verify all numbers in sequences have correct factor counts
-        for _num, factors in consecutive_2:
+        for _, factors in consecutive_2:
             assert len(factors) == 2
 
-        for _num, factors in consecutive_3:
+        for _, factors in consecutive_3:
             assert len(factors) == 3

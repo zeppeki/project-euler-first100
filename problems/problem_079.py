@@ -144,18 +144,3 @@ def solve_mathematical() -> int:
                     queue.append(neighbor)
 
     return int("".join(result))
-
-
-def verify_passcode(passcode: str, attempts: list[str]) -> bool:
-    """
-    パスコードが全てのログイン試行を満たすかを検証
-    """
-    for attempt in attempts:
-        pos = 0
-        for digit in attempt:
-            try:
-                pos = passcode.index(digit, pos)
-                pos += 1
-            except ValueError:
-                return False
-    return True

@@ -6,6 +6,12 @@ This module handles the execution and demonstration of Problem 071 solutions,
 separated from the core algorithm implementations.
 """
 
+import sys
+from pathlib import Path
+
+# Add parent directory to path to allow imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from collections.abc import Callable
 from typing import Any
 
@@ -15,9 +21,16 @@ from problems.problem_071 import (
     solve_mathematical,
     solve_mediant,
     solve_optimized,
-    verify_farey_neighbor,
 )
 from problems.runners.base_runner import BaseProblemRunner
+
+
+def verify_farey_neighbor(a: int, b: int, c: int, d: int) -> bool:
+    """
+    ファレー数列で隣接する分数かどうかを検証
+    隣接する分数a/bとc/dは ad - bc = 1 を満たす
+    """
+    return c * b - d * a == 1
 
 
 class Problem071Runner(BaseProblemRunner):

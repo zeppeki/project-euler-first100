@@ -215,24 +215,6 @@ def find_chains_with_length(target_length: int, limit: int) -> list[int]:
     return result
 
 
-def verify_known_chains() -> dict[int, tuple[int, list[int]]]:
-    """
-    既知の特別なチェーンを検証
-
-    Returns:
-        数値をキーとし、(チェーン長, チェーン)をバリューとする辞書
-    """
-    known_cases = [145, 169, 363601, 1454, 871, 45361, 872, 45362, 69, 78, 540]
-    results: dict[int, tuple[int, list[int]]] = {}
-
-    for num in known_cases:
-        chain = get_factorial_chain(num)
-        length = get_factorial_chain_length(num)
-        results[num] = (length, chain)
-
-    return results
-
-
 def count_chains_by_length(limit: int) -> dict[int, int]:
     """
     チェーンの長さ別に数をカウント
