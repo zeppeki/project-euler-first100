@@ -117,13 +117,13 @@ def count_integer_paths_optimized(max_size: int) -> int:
 
 def count_integer_paths_mathematical(max_size: int) -> int:
     """
-    数学的解法: ピタゴラス数の性質を利用した高速計算。
+    数学的解法: 最適化版と同じロジックを使用（整合性確保）。
 
-    最短経路が整数になる条件は、ある展開でピタゴラス数が現れること。
-    つまり、a² + (b+c)² = d² の形で整数解が存在すること。
+    最短経路が整数になる条件を正確にチェックする。
+    最短経路は3つの展開の最小値なので、その値が整数である必要がある。
 
-    時間計算量: O(n² log n)
-    空間計算量: O(n)
+    時間計算量: O(n³)
+    空間計算量: O(1)
 
     Args:
         max_size: 最大サイズM
@@ -133,43 +133,11 @@ def count_integer_paths_mathematical(max_size: int) -> int:
     """
     count = 0
 
-    # ピタゴラス数を生成して、立方体の条件を満たすものを数える
-    pythagorean_squares = set()
-
-    # 必要な範囲のピタゴラス数を生成
-    max_hypotenuse = int(math.sqrt(2) * (2 * max_size)) + 1
-
-    for m in range(2, int(math.sqrt(max_hypotenuse)) + 1):
-        for n in range(1, m):
-            if math.gcd(m, n) == 1 and (m - n) % 2 == 1:
-                # 原始ピタゴラス数を生成
-                a_pyth = m * m - n * n
-                b_pyth = 2 * m * n
-                c_pyth = m * m + n * n
-
-                # 倍数も含める
-                k = 1
-                while k * c_pyth <= max_hypotenuse:
-                    pythagorean_squares.add((k * a_pyth, k * b_pyth, k * c_pyth))
-                    k += 1
-
-    # 各立方体について、3つの展開のいずれかでピタゴラス数になるかチェック
+    # 各立方体について、最短経路が整数かチェック
     for a in range(1, max_size + 1):
         for b in range(a, max_size + 1):
             for c in range(b, max_size + 1):
-                # 3つの展開方法をチェック
-                expansions = [(a, b + c), (b, a + c), (c, a + b)]
-
-                is_integer = False
-                for x, y in expansions:
-                    # x² + y² が完全平方数かチェック
-                    sum_squares = x * x + y * y
-                    sqrt_val = int(math.sqrt(sum_squares))
-                    if sqrt_val * sqrt_val == sum_squares:
-                        is_integer = True
-                        break
-
-                if is_integer:
+                if is_integer_path(a, b, c):
                     # 重複度を計算
                     if a == b == c:
                         multiplicity = 1
@@ -217,12 +185,23 @@ def solve_optimized(target: int = 1000000) -> int:
     Returns:
         整数経路を持つ立方体が目標を初めて超える最小のM
     """
-    # 上限を推定（経験的に2000程度で十分）
-    left, right = 1, 2000
+    # 目標に応じて初期上限を調整
+    if target <= 100:
+        right = 20
+    elif target <= 10000:
+        right = 100
+    else:
+        right = 2000
 
-    # 右端が十分大きいことを確認
+    left = 1
+
+    # 右端が十分大きいことを確認（段階的に増加）
     while count_integer_paths_optimized(right) <= target:
-        right *= 2
+        left = right
+        if target >= 1000000:
+            right = min(right + 200, 3000)  # 大きな目標値では小刻みに増加
+        else:
+            right = min(right * 2, right + 500)  # 過度な増加を防ぐ
 
     # 二分探索で最小のMを見つける
     while left < right:
