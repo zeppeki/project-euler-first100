@@ -5,11 +5,18 @@ Problem 059 Runner: XOR decryption
 XOR暗号の復号を実行し、パフォーマンス分析を行うランナーです。
 """
 
+import sys
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
+# Add parent directory to path to allow imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from problems.problem_059 import (
-    get_decryption_details,
+    calculate_ascii_sum,
+    find_decryption_key,
+    load_encrypted_text,
     solve_mathematical,
     solve_naive,
     solve_optimized,
@@ -105,9 +112,12 @@ class Problem059Runner(BaseProblemRunner):
         print("=== キー分析デモンストレーション ===")
 
         # 実際のデータを使用した分析
-        key, decrypted_text, ascii_sum = get_decryption_details()
+        encrypted_data = load_encrypted_text()
+        key = find_decryption_key(encrypted_data)
 
         if key:
+            decrypted_text = xor_decrypt(encrypted_data, key)
+            ascii_sum = calculate_ascii_sum(decrypted_text)
             print(f"発見されたキー: '{key}'")
             print(f"キーのASCII値: {[ord(c) for c in key]}")
             print(f"復号テキスト（最初の100文字）: '{decrypted_text[:100]}...'")
@@ -130,7 +140,9 @@ class Problem059Runner(BaseProblemRunner):
         """頻度分析のデモンストレーション"""
         print("=== 頻度分析デモンストレーション ===")
 
-        key, decrypted_text, _ = get_decryption_details()
+        encrypted_data = load_encrypted_text()
+        key = find_decryption_key(encrypted_data)
+        decrypted_text = xor_decrypt(encrypted_data, key) if key else ""
 
         if decrypted_text:
             # 文字頻度の分析

@@ -6,11 +6,16 @@ This module handles the execution and demonstration of Problem 047 solutions,
 separated from the core algorithm implementations.
 """
 
+import sys
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
+# Add parent directory to path to allow imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from problems.problem_047 import (
-    get_consecutive_with_factors,
+    get_prime_factors,
     solve_mathematical,
     solve_naive,
     solve_optimized,
@@ -65,20 +70,24 @@ class Problem047Runner(BaseProblemRunner):
         )
         print(f"開始数: {result}")
 
-        consecutive = get_consecutive_with_factors(result, target_factors)
-        for num, factors in consecutive:
+        # Show consecutive numbers with their factors
+        for i in range(target_factors):
+            num = result + i
+            factors = get_prime_factors(num)
             factors_str = " × ".join(map(str, sorted(factors)))
             print(f"  {num} = {factors_str} ({len(factors)} distinct prime factors)")
 
         print("\n検証例 - 2つの異なる素因数を持つ最初の連続数:")
-        consecutive_2 = get_consecutive_with_factors(14, 2)
-        for num, factors in consecutive_2:
+        for i in range(2):
+            num = 14 + i
+            factors = get_prime_factors(num)
             factors_str = " × ".join(map(str, sorted(factors)))
             print(f"  {num} = {factors_str} ({len(factors)} distinct prime factors)")
 
         print("\n検証例 - 3つの異なる素因数を持つ最初の連続数:")
-        consecutive_3 = get_consecutive_with_factors(644, 3)
-        for num, factors in consecutive_3:
+        for i in range(3):
+            num = 644 + i
+            factors = get_prime_factors(num)
             factors_str = " × ".join(map(str, sorted(factors)))
             print(f"  {num} = {factors_str} ({len(factors)} distinct prime factors)")
 

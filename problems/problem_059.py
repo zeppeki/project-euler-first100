@@ -416,21 +416,3 @@ def solve_mathematical() -> int:
         return calculate_ascii_sum(decrypted_text)
 
     return 0
-
-
-def get_decryption_details() -> tuple[str, str, int]:
-    """
-    復号の詳細情報を取得（デバッグ用）
-
-    Returns:
-        Tuple[str, str, int]: (key, decrypted_text, ascii_sum)
-    """
-    encrypted_data = load_encrypted_text()
-    key = find_decryption_key(encrypted_data)
-
-    if key:
-        decrypted_text = xor_decrypt(encrypted_data, key)
-        ascii_sum = calculate_ascii_sum(decrypted_text)
-        return key, decrypted_text, ascii_sum
-
-    return "", "", 0

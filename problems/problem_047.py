@@ -184,22 +184,3 @@ def solve_mathematical(target_factors: int) -> int:
             return n
 
         n += 1
-
-
-def get_consecutive_with_factors(start: int, count: int) -> list[tuple[int, set[int]]]:
-    """
-    連続する数とその素因数を取得
-
-    Args:
-        start: 開始数
-        count: 連続する数の個数
-
-    Returns:
-        (数, 素因数の集合) のリスト
-    """
-    result = []
-    for i in range(count):
-        n = start + i
-        factors = get_prime_factors(n)
-        result.append((n, factors))
-    return result

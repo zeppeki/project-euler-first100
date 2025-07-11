@@ -120,37 +120,3 @@ def solve_mathematical(max_perimeter: int) -> int:
     if max_solutions == 0:
         return 0
     return solution_counts.index(max_solutions)
-
-
-def count_solutions(perimeter: int) -> int:
-    """
-    指定された周囲の長さで直角三角形の解の数を計算
-    """
-    if perimeter <= 0:
-        return 0
-
-    count = 0
-    for a in range(1, perimeter // 3 + 1):
-        for b in range(a, (perimeter - a) // 2 + 1):
-            c = perimeter - a - b
-            if c > 0 and a * a + b * b == c * c:
-                count += 1
-
-    return count
-
-
-def get_solutions(perimeter: int) -> list[tuple[int, int, int]]:
-    """
-    指定された周囲の長さで直角三角形の解を全て取得
-    """
-    if perimeter <= 0:
-        return []
-
-    solutions = []
-    for a in range(1, perimeter // 3 + 1):
-        for b in range(a, (perimeter - a) // 2 + 1):
-            c = perimeter - a - b
-            if c > 0 and a * a + b * b == c * c:
-                solutions.append((a, b, c))
-
-    return solutions
