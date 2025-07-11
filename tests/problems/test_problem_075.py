@@ -14,8 +14,23 @@ from problems.problem_075 import (
     get_examples_by_triangle_count,
     solve_naive,
     solve_optimized,
-    verify_small_examples,
 )
+
+
+def verify_small_examples() -> dict[int, list[tuple[int, int, int]]]:
+    """
+    小さな例での検証
+    返り値: 周長ごとの三角形リスト
+    """
+    examples = {}
+
+    # テストケースを追加 (問題文で言及されている周長)
+    test_perimeters = [12, 24, 30, 36, 40, 48, 120]
+
+    for perimeter in test_perimeters:
+        examples[perimeter] = find_triangles_with_perimeter(perimeter)
+
+    return examples
 
 
 class TestUtilityFunctions:

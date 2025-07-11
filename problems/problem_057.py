@@ -178,29 +178,6 @@ def analyze_convergent_pattern(limit: int = 100) -> dict[str, Any]:
     }
 
 
-def verify_known_convergents() -> bool:
-    """
-    既知の近似分数を検証
-    """
-    known_convergents = [
-        (1, Fraction(3, 2)),
-        (2, Fraction(7, 5)),
-        (3, Fraction(17, 12)),
-        (4, Fraction(41, 29)),
-        (5, Fraction(99, 70)),
-        (6, Fraction(239, 169)),
-        (7, Fraction(577, 408)),
-        (8, Fraction(1393, 985)),
-    ]
-
-    for n, expected in known_convergents:
-        actual = generate_sqrt2_convergent(n)
-        if actual != expected:
-            return False
-
-    return True
-
-
 def demonstrate_convergence() -> list[dict[str, Any]]:
     """
     √2への収束をデモンストレーション

@@ -188,28 +188,3 @@ def solve_mathematical(limit: int = 1000000) -> int:
             break
 
     return result_prime
-
-
-def main() -> None:
-    """メイン関数"""
-    print("Problem 050: Consecutive prime sum")
-    print("=" * 40)
-
-    # 各解法の実行と結果確認
-    result_naive = solve_naive()
-    result_optimized = solve_optimized()
-    result_mathematical = solve_mathematical()
-
-    print(f"素直な解法: {result_naive}")
-    print(f"最適化解法: {result_optimized}")
-    print(f"数学的解法: {result_mathematical}")
-
-    # 結果の一致確認
-    assert result_naive == result_optimized == result_mathematical, (
-        "解法間で結果が一致しません"
-    )
-    print(f"最も多くの連続する素数の和で表せる素数: {result_naive}")
-
-
-if __name__ == "__main__":
-    main()

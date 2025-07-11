@@ -4,21 +4,78 @@ Tests for Project Euler Problem 058: Spiral primes
 """
 
 from collections.abc import Callable
+from typing import Any
 
 import pytest
 
 from problems.problem_058 import (
-    analyze_spiral_pattern,
     calculate_prime_ratio,
     count_primes_in_diagonals,
     get_all_diagonal_values,
     get_diagonal_values,
-    get_spiral_layer_info,
     is_prime,
     solve_naive,
     solve_optimized,
-    verify_example_spiral,
 )
+
+
+def verify_example_spiral() -> bool:
+    """Verify the example spiral from the problem statement."""
+    # In the 7x7 spiral, there should be 8 primes out of 13 diagonal values
+    prime_count, total_count = count_primes_in_diagonals(7)
+    return prime_count == 8 and total_count == 13
+
+
+def get_spiral_layer_info(side_length: int) -> dict[str, Any]:
+    """Get information about a specific spiral layer."""
+    if side_length == 1:
+        return {
+            "side_length": 1,
+            "layer": 0,
+            "diagonal_values": [1],
+            "prime_status": [False],
+            "primes": [],
+            "non_primes": [1],
+        }
+
+    diagonal_values = get_diagonal_values(side_length)
+    prime_status = [is_prime(val) for val in diagonal_values]
+    primes = [
+        val for val, is_pr in zip(diagonal_values, prime_status, strict=True) if is_pr
+    ]
+    non_primes = [
+        val
+        for val, is_pr in zip(diagonal_values, prime_status, strict=True)
+        if not is_pr
+    ]
+
+    return {
+        "side_length": side_length,
+        "layer": (side_length - 1) // 2,
+        "diagonal_values": diagonal_values,
+        "prime_status": prime_status,
+        "primes": primes,
+        "non_primes": non_primes,
+    }
+
+
+def analyze_spiral_pattern(max_side_length: int) -> list[dict[str, Any]]:
+    """Analyze spiral pattern up to given side length."""
+    analysis = []
+    for side_length in range(1, max_side_length + 1, 2):
+        prime_count, total_count = count_primes_in_diagonals(side_length)
+        ratio = prime_count / total_count if total_count > 0 else 0.0
+
+        analysis.append(
+            {
+                "side_length": side_length,
+                "prime_count": prime_count,
+                "total_count": total_count,
+                "ratio": ratio,
+            }
+        )
+
+    return analysis
 
 
 class TestUtilityFunctions:

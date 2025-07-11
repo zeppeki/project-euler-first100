@@ -122,28 +122,3 @@ def solve_mathematical() -> int:
                 return number  # 最初に見つかった素数が最大値
 
     return 0  # 見つからなかった場合
-
-
-def main() -> None:
-    """メイン関数"""
-    print("Problem 041: Pandigital prime")
-    print("=" * 40)
-
-    # 各解法の実行と結果確認
-    result_naive = solve_naive()
-    result_optimized = solve_optimized()
-    result_mathematical = solve_mathematical()
-
-    print(f"素直な解法: {result_naive}")
-    print(f"最適化解法: {result_optimized}")
-    print(f"数学的解法: {result_mathematical}")
-
-    # 結果の一致確認
-    assert result_naive == result_optimized == result_mathematical, (
-        "解法間で結果が一致しません"
-    )
-    print(f"最大のpandigital素数: {result_naive}")
-
-
-if __name__ == "__main__":
-    main()

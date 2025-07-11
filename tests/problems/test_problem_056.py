@@ -16,8 +16,16 @@ from problems.problem_056 import (
     get_digit_sum_statistics,
     solve_naive,
     solve_optimized,
-    verify_examples,
 )
+
+
+def verify_examples() -> bool:
+    """
+    既知の例を検証
+    """
+    # 2^15 = 32768, digit sum = 3+2+7+6+8 = 26
+    # 99^2 = 9801, digit sum = 9+8+0+1 = 18
+    return digit_sum(2**15) == 26 and digit_sum(99**2) == 18
 
 
 class TestUtilityFunctions:

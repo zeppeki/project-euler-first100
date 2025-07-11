@@ -282,20 +282,3 @@ def get_examples_by_triangle_count(
             examples.append((perimeter, triangles))
 
     return examples
-
-
-def verify_small_examples() -> dict[int, list[tuple[int, int, int]]]:
-    """
-    問題文の小例を検証
-
-    Returns:
-        周長をキー、三角形リストをバリューとする辞書
-    """
-    test_perimeters = [12, 24, 30, 36, 40, 48, 120]
-    results: dict[int, list[tuple[int, int, int]]] = {}
-
-    for perimeter in test_perimeters:
-        triangles = find_triangles_with_perimeter(perimeter)
-        results[perimeter] = triangles
-
-    return results

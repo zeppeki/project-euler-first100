@@ -16,8 +16,28 @@ from problems.problem_074 import (
     get_factorial_chain_statistics,
     solve_naive,
     solve_optimized,
-    verify_known_chains,
 )
+
+
+def verify_known_chains() -> dict[int, tuple[int, list[int]]]:
+    """
+    既知のチェーンを検証し、結果を返す
+    """
+    known_chains = {}
+
+    # 145: 145 → 1!+4!+5! = 145 (length 1)
+    chain_145 = get_factorial_chain(145)
+    known_chains[145] = (len(chain_145), chain_145)
+
+    # 169: 169 → 363601 → 1454 → 169 (length 3)
+    chain_169 = get_factorial_chain(169)
+    known_chains[169] = (len(chain_169), chain_169)
+
+    # 871: 871 → 45361 → 871 (length 2)
+    chain_871 = get_factorial_chain(871)
+    known_chains[871] = (len(chain_871), chain_871)
+
+    return known_chains
 
 
 class TestDigitFactorialSum:

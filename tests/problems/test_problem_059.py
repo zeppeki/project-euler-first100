@@ -7,7 +7,6 @@ from problems.problem_059 import (
     calculate_ascii_sum,
     find_decryption_key,
     generate_three_letter_keys,
-    get_decryption_details,
     is_valid_english_text,
     load_encrypted_text,
     solve_mathematical,
@@ -15,6 +14,18 @@ from problems.problem_059 import (
     solve_optimized,
     xor_decrypt,
 )
+
+
+def get_decryption_details() -> tuple[str | None, str, int]:
+    """Get decryption details including key, decrypted text, and ASCII sum."""
+    encrypted_data = load_encrypted_text()
+    key = find_decryption_key(encrypted_data)
+
+    if key:
+        decrypted_text = xor_decrypt(encrypted_data, key)
+        ascii_sum = calculate_ascii_sum(decrypted_text)
+        return key, decrypted_text, ascii_sum
+    return None, "", 0
 
 
 class TestProblem059:

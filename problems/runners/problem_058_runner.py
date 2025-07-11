@@ -6,17 +6,22 @@ This module handles the execution and demonstration of Problem 058 solutions,
 separated from the core algorithm implementations.
 """
 
+import sys
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
+# Add parent directory to path to allow imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from problems.problem_058 import (
-    analyze_spiral_pattern,
     calculate_prime_ratio,
     count_primes_in_diagonals,
-    get_spiral_layer_info,
+    get_all_diagonal_values,
+    get_diagonal_values,
+    is_prime,
     solve_naive,
     solve_optimized,
-    verify_example_spiral,
 )
 from problems.runners.base_runner import BaseProblemRunner
 
@@ -63,22 +68,19 @@ class Problem058Runner(BaseProblemRunner):
         print("スパイラルパターンの分析 (辺の長さ 1-21):")
         print("=" * 60)
 
-        analysis = analyze_spiral_pattern(21)
-
         print(
             f"{'辺の長さ':>6} {'対角線数':>8} {'素数':>6} {'総数':>6} {'比率':>10} {'パーセント':>10}"
         )
         print("-" * 60)
 
-        for data in analysis:
-            side_length = data["side_length"]
-            prime_count = data["prime_count"]
-            total_count = data["total_count"]
-            ratio = data["ratio"]
-            percentage = data["percentage"]
+        for side_length in range(1, 22, 2):
+            diagonal_values = get_all_diagonal_values(side_length)
+            prime_count, total_count = count_primes_in_diagonals(side_length)
+            ratio = prime_count / total_count if total_count > 0 else 0.0
+            percentage = ratio * 100
 
             print(
-                f"{side_length:>6} {len(data['diagonal_values']):>8} {prime_count:>6} {total_count:>6} {ratio:>10.4f} {percentage:>9.2f}%"
+                f"{side_length:>6} {len(diagonal_values):>8} {prime_count:>6} {total_count:>6} {ratio:>10.4f} {percentage:>9.2f}%"
             )
 
     def _demonstrate_layer_analysis(self) -> None:
@@ -87,13 +89,24 @@ class Problem058Runner(BaseProblemRunner):
         print("=" * 50)
 
         for side_length in [3, 5, 7, 9, 11]:
-            layer_info = get_spiral_layer_info(side_length)
+            if side_length == 1:
+                diagonal_values = [1]
+                primes = []
+                non_primes = [1]
+                prime_status = [False]
+                layer = 0
+            else:
+                diagonal_values = get_diagonal_values(side_length)
+                prime_status = [is_prime(value) for value in diagonal_values]
+                primes = [value for value in diagonal_values if is_prime(value)]
+                non_primes = [value for value in diagonal_values if not is_prime(value)]
+                layer = (side_length - 1) // 2
 
-            print(f"\n辺の長さ {side_length} (層 {layer_info['layer']}):")
-            print(f"  対角線の値: {layer_info['diagonal_values']}")
-            print(f"  素数: {layer_info['primes']}")
-            print(f"  非素数: {layer_info['non_primes']}")
-            print(f"  素数状態: {layer_info['prime_status']}")
+            print(f"\n辺の長さ {side_length} (層 {layer}):")
+            print(f"  対角線の値: {diagonal_values}")
+            print(f"  素数: {primes}")
+            print(f"  非素数: {non_primes}")
+            print(f"  素数状態: {prime_status}")
 
             # 現在の辺の長さまでの総比率
             prime_count, total_count = count_primes_in_diagonals(side_length)
@@ -108,7 +121,16 @@ class Problem058Runner(BaseProblemRunner):
         print("=" * 30)
 
         # 辺の長さ7のスパイラルを検証
-        if verify_example_spiral():
+        side_length = 7
+        diagonal_values = get_all_diagonal_values(side_length)
+
+        # 素数の数をカウント
+        prime_count = sum(
+            1 for value in diagonal_values if value > 1 and is_prime(value)
+        )
+        expected_prime_count = 8  # 問題文では8個の素数
+
+        if prime_count == expected_prime_count:
             print("✓ 辺の長さ7のスパイラル検証: 成功")
 
             # 詳細を表示

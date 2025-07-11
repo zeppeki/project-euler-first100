@@ -154,27 +154,6 @@ def count_fractions_in_range(
     return count
 
 
-def verify_small_example() -> tuple[int, list[tuple[int, int]]]:
-    """
-    小さな例（d ≤ 8）での検証
-
-    Returns:
-        (1/3と1/2の間の分数の個数, 分数のリスト)
-    """
-    fractions = []
-
-    for d in range(2, 9):  # d = 2 to 8
-        for n in range(1, d):
-            # 1/3 < n/d < 1/2 かチェック
-            if gcd(n, d) == 1 and 3 * n > d and 2 * n < d:
-                fractions.append((n, d))
-
-    # 分数値でソート
-    fractions.sort(key=lambda x: x[0] / x[1])
-
-    return len(fractions), fractions
-
-
 def analyze_fraction_distribution(limit: int) -> dict[str, Any]:
     """
     分数の分布を分析
