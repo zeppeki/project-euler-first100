@@ -2,12 +2,6 @@
 Runner for Problem 084: Monopoly odds
 """
 
-import os
-import sys
-
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
-
 from problems.problem_084 import BOARD_SQUARES, solve_naive
 from problems.utils.display import (
     print_final_answer,

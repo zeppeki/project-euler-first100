@@ -2,12 +2,6 @@
 Runner for Problem 088: Product-sum numbers
 """
 
-import os
-import sys
-
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
-
 from problems.problem_088 import (
     find_minimal_product_sum_numbers,
     solve_mathematical,

@@ -5,6 +5,6 @@ This package contains the base runner infrastructure and problem-specific runner
 for executing and analyzing Project Euler solutions.
 """
 
-from .base_runner import BaseProblemRunner
+from problems.runners.base_runner import BaseProblemRunner
 
 __all__ = ["BaseProblemRunner"]

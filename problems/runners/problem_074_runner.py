@@ -6,13 +6,8 @@ This module handles the execution and demonstration of Problem 074 solutions,
 separated from the core algorithm implementations.
 """
 
-import sys
 from collections.abc import Callable
-from pathlib import Path
 from typing import Any
-
-# Add parent directory to path to allow imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from problems.problem_074 import (
     count_chains_by_length,

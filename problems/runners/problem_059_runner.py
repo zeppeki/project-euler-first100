@@ -5,13 +5,8 @@ Problem 059 Runner: XOR decryption
 XOR暗号の復号を実行し、パフォーマンス分析を行うランナーです。
 """
 
-import sys
 from collections.abc import Callable
-from pathlib import Path
 from typing import Any
-
-# Add parent directory to path to allow imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from problems.problem_059 import (
     calculate_ascii_sum,

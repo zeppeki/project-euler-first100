@@ -6,12 +6,6 @@ This module handles the execution and demonstration of Problem 075 solutions,
 separated from the core algorithm implementations.
 """
 
-import sys
-from pathlib import Path
-
-# Add parent directory to path to allow imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
 from collections.abc import Callable
 from typing import Any
 
