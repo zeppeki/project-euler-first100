@@ -30,18 +30,20 @@ def load_matrix(filename: str = "p081_matrix.txt") -> list[list[int]]:
     return matrix
 
 
-def solve_naive(matrix: list[list[int]]) -> int:
+def solve_naive(matrix: list[list[int]] | None = None) -> int:
     """
     素直な解法: 再帰的に全ての経路を探索
     時間計算量: O(2^(m+n))
     空間計算量: O(m+n) (再帰スタック)
 
     Args:
-        matrix: 2次元配列の行列
+        matrix: 2次元配列の行列（Noneの場合はファイルから読み込み）
 
     Returns:
         左上から右下への最小経路の合計
     """
+    if matrix is None:
+        matrix = load_matrix()
     if not matrix or not matrix[0]:
         return 0
 
@@ -66,18 +68,20 @@ def solve_naive(matrix: list[list[int]]) -> int:
     return min_path_sum(0, 0)
 
 
-def solve_optimized(matrix: list[list[int]]) -> int:
+def solve_optimized(matrix: list[list[int]] | None = None) -> int:
     """
     最適化解法: 動的計画法を使用
     時間計算量: O(m*n)
     空間計算量: O(m*n)
 
     Args:
-        matrix: 2次元配列の行列
+        matrix: 2次元配列の行列（Noneの場合はファイルから読み込み）
 
     Returns:
         左上から右下への最小経路の合計
     """
+    if matrix is None:
+        matrix = load_matrix()
     if not matrix or not matrix[0]:
         return 0
 
