@@ -29,7 +29,29 @@ class Problem045Runner(BaseProblemRunner):
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 045."""
-        return []  # No specific test cases for this problem
+                return [
+            # Test case: Main problem parameters
+            ()
+
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 045."""
+        from problems.lib import generate_pentagonal
+        from problems.problem_045 import (
+            generate_hexagonal,
+            generate_triangle,
+            is_hexagonal,
+            is_pentagonal,
+            is_triangle,
+        )
+
+        def demonstrate_number_generation() -> None:
+            """各数列の生成を表示"""
+            print("数列の生成:")
+            print("最初の10個の三角数:")
+            for i in range(1, 11):
+                tri = generate_triangle(i)
+                print(f"  T{i,
+        ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 045."""

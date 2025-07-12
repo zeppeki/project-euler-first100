@@ -29,7 +29,20 @@ class Problem049Runner(BaseProblemRunner):
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 049."""
-        return []  # No specific test cases for this problem
+                return [
+            # Test case: Main problem parameters
+            ()
+
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 049."""
+        from problems.lib import get_digit_signature, is_prime
+
+        def demonstrate_known_example() -> None:
+            """既知の例を表示"""
+            print("既知の算術数列:")
+            sequence = [1487, 4817, 8147]
+            print(f"数列: {sequence,
+        ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 049."""

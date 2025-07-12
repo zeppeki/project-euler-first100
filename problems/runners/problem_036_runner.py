@@ -29,7 +29,37 @@ class Problem036Runner(BaseProblemRunner):
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 036."""
-        return []  # TODO: Add test cases
+                return [
+            # Test case: Main problem parameters
+            (1000000,)
+
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get optional demonstration functions for complex analysis."""
+        return None
+
+
+def main() -> None:
+    """Main entry point."""
+    # デフォルト実行（パフォーマンステストのみ無効、デモンストレーションは有効）
+    runner = Problem036Runner(enable_demonstrations=True)
+    runner.main()
+
+
+def run_with_all_features() -> None:
+    """Run with all features enabled for demonstration."""
+    print("=== 全機能有効 ===")
+    runner = Problem036Runner(enable_performance_test=True, enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 036."""
+    print("=== Problem 036 Performance Benchmark ===")
+    runner = Problem036Runner(enable_performance_test=True, enable_demonstrations=False)
+    # Skip tests and run only the performance benchmark
+    result = runner.run_problem()
+    print(f"Benchmark result: {result,
+        ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 036."""

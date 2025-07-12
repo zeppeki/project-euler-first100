@@ -29,7 +29,22 @@ class Problem044Runner(BaseProblemRunner):
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 044."""
-        return []  # No specific test cases for this problem
+                return [
+            # Test case: Main problem parameters
+            ()
+
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 044."""
+        from problems.problem_044 import generate_pentagonal, is_pentagonal
+
+        def demonstrate_pentagonal_numbers() -> None:
+            """五角数の生成とテスト"""
+            print("五角数の生成と検証:")
+            print("最初の10個の五角数:")
+            for i in range(1, 11):
+                pent = generate_pentagonal(i)
+                print(f"  P{i,
+        ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 044."""

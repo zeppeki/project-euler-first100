@@ -18,8 +18,8 @@ class Problem025Runner(BaseProblemRunner):
 
     def __init__(
         self,
-        enable_performance_test: bool = True,
-        enable_demonstrations: bool = True,
+        enable_performance_test: bool = False,
+        enable_demonstrations: bool = False,
     ) -> None:
         super().__init__(
             "025",
@@ -31,7 +31,31 @@ class Problem025Runner(BaseProblemRunner):
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 025."""
-        return []  # TODO: Add test cases
+        return [
+            # Test case: Main problem parameters
+            (1000,),
+        ]
+
+    def get_demonstration_functions(self) -> list[Callable[[], None]] | None:
+        """Get demonstration functions for Problem 025."""
+        return None
+
+
+def main() -> None:
+    """メイン関数"""
+    runner = Problem025Runner(enable_demonstrations=True)
+    runner.main()
+
+
+def run_benchmark() -> None:
+    """Run benchmark for Problem 025."""
+    runner = Problem025Runner(enable_demonstrations=False)
+    runner.run_problem()
+
+
+if __name__ == "__main__":
+    main(),
+        ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 025."""
