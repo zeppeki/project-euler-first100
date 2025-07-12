@@ -15,6 +15,8 @@ Project Euler問題解決で使用される共通関数のライブラリ。
 - matrix_utils: 行列・データ処理
 - constraint_solving: 制約充足問題
 - file_io: ファイルI/O統一処理
+- data_structures: データ構造操作・グループ化
+- number_theory: 高度な数論関数
 """
 
 from .combinatorics import (
@@ -25,6 +27,20 @@ from .combinatorics import (
     get_permutations_with_replacement,
     multinomial_coefficient,
     permutation_formula,
+)
+from .data_structures import (
+    PriorityQueue,
+    UnionFind,
+    create_adjacency_list,
+    find_duplicates,
+    find_unique_elements,
+    flatten_nested_list,
+    get_frequency_distribution,
+    group_by,
+    group_by_count,
+    invert_dictionary,
+    set_operations_summary,
+    sliding_window,
 )
 from .constraint_solving import (
     backtrack_search,
@@ -145,6 +161,21 @@ from .sequences import (
     is_triangle_number,
     pentagonal_generator,
     triangle_generator,
+)
+from .number_theory import (
+    carmichael_lambda,
+    chinese_remainder_theorem,
+    continued_fraction_sqrt,
+    convergents_from_continued_fraction,
+    euler_totient,
+    euler_totient_sieve,
+    extended_gcd,
+    is_carmichael_number,
+    jacobi_symbol,
+    mobius_function,
+    modular_exponentiation,
+    modular_inverse,
+    solve_pell_equation,
 )
 
 __all__ = [
@@ -267,4 +298,31 @@ __all__ = [
     "parse_structured_file",
     "write_results_to_file",
     "get_file_stats",
+    # data_structures module
+    "group_by",
+    "group_by_count",
+    "find_duplicates",
+    "find_unique_elements",
+    "get_frequency_distribution",
+    "set_operations_summary",
+    "PriorityQueue",
+    "UnionFind",
+    "create_adjacency_list",
+    "invert_dictionary",
+    "flatten_nested_list",
+    "sliding_window",
+    # number_theory module
+    "extended_gcd",
+    "modular_inverse",
+    "chinese_remainder_theorem",
+    "modular_exponentiation",
+    "euler_totient",
+    "euler_totient_sieve",
+    "mobius_function",
+    "jacobi_symbol",
+    "continued_fraction_sqrt",
+    "convergents_from_continued_fraction",
+    "solve_pell_equation",
+    "carmichael_lambda",
+    "is_carmichael_number",
 ]

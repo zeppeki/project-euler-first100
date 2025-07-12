@@ -54,7 +54,6 @@ def solve_optimized(limit: int = 1000000) -> int:
     空間計算量: O(n) - 篩とチェック済みセット
     """
 
-
     def get_rotations(n: int) -> list[int]:
         """数の全ての回転を取得"""
         s = str(n)
