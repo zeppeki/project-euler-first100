@@ -9,7 +9,6 @@ import pytest
 
 from problems.problem_041 import (
     is_pandigital,
-    is_prime,
     solve_mathematical,
     solve_naive,
     solve_optimized,
@@ -18,28 +17,6 @@ from problems.problem_041 import (
 
 class TestProblem041:
     """Test cases for Problem 041"""
-
-    def test_is_prime(self) -> None:
-        """Test prime number detection"""
-        # Known primes
-        assert is_prime(2)
-        assert is_prime(3)
-        assert is_prime(5)
-        assert is_prime(7)
-        assert is_prime(11)
-        assert is_prime(13)
-        assert is_prime(2143)  # Example from problem
-        assert is_prime(4231)  # Another 4-digit pandigital prime
-
-        # Known non-primes
-        assert not is_prime(0)
-        assert not is_prime(1)
-        assert not is_prime(4)
-        assert not is_prime(6)
-        assert not is_prime(8)
-        assert not is_prime(9)
-        assert not is_prime(10)
-        assert not is_prime(1234)  # Pandigital but not prime
 
     def test_is_pandigital(self) -> None:
         """Test pandigital number detection"""
@@ -62,6 +39,8 @@ class TestProblem041:
 
     def test_known_pandigital_primes(self) -> None:
         """Test with known pandigital primes"""
+        from problems.lib.primes import is_prime
+
         # Example from problem statement
         assert is_pandigital(2143, 4)
         assert is_prime(2143)
@@ -110,6 +89,8 @@ class TestProblem041:
 
     def test_solution_properties(self) -> None:
         """Test properties of the solution"""
+        from problems.lib.primes import is_prime
+
         result = solve_mathematical()  # Use most efficient method
 
         # Result should be positive
@@ -132,6 +113,8 @@ class TestProblem041:
     )
     def test_all_solutions(self, solve_func: Callable[[], int]) -> None:
         """Test each solution function individually"""
+        from problems.lib.primes import is_prime
+
         result = solve_func()
 
         # Basic properties
@@ -165,6 +148,8 @@ class TestProblem041:
 
     def test_edge_cases(self) -> None:
         """Test edge cases"""
+        from problems.lib.primes import is_prime
+
         # Test 1-digit pandigital prime
         assert is_pandigital(1, 1)
         assert not is_prime(1)  # 1 is not considered prime

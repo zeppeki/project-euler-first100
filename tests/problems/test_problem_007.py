@@ -175,21 +175,6 @@ class TestProblem007:
         assert not is_prime_optimized(0)
         assert not is_prime_optimized(1)
 
-    def test_sieve_of_eratosthenes(self) -> None:
-        """Test the Sieve of Eratosthenes function."""
-        # Test small range
-        primes_10 = sieve_of_eratosthenes(10, "list")
-        expected_10 = [2, 3, 5, 7]
-        assert primes_10 == expected_10
-
-        # Test medium range
-        primes_30 = sieve_of_eratosthenes(30, "list")
-        expected_30 = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-        assert primes_30 == expected_30
-
-        # Test edge cases
-        assert sieve_of_eratosthenes(1, "list") == []
-        assert sieve_of_eratosthenes(2, "list") == [2]
         assert sieve_of_eratosthenes(3, "list") == [2, 3]
 
     def test_manual_calculation_verification(self) -> None:

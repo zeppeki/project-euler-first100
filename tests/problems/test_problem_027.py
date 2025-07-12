@@ -9,8 +9,6 @@ import pytest
 
 from problems.problem_027 import (
     count_consecutive_primes,
-    is_prime,
-    sieve_of_eratosthenes,
     solve_naive,
     solve_optimized,
 )
@@ -18,40 +16,6 @@ from problems.problem_027 import (
 
 class TestUtilityFunctions:
     """Tests for utility functions."""
-
-    def test_is_prime(self) -> None:
-        """Test prime checking function."""
-        # Test small primes
-        assert is_prime(2) is True
-        assert is_prime(3) is True
-        assert is_prime(5) is True
-        assert is_prime(7) is True
-        assert is_prime(11) is True
-
-        # Test non-primes
-        assert is_prime(0) is False
-        assert is_prime(1) is False
-        assert is_prime(4) is False
-        assert is_prime(6) is False
-        assert is_prime(8) is False
-        assert is_prime(9) is False
-        assert is_prime(10) is False
-
-    def test_sieve_of_eratosthenes(self) -> None:
-        """Test sieve of Eratosthenes."""
-        # Test small range
-        primes_10 = sieve_of_eratosthenes(10)
-        expected_primes_10 = {2, 3, 5, 7}
-        assert set(primes_10) == expected_primes_10
-
-        # Test larger range
-        primes_30 = sieve_of_eratosthenes(30)
-        expected_primes_30 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
-        assert set(primes_30) == expected_primes_30
-
-        # Test edge cases
-        assert set(sieve_of_eratosthenes(1)) == set()
-        assert set(sieve_of_eratosthenes(2)) == {2}
 
     def test_count_consecutive_primes(self) -> None:
         """Test consecutive prime counting."""

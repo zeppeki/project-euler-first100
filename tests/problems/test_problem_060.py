@@ -13,8 +13,6 @@ from problems.problem_060 import (
     find_prime_pair_sets_by_size,
     find_prime_pairs,
     get_prime_pair_details,
-    is_prime,
-    sieve_of_eratosthenes,
     solve_mathematical,
     solve_naive,
     solve_optimized,
@@ -23,62 +21,6 @@ from problems.problem_060 import (
 
 class TestProblem060:
     """Problem 060のテストクラス"""
-
-    def test_sieve_of_eratosthenes(self) -> None:
-        """エラトステネスの篩のテスト"""
-        # 小さな範囲でのテスト
-        result = sieve_of_eratosthenes(10, "bool_array")
-        expected = [
-            False,
-            False,
-            True,
-            True,
-            False,
-            True,
-            False,
-            True,
-            False,
-            False,
-            False,
-        ]
-        assert result == expected
-
-        # 素数の個数確認
-        primes_up_to_100 = [
-            i for i in range(2, 101) if sieve_of_eratosthenes(100, "bool_array")[i]
-        ]
-        assert len(primes_up_to_100) == 25  # 100以下の素数は25個
-
-    def test_is_prime(self) -> None:
-        """素数判定のテスト"""
-        # 既知の素数
-        assert is_prime(2)
-        assert is_prime(3)
-        assert is_prime(5)
-        assert is_prime(7)
-        assert is_prime(11)
-        assert is_prime(13)
-        assert is_prime(17)
-        assert is_prime(19)
-        assert is_prime(23)
-
-        # 合成数
-        assert not is_prime(1)
-        assert not is_prime(4)
-        assert not is_prime(6)
-        assert not is_prime(8)
-        assert not is_prime(9)
-        assert not is_prime(10)
-        assert not is_prime(12)
-        assert not is_prime(14)
-        assert not is_prime(15)
-        assert not is_prime(16)
-
-        # より大きな数
-        assert is_prime(97)
-        assert is_prime(101)
-        assert not is_prime(100)
-        assert not is_prime(102)
 
     def test_concatenate_numbers(self) -> None:
         """数値連結のテスト"""
