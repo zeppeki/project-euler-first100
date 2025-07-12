@@ -285,8 +285,8 @@ class Memoization:
             self.cache.clear()
 
         # Use setattr to avoid mypy issues with dynamic attributes
-        wrapper.cache_info = cache_info_func
-        wrapper.cache_clear = cache_clear_func
+        setattr(wrapper, "cache_info", cache_info_func)
+        setattr(wrapper, "cache_clear", cache_clear_func)
 
         return wrapper
 
