@@ -12,7 +12,7 @@ Problem 035: Circular primes
 Answer: 55
 """
 
-from problems.lib.primes import is_prime
+from problems.lib.primes import is_prime, sieve_of_eratosthenes
 
 
 def solve_naive(limit: int = 1000000) -> int:
@@ -54,17 +54,6 @@ def solve_optimized(limit: int = 1000000) -> int:
     空間計算量: O(n) - 篩とチェック済みセット
     """
 
-    def sieve_of_eratosthenes(n: int) -> list[bool]:
-        """エラトステネスの篩"""
-        is_prime = [True] * n
-        is_prime[0] = is_prime[1] = False
-
-        for i in range(2, int(n**0.5) + 1):
-            if is_prime[i]:
-                for j in range(i * i, n, i):
-                    is_prime[j] = False
-
-        return is_prime
 
     def get_rotations(n: int) -> list[int]:
         """数の全ての回転を取得"""
@@ -78,7 +67,8 @@ def solve_optimized(limit: int = 1000000) -> int:
     # 篩を十分大きなサイズで生成（最大の回転を考慮）
     # 最悪の場合、6桁の数 (999999) の回転も6桁なので limit で十分
     max_possible = max(limit, 10 ** len(str(limit - 1)))
-    is_prime = sieve_of_eratosthenes(max_possible)
+    primes_list = sieve_of_eratosthenes(max_possible, "bool_array")
+    is_prime = primes_list
 
     # 処理済みの数を記録
     checked = set()

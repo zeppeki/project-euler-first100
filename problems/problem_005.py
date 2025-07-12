@@ -14,6 +14,7 @@ Answer: 232792560
 import math
 
 from .lib import lcm
+from .lib.primes import sieve_of_eratosthenes
 
 
 def solve_naive(n: int = 20) -> int:
@@ -105,21 +106,7 @@ def solve_mathematical(n: int = 20) -> int:
     if n == 1:
         return 1
 
-    # エラトステネスの篩で素数を求める
-    def sieve_of_eratosthenes(limit: int) -> list[int]:
-        """エラトステネスの篩による素数列挙"""
-        if limit < 2:
-            return []
-
-        is_prime = [True] * (limit + 1)
-        is_prime[0] = is_prime[1] = False
-
-        for i in range(2, int(limit**0.5) + 1):
-            if is_prime[i]:
-                for j in range(i * i, limit + 1, i):
-                    is_prime[j] = False
-
-        return [i for i in range(2, limit + 1) if is_prime[i]]
+    # エラトステネスの篩で素数を求める（ライブラリを使用）
 
     # 各素数について最大の冪を求める
     def max_prime_power(prime: int, limit: int) -> int:

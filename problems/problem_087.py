@@ -15,29 +15,7 @@ How many numbers below fifty million can be expressed as the sum of a prime squa
 
 import math
 
-
-def sieve_of_eratosthenes(limit: int) -> list[int]:
-    """
-    エラトステネスの篩を使って素数を生成する。
-
-    Args:
-        limit: 上限値
-
-    Returns:
-        limit以下の素数のリスト
-    """
-    if limit < 2:
-        return []
-
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-
-    for i in range(2, int(math.sqrt(limit)) + 1):
-        if is_prime[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime[j] = False
-
-    return [i for i in range(2, limit + 1) if is_prime[i]]
+from problems.lib.primes import sieve_of_eratosthenes
 
 
 def solve_naive(limit: int = 50000000) -> int:

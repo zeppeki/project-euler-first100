@@ -23,27 +23,7 @@ Find the product of the coefficients, a and b, for the quadratic expression that
 produces the maximum number of primes for consecutive values of n, starting with n = 0.
 """
 
-from problems.lib.primes import is_prime
-
-
-def sieve_of_eratosthenes(limit: int) -> set[int]:
-    """
-    エラトステネスの篩で指定した範囲の素数を生成
-    時間計算量: O(n log log n)
-    空間計算量: O(n)
-    """
-    if limit < 2:
-        return set()
-
-    is_prime_arr = [True] * (limit + 1)
-    is_prime_arr[0] = is_prime_arr[1] = False
-
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime_arr[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime_arr[j] = False
-
-    return {i for i in range(2, limit + 1) if is_prime_arr[i]}
+from problems.lib.primes import is_prime, sieve_of_eratosthenes
 
 
 def count_consecutive_primes(
@@ -114,7 +94,8 @@ def solve_optimized(limit: int = 1000) -> int:
     # 十分大きな範囲で素数を事前計算
     # 最大値の見積もりを保守的にする
     max_possible_value = 10000  # 実用的な範囲に制限
-    prime_set = sieve_of_eratosthenes(max_possible_value)
+    primes_list = sieve_of_eratosthenes(max_possible_value)
+    prime_set = set(primes_list)
 
     max_primes = 0
     result_product = 0

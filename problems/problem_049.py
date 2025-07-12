@@ -15,6 +15,7 @@ from .lib import (
     get_digit_signature,
     is_prime,
 )
+from .lib.primes import sieve_of_eratosthenes
 
 
 def find_arithmetic_sequences(numbers: list[int]) -> list[tuple[int, int, int]]:
@@ -79,19 +80,7 @@ def solve_optimized() -> int:
     """
 
     # エラトステネスの篩で4桁の素数を効率的に生成
-    def sieve_of_eratosthenes(limit: int) -> list[bool]:
-        is_prime_arr = [True] * (limit + 1)
-        is_prime_arr[0] = is_prime_arr[1] = False
-
-        for i in range(2, int(limit**0.5) + 1):
-            if is_prime_arr[i]:
-                for j in range(i * i, limit + 1, i):
-                    is_prime_arr[j] = False
-
-        return is_prime_arr
-
-    # 10000まで篩を実行
-    is_prime_arr = sieve_of_eratosthenes(9999)
+    is_prime_arr = sieve_of_eratosthenes(9999, "bool_array")
 
     # 4桁の素数のみ抽出
     primes = [n for n in range(1000, 10000) if is_prime_arr[n]]
@@ -125,18 +114,8 @@ def solve_mathematical() -> int:
     """
 
     # エラトステネスの篩で素数生成
-    def sieve_of_eratosthenes(limit: int) -> set[int]:
-        is_prime_arr = [True] * (limit + 1)
-        is_prime_arr[0] = is_prime_arr[1] = False
-
-        for i in range(2, int(limit**0.5) + 1):
-            if is_prime_arr[i]:
-                for j in range(i * i, limit + 1, i):
-                    is_prime_arr[j] = False
-
-        return {n for n in range(1000, limit + 1) if is_prime_arr[n]}
-
-    primes = sieve_of_eratosthenes(9999)
+    primes_list = sieve_of_eratosthenes(9999)
+    primes = {n for n in primes_list if n >= 1000}
 
     # 順列グループを作成
     permutation_groups: dict[str, set[int]] = {}
