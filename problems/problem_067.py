@@ -22,25 +22,8 @@ billion years to check them all. There is an efficient algorithm to solve it. ;o
 The triangle contains 100 rows and is available in the file triangle.txt.
 """
 
-
-def parse_triangle(triangle_str: str) -> list[list[int]]:
-    """
-    三角形の文字列表現を数値の二次元リストに変換
-
-    Args:
-        triangle_str: 三角形の文字列表現
-
-    Returns:
-        数値の二次元リスト
-    """
-    lines = triangle_str.strip().split("\n")
-    triangle = []
-
-    for line in lines:
-        row = [int(x) for x in line.split()]
-        triangle.append(row)
-
-    return triangle
+from problems.lib.dynamic_programming import max_path_sum_triangle, parse_triangle
+from problems.lib.file_io import load_triangle_data
 
 
 def solve_naive(triangle: list[list[int]] | None = None) -> int:
@@ -127,10 +110,10 @@ def solve_optimized(triangle: list[list[int]] | None = None) -> int:
 
 def solve_mathematical(triangle: list[list[int]] | None = None) -> int:
     """
-    数学的解法: ボトムアップ動的プログラミングで最適化
+    数学的解法: ライブラリのmax_path_sum_triangle関数を使用
 
     時間計算量: O(n^2)
-    空間計算量: O(n) - インプレース更新
+    空間計算量: O(n)
 
     Args:
         triangle: 三角形の数値配列（Noneの場合はファイルから読み込み）
@@ -140,30 +123,13 @@ def solve_mathematical(triangle: list[list[int]] | None = None) -> int:
     """
     if triangle is None:
         triangle = load_triangle()
-    # 三角形をコピーして破壊的変更を避ける
-    dp = [row[:] for row in triangle]
 
-    # 底辺から上に向かって計算
-    for i in range(len(dp) - 2, -1, -1):  # 下から2番目の行から上へ
-        for j in range(len(dp[i])):
-            # 現在位置の値 + 下の行の隣接する2つのうち大きい方
-            dp[i][j] += max(dp[i + 1][j], dp[i + 1][j + 1])
-
-    return dp[0][0]
+    return max_path_sum_triangle(triangle)
 
 
 def get_problem_triangle() -> list[list[int]]:
     """Problem 067の三角形データを取得"""
-    from pathlib import Path
-
-    # データファイルのパスを取得
-    data_file = Path(__file__).parent.parent / "data" / "0067_triangle.txt"
-
-    # ファイルから三角形データを読み込み
-    with open(data_file) as f:
-        triangle_str = f.read()
-
-    return parse_triangle(triangle_str)
+    return load_triangle_data("0067_triangle.txt")
 
 
 def get_example_triangle() -> list[list[int]]:

@@ -218,8 +218,4 @@ def is_truncatable_prime(n: int) -> bool:
             return False
 
     # 右から切り取りチェック
-    for i in range(len(s) - 1, 0, -1):
-        if not is_prime(int(s[:i])):
-            return False
-
-    return True
+    return all(is_prime(int(s[:i])) for i in range(len(s) - 1, 0, -1))

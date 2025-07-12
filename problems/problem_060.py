@@ -10,52 +10,7 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 from itertools import combinations
 from typing import Any
 
-
-def sieve_of_eratosthenes(limit: int) -> list[bool]:
-    """
-    エラトステネスの篩で素数表を作成
-
-    Args:
-        limit: 上限値
-
-    Returns:
-        インデックスが素数かどうかのブール配列
-
-    時間計算量: O(n log log n)
-    空間計算量: O(n)
-    """
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime[j] = False
-
-    return is_prime
-
-
-def is_prime(n: int) -> bool:
-    """
-    素数判定
-
-    Args:
-        n: 判定する正の整数
-
-    Returns:
-        素数の場合True、そうでなければFalse
-
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    return all(n % i != 0 for i in range(3, int(n**0.5) + 1, 2))
+from problems.lib.primes import is_prime, sieve_of_eratosthenes
 
 
 def concatenate_numbers(a: int, b: int) -> int:
@@ -157,7 +112,7 @@ def solve_naive(set_size: int = 5, prime_limit: int = 10000) -> int:
     空間計算量: O(n)
     """
     # 素数を生成
-    is_prime_array = sieve_of_eratosthenes(prime_limit)
+    is_prime_array = sieve_of_eratosthenes(prime_limit, "bool_array")
     primes = [i for i in range(2, prime_limit + 1) if is_prime_array[i]]
 
     min_sum = float("inf")
@@ -186,7 +141,7 @@ def solve_optimized(set_size: int = 5, prime_limit: int = 10000) -> int:
     空間計算量: O(n)
     """
     # 素数を生成
-    is_prime_array = sieve_of_eratosthenes(prime_limit)
+    is_prime_array = sieve_of_eratosthenes(prime_limit, "bool_array")
     primes = [i for i in range(2, prime_limit + 1) if is_prime_array[i]]
 
     min_sum = float("inf")
@@ -229,7 +184,7 @@ def solve_mathematical(set_size: int = 5, prime_limit: int = 10000) -> int:
     空間計算量: O(n^2)
     """
     # 素数を生成
-    is_prime_array = sieve_of_eratosthenes(prime_limit)
+    is_prime_array = sieve_of_eratosthenes(prime_limit, "bool_array")
     primes = [i for i in range(2, prime_limit + 1) if is_prime_array[i]]
 
     # 素数ペアの隣接行列を構築
@@ -289,7 +244,7 @@ def find_prime_pair_sets_by_size(
     空間計算量: O(n)
     """
     # 素数を生成
-    is_prime_array = sieve_of_eratosthenes(prime_limit)
+    is_prime_array = sieve_of_eratosthenes(prime_limit, "bool_array")
     primes = [i for i in range(2, prime_limit + 1) if is_prime_array[i]]
 
     results = {}

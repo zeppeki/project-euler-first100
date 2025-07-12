@@ -5,9 +5,8 @@ Tests for Problem 050: Consecutive prime sum
 
 import pytest
 
+from problems.lib.primes import is_prime, sieve_of_eratosthenes
 from problems.problem_050 import (
-    is_prime,
-    sieve_of_eratosthenes,
     solve_mathematical,
     solve_naive,
     solve_optimized,

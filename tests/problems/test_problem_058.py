@@ -81,37 +81,6 @@ def analyze_spiral_pattern(max_side_length: int) -> list[dict[str, Any]]:
 class TestUtilityFunctions:
     """Test utility functions for spiral calculations"""
 
-    def test_is_prime(self) -> None:
-        """Test prime checking function"""
-        # Test small primes
-        assert is_prime(2) is True
-        assert is_prime(3) is True
-        assert is_prime(5) is True
-        assert is_prime(7) is True
-        assert is_prime(11) is True
-        assert is_prime(13) is True
-
-        # Test small composites
-        assert is_prime(1) is False
-        assert is_prime(4) is False
-        assert is_prime(6) is False
-        assert is_prime(8) is False
-        assert is_prime(9) is False
-        assert is_prime(10) is False
-
-        # Test edge cases
-        assert is_prime(0) is False
-        assert is_prime(-1) is False
-
-        # Test larger numbers
-        assert is_prime(17) is True
-        assert is_prime(31) is True
-        assert is_prime(37) is True
-        assert is_prime(43) is True
-        assert is_prime(21) is False  # 3 × 7
-        assert is_prime(25) is False  # 5²
-        assert is_prime(49) is False  # 7²
-
     def test_get_diagonal_values_basic(self) -> None:
         """Test basic diagonal value calculation"""
         # Test side length 1 (special case)

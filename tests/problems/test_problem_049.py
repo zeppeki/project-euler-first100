@@ -6,11 +6,11 @@ import pytest
 # Import functions from common library
 from problems.lib import (
     get_digit_signature,
-    is_prime,
 )
 from problems.lib import (
     get_permutations_4digit as get_permutations,
 )
+from problems.lib.primes import is_prime
 from problems.problem_049 import (
     find_arithmetic_sequences,
     solve_mathematical,
@@ -21,22 +21,6 @@ from problems.problem_049 import (
 
 class TestProblem049:
     """Test cases for Problem 049"""
-
-    def test_is_prime(self) -> None:
-        """Test prime checking function"""
-        # Known primes
-        primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 1487, 4817, 8147]
-        for p in primes:
-            assert is_prime(p), f"{p} should be prime"
-
-        # Known non-primes
-        non_primes = [0, 1, 4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 1000, 1001, 9999]
-        for n in non_primes:
-            assert not is_prime(n), f"{n} should not be prime"
-
-        # Edge cases
-        assert not is_prime(-1), "Negative numbers should not be prime"
-        assert not is_prime(-5), "Negative numbers should not be prime"
 
     def test_get_digit_signature(self) -> None:
         """Test digit signature function"""

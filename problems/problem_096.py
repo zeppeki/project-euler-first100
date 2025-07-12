@@ -23,104 +23,11 @@ By solving all fifty puzzles find the sum of the 3-digit numbers found in the to
 left corner of each solution grid.
 """
 
-import os
-
-
-def load_sudoku_puzzles(filename: str = "p096_sudoku.txt") -> list[list[list[int]]]:
-    """
-    数独パズルをファイルから読み込む
-    時間計算量: O(n) where n is number of puzzles
-    空間計算量: O(n)
-    """
-    puzzles = []
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    data_dir = os.path.join(os.path.dirname(current_dir), "data")
-    file_path = os.path.join(data_dir, filename)
-
-    with open(file_path) as f:
-        lines = f.readlines()
-
-    i = 0
-    while i < len(lines):
-        line = lines[i].strip()
-        if line.startswith("Grid"):
-            # Read the 9x9 grid
-            grid = []
-            for j in range(1, 10):
-                if i + j < len(lines):
-                    row = [int(digit) for digit in lines[i + j].strip()]
-                    grid.append(row)
-            puzzles.append(grid)
-            i += 10  # Skip to next grid
-        else:
-            i += 1
-
-    return puzzles
-
-
-def is_valid_move(grid: list[list[int]], row: int, col: int, num: int) -> bool:
-    """
-    数独の配置が有効かどうかを判定
-    時間計算量: O(1) - 固定サイズの9x9グリッド
-    空間計算量: O(1)
-    """
-    # Check row
-    for j in range(9):
-        if grid[row][j] == num:
-            return False
-
-    # Check column
-    for i in range(9):
-        if grid[i][col] == num:
-            return False
-
-    # Check 3x3 box
-    box_row = (row // 3) * 3
-    box_col = (col // 3) * 3
-    for i in range(box_row, box_row + 3):
-        for j in range(box_col, box_col + 3):
-            if grid[i][j] == num:
-                return False
-
-    return True
-
-
-def find_empty_cell(grid: list[list[int]]) -> tuple[int, int] | None:
-    """
-    空のセル（0）を見つける
-    時間計算量: O(1) - 固定サイズの9x9グリッド
-    空間計算量: O(1)
-    """
-    for i in range(9):
-        for j in range(9):
-            if grid[i][j] == 0:
-                return (i, j)
-    return None
-
-
-def solve_sudoku_backtrack(grid: list[list[int]]) -> bool:
-    """
-    バックトラッキングを使用した数独解法
-    時間計算量: O(9^(n*n)) worst case where n=9
-    空間計算量: O(n*n) for recursion stack
-    """
-    empty_cell = find_empty_cell(grid)
-    if empty_cell is None:
-        return True  # All cells filled
-
-    row, col = empty_cell
-
-    for num in range(1, 10):
-        if is_valid_move(grid, row, col, num):
-            grid[row][col] = num
-
-            if solve_sudoku_backtrack(grid):
-                return True
-
-            # Backtrack
-            grid[row][col] = 0
-
-    return False
+from problems.lib.constraint_solving import (
+    is_valid_sudoku_move,
+    load_sudoku_puzzles,
+    solve_sudoku_backtrack,
+)
 
 
 def solve_sudoku_optimized(grid: list[list[int]]) -> bool:
@@ -177,13 +84,14 @@ def solve_sudoku_optimized(grid: list[list[int]]) -> bool:
         return False  # No valid values
 
     for num in possible_values:
-        grid[row][col] = num
+        if is_valid_sudoku_move(grid, row, col, num):
+            grid[row][col] = num
 
-        if solve_sudoku_optimized(grid):
-            return True
+            if solve_sudoku_optimized(grid):
+                return True
 
-        # Backtrack
-        grid[row][col] = 0
+            # Backtrack
+            grid[row][col] = 0
 
     return False
 

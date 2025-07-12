@@ -14,24 +14,6 @@ from problems.problem_037 import (
 class TestProblem037:
     """Test cases for Problem 037"""
 
-    def test_is_prime(self) -> None:
-        """Test prime checking function"""
-        assert is_prime(2) is True
-        assert is_prime(3) is True
-        assert is_prime(5) is True
-        assert is_prime(7) is True
-        assert is_prime(11) is True
-        assert is_prime(23) is True
-        assert is_prime(37) is True
-        assert is_prime(3797) is True
-
-        assert is_prime(1) is False
-        assert is_prime(4) is False
-        assert is_prime(6) is False
-        assert is_prime(8) is False
-        assert is_prime(9) is False
-        assert is_prime(10) is False
-
     def test_is_truncatable_prime(self) -> None:
         """Test truncatable prime checking function"""
         # Known truncatable primes

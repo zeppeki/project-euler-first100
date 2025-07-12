@@ -20,24 +20,7 @@ If this process is continued, what is the side length of the square spiral for w
 along both diagonals first falls below 10%?
 """
 
-import math
-
-
-def is_prime(n: int) -> bool:
-    """
-    素数判定関数
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    # 3から√nまでの奇数で試し割り
-    return all(n % i != 0 for i in range(3, int(math.sqrt(n)) + 1, 2))
+from problems.lib.primes import is_prime
 
 
 def get_diagonal_values(side_length: int) -> list[int]:

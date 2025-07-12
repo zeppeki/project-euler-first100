@@ -5,16 +5,18 @@ Test for Problem 096: Su Doku
 
 import pytest
 
-from problems.problem_096 import (
+from problems.lib.constraint_solving import (
     find_empty_cell,
+    is_valid_sudoku_move,
+    solve_sudoku_backtrack,
+)
+from problems.problem_096 import (
     get_top_left_number,
-    is_valid_move,
     load_sudoku_puzzles,
     solve_mathematical,
     solve_naive,
     solve_optimized,
     solve_single_puzzle,
-    solve_sudoku_backtrack,
     solve_sudoku_optimized,
 )
 
@@ -38,7 +40,7 @@ class TestUtilityFunctions:
                 for cell in row:
                     assert 0 <= cell <= 9
 
-    def test_is_valid_move(self) -> None:
+    def test_is_valid_sudoku_move(self) -> None:
         """Test sudoku move validation."""
         # Simple test grid
         grid = [
@@ -54,18 +56,18 @@ class TestUtilityFunctions:
         ]
 
         # Test row constraint
-        assert not is_valid_move(grid, 0, 2, 5)  # 5 already in row 0
-        assert not is_valid_move(grid, 0, 2, 3)  # 3 already in row 0
+        assert not is_valid_sudoku_move(grid, 0, 2, 5)  # 5 already in row 0
+        assert not is_valid_sudoku_move(grid, 0, 2, 3)  # 3 already in row 0
 
         # Test column constraint
-        assert not is_valid_move(grid, 0, 2, 6)  # 6 already in column 2
+        assert not is_valid_sudoku_move(grid, 0, 2, 6)  # 6 already in column 2
 
         # Test box constraint
-        assert not is_valid_move(grid, 0, 2, 9)  # 9 already in top-left box
+        assert not is_valid_sudoku_move(grid, 0, 2, 9)  # 9 already in top-left box
 
         # Test valid move
-        assert is_valid_move(grid, 0, 2, 4)  # 4 should be valid
-        assert is_valid_move(grid, 0, 2, 1)  # 1 should be valid
+        assert is_valid_sudoku_move(grid, 0, 2, 4)  # 4 should be valid
+        assert is_valid_sudoku_move(grid, 0, 2, 1)  # 1 should be valid
 
     def test_find_empty_cell(self) -> None:
         """Test finding empty cells."""
@@ -323,7 +325,7 @@ class TestSolutionMethods:
                         num = solved[row][col]
                         # Temporarily remove the number to test validity
                         solved[row][col] = 0
-                        assert is_valid_move(solved, row, col, num), (
+                        assert is_valid_sudoku_move(solved, row, col, num), (
                             f"Invalid solution in puzzle {i + 1} at ({row},{col})"
                         )
                         solved[row][col] = num
