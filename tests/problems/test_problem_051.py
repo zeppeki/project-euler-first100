@@ -7,12 +7,11 @@ from collections.abc import Callable
 
 import pytest
 
+from problems.lib.primes import sieve_of_eratosthenes
 from problems.problem_051 import (
     count_prime_family,
     generate_replacements,
     get_prime_family_details,
-    is_prime,
-    sieve_of_eratosthenes,
     solve_mathematical,
     solve_naive,
     solve_optimized,
@@ -24,6 +23,8 @@ class TestUtilityFunctions:
 
     def test_is_prime(self) -> None:
         """Test prime checking function"""
+        from problems.lib.primes import is_prime
+
         # Known primes
         assert is_prime(2)
         assert is_prime(3)
@@ -53,13 +54,7 @@ class TestUtilityFunctions:
 
         # Check known primes up to 20
         expected_primes = [2, 3, 5, 7, 11, 13, 17, 19]
-        for p in expected_primes:
-            assert primes_up_to_20[p], f"{p} should be prime"
-
-        # Check known non-primes
-        expected_non_primes = [0, 1, 4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20]
-        for n in expected_non_primes:
-            assert not primes_up_to_20[n], f"{n} should not be prime"
+        assert primes_up_to_20 == expected_primes
 
     def test_generate_replacements(self) -> None:
         """Test digit replacement function"""
@@ -77,7 +72,7 @@ class TestUtilityFunctions:
         """Test prime family counting"""
         # Create a prime set for testing
         primes_up_to_100 = sieve_of_eratosthenes(100)
-        prime_set = {i for i in range(2, 101) if primes_up_to_100[i]}
+        prime_set = set(primes_up_to_100)
 
         # Test *3 pattern (13 -> 13, 23, 43, 53, 73, 83)
         count = count_prime_family(13, (0,), prime_set)
@@ -85,7 +80,7 @@ class TestUtilityFunctions:
 
         # Test **03 pattern should work with 56003
         primes_up_to_60000 = sieve_of_eratosthenes(60000)
-        large_prime_set = {i for i in range(2, 60001) if primes_up_to_60000[i]}
+        large_prime_set = set(primes_up_to_60000)
         count_large = count_prime_family(56003, (2, 3), large_prime_set)
         assert count_large == 7
 
@@ -171,6 +166,8 @@ class TestEdgeCases:
 
     def test_empty_or_invalid_inputs(self) -> None:
         """Test handling of invalid inputs"""
+        from problems.lib.primes import is_prime
+
         # Test invalid prime checking
         assert not is_prime(-1)
         assert not is_prime(0)
@@ -179,7 +176,7 @@ class TestEdgeCases:
     def test_single_digit_replacements(self) -> None:
         """Test single digit numbers"""
         primes_up_to_10 = sieve_of_eratosthenes(10)
-        prime_set = {i for i in range(2, 11) if primes_up_to_10[i]}
+        prime_set = set(primes_up_to_10)
 
         # Single digit numbers can't have meaningful replacements for families
         # This tests the edge case handling
@@ -188,14 +185,14 @@ class TestEdgeCases:
 
     def test_large_number_handling(self) -> None:
         """Test with larger numbers to ensure scalability"""
+        from problems.lib.primes import is_prime
+
         # Test that the functions can handle reasonably large numbers
         assert is_prime(97)
         assert is_prime(101)
 
         primes_up_to_1000 = sieve_of_eratosthenes(1000)
-        assert (
-            len([i for i in range(2, 1001) if primes_up_to_1000[i]]) == 168
-        )  # Known count of primes up to 1000
+        assert len(primes_up_to_1000) == 168  # Known count of primes up to 1000
 
 
 if __name__ == "__main__":

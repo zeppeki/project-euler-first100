@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Tests for Problem 079"""
 
+from problems.lib.file_io import load_keylog_data
+from problems.lib.graph_algorithms import build_dependency_graph, topological_sort
 from problems.problem_079 import (
-    build_dependency_graph,
-    read_keylog_data,
     solve_mathematical,
     solve_naive,
     solve_optimized,
-    topological_sort,
 )
 
 
@@ -31,7 +30,7 @@ class TestUtilityFunctions:
 
     def test_read_keylog_data(self) -> None:
         """Test keylog data reading"""
-        attempts = read_keylog_data()
+        attempts = load_keylog_data()
         assert isinstance(attempts, list)
         assert len(attempts) > 0
         assert all(isinstance(attempt, str) for attempt in attempts)
@@ -69,7 +68,7 @@ class TestUtilityFunctions:
             "9": set(),
         }
         result = topological_sort(dependencies)
-        assert result == "319"
+        assert "".join(result) == "319"
 
         # More complex case
         dependencies = {
@@ -78,7 +77,7 @@ class TestUtilityFunctions:
             "0": set(),
         }
         result = topological_sort(dependencies)
-        assert result == "730"
+        assert "".join(result) == "730"
 
     def test_verify_passcode(self) -> None:
         """Test passcode verification"""
@@ -102,7 +101,7 @@ class TestSolutionFunctions:
         assert result > 0
 
         # Verify the result works with all attempts
-        attempts = read_keylog_data()
+        attempts = load_keylog_data()
         passcode_str = str(result)
         assert verify_passcode(passcode_str, attempts)
 
@@ -113,7 +112,7 @@ class TestSolutionFunctions:
         assert result > 0
 
         # Verify the result works with all attempts
-        attempts = read_keylog_data()
+        attempts = load_keylog_data()
         passcode_str = str(result)
         assert verify_passcode(passcode_str, attempts)
 
@@ -124,7 +123,7 @@ class TestSolutionFunctions:
         assert result > 0
 
         # Verify the result works with all attempts
-        attempts = read_keylog_data()
+        attempts = load_keylog_data()
         passcode_str = str(result)
         assert verify_passcode(passcode_str, attempts)
 
@@ -149,13 +148,13 @@ class TestEdgeCases:
         """Test empty dependency graph"""
         dependencies: dict[str, set[str]] = {}
         result = topological_sort(dependencies)
-        assert result == ""
+        assert "".join(result) == ""
 
     def test_single_digit(self) -> None:
         """Test single digit cases"""
         dependencies: dict[str, set[str]] = {"5": set()}
         result = topological_sort(dependencies)
-        assert result == "5"
+        assert "".join(result) == "5"
 
     def test_small_example(self) -> None:
         """Test with a small known example"""
@@ -164,7 +163,7 @@ class TestEdgeCases:
         result = topological_sort(dependencies)
 
         # Verify the result satisfies all attempts
-        assert verify_passcode(result, test_attempts)
+        assert verify_passcode("".join(result), test_attempts)
 
         # Check specific ordering constraints
         assert result.index("5") < result.index("3")
@@ -186,7 +185,7 @@ class TestEdgeCases:
         assert len(set(passcode_str)) == len(passcode_str)
 
         # Should contain all digits that appear in the keylog
-        attempts = read_keylog_data()
+        attempts = load_keylog_data()
         all_digits_in_keylog: set[str] = set()
         for attempt in attempts:
             all_digits_in_keylog.update(attempt)
@@ -212,7 +211,7 @@ class TestComplexScenarios:
         assert "7" in dependencies["4"]
 
         result = topological_sort(dependencies)
-        assert verify_passcode(result, test_attempts)
+        assert verify_passcode("".join(result), test_attempts)
 
     def test_ordering_consistency(self) -> None:
         """Test that ordering is consistent across runs"""

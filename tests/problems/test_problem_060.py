@@ -27,7 +27,7 @@ class TestProblem060:
     def test_sieve_of_eratosthenes(self) -> None:
         """エラトステネスの篩のテスト"""
         # 小さな範囲でのテスト
-        result = sieve_of_eratosthenes(10)
+        result = sieve_of_eratosthenes(10, "bool_array")
         expected = [
             False,
             False,
@@ -44,7 +44,9 @@ class TestProblem060:
         assert result == expected
 
         # 素数の個数確認
-        primes_up_to_100 = [i for i in range(2, 101) if sieve_of_eratosthenes(100)[i]]
+        primes_up_to_100 = [
+            i for i in range(2, 101) if sieve_of_eratosthenes(100, "bool_array")[i]
+        ]
         assert len(primes_up_to_100) == 25  # 100以下の素数は25個
 
     def test_is_prime(self) -> None:

@@ -17,7 +17,7 @@ Project Euler問題で使用されるデータファイル処理と統一的なI
 import csv
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 
 def load_problem_data(
@@ -62,7 +62,7 @@ def load_problem_data(
         with open(file_path, encoding=encoding) as f:
             content = f.read()
     except UnicodeDecodeError as e:
-        raise ValueError(f"ファイルエンコーディングエラー: {e}")
+        raise ValueError(f"ファイルエンコーディングエラー: {e}") from e
 
     if data_type == "raw":
         return content
@@ -116,7 +116,8 @@ def load_names_file(filename: str = "p022_names.txt") -> list[str]:
         >>> "MARY" in names
         True
     """
-    return load_problem_data(filename, "words")
+    result = load_problem_data(filename, "words")
+    return cast("list[str]", result)
 
 
 def load_words_file(filename: str = "p042_words.txt") -> list[str]:
@@ -134,7 +135,8 @@ def load_words_file(filename: str = "p042_words.txt") -> list[str]:
         >>> len(words) > 1000
         True
     """
-    return load_problem_data(filename, "words")
+    result = load_problem_data(filename, "words")
+    return cast("list[str]", result)
 
 
 def load_poker_hands(
@@ -186,7 +188,8 @@ def load_keylog_data(filename: str = "0079_keylog.txt") -> list[str]:
         >>> attempts[0]
         "319"
     """
-    return load_problem_data(filename, "lines")
+    result = load_problem_data(filename, "lines")
+    return cast("list[str]", result)
 
 
 def load_triangle_data(filename: str = "0067_triangle.txt") -> list[list[int]]:
@@ -442,7 +445,7 @@ def write_results_to_file(
     elif format_type == "csv":
         with open(file_path, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
-            if isinstance(results, list) and isinstance(results[0], (list, tuple)):
+            if isinstance(results, list) and isinstance(results[0], list | tuple):
                 writer.writerows(results)
             else:
                 writer.writerow(results)

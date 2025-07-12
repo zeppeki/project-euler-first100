@@ -42,16 +42,16 @@ class TestUtilityFunctions:
         # Test small range
         primes_10 = sieve_of_eratosthenes(10)
         expected_primes_10 = {2, 3, 5, 7}
-        assert primes_10 == expected_primes_10
+        assert set(primes_10) == expected_primes_10
 
         # Test larger range
         primes_30 = sieve_of_eratosthenes(30)
         expected_primes_30 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
-        assert primes_30 == expected_primes_30
+        assert set(primes_30) == expected_primes_30
 
         # Test edge cases
-        assert sieve_of_eratosthenes(1) == set()
-        assert sieve_of_eratosthenes(2) == {2}
+        assert set(sieve_of_eratosthenes(1)) == set()
+        assert set(sieve_of_eratosthenes(2)) == {2}
 
     def test_count_consecutive_primes(self) -> None:
         """Test consecutive prime counting."""

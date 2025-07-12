@@ -210,7 +210,7 @@ const performanceData = {{
 """
 
 
-def main():
+def main() -> None:
     """Main function to generate and save dashboard data."""
     js_data = generate_dashboard_data()
 

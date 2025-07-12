@@ -122,7 +122,7 @@ def dijkstra_shortest_path(
     start: tuple[int, int] | Any,
     end: tuple[int, int] | Any,
     directions: list[tuple[int, int]] | None = None,
-) -> tuple[int, list[Any]]:
+) -> tuple[int | float, list[Any]]:
     """
     Dijkstra法を使用して最短経路を探索する
 
@@ -158,7 +158,7 @@ def _dijkstra_grid(
     start: tuple[int, int],
     end: tuple[int, int],
     directions: list[tuple[int, int]] | None = None,
-) -> tuple[int, list[tuple[int, int]]]:
+) -> tuple[int | float, list[tuple[int, int]]]:
     """グリッド用のDijkstra法実装"""
     if directions is None:
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # 右、下、左、上
@@ -168,7 +168,7 @@ def _dijkstra_grid(
     # Priority queue: (distance, row, col)
     pq = [(matrix[start[0]][start[1]], start[0], start[1])]
     distances = {start: matrix[start[0]][start[1]]}
-    previous = {}
+    previous: dict[tuple[int, int], tuple[int, int] | None] = {}
 
     while pq:
         current_dist, row, col = heapq.heappop(pq)
@@ -208,12 +208,12 @@ def _dijkstra_grid(
 
 def _dijkstra_graph(
     graph: dict[Any, dict[Any, int]], start: Any, end: Any
-) -> tuple[int, list[Any]]:
+) -> tuple[int | float, list[Any]]:
     """隣接リスト用のDijkstra法実装"""
     # Priority queue: (distance, vertex)
     pq = [(0, start)]
     distances = {start: 0}
-    previous = {}
+    previous: dict[Any, Any | None] = {}
 
     while pq:
         current_dist, current_vertex = heapq.heappop(pq)
@@ -325,7 +325,7 @@ def find_strongly_connected_components(graph: dict[Any, list[Any]]) -> list[list
     while stack:
         vertex = stack.pop()
         if vertex not in visited:
-            component = []
+            component: list[Any] = []
             dfs2(vertex, component)
             components.append(component)
 
