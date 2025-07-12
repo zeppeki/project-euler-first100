@@ -23,21 +23,7 @@ Find the product of the coefficients, a and b, for the quadratic expression that
 produces the maximum number of primes for consecutive values of n, starting with n = 0.
 """
 
-
-def is_prime(n: int) -> bool:
-    """
-    素数判定を行う
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    return all(n % i != 0 for i in range(3, int(n**0.5) + 1, 2))
+from problems.lib.primes import is_prime
 
 
 def sieve_of_eratosthenes(limit: int) -> set[int]:

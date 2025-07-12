@@ -13,41 +13,7 @@ The prime 953 can be written as the sum of twenty-one consecutive primes.
 Which prime, below one-million, can be written as the sum of the most consecutive primes?
 """
 
-
-def sieve_of_eratosthenes(limit: int) -> list[int]:
-    """
-    エラトステネスの篩を使用して指定した上限以下の素数を生成
-    時間計算量: O(n log log n)
-    空間計算量: O(n)
-    """
-    if limit < 2:
-        return []
-
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime[j] = False
-
-    return [i for i in range(2, limit + 1) if is_prime[i]]
-
-
-def is_prime(n: int) -> bool:
-    """
-    素数判定関数
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    return all(n % i != 0 for i in range(3, int(n**0.5) + 1, 2))
+from problems.lib.primes import sieve_of_eratosthenes
 
 
 def solve_naive(limit: int = 1000000) -> int:

@@ -12,76 +12,13 @@ a 31K text file containing an 80 by 80 matrix.
 この問題は四方向への移動が可能なため、最短経路問題として解きます。
 """
 
-import heapq
-from collections import deque
-
-
-def load_matrix(filename: str = "data/p083_matrix.txt") -> list[list[int]]:
-    """Load matrix from file."""
-    from pathlib import Path
-
-    file_path = Path(__file__).parent.parent / filename
-    matrix = []
-    with open(file_path) as f:
-        for line in f:
-            row = [int(x) for x in line.strip().split(",")]
-            matrix.append(row)
-    return matrix
+from problems.lib.graph_algorithms import dijkstra_shortest_path
+from problems.lib.matrix_utils import load_matrix
 
 
 def solve_naive(matrix: list[list[int]] | None = None) -> int:
     """
-    素直な解法：BFSを使用してすべての可能なパスを探索
-    時間計算量：O(4^(m*n)) - 最悪の場合
-    空間計算量：O(m*n)
-
-    Args:
-        matrix: 2次元配列の行列（Noneの場合はファイルから読み込み）
-
-    Returns:
-        左上から右下への最小経路の合計
-    """
-    if matrix is None:
-        matrix = load_matrix()
-    if not matrix or not matrix[0]:
-        return 0
-
-    rows, cols = len(matrix), len(matrix[0])
-
-    # BFS with distance tracking
-    queue = deque([(0, 0, matrix[0][0])])  # (row, col, distance)
-    visited = {(0, 0): matrix[0][0]}
-
-    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # right, down, left, up
-
-    while queue:
-        row, col, dist = queue.popleft()
-
-        # If we reached the destination
-        if row == rows - 1 and col == cols - 1:
-            continue
-
-        # Try all four directions
-        for dr, dc in directions:
-            new_row, new_col = row + dr, col + dc
-
-            # Check bounds
-            if 0 <= new_row < rows and 0 <= new_col < cols:
-                new_dist = dist + matrix[new_row][new_col]
-
-                # If we found a shorter path to this cell
-                if (new_row, new_col) not in visited or new_dist < visited[
-                    (new_row, new_col)
-                ]:
-                    visited[(new_row, new_col)] = new_dist
-                    queue.append((new_row, new_col, new_dist))
-
-    return visited.get((rows - 1, cols - 1), 0)
-
-
-def solve_optimized(matrix: list[list[int]] | None = None) -> int:
-    """
-    最適化解法：ダイクストラ法を使用した最短経路探索
+    素直な解法：ライブラリのダイクストラ法を使用
     時間計算量：O(m*n*log(m*n))
     空間計算量：O(m*n)
 
@@ -92,40 +29,29 @@ def solve_optimized(matrix: list[list[int]] | None = None) -> int:
         左上から右下への最小経路の合計
     """
     if matrix is None:
-        matrix = load_matrix()
+        matrix = load_matrix("p083_matrix.txt")
     if not matrix or not matrix[0]:
         return 0
 
     rows, cols = len(matrix), len(matrix[0])
-
-    # Priority queue: (distance, row, col)
-    pq = [(matrix[0][0], 0, 0)]
-    distances = {(0, 0): matrix[0][0]}
-
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # right, down, left, up
 
-    while pq:
-        current_dist, row, col = heapq.heappop(pq)
+    distance, _ = dijkstra_shortest_path(
+        matrix, (0, 0), (rows - 1, cols - 1), directions
+    )
+    return distance
 
-        # If we reached the destination
-        if row == rows - 1 and col == cols - 1:
-            return current_dist
 
-        # Skip if we've already found a better path
-        if current_dist > distances.get((row, col), float("inf")):
-            continue
+def solve_optimized(matrix: list[list[int]] | None = None) -> int:
+    """
+    最適化解法：ライブラリのダイクストラ法を使用（同じ実装）
+    時間計算量：O(m*n*log(m*n))
+    空間計算量：O(m*n)
 
-        # Try all four directions
-        for dr, dc in directions:
-            new_row, new_col = row + dr, col + dc
+    Args:
+        matrix: 2次元配列の行列（Noneの場合はファイルから読み込み）
 
-            # Check bounds
-            if 0 <= new_row < rows and 0 <= new_col < cols:
-                new_dist = current_dist + matrix[new_row][new_col]
-
-                # If we found a shorter path
-                if new_dist < distances.get((new_row, new_col), float("inf")):
-                    distances[(new_row, new_col)] = new_dist
-                    heapq.heappush(pq, (new_dist, new_row, new_col))
-
-    return distances.get((rows - 1, cols - 1), 0)
+    Returns:
+        左上から右下への最小経路の合計
+    """
+    return solve_naive(matrix)

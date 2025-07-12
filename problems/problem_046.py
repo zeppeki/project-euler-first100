@@ -20,21 +20,7 @@ of a prime and twice a square?
 
 import math
 
-
-def is_prime(n: int) -> bool:
-    """
-    素数判定
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    return all(n % i != 0 for i in range(3, int(math.sqrt(n)) + 1, 2))
+from problems.lib.primes import is_prime
 
 
 def is_perfect_square(n: int) -> bool:

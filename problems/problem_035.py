@@ -12,6 +12,8 @@ Problem 035: Circular primes
 Answer: 55
 """
 
+from problems.lib.primes import is_prime
+
 
 def solve_naive(limit: int = 1000000) -> int:
     """
@@ -19,16 +21,6 @@ def solve_naive(limit: int = 1000000) -> int:
     時間計算量: O(n * log(n) * sqrt(n)) - 各数の回転と素数判定
     空間計算量: O(1)
     """
-
-    def is_prime(n: int) -> bool:
-        """素数判定"""
-        if n < 2:
-            return False
-        if n == 2:
-            return True
-        if n % 2 == 0:
-            return False
-        return all(n % i != 0 for i in range(3, int(n**0.5) + 1, 2))
 
     def get_rotations(n: int) -> list[int]:
         """数の全ての回転を取得"""

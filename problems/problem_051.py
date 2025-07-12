@@ -11,52 +11,7 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 
 from itertools import combinations
 
-
-def is_prime(n: int) -> bool:
-    """
-    素数判定
-
-    Args:
-        n: 判定する正の整数
-
-    Returns:
-        素数の場合True、そうでなければFalse
-
-    時間計算量: O(√n)
-    空間計算量: O(1)
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    return all(n % i != 0 for i in range(3, int(n**0.5) + 1, 2))
-
-
-def sieve_of_eratosthenes(limit: int) -> list[bool]:
-    """
-    エラトステネスの篩で素数表を作成
-
-    Args:
-        limit: 上限値
-
-    Returns:
-        インデックスが素数かどうかのブール配列
-
-    時間計算量: O(n log log n)
-    空間計算量: O(n)
-    """
-    is_prime_array = [True] * (limit + 1)
-    is_prime_array[0] = is_prime_array[1] = False
-
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime_array[i]:
-            for j in range(i * i, limit + 1, i):
-                is_prime_array[j] = False
-
-    return is_prime_array
+from problems.lib.primes import sieve_of_eratosthenes
 
 
 def generate_replacements(n: int, positions: tuple[int, ...], digit: int) -> int:
@@ -119,9 +74,8 @@ def solve_naive(target_family_size: int) -> int:
     """
     # 十分に大きな範囲で素数を生成
     limit = 1000000
-    prime_array = sieve_of_eratosthenes(limit)
-    prime_set = {i for i in range(2, limit + 1) if prime_array[i]}
-    primes = sorted(prime_set)
+    primes = sieve_of_eratosthenes(limit)
+    prime_set = set(primes)
 
     for prime in primes:
         s = str(prime)
@@ -152,9 +106,8 @@ def solve_optimized(target_family_size: int) -> int:
     """
     # より効率的な範囲設定
     limit = 1000000
-    prime_array = sieve_of_eratosthenes(limit)
-    prime_set = {i for i in range(2, limit + 1) if prime_array[i]}
-    primes = sorted(prime_set)
+    primes = sieve_of_eratosthenes(limit)
+    prime_set = set(primes)
 
     for prime in primes:
         s = str(prime)
@@ -188,9 +141,8 @@ def solve_mathematical(target_family_size: int) -> int:
     # この数学的制約を利用して探索を効率化
 
     limit = 1000000
-    prime_array = sieve_of_eratosthenes(limit)
-    prime_set = {i for i in range(2, limit + 1) if prime_array[i]}
-    primes = sorted(prime_set)
+    primes = sieve_of_eratosthenes(limit)
+    prime_set = set(primes)
 
     for prime in primes:
         s = str(prime)
@@ -229,8 +181,8 @@ def get_prime_family_details(
         (素数族のリスト, 置換位置) または None
     """
     limit = 1000000
-    prime_array = sieve_of_eratosthenes(limit)
-    prime_set = {i for i in range(2, limit + 1) if prime_array[i]}
+    primes = sieve_of_eratosthenes(limit)
+    prime_set = set(primes)
 
     s = str(prime)
     num_digits = len(s)
