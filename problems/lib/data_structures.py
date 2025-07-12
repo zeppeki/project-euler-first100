@@ -467,4 +467,3 @@ def sliding_window(items: list[T], window_size: int) -> list[list[T]]:
         return []
 
     return [items[i : i + window_size] for i in range(len(items) - window_size + 1)]
-

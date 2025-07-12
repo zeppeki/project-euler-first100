@@ -623,4 +623,3 @@ def is_square_free(n: int) -> bool:
             return False
         i += 1
     return True
-
