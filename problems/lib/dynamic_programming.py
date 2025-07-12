@@ -284,9 +284,9 @@ class Memoization:
         def cache_clear_func() -> None:
             self.cache.clear()
 
-        # Use setattr to avoid mypy issues with dynamic attributes
-        setattr(wrapper, "cache_info", cache_info_func)
-        setattr(wrapper, "cache_clear", cache_clear_func)
+        # Add dynamic attributes with type ignore for mypy
+        wrapper.cache_info = cache_info_func  # type: ignore[attr-defined]
+        wrapper.cache_clear = cache_clear_func  # type: ignore[attr-defined]
 
         return wrapper
 
