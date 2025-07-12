@@ -180,7 +180,10 @@ def _dijkstra_grid(
             current = end
             while current in previous:
                 path.append(current)
-                current = previous[current]
+                prev_node = previous[current]
+                if prev_node is None:
+                    break
+                current = prev_node
             path.append(start)
             return current_dist, list(reversed(path))
 
@@ -225,7 +228,10 @@ def _dijkstra_graph(
             current = end
             while current in previous:
                 path.append(current)
-                current = previous[current]
+                prev_node = previous[current]
+                if prev_node is None:
+                    break
+                current = prev_node
             path.append(start)
             return current_dist, list(reversed(path))
 

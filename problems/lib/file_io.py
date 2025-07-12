@@ -158,7 +158,9 @@ def load_poker_hands(
         >>> hands[0]
         (['8C', 'TS', 'KC', '9H', '4S'], ['7D', '2S', '5D', '3S', 'AC'])
     """
-    lines = load_problem_data(filename, "lines")
+    lines_data = load_problem_data(filename, "lines")
+    assert isinstance(lines_data, list), "Expected list from load_problem_data"
+    lines = [line for line in lines_data if isinstance(line, str)]
     hands = []
 
     for line in lines:
@@ -209,7 +211,9 @@ def load_triangle_data(filename: str = "0067_triangle.txt") -> list[list[int]]:
         >>> triangle[0]
         [59]
     """
-    lines = load_problem_data(filename, "lines")
+    lines_data = load_problem_data(filename, "lines")
+    assert isinstance(lines_data, list), "Expected list from load_problem_data"
+    lines = [line for line in lines_data if isinstance(line, str)]
     triangle = []
 
     for line in lines:
@@ -237,7 +241,9 @@ def load_matrix_data(filename: str, delimiter: str = ",") -> list[list[int]]:
         >>> len(matrix[0])
         80
     """
-    lines = load_problem_data(filename, "lines")
+    lines_data = load_problem_data(filename, "lines")
+    assert isinstance(lines_data, list), "Expected list from load_problem_data"
+    lines = [line for line in lines_data if isinstance(line, str)]
     matrix = []
 
     for line in lines:
@@ -262,7 +268,9 @@ def load_cipher_data(filename: str = "p059_cipher.txt") -> list[int]:
         >>> len(cipher) > 1000
         True
     """
-    return load_problem_data(filename, "numbers")
+    data = load_problem_data(filename, "numbers")
+    assert isinstance(data, list), "Expected list from load_problem_data"
+    return [x for x in data if isinstance(x, int)]
 
 
 def load_roman_numerals(filename: str = "p089_roman.txt") -> list[str]:
@@ -280,7 +288,9 @@ def load_roman_numerals(filename: str = "p089_roman.txt") -> list[str]:
         >>> len(romans)
         1000
     """
-    return load_problem_data(filename, "lines")
+    data = load_problem_data(filename, "lines")
+    assert isinstance(data, list), "Expected list from load_problem_data"
+    return [x for x in data if isinstance(x, str)]
 
 
 def load_base_exp_data(filename: str = "p099_base_exp.txt") -> list[tuple[int, int]]:
@@ -300,7 +310,9 @@ def load_base_exp_data(filename: str = "p099_base_exp.txt") -> list[tuple[int, i
         >>> pairs[0]
         (519432, 525806)
     """
-    lines = load_problem_data(filename, "lines")
+    lines_data = load_problem_data(filename, "lines")
+    assert isinstance(lines_data, list), "Expected list from load_problem_data"
+    lines = [line for line in lines_data if isinstance(line, str)]
     pairs = []
 
     for line in lines:
@@ -359,11 +371,15 @@ def safe_file_reader(
             continue
 
     raise UnicodeDecodeError(
-        f"ファイルを読み込めませんでした。試行したエンコーディング: {encodings_to_try}"
+        "utf-8",
+        b"",
+        0,
+        1,
+        f"ファイルを読み込めませんでした。試行したエンコーディング: {encodings_to_try}",
     )
 
 
-def parse_structured_file(content: str, structure_type: str, **kwargs) -> Any:
+def parse_structured_file(content: str, structure_type: str, **kwargs: Any) -> Any:
     """
     構造化ファイルの内容を解析
 
@@ -416,7 +432,7 @@ def write_results_to_file(
     results: Any,
     filename: str,
     format_type: str = "json",
-    project_root: str | None = None,
+    project_root: str | Path | None = None,
 ) -> None:
     """
     結果をファイルに書き込む
@@ -431,11 +447,11 @@ def write_results_to_file(
         >>> write_results_to_file({"answer": 42}, "result.json")
     """
     if project_root is None:
-        project_root = Path(__file__).parent.parent.parent
+        root_path = Path(__file__).parent.parent.parent
     else:
-        project_root = Path(project_root)
+        root_path = Path(project_root)
 
-    file_path = project_root / "output" / filename
+    file_path = root_path / "output" / filename
     file_path.parent.mkdir(parents=True, exist_ok=True)
 
     if format_type == "json":

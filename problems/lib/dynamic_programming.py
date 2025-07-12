@@ -139,7 +139,8 @@ def min_path_sum_matrix(
                         dp[row][col], dp[row][col - 1] + matrix[row][col]
                     )
 
-        return dp[rows - 1][cols - 1]
+        result = dp[rows - 1][cols - 1]
+        return int(result) if result != float("inf") else 0
 
     # 任意方向の移動（汎用版）
     # 注意: この場合はDijkstra法を使用することを推奨
@@ -148,7 +149,7 @@ def min_path_sum_matrix(
     distance, _ = dijkstra_shortest_path(
         matrix, (0, 0), (rows - 1, cols - 1), directions
     )
-    return distance
+    return int(distance) if distance != float("inf") else 0
 
 
 def coin_change_ways(amount: int, coins: list[int]) -> int:
@@ -229,7 +230,7 @@ def longest_increasing_subsequence(sequence: list[int]) -> int:
     from bisect import bisect_left
 
     # tails[i] = 長さi+1のLISの末尾要素の最小値
-    tails = []
+    tails: list[int] = []
 
     for num in sequence:
         pos = bisect_left(tails, num)
@@ -255,8 +256,8 @@ class Memoization:
         self.calls = 0
         self.hits = 0
 
-    def __call__(self, func: Callable) -> Callable:
-        def wrapper(*args, **kwargs):
+    def __call__(self, func: Callable[..., Any]) -> Callable[..., Any]:
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             self.calls += 1
             key = (args, tuple(sorted(kwargs.items())))
 
@@ -271,13 +272,18 @@ class Memoization:
 
             return result
 
-        wrapper.cache_info = lambda: {
+        # Add cache management methods for compatibility with functools.lru_cache
+        cache_info_func = lambda: {
             "hits": self.hits,
             "calls": self.calls,
             "cache_size": len(self.cache),
             "maxsize": self.maxsize,
         }
-        wrapper.cache_clear = lambda: self.cache.clear()
+        cache_clear_func = lambda: self.cache.clear()
+        
+        # Use setattr to avoid mypy issues with dynamic attributes
+        setattr(wrapper, "cache_info", cache_info_func)
+        setattr(wrapper, "cache_clear", cache_clear_func)
 
         return wrapper
 
