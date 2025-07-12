@@ -39,7 +39,7 @@ def solve_naive(matrix: list[list[int]] | None = None) -> int:
     distance, _ = dijkstra_shortest_path(
         matrix, (0, 0), (rows - 1, cols - 1), directions
     )
-    return distance
+    return int(distance) if distance != float("inf") else 0
 
 
 def solve_optimized(matrix: list[list[int]] | None = None) -> int:

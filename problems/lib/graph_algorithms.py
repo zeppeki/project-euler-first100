@@ -14,7 +14,7 @@ from typing import Any
 
 
 def build_dependency_graph(
-    sequences: list[str | list[Any]], element_type: type = str
+    sequences: list[str] | list[list[Any]], element_type: type = str
 ) -> dict[Any, set[Any]]:
     """
     シーケンスのリストから依存関係グラフを構築する
