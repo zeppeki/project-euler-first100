@@ -18,8 +18,8 @@ class Problem021Runner(BaseProblemRunner):
 
     def __init__(
         self,
-        enable_performance_test: bool = True,
-        enable_demonstrations: bool = True,
+        enable_performance_test: bool = False,
+        enable_demonstrations: bool = False,
     ) -> None:
         super().__init__(
             "021",
@@ -31,7 +31,14 @@ class Problem021Runner(BaseProblemRunner):
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 021."""
-        return []  # TODO: Add test cases
+        return [
+            # Test case 1: Small limit that includes the known amicable pair (220, 284)
+            (300,),
+            # Test case 2: Larger test case
+            (1000,),
+            # Test case 3: Main problem
+            (10000,),
+        ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 021."""
@@ -53,14 +60,21 @@ class Problem021Runner(BaseProblemRunner):
 def main() -> None:
     """メイン関数"""
     runner = Problem021Runner(enable_demonstrations=True)
-    runner.main()
-
-
-def run_benchmark() -> None:
-    """Run benchmark for Problem 021."""
-    runner = Problem021Runner(enable_demonstrations=False)
     runner.run_problem()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 021."""
+    print("=== Problem 021 Performance Benchmark ===")
+    runner = Problem021Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

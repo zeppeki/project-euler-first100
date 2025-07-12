@@ -30,8 +30,8 @@ class Problem041Runner(BaseProblemRunner):
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 041."""
         return [
-            (4, 4231),  # Largest 4-digit pandigital prime
-            (7, 7652413),  # Largest 7-digit pandigital prime
+            # No parameters needed for this problem
+            (),
         ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
@@ -44,7 +44,7 @@ class Problem041Runner(BaseProblemRunner):
 
     def get_main_parameters(self) -> tuple[Any, ...]:
         """Get parameters for the main problem."""
-        return (9,)
+        return ()
 
 
 def main() -> None:
@@ -60,4 +60,9 @@ def run_benchmark() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

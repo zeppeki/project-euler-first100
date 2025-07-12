@@ -18,8 +18,8 @@ class Problem023Runner(BaseProblemRunner):
 
     def __init__(
         self,
-        enable_performance_test: bool = True,
-        enable_demonstrations: bool = True,
+        enable_performance_test: bool = False,
+        enable_demonstrations: bool = False,
     ) -> None:
         super().__init__(
             "023",
