@@ -65,10 +65,7 @@ def is_pandigital(n: int | str, start: int = 1, end: int | None = None) -> bool:
     s = str(n)
 
     if end is None:
-        if start == 0:
-            end = len(s) - 1
-        else:
-            end = len(s)
+        end = len(s) - 1 if start == 0 else len(s)
 
     expected_length = end - start + 1
     if len(s) != expected_length:

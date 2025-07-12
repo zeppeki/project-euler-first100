@@ -28,6 +28,18 @@ from .combinatorics import (
     multinomial_coefficient,
     permutation_formula,
 )
+from .constraint_solving import (
+    backtrack_search,
+    find_empty_cell,
+    generate_permutations_with_constraints,
+    is_complete_sudoku,
+    is_magic_square,
+    is_valid_sudoku_move,
+    load_sudoku_puzzles,
+    solve_constraint_satisfaction,
+    solve_n_queens,
+    solve_sudoku_backtrack,
+)
 from .data_structures import (
     PriorityQueue,
     UnionFind,
@@ -41,18 +53,6 @@ from .data_structures import (
     invert_dictionary,
     set_operations_summary,
     sliding_window,
-)
-from .constraint_solving import (
-    backtrack_search,
-    find_empty_cell,
-    generate_permutations_with_constraints,
-    is_complete_sudoku,
-    is_magic_square,
-    is_valid_sudoku_move,
-    load_sudoku_puzzles,
-    solve_constraint_satisfaction,
-    solve_n_queens,
-    solve_sudoku_backtrack,
 )
 from .digits import (
     are_permutations,
@@ -138,6 +138,21 @@ from .matrix_utils import (
     parse_csv_matrix,
     validate_matrix_dimensions,
 )
+from .number_theory import (
+    carmichael_lambda,
+    chinese_remainder_theorem,
+    continued_fraction_sqrt,
+    convergents_from_continued_fraction,
+    euler_totient,
+    euler_totient_sieve,
+    extended_gcd,
+    is_carmichael_number,
+    jacobi_symbol,
+    mobius_function,
+    modular_exponentiation,
+    modular_inverse,
+    solve_pell_equation,
+)
 from .primes import (
     count_distinct_prime_factors,
     generate_primes,
@@ -161,21 +176,6 @@ from .sequences import (
     is_triangle_number,
     pentagonal_generator,
     triangle_generator,
-)
-from .number_theory import (
-    carmichael_lambda,
-    chinese_remainder_theorem,
-    continued_fraction_sqrt,
-    convergents_from_continued_fraction,
-    euler_totient,
-    euler_totient_sieve,
-    extended_gcd,
-    is_carmichael_number,
-    jacobi_symbol,
-    mobius_function,
-    modular_exponentiation,
-    modular_inverse,
-    solve_pell_equation,
 )
 
 __all__ = [

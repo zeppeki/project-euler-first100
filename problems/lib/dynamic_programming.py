@@ -273,17 +273,20 @@ class Memoization:
             return result
 
         # Add cache management methods for compatibility with functools.lru_cache
-        cache_info_func = lambda: {
-            "hits": self.hits,
-            "calls": self.calls,
-            "cache_size": len(self.cache),
-            "maxsize": self.maxsize,
-        }
-        cache_clear_func = lambda: self.cache.clear()
-        
+        def cache_info_func() -> dict[str, int]:
+            return {
+                "hits": self.hits,
+                "calls": self.calls,
+                "cache_size": len(self.cache),
+                "maxsize": self.maxsize,
+            }
+
+        def cache_clear_func() -> None:
+            self.cache.clear()
+
         # Use setattr to avoid mypy issues with dynamic attributes
-        setattr(wrapper, "cache_info", cache_info_func)
-        setattr(wrapper, "cache_clear", cache_clear_func)
+        wrapper.cache_info = cache_info_func
+        wrapper.cache_clear = cache_clear_func
 
         return wrapper
 

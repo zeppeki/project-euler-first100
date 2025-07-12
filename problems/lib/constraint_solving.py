@@ -371,10 +371,7 @@ def is_magic_square(square: list[list[int]]) -> bool:
     # 対角線の合計をチェック
     if sum(square[i][i] for i in range(n)) != target_sum:
         return False
-    if sum(square[i][n - 1 - i] for i in range(n)) != target_sum:
-        return False
-
-    return True
+    return sum(square[i][n - 1 - i] for i in range(n)) == target_sum
 
 
 def generate_permutations_with_constraints(

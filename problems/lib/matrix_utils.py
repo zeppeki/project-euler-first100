@@ -64,7 +64,7 @@ def load_matrix(
                 row = [data_type(x.strip()) for x in line.split(delimiter)]
                 matrix.append(row)
             except ValueError as e:
-                raise ValueError(f"行{line_num}の変換エラー: {e}")
+                raise ValueError(f"行{line_num}の変換エラー: {e}") from e
 
     return matrix
 
@@ -184,9 +184,7 @@ def matrix_transpose(matrix: list[list[Any]]) -> list[list[Any]]:
         return []
 
     rows, cols = len(matrix), len(matrix[0])
-    transposed = [[matrix[r][c] for r in range(rows)] for c in range(cols)]
-
-    return transposed
+    return [[matrix[r][c] for r in range(rows)] for c in range(cols)]
 
 
 def matrix_rotate_90(
