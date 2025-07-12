@@ -171,6 +171,7 @@ class TestSquareAnagramFinding:
 class TestSolutionMethods:
     """Test solution methods."""
 
+    @pytest.mark.slow
     @pytest.mark.timeout(
         300
     )  # 5 minutes timeout for this computationally intensive test
@@ -183,6 +184,7 @@ class TestSolutionMethods:
 
         assert result_naive == result_optimized == result_mathematical
 
+    @pytest.mark.slow
     @pytest.mark.timeout(
         300
     )  # 5 minutes timeout for this computationally intensive test
@@ -194,6 +196,7 @@ class TestSolutionMethods:
         result = solve_mathematical()
         assert result == expected_result
 
+    @pytest.mark.slow
     @pytest.mark.timeout(
         300
     )  # 5 minutes timeout for this computationally intensive test
@@ -229,6 +232,7 @@ class TestSolutionMethods:
 class TestPerformanceAndIntegration:
     """Test performance characteristics and integration."""
 
+    @pytest.mark.slow
     @pytest.mark.timeout(
         300
     )  # 5 minutes timeout for this computationally intensive test
