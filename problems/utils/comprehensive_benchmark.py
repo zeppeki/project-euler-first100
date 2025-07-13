@@ -152,6 +152,20 @@ class ComprehensiveBenchmark:
             module_name = f"problems.problem_{problem_number.zfill(3)}"
             problem_module = importlib.import_module(module_name)
 
+            # Try to get runner for expected answer checking
+            runner = None
+            try:
+                runner_module_name = (
+                    f"problems.runners.problem_{problem_number.zfill(3)}_runner"
+                )
+                runner_module = importlib.import_module(runner_module_name)
+                runner_class_name = f"Problem{problem_number.zfill(3)}Runner"
+                runner_class = getattr(runner_module, runner_class_name)
+                runner = runner_class()
+            except (ImportError, AttributeError):
+                # No runner available, continue without expected answer checking
+                pass
+
             # Get problem information
             problem_title = self.simple_runner.get_problem_title(problem_module)
             args, kwargs = self.simple_runner.get_problem_arguments(problem_number)
@@ -217,8 +231,29 @@ class ComprehensiveBenchmark:
                 if len({str(r) for r in results}) == 1:
                     problem_result["result_consistency"] = True
                     problem_result["verified_result"] = "[隠匿]"
+
+                    # Check against expected answer if available
+                    common_result = results[0]
+                    if (
+                        runner is not None
+                        and hasattr(runner, "problem_answer")
+                        and runner.problem_answer is not None
+                    ):
+                        if common_result == runner.problem_answer:
+                            problem_result["answer_correct"] = True
+                        else:
+                            problem_result["answer_correct"] = False
+                            problem_result["status"] = "error"
+                            problem_result["error"] = (
+                                f"Result {common_result} does not match expected answer {runner.problem_answer}"
+                            )
+                            problem_result["warning"] = (
+                                f"Expected {runner.problem_answer}, got {common_result}"
+                            )
                 else:
                     problem_result["result_consistency"] = False
+                    problem_result["status"] = "error"
+                    problem_result["error"] = "Solutions produced different results"
                     problem_result["warning"] = "Solutions produced different results"
 
             return problem_result
