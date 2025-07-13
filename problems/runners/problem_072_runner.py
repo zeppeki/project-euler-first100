@@ -297,9 +297,9 @@ class Problem072Runner(BaseProblemRunner):
 def run_benchmark() -> None:
     """Run performance benchmark for Problem 072."""
     print("=== Problem 072 Performance Benchmark ===")
-    runner = Problem072Runner(enable_performance_test=True, enable_demonstrations=False)
-    result = runner.run_problem()
-    print(f"Benchmark result: {result}")
+
+    # Run the main function which handles the problem
+    main()
 
 
 def main() -> None:

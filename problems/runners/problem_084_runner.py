@@ -101,9 +101,9 @@ def run_comparison() -> None:
 def run_benchmark() -> None:
     """Run performance benchmark for Problem 084."""
     print("=== Problem 084 Performance Benchmark ===")
-    runner = Problem084Runner(enable_performance_test=True, enable_demonstrations=False)
-    result = runner.run_problem()
-    print(f"Benchmark result: {result}")
+
+    # Run the main function which handles the problem
+    main()
 
 
 def main() -> None:

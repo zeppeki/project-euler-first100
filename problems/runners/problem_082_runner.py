@@ -120,9 +120,9 @@ def run_problem() -> None:
 def run_benchmark() -> None:
     """Run performance benchmark for Problem 082."""
     print("=== Problem 082 Performance Benchmark ===")
-    runner = Problem082Runner(enable_performance_test=True, enable_demonstrations=False)
-    result = runner.run_problem()
-    print(f"Benchmark result: {result}")
+
+    # Run the main function which handles the problem
+    main()
 
 
 def main() -> None:
