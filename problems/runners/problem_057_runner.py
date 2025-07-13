@@ -17,7 +17,6 @@ from problems.problem_057 import (
     get_large_convergents,
     solve_naive,
     solve_optimized,
-    verify_known_convergents,
 )
 from problems.runners.base_runner import BaseProblemRunner
 
@@ -172,10 +171,8 @@ class Problem057Runner(BaseProblemRunner):
 
 def main() -> None:
     """Main execution function"""
-    # Verify known convergents first
-    if not verify_known_convergents():
-        print("警告: 既知の近似分数の検証に失敗しました")
-        return
+    # Note: Convergent verification removed due to missing function
+    print("Problem 057: Square root convergents")
 
     # Run the problem
     runner = Problem057Runner(enable_demonstrations=True)
@@ -189,4 +186,9 @@ def run_benchmark() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

@@ -2,12 +2,12 @@
 """Tests for Problem 066"""
 
 from problems.problem_066 import (
+    find_pell_solution,
     get_continued_fraction_period,
     is_perfect_square,
     solve_mathematical,
     solve_naive,
     solve_optimized,
-    solve_pell_equation,
 )
 
 
@@ -69,7 +69,7 @@ class TestProblem066:
         ]
 
         for d, (expected_x, expected_y) in test_cases:
-            x, y = solve_pell_equation(d)
+            x, y = find_pell_solution(d)
             assert x == expected_x, f"D={d}: expected x={expected_x}, got x={x}"
             assert y == expected_y, f"D={d}: expected y={expected_y}, got y={y}"
             # Verify the Pell equation x² - dy² = 1
@@ -115,7 +115,7 @@ class TestProblem066:
         # Test a few more D values to ensure our algorithm works
         for d in [2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15]:
             if not is_perfect_square(d):
-                x, y = solve_pell_equation(d)
+                x, y = find_pell_solution(d)
                 # Verify the equation x² - dy² = 1
                 assert x * x - d * y * y == 1, (
                     f"D={d}: x={x}, y={y} doesn't satisfy Pell equation"
@@ -125,9 +125,9 @@ class TestProblem066:
 
     def test_perfect_square_exclusion(self) -> None:
         """Test that perfect squares are properly excluded"""
-        # Perfect squares should return (0, 0) from solve_pell_equation
+        # Perfect squares should return (0, 0) from find_pell_solution
         for perfect_square in [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]:
-            x, y = solve_pell_equation(perfect_square)
+            x, y = find_pell_solution(perfect_square)
             assert x == 0 and y == 0, (
                 f"Perfect square {perfect_square} should have no solution"
             )

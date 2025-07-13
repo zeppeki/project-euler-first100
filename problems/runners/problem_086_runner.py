@@ -150,6 +150,14 @@ def run_examples() -> None:
     print(f"  最小値: {min(dist1, dist2, dist3):.3f}")
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 086."""
+    print("=== Problem 086 Performance Benchmark ===")
+
+    # Run the main function which handles the problem
+    main()
+
+
 def main() -> None:
     """Main function."""
     print_solution_header("086", "Cuboid route")
@@ -169,4 +177,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

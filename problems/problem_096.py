@@ -26,11 +26,13 @@ left corner of each solution grid.
 from problems.lib.constraint_solving import (
     is_valid_sudoku_move,
     load_sudoku_puzzles,
-    solve_sudoku_backtrack,
+)
+from problems.lib.constraint_solving import (
+    solve_sudoku_backtrack as sudoku_backtrack,
 )
 
 
-def solve_sudoku_optimized(grid: list[list[int]]) -> bool:
+def sudoku_backtrack_optimized(grid: list[list[int]]) -> bool:
     """
     最適化されたバックトラッキング解法（最小残可能値ヒューリスティック）
     時間計算量: O(9^(n*n)) but typically much faster
@@ -87,7 +89,7 @@ def solve_sudoku_optimized(grid: list[list[int]]) -> bool:
         if is_valid_sudoku_move(grid, row, col, num):
             grid[row][col] = num
 
-            if solve_sudoku_optimized(grid):
+            if sudoku_backtrack_optimized(grid):
                 return True
 
             # Backtrack
@@ -118,7 +120,7 @@ def solve_naive(filename: str = "p096_sudoku.txt") -> int:
         # Create a copy to avoid modifying original
         grid = [row[:] for row in puzzle]
 
-        if solve_sudoku_backtrack(grid):
+        if sudoku_backtrack(grid):
             total_sum += get_top_left_number(grid)
         else:
             raise ValueError(f"Puzzle {i + 1} has no solution")
@@ -139,7 +141,7 @@ def solve_optimized(filename: str = "p096_sudoku.txt") -> int:
         # Create a copy to avoid modifying original
         grid = [row[:] for row in puzzle]
 
-        if solve_sudoku_optimized(grid):
+        if sudoku_backtrack_optimized(grid):
             total_sum += get_top_left_number(grid)
         else:
             raise ValueError(f"Puzzle {i + 1} has no solution")
@@ -156,14 +158,14 @@ def solve_mathematical(filename: str = "p096_sudoku.txt") -> int:
     return solve_optimized(filename)
 
 
-def solve_single_puzzle(puzzle: list[list[int]]) -> list[list[int]]:
+def sudoku_solver_single(puzzle: list[list[int]]) -> list[list[int]]:
     """
     単一の数独パズルを解く（テスト用）
     時間計算量: O(9^(n*n))
     空間計算量: O(n*n)
     """
     grid = [row[:] for row in puzzle]
-    if solve_sudoku_optimized(grid):
+    if sudoku_backtrack_optimized(grid):
         return grid
     raise ValueError("Puzzle has no solution")
 
@@ -182,7 +184,7 @@ def main() -> None:
         for row in puzzles[0]:
             print("".join(map(str, row)))
 
-        solved = solve_single_puzzle(puzzles[0])
+        solved = sudoku_solver_single(puzzles[0])
         print("\nSolved:")
         for row in solved:
             print("".join(map(str, row)))

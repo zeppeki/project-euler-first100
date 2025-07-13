@@ -224,6 +224,14 @@ def run_detailed_analysis() -> None:
         print(f"効率化率:       {efficiency:.1f}%")
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 089."""
+    print("=== Problem 089 Performance Benchmark ===")
+
+    # Run the main function which handles the problem
+    main()
+
+
 def main() -> None:
     """Main function."""
     print_solution_header("089", "Roman numerals")
@@ -249,4 +257,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

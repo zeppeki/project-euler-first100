@@ -168,6 +168,14 @@ def run_performance_comparison() -> None:
             assert result1 == result2 == result3
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 087."""
+    print("=== Problem 087 Performance Benchmark ===")
+
+    # Run the main function which handles the problem
+    main()
+
+
 def main() -> None:
     """Main function."""
     print_solution_header("087", "Prime power triples")
@@ -187,4 +195,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

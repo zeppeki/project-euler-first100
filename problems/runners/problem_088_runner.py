@@ -192,6 +192,14 @@ def run_examples() -> None:
         print()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 088."""
+    print("=== Problem 088 Performance Benchmark ===")
+
+    # Run the main function which handles the problem
+    main()
+
+
 def main() -> None:
     """Main function."""
     print_solution_header("088", "Product-sum numbers")
@@ -214,4 +222,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

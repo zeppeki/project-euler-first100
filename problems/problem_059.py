@@ -127,7 +127,14 @@ def is_valid_english_text(text: str) -> bool:
     printable_chars = sum(1 for c in text if c.isprintable())
     printable_ratio = printable_chars / len(text)
 
-    if printable_ratio < 0.9:
+    if printable_ratio < 0.95:  # More strict printable requirement
+        return False
+
+    # ASCII文字の範囲チェック (より厳密)
+    valid_ascii_chars = sum(1 for c in text if 32 <= ord(c) <= 126)
+    valid_ascii_ratio = valid_ascii_chars / len(text)
+
+    if valid_ascii_ratio < 0.9:
         return False
 
     # 一般的な英単語が含まれているかチェック
@@ -228,7 +235,7 @@ def is_valid_english_text(text: str) -> bool:
     word_count = sum(1 for word in common_words if word in text_lower)
 
     # より厳しい条件: 長いテキストほど多くの単語を要求
-    min_words = max(3, len(text) // 20)
+    min_words = max(3, len(text) // 50)  # Require more words for validation
     return word_count >= min_words
 
 

@@ -9,14 +9,16 @@ separated from the core algorithm implementations.
 from collections.abc import Callable
 from typing import Any
 
+from problems.lib.constraint_solving import (
+    is_valid_sudoku_move,
+    load_sudoku_puzzles,
+)
 from problems.problem_096 import (
     get_top_left_number,
-    is_valid_move,
-    load_sudoku_puzzles,
     solve_mathematical,
     solve_naive,
     solve_optimized,
-    solve_single_puzzle,
+    sudoku_solver_single,
 )
 from problems.runners.base_runner import BaseProblemRunner
 
@@ -113,7 +115,7 @@ class Problem096Runner(BaseProblemRunner):
 
         for test_row, test_col, test_num, description in test_cases:
             if first_puzzle[test_row][test_col] == 0:  # Only test empty cells
-                valid = is_valid_move(first_puzzle, test_row, test_col, test_num)
+                valid = is_valid_sudoku_move(first_puzzle, test_row, test_col, test_num)
                 print(
                     f"  位置({test_row},{test_col})に{test_num}を配置: {'可能' if valid else '不可能'} - {description}"
                 )
@@ -137,7 +139,7 @@ class Problem096Runner(BaseProblemRunner):
         print()
 
         try:
-            solved_puzzle = solve_single_puzzle(first_puzzle)
+            solved_puzzle = sudoku_solver_single(first_puzzle)
             print("解答:")
             for row in solved_puzzle:
                 print("  " + " ".join(str(cell) for cell in row))
@@ -214,7 +216,7 @@ class Problem096Runner(BaseProblemRunner):
             count = 0
             for puzzle in test_puzzles:
                 try:
-                    solve_single_puzzle(puzzle)
+                    sudoku_solver_single(puzzle)
                     count += 1
                 except ValueError:
                     pass
@@ -265,7 +267,7 @@ class Problem096Runner(BaseProblemRunner):
             print("解答例（最初の3パズル）:")
             for i, puzzle in enumerate(puzzles[:3]):
                 try:
-                    solved = solve_single_puzzle(puzzle)
+                    solved = sudoku_solver_single(puzzle)
                     top_left = get_top_left_number(solved)
                     print(f"  パズル{i + 1}: 左上3桁 = {top_left}")
                 except ValueError:
@@ -286,4 +288,9 @@ def run_benchmark() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

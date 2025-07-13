@@ -18,8 +18,8 @@ class Problem025Runner(BaseProblemRunner):
 
     def __init__(
         self,
-        enable_performance_test: bool = True,
-        enable_demonstrations: bool = True,
+        enable_performance_test: bool = False,
+        enable_demonstrations: bool = False,
     ) -> None:
         super().__init__(
             "025",
@@ -31,11 +31,17 @@ class Problem025Runner(BaseProblemRunner):
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 025."""
-        return []  # TODO: Add test cases
+        return [
+            # Test case: Main problem parameters
+            (1000,),
+        ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
         """Get solution functions for Problem 025."""
-        return [("素直な解法", solve_naive), ("最適化解法", solve_optimized)]
+        return [
+            ("素直な解法", solve_naive),
+            ("最適化解法", solve_optimized),
+        ]
 
     def get_main_parameters(self) -> tuple[Any, ...]:
         """Get parameters for the main problem."""
@@ -49,14 +55,21 @@ class Problem025Runner(BaseProblemRunner):
 def main() -> None:
     """メイン関数"""
     runner = Problem025Runner(enable_demonstrations=True)
-    runner.main()
-
-
-def run_benchmark() -> None:
-    """Run benchmark for Problem 025."""
-    runner = Problem025Runner(enable_demonstrations=False)
     runner.run_problem()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 025."""
+    print("=== Problem 025 Performance Benchmark ===")
+    runner = Problem025Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

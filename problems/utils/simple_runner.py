@@ -240,6 +240,20 @@ class SimpleBenchmarkRunner:
             "088": ((), {}),  # Uses default max_k=12000
             "089": ((), {}),  # Uses default filename
             "090": ((), {}),  # No arguments needed
+            # Problems 091-100 argument mappings
+            "091": ((50,), {}),  # limit: int
+            "092": ((1000000,), {}),  # limit: int (reduced for benchmarking)
+            "093": ((), {}),  # No arguments needed
+            "094": (
+                (100000000,),
+                {},
+            ),  # perimeter_limit: int (reduced for benchmarking)
+            "095": ((1000000,), {}),  # limit: int
+            "096": ((), {}),  # No arguments needed (uses data file)
+            "097": ((), {}),  # Uses default values for multiplier, exponent, addend
+            "098": ((), {}),  # No arguments needed (uses data file)
+            "099": ((), {}),  # No arguments needed (uses data file)
+            "100": ((10**12,), {}),  # limit: int (original problem limit)
         }
 
         return problem_args.get(problem_number, ((), {}))

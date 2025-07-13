@@ -107,6 +107,14 @@ def run_analysis() -> None:
         print(f"  {i:3d}  | {m:2d}×{n:2d} | {area:4d} | {count:,} | {diff:,}")
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 085."""
+    print("=== Problem 085 Performance Benchmark ===")
+
+    # Run the main function which handles the problem
+    main()
+
+
 def main() -> None:
     """Main function."""
     print_solution_header("085", "Counting rectangles")
@@ -123,4 +131,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

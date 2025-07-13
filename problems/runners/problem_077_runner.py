@@ -56,6 +56,14 @@ def test_solutions() -> None:
     print("✓ すべてのテストケースが成功しました")
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 077."""
+    print("=== Problem 077 Performance Benchmark ===")
+
+    # Run the main function which handles the problem
+    main()
+
+
 def main() -> None:
     """
     メイン関数: テストの実行とProject Euler問題の解答
@@ -106,4 +114,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
