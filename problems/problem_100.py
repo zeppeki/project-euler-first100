@@ -37,33 +37,30 @@ def is_valid_arrangement(blue: int, total: int) -> bool:
 
 def solve_naive(limit: int = 10**12) -> int:
     """
-    素直な解法: 全ての可能な組み合わせを順次チェック
-    注意: 非常に大きな数では実用的でない
-    時間計算量: O(√limit) - 実用不可
+    素直な解法: Pell方程式の解を順次計算
+    大きな数でも動作するよう、数学的解法と同じ漸化式を使用
+    時間計算量: O(log limit)
     空間計算量: O(1)
     """
-    # 小さな例から始める
-    blue, total = 15, 21
+    # 初期解: (b=15, n=21) => (x=29, y=41)
+    x, y = 29, 41
 
-    while total <= limit:
-        if is_valid_arrangement(blue, total) and total > limit:
+    while True:
+        # x = 2b - 1, y = 2n - 1 から b, n を復元
+        blue = (x + 1) // 2
+        total = (y + 1) // 2
+
+        # 検証
+        if not is_valid_arrangement(blue, total):
+            raise ValueError(f"Invalid arrangement: b={blue}, n={total}")
+
+        if total > limit:
             return blue
 
-        # 次の候補を探す（非効率的な方法）
-        blue += 1
-        # totalを推定 - b(b-1) ≈ n(n-1)/2 なので n ≈ b√2
-        total = int(blue * math.sqrt(2)) + 1
-
-        # 正確なtotalを見つける
-        for t in range(max(blue, total - 10), total + 20):
-            if is_valid_arrangement(blue, t):
-                total = t
-                break
-        else:
-            # 見つからない場合は次のblueへ
-            continue
-
-    return blue
+        # 次の解を計算: y² - 2x² = -1 の漸化式
+        x_new = 2 * y + 3 * x
+        y_new = 3 * y + 4 * x
+        x, y = x_new, y_new
 
 
 def solve_optimized(limit: int = 10**12) -> int:

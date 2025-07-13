@@ -8,16 +8,16 @@ import pytest
 from problems.lib.constraint_solving import (
     find_empty_cell,
     is_valid_sudoku_move,
+    load_sudoku_puzzles,
     solve_sudoku_backtrack,
 )
 from problems.problem_096 import (
     get_top_left_number,
-    load_sudoku_puzzles,
     solve_mathematical,
     solve_naive,
     solve_optimized,
-    solve_single_puzzle,
-    solve_sudoku_optimized,
+    sudoku_backtrack_optimized,
+    sudoku_solver_single,
 )
 
 
@@ -156,7 +156,7 @@ class TestSudokuSolvers:
         ]
 
         original_grid = [row[:] for row in grid]
-        assert solve_sudoku_optimized(grid)
+        assert sudoku_backtrack_optimized(grid)
 
         # Check that solution is valid
         assert find_empty_cell(grid) is None  # No empty cells
@@ -167,7 +167,7 @@ class TestSudokuSolvers:
                 if original_grid[i][j] != 0:
                     assert grid[i][j] == original_grid[i][j]
 
-    def test_solve_single_puzzle(self) -> None:
+    def test_sudoku_solver_single(self) -> None:
         """Test solving a single puzzle."""
         puzzle = [
             [5, 3, 0, 0, 7, 0, 0, 0, 0],
@@ -181,7 +181,7 @@ class TestSudokuSolvers:
             [0, 0, 0, 0, 8, 0, 0, 7, 9],
         ]
 
-        solved = solve_single_puzzle(puzzle)
+        solved = sudoku_solver_single(puzzle)
 
         # Original puzzle should be unchanged
         assert puzzle[0][2] == 0  # Still empty
@@ -210,7 +210,7 @@ class TestSolutionMethods:
             # Calculate expected result
             expected_result = 0
             for puzzle in test_puzzles:
-                solved = solve_single_puzzle(puzzle)
+                solved = sudoku_solver_single(puzzle)
                 expected_result += get_top_left_number(solved)
 
             # Create test file with just these puzzles
@@ -258,7 +258,7 @@ class TestSolutionMethods:
         # Test first puzzle
         if puzzles:
             first_puzzle = puzzles[0]
-            solved = solve_single_puzzle(first_puzzle)
+            solved = sudoku_solver_single(first_puzzle)
             top_left = get_top_left_number(solved)
 
             # The first puzzle should be solvable
@@ -281,7 +281,7 @@ class TestSolutionMethods:
         ]
 
         # Should "solve" instantly (no changes needed)
-        result = solve_single_puzzle(solved_puzzle)
+        result = sudoku_solver_single(solved_puzzle)
         assert result == solved_puzzle
 
     @pytest.mark.slow
@@ -304,7 +304,7 @@ class TestSolutionMethods:
             sample_puzzles = puzzles[:5]  # Test first 5 for speed
 
             for i, puzzle in enumerate(sample_puzzles):
-                solved = solve_single_puzzle(puzzle)
+                solved = sudoku_solver_single(puzzle)
 
                 # Solution should be complete
                 assert find_empty_cell(solved) is None, (
@@ -353,7 +353,7 @@ class TestProblem096:
 
         if puzzles:
             # Test first puzzle
-            solved = solve_single_puzzle(puzzles[0])
+            solved = sudoku_solver_single(puzzles[0])
 
             # Should be 9x9
             assert len(solved) == 9
@@ -383,7 +383,7 @@ class TestProblem096:
 
             start_time = time.time()
             for puzzle in sample_puzzles:
-                solve_single_puzzle(puzzle)
+                sudoku_solver_single(puzzle)
             total_time = time.time() - start_time
 
             # Should solve 3 puzzles in reasonable time (< 10 seconds)
@@ -394,7 +394,7 @@ class TestProblem096:
         puzzles = load_sudoku_puzzles()
 
         if puzzles:
-            solved = solve_single_puzzle(puzzles[0])
+            solved = sudoku_solver_single(puzzles[0])
             top_left = get_top_left_number(solved)
 
             # Should be a valid 3-digit representation

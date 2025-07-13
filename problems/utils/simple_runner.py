@@ -253,7 +253,7 @@ class SimpleBenchmarkRunner:
             "097": ((), {}),  # Uses default values for multiplier, exponent, addend
             "098": ((), {}),  # No arguments needed (uses data file)
             "099": ((), {}),  # No arguments needed (uses data file)
-            "100": ((1000000,), {}),  # limit: int (reduced for benchmarking)
+            "100": ((10**12,), {}),  # limit: int (original problem limit)
         }
 
         return problem_args.get(problem_number, ((), {}))
