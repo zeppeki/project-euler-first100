@@ -10,11 +10,11 @@ from collections.abc import Callable
 from typing import Any
 
 from problems.problem_066 import (
+    find_pell_solution,
     is_perfect_square,
     solve_mathematical,
     solve_naive,
     solve_optimized,
-    solve_pell_equation,
 )
 from problems.runners.base_runner import BaseProblemRunner
 
@@ -54,7 +54,7 @@ class Problem066Runner(BaseProblemRunner):
         ]
 
         for d, (expected_x, expected_y) in test_cases:
-            x, y = solve_pell_equation(d)
+            x, y = find_pell_solution(d)
             assert x == expected_x, f"D={d}: expected x={expected_x}, got x={x}"
             assert y == expected_y, f"D={d}: expected y={expected_y}, got y={y}"
             # Verify the Pell equation

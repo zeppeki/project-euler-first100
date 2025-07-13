@@ -62,7 +62,7 @@ def get_continued_fraction_period(n: int) -> tuple[int, list[int]]:
     return (a0, period)
 
 
-def solve_pell_equation(d: int) -> tuple[int, int]:
+def find_pell_solution(d: int) -> tuple[int, int]:
     """
     Solve the Pell equation x² - dy² = 1 for the minimal positive solution.
 
@@ -131,7 +131,7 @@ def solve_naive() -> int:
 
     for d in range(2, 1001):
         if not is_perfect_square(d):
-            x, y = solve_pell_equation(d)
+            x, y = find_pell_solution(d)
             if x > max_x:
                 max_x = x
                 result_d = d
@@ -157,7 +157,7 @@ def solve_optimized() -> int:
 
     for d in range(2, 1001):
         if d not in perfect_squares:
-            x, y = solve_pell_equation(d)
+            x, y = find_pell_solution(d)
             if x > max_x:
                 max_x = x
                 result_d = d
