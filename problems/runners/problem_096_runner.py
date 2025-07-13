@@ -9,16 +9,16 @@ separated from the core algorithm implementations.
 from collections.abc import Callable
 from typing import Any
 
+from problems.lib.constraint_solving import (
+    is_valid_sudoku_move,
+    load_sudoku_puzzles,
+)
 from problems.problem_096 import (
     get_top_left_number,
     solve_mathematical,
     solve_naive,
     solve_optimized,
     sudoku_solver_single,
-)
-from problems.lib.constraint_solving import (
-    is_valid_sudoku_move,
-    load_sudoku_puzzles,
 )
 from problems.runners.base_runner import BaseProblemRunner
 

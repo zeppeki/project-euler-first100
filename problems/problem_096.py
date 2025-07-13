@@ -26,6 +26,8 @@ left corner of each solution grid.
 from problems.lib.constraint_solving import (
     is_valid_sudoku_move,
     load_sudoku_puzzles,
+)
+from problems.lib.constraint_solving import (
     solve_sudoku_backtrack as sudoku_backtrack,
 )
 

@@ -98,7 +98,7 @@ def run_problem() -> None:
 def run_benchmark() -> None:
     """Run performance benchmark for Problem 080."""
     print("=== Problem 080 Performance Benchmark ===")
-    
+
     # Run the main function which handles the problem
     main()
 
