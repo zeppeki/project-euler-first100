@@ -16,7 +16,6 @@ from problems.problem_056 import (
     get_digit_sum_statistics,
     solve_naive,
     solve_optimized,
-    verify_examples,
 )
 from problems.runners.base_runner import BaseProblemRunner
 
@@ -165,4 +164,9 @@ def run_benchmark() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

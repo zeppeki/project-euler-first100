@@ -117,6 +117,14 @@ def run_problem() -> None:
         print_performance_comparison(results)
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 082."""
+    print("=== Problem 082 Performance Benchmark ===")
+    runner = Problem082Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 def main() -> None:
     """Main function."""
     print_solution_header("082", "Path sum: three ways")
@@ -129,4 +137,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

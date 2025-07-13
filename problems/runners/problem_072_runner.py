@@ -294,6 +294,14 @@ class Problem072Runner(BaseProblemRunner):
         print()
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 072."""
+    print("=== Problem 072 Performance Benchmark ===")
+    runner = Problem072Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 def main() -> None:
     """Main function for Problem 072 runner"""
     runner = Problem072Runner(enable_demonstrations=True)
@@ -301,4 +309,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

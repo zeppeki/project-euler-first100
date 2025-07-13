@@ -11,7 +11,7 @@ from typing import Any
 
 from problems.problem_096 import (
     get_top_left_number,
-    is_valid_move,
+    is_valid_sudoku_move,
     load_sudoku_puzzles,
     solve_mathematical,
     solve_naive,
@@ -286,4 +286,9 @@ def run_benchmark() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

@@ -1,0 +1,65 @@
+{
+  "benchmark_info": {
+    "version": "2.0",
+    "timestamp": "2025-07-13T13:55:00.720651",
+    "timeout_seconds": 60,
+    "total_problems": 1,
+    "total_execution_time": 7.626605443074368
+  },
+  "summary": {
+    "successful_problems": 1,
+    "failed_problems": 0,
+    "problems_with_timeouts": 0,
+    "total_solutions_tested": 3,
+    "total_successful_solutions": 3,
+    "total_timeout_solutions": 0,
+    "one_minute_rule_compliance": 1,
+    "result_consistency_rate": 1.0
+  },
+  "problems": {
+    "010": {
+      "problem_number": "010",
+      "problem_title": "Summation of primes",
+      "timestamp": "2025-07-13T13:55:00.720476",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 0.07731522305402905,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 142913828922
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 7.36556412500795,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 142913828922
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.17890553595498204,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 142913828922
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "数学的解法 (Mathematical)",
+      "fastest_time": 0.07731522305402905,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]"
+    }
+  }
+}

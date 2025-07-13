@@ -62,10 +62,23 @@ def run_problem() -> None:
         print("Results:", results)
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 079."""
+    print("=== Problem 079 Performance Benchmark ===")
+    runner = Problem079Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 def main() -> None:
     """Main function for standalone execution."""
     run_problem()
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

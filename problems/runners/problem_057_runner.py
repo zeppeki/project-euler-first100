@@ -17,7 +17,6 @@ from problems.problem_057 import (
     get_large_convergents,
     solve_naive,
     solve_optimized,
-    verify_known_convergents,
 )
 from problems.runners.base_runner import BaseProblemRunner
 
@@ -189,4 +188,9 @@ def run_benchmark() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()

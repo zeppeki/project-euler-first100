@@ -98,6 +98,14 @@ def run_comparison() -> None:
     print(f"  4面ダイス: {result_4}")
 
 
+def run_benchmark() -> None:
+    """Run performance benchmark for Problem 084."""
+    print("=== Problem 084 Performance Benchmark ===")
+    runner = Problem084Runner(enable_performance_test=True, enable_demonstrations=False)
+    result = runner.run_problem()
+    print(f"Benchmark result: {result}")
+
+
 def main() -> None:
     """Main function."""
     print_solution_header("084", "Monopoly odds")
@@ -113,4 +121,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        run_benchmark()
+    else:
+        main()
