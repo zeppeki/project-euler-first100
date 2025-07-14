@@ -138,14 +138,21 @@ class SimpleBenchmarkRunner:
         if problem_number == "022":
             # Import names data for Problem 022
             try:
-                problem_module = importlib.import_module(
-                    f"problems.problem_{problem_number.zfill(3)}"
-                )
-                names_func = problem_module.create_sample_names
-                names_data = names_func()
+                from problems.lib.file_io import load_names_file
+
+                names_data = load_names_file("p022_names.txt")
                 return ((names_data,), {})
-            except (ImportError, AttributeError):
-                return ((), {})
+            except (ImportError, AttributeError, FileNotFoundError):
+                # Fallback to sample data if file is not available
+                try:
+                    problem_module = importlib.import_module(
+                        f"problems.problem_{problem_number.zfill(3)}"
+                    )
+                    names_func = problem_module.create_sample_names
+                    names_data = names_func()
+                    return ((names_data,), {})
+                except (ImportError, AttributeError):
+                    return ((), {})
 
         # Default arguments for common problems
         problem_args: dict[str, tuple[tuple, dict]] = {
@@ -242,7 +249,7 @@ class SimpleBenchmarkRunner:
             "090": ((), {}),  # No arguments needed
             # Problems 091-100 argument mappings
             "091": ((50,), {}),  # limit: int
-            "092": ((1000000,), {}),  # limit: int (reduced for benchmarking)
+            "092": ((10000000,), {}),  # limit: int
             "093": ((), {}),  # No arguments needed
             "094": (
                 (100000000,),

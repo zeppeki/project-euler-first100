@@ -35,8 +35,8 @@ class Problem004Runner(BaseProblemRunner):
     def get_test_cases(self) -> list[tuple[Any, ...]]:
         """Get test cases for Problem 004."""
         return [
-            (1, 1, (9, 9, 1)),  # 1桁の場合: 9 * 1 = 9
-            (2, 2, (9009, 99, 91)),  # 2桁の場合: 99 * 91 = 9009
+            (1, 1, 9),  # 1桁の場合: 9
+            (2, 2, 9009),  # 2桁の場合: 9009
         ]
 
     def get_solution_functions(self) -> list[tuple[str, Callable[..., Any]]]:
@@ -58,15 +58,13 @@ class Problem004Runner(BaseProblemRunner):
     def _demonstrate_palindrome_verification(self) -> None:
         """Demonstrate palindrome verification for the solution."""
         min_digits, max_digits = self.get_main_parameters()
-        result = solve_optimized(min_digits, max_digits)
-        palindrome, factor1, factor2 = result
+        palindrome = solve_optimized(min_digits, max_digits)
 
         print("=== 回文の検証 ===")
         print(f"数値: {palindrome}")
         print(f"文字列: {palindrome!s}")
         print(f"逆順: {str(palindrome)[::-1]}")
         print(f"回文: {'✓' if is_palindrome(palindrome) else '✗'}")
-        print(f"因子: {factor1} × {factor2} = {palindrome}")
 
 
 def main() -> None:
