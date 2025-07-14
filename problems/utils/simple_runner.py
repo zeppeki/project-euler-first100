@@ -252,7 +252,7 @@ class SimpleBenchmarkRunner:
             "092": ((10000000,), {}),  # limit: int
             "093": ((), {}),  # No arguments needed
             "094": (
-                (100000000,),
+                (1000000000,),
                 {},
             ),  # perimeter_limit: int (reduced for benchmarking)
             "095": ((1000000,), {}),  # limit: int
