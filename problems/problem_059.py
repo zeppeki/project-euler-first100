@@ -346,7 +346,14 @@ def solve_optimized() -> int:
             return calculate_ascii_sum(decrypted_text)
 
     # 頻度分析が失敗した場合、全探索にフォールバック
-    return solve_naive()
+    encrypted_data = load_encrypted_text()
+
+    for key in generate_three_letter_keys():
+        decrypted_text = xor_decrypt(encrypted_data, key)
+        if is_valid_english_text(decrypted_text):
+            return calculate_ascii_sum(decrypted_text)
+
+    return 0
 
 
 def solve_mathematical() -> int:

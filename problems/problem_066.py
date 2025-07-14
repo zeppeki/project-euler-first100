@@ -171,5 +171,21 @@ def solve_mathematical() -> int:
     時間計算量: O(n * p) - Pell方程式の解法は避けられない
     空間計算量: O(√n + p) - 完全平方数のセットと周期検出用ハッシュマップ
     """
-    # この問題では数学的ショートカットは限定的なので、optimizedと同じ実装
-    return solve_optimized()
+    max_x = 0
+    result_d = 0
+
+    # 完全平方数のセットを事前計算
+    perfect_squares = set()
+    i = 1
+    while i * i <= 1000:
+        perfect_squares.add(i * i)
+        i += 1
+
+    for d in range(2, 1001):
+        if d not in perfect_squares:
+            x, y = find_pell_solution(d)
+            if x > max_x:
+                max_x = x
+                result_d = d
+
+    return result_d

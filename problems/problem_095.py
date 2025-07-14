@@ -173,15 +173,6 @@ def solve_optimized(limit: int = 1000000) -> int:
     return result
 
 
-def solve_mathematical(limit: int = 1000000) -> int:
-    """
-    数学的解法: 最適化解法と同じ（この問題では特別な数学的ショートカットはない）
-    時間計算量: O(n * log n)
-    空間計算量: O(n)
-    """
-    return solve_optimized(limit)
-
-
 def find_all_amicable_chains(limit: int = 1000000) -> list[tuple[int, list[int]]]:
     """
     指定された制限内のすべての友愛連鎖を見つける

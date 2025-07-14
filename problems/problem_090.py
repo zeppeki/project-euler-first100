@@ -124,8 +124,31 @@ def solve_optimized() -> int:
     Returns:
         条件を満たす配置の数
     """
-    # naive解法と同じアプローチを使用（正規化による複雑さを避ける）
-    return solve_naive()
+    # 必要な平方数
+    squares = ["01", "04", "09", "16", "25", "36", "49", "64", "81"]
+
+    # 10個の数字から6個を選ぶ全ての組み合わせ
+    all_cubes = list(combinations(range(10), 6))
+
+    valid_arrangements = 0
+
+    # 全ての組み合わせをチェック（重複を避けるため i <= j）
+    for i in range(len(all_cubes)):
+        for j in range(i, len(all_cubes)):
+            cube1 = set(all_cubes[i])
+            cube2 = set(all_cubes[j])
+
+            # 全ての平方数が作成可能かチェック
+            can_form_all = True
+            for square in squares:
+                if not can_form_square(cube1, cube2, square):
+                    can_form_all = False
+                    break
+
+            if can_form_all:
+                valid_arrangements += 1
+
+    return valid_arrangements
 
 
 def solve_mathematical() -> int:

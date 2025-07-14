@@ -302,17 +302,6 @@ def solve_optimized(filename: str = "p098_words.txt") -> int:
     return max_square
 
 
-def solve_mathematical(filename: str = "p098_words.txt") -> int:
-    """
-    数学的解法: 数学的性質を活用した最適化
-    時間計算量: O(n * m * s) - optimized square generation
-    空間計算量: O(s + n)
-    """
-    # For this problem, the mathematical approach is similar to optimized
-    # The key insight is to group by word length and generate appropriate squares
-    return solve_optimized(filename)
-
-
 def main() -> None:
     """メイン実行関数"""
     import time

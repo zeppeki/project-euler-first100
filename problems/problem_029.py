@@ -32,14 +32,3 @@ def solve_naive(limit: int = 100) -> int:
         for b in range(2, limit + 1):
             distinct_terms.add(a**b)
     return len(distinct_terms)
-
-
-def solve_optimized(limit: int = 100) -> int:
-    """
-    This problem is most easily solved with the naive approach in Python due to
-    its efficient handling of large integers and hash sets. A mathematical
-    approach involving prime factorization would be significantly more complex
-    to implement and likely not much faster in a language like Python.
-    Therefore, the optimized solution is the same as the naive one.
-    """
-    return solve_naive(limit)

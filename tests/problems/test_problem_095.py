@@ -9,7 +9,6 @@ from problems.problem_095 import (
     compute_divisor_sums,
     find_all_amicable_chains,
     find_chain_length,
-    solve_mathematical,
     solve_naive,
     solve_optimized,
     sum_of_proper_divisors,
@@ -127,12 +126,12 @@ class TestSolutionMethods:
         # Very small case - should find 6 (perfect number)
         assert solve_naive(10) == 6
         assert solve_optimized(10) == 6
-        assert solve_mathematical(10) == 6
+        assert solve_optimized(10) == 6
 
         # Case with amicable pair
         assert solve_naive(300) == 220
         assert solve_optimized(300) == 220
-        assert solve_mathematical(300) == 220
+        assert solve_optimized(300) == 220
 
     def test_solution_consistency(self) -> None:
         """Test that all solution methods give the same results."""
@@ -141,15 +140,10 @@ class TestSolutionMethods:
         for limit in test_limits:
             naive_result = solve_naive(limit)
             optimized_result = solve_optimized(limit)
-            mathematical_result = solve_mathematical(limit)
 
             assert naive_result == optimized_result, (
                 f"Naive vs Optimized mismatch at limit {limit}: "
                 f"{naive_result} != {optimized_result}"
-            )
-            assert naive_result == mathematical_result, (
-                f"Naive vs Mathematical mismatch at limit {limit}: "
-                f"{naive_result} != {mathematical_result}"
             )
 
     def test_known_chains(self) -> None:
@@ -183,9 +177,7 @@ class TestSolutionMethods:
         # Test with moderately large limit
         limit = 100000
         result_optimized = solve_optimized(limit)
-        result_mathematical = solve_mathematical(limit)
 
-        assert result_optimized == result_mathematical
         assert result_optimized > 0
 
         # Verify the result is actually the smallest member of the longest chain
@@ -257,7 +249,7 @@ class TestProblem095:
     def test_main_problem_result(self) -> None:
         """Test the main problem result."""
         # The expected answer for limit 1,000,000 is 14316
-        result = solve_mathematical(1000000)
+        result = solve_optimized(1000000)
         assert result == 14316
 
     def test_chain_detection_algorithm(self) -> None:

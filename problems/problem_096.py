@@ -149,15 +149,6 @@ def solve_optimized(filename: str = "p096_sudoku.txt") -> int:
     return total_sum
 
 
-def solve_mathematical(filename: str = "p096_sudoku.txt") -> int:
-    """
-    数学的解法: この問題では最適化解法と同じ（数独は組み合わせ問題）
-    時間計算量: O(k * 9^(n*n)) but typically much faster
-    空間計算量: O(n*n)
-    """
-    return solve_optimized(filename)
-
-
 def sudoku_solver_single(puzzle: list[list[int]]) -> list[list[int]]:
     """
     単一の数独パズルを解く（テスト用）

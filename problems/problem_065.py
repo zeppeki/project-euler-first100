@@ -113,9 +113,11 @@ def solve_optimized() -> int:
     時間計算量: O(n) - 収束分数の計算は本質的にO(n)
     空間計算量: O(1) - 定数領域のみ使用
     """
-    # For this problem, the optimized approach is essentially the same
-    # as the naive approach since we need to compute all coefficients up to n
-    return solve_naive()
+    # Calculate the 100th convergent (0-based index, so 99)
+    numerator, _ = compute_convergent(99)
+
+    # Return sum of digits in the numerator
+    return sum_of_digits(numerator)
 
 
 def solve_mathematical() -> int:
@@ -124,6 +126,8 @@ def solve_mathematical() -> int:
     時間計算量: O(n) - 連分数の収束分数計算は避けられない
     空間計算量: O(1) - 定数領域のみ使用
     """
-    # The mathematical approach for this problem is the same as the naive approach
-    # There's no significant mathematical shortcut for computing the 100th convergent
-    return solve_naive()
+    # Calculate the 100th convergent (0-based index, so 99)
+    numerator, _ = compute_convergent(99)
+
+    # Return sum of digits in the numerator
+    return sum_of_digits(numerator)

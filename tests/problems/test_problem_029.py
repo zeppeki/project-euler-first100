@@ -7,10 +7,10 @@ from collections.abc import Callable
 
 import pytest
 
-from problems.problem_029 import solve_naive, solve_optimized
+from problems.problem_029 import solve_naive
 
 
-@pytest.mark.parametrize("solver", [solve_naive, solve_optimized])
+@pytest.mark.parametrize("solver", [solve_naive])
 class TestProblem029:
     """Tests for Problem 029 solvers."""
 

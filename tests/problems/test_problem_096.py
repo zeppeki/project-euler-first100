@@ -13,7 +13,6 @@ from problems.lib.constraint_solving import (
 )
 from problems.problem_096 import (
     get_top_left_number,
-    solve_mathematical,
     solve_naive,
     solve_optimized,
     sudoku_backtrack_optimized,
@@ -237,14 +236,8 @@ class TestSolutionMethods:
                 # Test all methods
                 naive_result = solve_naive("test_sudoku.txt")
                 optimized_result = solve_optimized("test_sudoku.txt")
-                mathematical_result = solve_mathematical("test_sudoku.txt")
 
-                assert (
-                    naive_result
-                    == optimized_result
-                    == mathematical_result
-                    == expected_result
-                )
+                assert naive_result == optimized_result == expected_result
 
             finally:
                 # Clean up
@@ -368,7 +361,7 @@ class TestProblem096:
     def test_main_problem_result(self) -> None:
         """Test the main problem result."""
         # The expected answer for all 50 puzzles is 24702
-        result = solve_mathematical()
+        result = solve_optimized()
         assert result == 24702
 
     def test_performance_characteristics(self) -> None:

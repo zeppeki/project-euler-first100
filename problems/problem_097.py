@@ -70,19 +70,6 @@ def solve_optimized(
     return (multiplier * power_of_two + addend) % modulus
 
 
-def solve_mathematical(
-    multiplier: int = 28433, exponent: int = 7830457, addend: int = 1
-) -> int:
-    """
-    数学的解法: モジュラー算術の性質を活用
-    時間計算量: O(log exponent)
-    空間計算量: O(1)
-    """
-    # This problem is fundamentally about modular exponentiation
-    # The mathematical approach is the same as the optimized approach
-    return solve_optimized(multiplier, exponent, addend)
-
-
 def verify_small_case(multiplier: int, exponent: int, addend: int) -> int:
     """
     小さな指数の場合の検証用関数
@@ -113,12 +100,10 @@ def main() -> None:
 
     result_naive = solve_naive(small_mult, small_exp, small_add)
     result_optimized = solve_optimized(small_mult, small_exp, small_add)
-    result_mathematical = solve_mathematical(small_mult, small_exp, small_add)
     result_verify = verify_small_case(small_mult, small_exp, small_add)
 
     print(f"素直な解法: {result_naive}")
     print(f"最適化解法: {result_optimized}")
-    print(f"数学的解法: {result_mathematical}")
     print(f"検証用関数: {result_verify}")
 
     # Main problem
@@ -134,13 +119,11 @@ def main() -> None:
 
     # Verify all methods give the same result
     result_naive_main = solve_naive()
-    result_mathematical_main = solve_mathematical()
 
     print("\n検証:")
     print(f"素直な解法: {result_naive_main}")
     print(f"最適化解法: {result}")
-    print(f"数学的解法: {result_mathematical_main}")
-    print(f"全て一致: {result_naive_main == result == result_mathematical_main}")
+    print(f"一致: {result_naive_main == result}")
 
 
 if __name__ == "__main__":

@@ -214,7 +214,25 @@ def solve_optimized(dice_sides: int = 4) -> str:
         import numpy as np
     except ImportError:
         # Fallback to naive solution if numpy is not available
-        return solve_naive(dice_sides, 1000000)
+        random.seed(42)  # For reproducible results
+
+        total_visits: dict[int, int] = defaultdict(int)
+
+        # Run simulation
+        visit_counts = simulate_game(dice_sides, 1000000)
+        for pos, count in visit_counts.items():
+            total_visits[pos] += count
+
+        # Find top 3 most visited squares
+        sorted_squares = sorted(total_visits.items(), key=lambda x: x[1], reverse=True)
+        top_3 = sorted_squares[:3]
+
+        # Format as 6-digit string (2 digits per square)
+        result = ""
+        for pos, _ in top_3:
+            result += f"{pos:02d}"
+
+        return result
 
     # Create transition matrix (40x40)
     transition_matrix = np.zeros((40, 40))

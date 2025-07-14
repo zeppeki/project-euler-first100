@@ -123,15 +123,6 @@ def solve_optimized(perimeter_limit: int = 1000000000) -> int:
     return total_perimeter
 
 
-def solve_mathematical(perimeter_limit: int = 1000000000) -> int:
-    """
-    数学的解法: ほぼ正三角形の漸化式を直接利用
-    時間計算量: O(log n)
-    空間計算量: O(1)
-    """
-    return solve_optimized(perimeter_limit)
-
-
 def find_almost_equilateral_triangles(
     perimeter_limit: int = 1000000000,
 ) -> list[tuple[int, int, int]]:

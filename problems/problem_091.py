@@ -113,23 +113,3 @@ def gcd(a: int, b: int) -> int:
     while b:
         a, b = b, a % b
     return a
-
-
-def solve_mathematical(limit: int = 50) -> int:
-    """
-    数学的解法: 簡潔な実装（最適化解法と同じアプローチ）
-    時間計算量: O(n^4) だが定数倍が改善
-    空間計算量: O(1)
-
-    直角三角形の判定にベクトルの内積を使用し、
-    順序を固定して重複を避ける
-
-    Args:
-        limit: 座標の上限値（0 <= x,y <= limit）
-
-    Returns:
-        直角三角形の個数
-    """
-    # 現時点では最適化解法と同じアプローチを使用
-    # より高度な数学的最適化は今後の課題
-    return solve_optimized(limit)

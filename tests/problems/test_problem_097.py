@@ -7,7 +7,6 @@ import pytest
 
 from problems.problem_097 import (
     modular_exponentiation,
-    solve_mathematical,
     solve_naive,
     solve_optimized,
     verify_small_case,
@@ -110,7 +109,7 @@ class TestSolutionMethods:
 
         assert solve_naive(mult, exp, add) == expected
         assert solve_optimized(mult, exp, add) == expected
-        assert solve_mathematical(mult, exp, add) == expected
+        assert solve_optimized(mult, exp, add) == expected
 
     def test_medium_examples(self) -> None:
         """Test with medium-sized examples."""
@@ -120,7 +119,7 @@ class TestSolutionMethods:
 
         assert solve_naive(mult, exp, add) == expected
         assert solve_optimized(mult, exp, add) == expected
-        assert solve_mathematical(mult, exp, add) == expected
+        assert solve_optimized(mult, exp, add) == expected
 
     def test_larger_examples(self) -> None:
         """Test with larger examples that require modular arithmetic."""
@@ -129,7 +128,7 @@ class TestSolutionMethods:
 
         result_naive = solve_naive(mult, exp, add)
         result_optimized = solve_optimized(mult, exp, add)
-        result_mathematical = solve_mathematical(mult, exp, add)
+        result_mathematical = solve_optimized(mult, exp, add)
 
         # All methods should give the same result
         assert result_naive == result_optimized == result_mathematical
@@ -142,7 +141,7 @@ class TestSolutionMethods:
         # Test with default parameters (main problem)
         result_naive = solve_naive()
         result_optimized = solve_optimized()
-        result_mathematical = solve_mathematical()
+        result_mathematical = solve_optimized()
 
         assert result_naive == result_optimized == result_mathematical
 
@@ -154,7 +153,7 @@ class TestSolutionMethods:
         # All methods should work with no parameters
         result_naive = solve_naive()
         result_optimized = solve_optimized()
-        result_mathematical = solve_mathematical()
+        result_mathematical = solve_optimized()
 
         # Should all be equal
         assert result_naive == result_optimized == result_mathematical
@@ -173,7 +172,7 @@ class TestSolutionMethods:
         for mult, exp, add in test_cases:
             result_naive = solve_naive(mult, exp, add)
             result_optimized = solve_optimized(mult, exp, add)
-            result_mathematical = solve_mathematical(mult, exp, add)
+            result_mathematical = solve_optimized(mult, exp, add)
 
             assert result_naive == result_optimized == result_mathematical
 
@@ -186,12 +185,12 @@ class TestProblem097:
         # The expected answer for Problem 097
         expected_result = 8739992577
 
-        result = solve_mathematical()
+        result = solve_optimized()
         assert result == expected_result
 
     def test_result_format(self) -> None:
         """Test that result has correct format."""
-        result = solve_mathematical()
+        result = solve_optimized()
 
         # Should be a positive integer
         assert isinstance(result, int)
@@ -215,7 +214,7 @@ class TestProblem097:
         result = (28433 * power_mod + 1) % (10**10)
 
         # Should match our solution functions
-        assert result == solve_mathematical()
+        assert result == solve_optimized()
 
     def test_performance_characteristics(self) -> None:
         """Test performance characteristics."""
@@ -237,7 +236,7 @@ class TestProblem097:
         # Verify using different approaches
 
         # Method 1: Direct calculation with our functions
-        result1 = solve_mathematical()
+        result1 = solve_optimized()
 
         # Method 2: Step by step calculation
         modulus = 10**10
@@ -254,17 +253,17 @@ class TestProblem097:
     def test_edge_case_parameters(self) -> None:
         """Test edge cases with different parameters."""
         # Test with multiplier = 1
-        result = solve_mathematical(1, 10, 0)
+        result = solve_optimized(1, 10, 0)
         expected = 2**10 % (10**10)  # 1024
         assert result == expected
 
         # Test with addend = 0
-        result = solve_mathematical(5, 10, 0)
+        result = solve_optimized(5, 10, 0)
         expected = (5 * (2**10)) % (10**10)  # 5120
         assert result == expected
 
         # Test with exponent = 0
-        result = solve_mathematical(123, 0, 456)
+        result = solve_optimized(123, 0, 456)
         expected = (123 * 1 + 456) % (10**10)  # 579
         assert result == expected
 
@@ -286,7 +285,7 @@ class TestIntegration:
             results = []
             results.append(solve_naive(*params))
             results.append(solve_optimized(*params))
-            results.append(solve_mathematical(*params))
+            results.append(solve_optimized(*params))
 
             # All results should be equal
             assert len(set(results)) == 1, (
@@ -308,5 +307,5 @@ class TestIntegration:
         for mult, exp, add in verifiable_cases:
             if exp <= 20:  # Safe for direct calculation
                 expected = verify_small_case(mult, exp, add)
-                result = solve_mathematical(mult, exp, add)
+                result = solve_optimized(mult, exp, add)
                 assert result == expected, f"Failed for {mult} × 2^{exp} + {add}"

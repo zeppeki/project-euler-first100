@@ -35,7 +35,10 @@ def solve_optimized() -> int:
     時間計算量: O(V + E)
     空間計算量: O(V + E)
     """
-    return solve_naive()
+    attempts = load_keylog_data("0079_keylog.txt")
+    dependencies = build_dependency_graph(attempts)
+    passcode_list = topological_sort(dependencies)
+    return int("".join(passcode_list))
 
 
 def solve_mathematical() -> int:
