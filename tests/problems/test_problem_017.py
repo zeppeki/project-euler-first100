@@ -8,7 +8,6 @@ import pytest
 from problems.problem_017 import (
     count_letters,
     number_to_words,
-    solve_mathematical,
     solve_naive,
     solve_optimized,
 )
@@ -168,19 +167,6 @@ class TestProblem017:
         for limit, expected in test_cases:
             assert solve_optimized(limit) == expected, f"Failed for limit {limit}"
 
-    def test_solve_mathematical(self) -> None:
-        """数学的解法のテスト"""
-        test_cases = [
-            (1, 3),  # "one" = 3
-            (2, 6),  # "one" + "two" = 3 + 3 = 6
-            (5, 19),  # "one" + "two" + "three" + "four" + "five" = 3+3+5+4+4 = 19
-            (10, 39),  # 計算される値
-            (20, 112),  # 予想される値
-        ]
-
-        for limit, expected in test_cases:
-            assert solve_mathematical(limit) == expected, f"Failed for limit {limit}"
-
     def test_all_solutions_agree(self) -> None:
         """すべての解法が同じ結果を返すことを確認"""
         test_cases = [1, 2, 5, 10, 20, 50, 100, 500, 1000]
@@ -188,11 +174,10 @@ class TestProblem017:
         for limit in test_cases:
             result_naive = solve_naive(limit)
             result_optimized = solve_optimized(limit)
-            result_math = solve_mathematical(limit)
 
-            assert result_naive == result_optimized == result_math, (
+            assert result_naive == result_optimized, (
                 f"Solutions disagree for limit {limit}: "
-                f"naive={result_naive}, optimized={result_optimized}, math={result_math}"
+                f"naive={result_naive}, optimized={result_optimized}"
             )
 
     def test_edge_cases(self) -> None:
@@ -200,19 +185,16 @@ class TestProblem017:
         # 最小値
         assert solve_naive(1) == 3
         assert solve_optimized(1) == 3
-        assert solve_mathematical(1) == 3
 
         # 最大値
         result_1000 = solve_naive(1000)
         assert solve_optimized(1000) == result_1000
-        assert solve_mathematical(1000) == result_1000
 
     def test_specific_examples(self) -> None:
         """問題文の具体例のテスト"""
         # 1-5の例: one, two, three, four, five → 3+3+5+4+4 = 19
         assert solve_naive(5) == 19
         assert solve_optimized(5) == 19
-        assert solve_mathematical(5) == 19
 
         # 342 = "three hundred and forty two" = 23 letters
         assert count_letters(number_to_words(342)) == 23
@@ -275,9 +257,8 @@ class TestProblem017:
         # すべての解法が同じ結果を返すことを確認
         result_naive = solve_naive(limit)
         result_optimized = solve_optimized(limit)
-        result_math = solve_mathematical(limit)
 
-        assert result_naive == result_optimized == result_math
+        assert result_naive == result_optimized
         assert result_naive > 0  # 正の数であることを確認
         assert result_naive < 100000  # 妥当な範囲内であることを確認
 
@@ -332,4 +313,3 @@ class TestProblem017:
 
         # 他の解法でも同じ結果が得られることを確認
         assert solve_optimized(1000) == 21124
-        assert solve_mathematical(1000) == 21124

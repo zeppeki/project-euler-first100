@@ -5,7 +5,6 @@ import pytest
 from problems.problem_091 import (
     gcd,
     is_right_triangle,
-    solve_mathematical,
     solve_naive,
     solve_optimized,
 )
@@ -60,20 +59,17 @@ class TestProblem091:
         # Problem states there are 14 right triangles in 2x2 grid
         assert solve_naive(2) == 14
         assert solve_optimized(2) == 14
-        assert solve_mathematical(2) == 14
 
     def test_trivial_cases(self) -> None:
         """Test edge cases"""
         # 0x0 grid - no triangles possible
         assert solve_naive(0) == 0
         assert solve_optimized(0) == 0
-        assert solve_mathematical(0) == 0
 
         # 1x1 grid - only 3 triangles possible
         # (1,0), (0,1) and (1,1), (1,0) and (1,1), (0,1)
         assert solve_naive(1) == 3
         assert solve_optimized(1) == 3
-        assert solve_mathematical(1) == 3
 
     def test_solutions_consistency(self) -> None:
         """Test that all solutions give same result for various inputs"""
@@ -82,12 +78,10 @@ class TestProblem091:
         for limit in test_limits:
             naive_result = solve_naive(limit)
             optimized_result = solve_optimized(limit)
-            mathematical_result = solve_mathematical(limit)
 
-            assert naive_result == optimized_result == mathematical_result, (
+            assert naive_result == optimized_result, (
                 f"Solutions differ for limit={limit}: "
-                f"naive={naive_result}, optimized={optimized_result}, "
-                f"mathematical={mathematical_result}"
+                f"naive={naive_result}, optimized={optimized_result}"
             )
 
     def test_known_values(self) -> None:

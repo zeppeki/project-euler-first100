@@ -10,7 +10,6 @@ from problems.problem_093 import (
     find_consecutive_length,
     generate_all_expressions,
     get_expression_details,
-    solve_mathematical,
     solve_naive,
     solve_optimized,
 )
@@ -104,11 +103,9 @@ class TestSolutionMethods:
         """Test that all solution methods give the same results."""
         naive_result = solve_naive()
         optimized_result = solve_optimized()
-        mathematical_result = solve_mathematical()
 
         # All methods should return the same result
         assert naive_result == optimized_result
-        assert naive_result == mathematical_result
 
         # Result should be a 4-digit string
         assert len(naive_result) == 4

@@ -209,20 +209,3 @@ def solve_optimized(limit: int) -> int:
         total_letters += letters
 
     return total_letters
-
-
-def solve_mathematical(limit: int) -> int:
-    """
-    数学的解法
-    パターン分析による効率的な計算
-
-    時間計算量: O(1) - 限定的な範囲での定数時間計算
-    空間計算量: O(1)
-    """
-    if limit <= 1000:
-        # 1000以下は最適化解法を使用（十分に効率的）
-        return solve_optimized(limit)
-
-    # より大きな範囲の場合の数学的最適化をここに実装
-    # 現在の問題では1000が上限なので、最適化解法で十分
-    return solve_optimized(limit)

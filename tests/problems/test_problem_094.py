@@ -9,7 +9,6 @@ from problems.problem_094 import (
     calculate_area,
     find_almost_equilateral_triangles,
     is_integral_area,
-    solve_mathematical,
     solve_naive,
     solve_optimized,
 )
@@ -99,7 +98,6 @@ class TestSolutionMethods:
         # Very small cases
         assert solve_naive(15) == 0  # No triangles with perimeter ≤ 15
         assert solve_optimized(15) == 0
-        assert solve_mathematical(15) == 0
 
         # Case with known triangles
         result_100 = solve_naive(100)
@@ -117,15 +115,10 @@ class TestSolutionMethods:
         for limit in test_limits:
             naive_result = solve_naive(limit)
             optimized_result = solve_optimized(limit)
-            mathematical_result = solve_mathematical(limit)
 
             assert naive_result == optimized_result, (
                 f"Naive vs Optimized mismatch at limit {limit}: "
                 f"{naive_result} != {optimized_result}"
-            )
-            assert naive_result == mathematical_result, (
-                f"Naive vs Mathematical mismatch at limit {limit}: "
-                f"{naive_result} != {mathematical_result}"
             )
 
     def test_known_triangles(self) -> None:
@@ -151,34 +144,30 @@ class TestSolutionMethods:
         # Very small limits
         assert solve_naive(1) == 0
         assert solve_optimized(1) == 0
-        assert solve_mathematical(1) == 0
 
         # Limits that exclude all triangles
         assert solve_naive(10) == 0
         assert solve_optimized(10) == 0
-        assert solve_mathematical(10) == 0
 
         # Minimum limit to include smallest triangle
         # Smallest triangle is (5,5,6) with perimeter 16
         assert solve_naive(16) == 16
         assert solve_optimized(16) == 16
-        assert solve_mathematical(16) == 16
 
         # Include next triangle (17,17,16) with perimeter 50
         result_50 = solve_naive(50)
         assert result_50 == 16 + 50  # Both triangles included
         assert solve_optimized(50) == result_50
-        assert solve_mathematical(50) == result_50
 
     @pytest.mark.slow
     def test_large_case(self) -> None:
         """Test with larger input (marked as slow)."""
         # Test with moderately large limit
         limit = 100000
+        result_naive = solve_naive(limit)
         result_optimized = solve_optimized(limit)
-        result_mathematical = solve_mathematical(limit)
 
-        assert result_optimized == result_mathematical
+        assert result_naive == result_optimized
         assert result_optimized > 0
 
         # Verify by checking actual triangles
@@ -189,8 +178,8 @@ class TestSolutionMethods:
     def test_result_properties(self) -> None:
         """Test properties of the results."""
         # Results should be positive for reasonable limits
+        assert solve_naive(100) > 0
         assert solve_optimized(100) > 0
-        assert solve_mathematical(100) > 0
 
         # Results should increase with larger limits
         result_100 = solve_optimized(100)
@@ -245,10 +234,9 @@ class TestProblem094:
         triangles = find_almost_equilateral_triangles(limit)
         total_perimeter = sum(sum(t) for t in triangles)
 
-        # All three methods should give the same result
+        # Both methods should give the same result
         assert solve_naive(limit) == total_perimeter
         assert solve_optimized(limit) == total_perimeter
-        assert solve_mathematical(limit) == total_perimeter
 
         # Check some specific triangles
         assert (5, 5, 6) in triangles
@@ -260,13 +248,13 @@ class TestProblem094:
 
     def test_performance_characteristics(self) -> None:
         """Test performance characteristics of different approaches."""
-        # Mathematical approach should handle large limits efficiently
+        # Optimized approach should handle large limits efficiently
         limit = 1000000
-        result = solve_mathematical(limit)
+        result = solve_optimized(limit)
         assert result > 0
 
         # Should be much larger than small limit results
-        small_result = solve_mathematical(1000)
+        small_result = solve_optimized(1000)
         assert result > small_result
 
     def test_triangle_distribution(self) -> None:
@@ -289,5 +277,5 @@ class TestProblem094:
 
         # Total should match
         expected_total = total_type1 + total_type2
-        actual_total = solve_mathematical(10000)
+        actual_total = solve_optimized(10000)
         assert actual_total == expected_total

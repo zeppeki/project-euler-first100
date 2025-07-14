@@ -168,4 +168,19 @@ def solve_optimized() -> int:
     時間計算量: O(n! * n^2) - 最悪ケースは同じだが実用的には高速
     空間計算量: O(n^2) - 接続グラフの保存
     """
-    return solve_naive()
+    # Generate all figurate numbers for sides 3-8
+    figurate_sets: dict[int, list[int]] = {}
+    for sides in range(3, 9):
+        figurate_sets[sides] = generate_figurate_numbers(sides)
+
+    # Build connection graph
+    connections = build_connection_graph(figurate_sets)
+
+    # Find cyclic chain
+    sides_list = list(range(3, 9))
+    chain = find_cyclic_chain(connections, sides_list, figurate_sets)
+
+    if chain:
+        return sum(chain)
+
+    return 0

@@ -140,36 +140,3 @@ def solve_naive(filename: str = "data/p089_roman.txt") -> int:
         total_saved += saved
 
     return total_saved
-
-
-def solve_optimized(filename: str = "data/p089_roman.txt") -> int:
-    """
-    最適化解法: 効率的な処理で最適化を実行。
-
-    時間計算量: O(n × m) where n は行数、m は各行の文字数
-    空間計算量: O(1)
-
-    Args:
-        filename: ローマ数字が記載されたファイルのパス
-
-    Returns:
-        最適化により節約できる文字数
-    """
-    # naive解法と同じアプローチを使用（最も確実）
-    return solve_naive(filename)
-
-
-def solve_mathematical(filename: str = "data/p089_roman.txt") -> int:
-    """
-    数学的解法: 完全なローマ数字変換を使用。
-
-    時間計算量: O(n × m) where n は行数、m は各行の文字数
-    空間計算量: O(1)
-
-    Args:
-        filename: ローマ数字が記載されたファイルのパス
-
-    Returns:
-        最適化により節約できる文字数
-    """
-    return solve_naive(filename)  # naive解法と同じアプローチ

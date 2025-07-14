@@ -25,10 +25,6 @@ def solve_naive(limit: int = 1000000) -> int:
     全ての可能な連続する素数の組み合わせを生成し、
     その和が素数かどうかを確認する。
     """
-    # 大きな制限の場合は効率的なアルゴリズムを使用
-    if limit > 10000:
-        return solve_optimized(limit)
-
     primes = sieve_of_eratosthenes(limit)
     prime_set = set(primes)
 

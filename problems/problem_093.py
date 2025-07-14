@@ -187,15 +187,6 @@ def solve_optimized() -> str:
     return best_digits
 
 
-def solve_mathematical() -> str:
-    """
-    数学的解法: 最適化解法と同じ（この問題では数学的ショートカットがない）
-    時間計算量: O(C(9,4) × 4! × 4³ × 5) = O(126 × 1280) = O(161,280)
-    空間計算量: O(1)
-    """
-    return solve_optimized()
-
-
 def get_expression_details(
     digits: tuple[int, ...],
 ) -> dict[str, int | set[int] | tuple[int, ...]]:

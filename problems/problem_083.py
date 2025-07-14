@@ -54,4 +54,15 @@ def solve_optimized(matrix: list[list[int]] | None = None) -> int:
     Returns:
         左上から右下への最小経路の合計
     """
-    return solve_naive(matrix)
+    if matrix is None:
+        matrix = load_matrix("p083_matrix.txt")
+    if not matrix or not matrix[0]:
+        return 0
+
+    rows, cols = len(matrix), len(matrix[0])
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # right, down, left, up
+
+    distance, _ = dijkstra_shortest_path(
+        matrix, (0, 0), (rows - 1, cols - 1), directions
+    )
+    return int(distance) if distance != float("inf") else 0

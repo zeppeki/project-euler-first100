@@ -85,9 +85,16 @@ def solve_mathematical(min_digits: int, max_digits: int) -> int:
 
     largest_palindrome = 0
 
-    # 1桁や2桁の場合は最適化を適用せず、通常の方法を使用
+    # 1桁や2桁の場合は最適化を適用せず、基本的な方法を使用
     if max_digits <= 2:
-        return solve_optimized(min_digits, max_digits)
+        for i in range(max_num, min_num - 1, -1):
+            for j in range(i, min_num - 1, -1):
+                product = i * j
+                if product <= largest_palindrome:
+                    break
+                if is_palindrome(product):
+                    largest_palindrome = product
+        return largest_palindrome
 
     # 6桁の回文の場合: abccba = 100001*a + 10010*b + 1100*c
     # = 11 * (9091*a + 910*b + 100*c)

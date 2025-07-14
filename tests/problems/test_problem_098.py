@@ -13,7 +13,6 @@ from problems.problem_098 import (
     get_sorted_letters,
     is_perfect_square,
     load_words,
-    solve_mathematical,
     solve_naive,
     solve_optimized,
 )
@@ -180,7 +179,7 @@ class TestSolutionMethods:
         # Test with data file
         result_naive = solve_naive()
         result_optimized = solve_optimized()
-        result_mathematical = solve_mathematical()
+        result_mathematical = solve_optimized()
 
         assert result_naive == result_optimized == result_mathematical
 
@@ -193,7 +192,7 @@ class TestSolutionMethods:
         # The expected answer for Problem 098
         expected_result = 18769
 
-        result = solve_mathematical()
+        result = solve_optimized()
         assert result == expected_result
 
     @pytest.mark.slow
@@ -202,7 +201,7 @@ class TestSolutionMethods:
     )  # 5 minutes timeout for this computationally intensive test
     def test_result_properties(self) -> None:
         """Test properties of the result."""
-        result = solve_mathematical()
+        result = solve_optimized()
 
         # Should be a positive integer
         assert isinstance(result, int)

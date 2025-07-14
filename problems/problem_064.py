@@ -116,5 +116,20 @@ def solve_mathematical() -> int:
     時間計算量: O(n * p) - 周期計算は避けられない
     空間計算量: O(√n + p) - 完全平方数のセットと周期検出用ハッシュマップ
     """
-    # この問題では数学的ショートカットは限定的なので、optimizedと同じ実装
-    return solve_optimized()
+    count = 0
+    limit = 10000
+
+    # 完全平方数のセットを事前計算
+    perfect_squares = set()
+    i = 1
+    while i * i <= limit:
+        perfect_squares.add(i * i)
+        i += 1
+
+    for n in range(2, limit + 1):
+        if n not in perfect_squares:
+            period_length = get_continued_fraction_period(n)
+            if period_length % 2 == 1:  # 奇数周期
+                count += 1
+
+    return count
