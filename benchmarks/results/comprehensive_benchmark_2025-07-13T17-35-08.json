@@ -1,0 +1,66 @@
+{
+  "benchmark_info": {
+    "version": "2.0",
+    "timestamp": "2025-07-13T17:35:08.150338",
+    "timeout_seconds": 60,
+    "total_problems": 1,
+    "total_execution_time": 0.004132668953388929
+  },
+  "summary": {
+    "successful_problems": 1,
+    "failed_problems": 0,
+    "problems_with_timeouts": 0,
+    "total_solutions_tested": 3,
+    "total_successful_solutions": 3,
+    "total_timeout_solutions": 0,
+    "one_minute_rule_compliance": 1,
+    "result_consistency_rate": 1.0
+  },
+  "problems": {
+    "100": {
+      "problem_number": "100",
+      "problem_title": "Arranged probability",
+      "timestamp": "2025-07-13T17:35:08.150297",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 1.3528973795473576e-05,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 756872327473
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 9.699957445263863e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 756872327473
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 5.73496799916029e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 756872327473
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "最適化解法 (Optimized)",
+      "fastest_time": 5.73496799916029e-06,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]",
+      "answer_correct": true
+    }
+  }
+}

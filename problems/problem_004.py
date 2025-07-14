@@ -13,20 +13,19 @@ Answer: 906609
 from .lib import is_palindrome
 
 
-def solve_naive(min_digits: int, max_digits: int) -> tuple[int, int, int]:
+def solve_naive(min_digits: int, max_digits: int) -> int:
     """
     素直な解法: 全ての組み合わせをチェック
     時間計算量: O(n²)
     空間計算量: O(1)
     """
     if min_digits > max_digits:
-        return 0, 0, 0
+        return 0
 
     min_num = 10 ** (min_digits - 1)
     max_num = 10**max_digits - 1
 
     largest_palindrome = 0
-    factors = (0, 0)
 
     for i in range(max_num, min_num - 1, -1):
         for j in range(i, min_num - 1, -1):  # j >= i to avoid duplicates
@@ -35,25 +34,23 @@ def solve_naive(min_digits: int, max_digits: int) -> tuple[int, int, int]:
                 break  # Early termination since products will only get smaller
             if is_palindrome(product):
                 largest_palindrome = product
-                factors = (i, j)
 
-    return largest_palindrome, factors[0], factors[1]
+    return largest_palindrome
 
 
-def solve_optimized(min_digits: int, max_digits: int) -> tuple[int, int, int]:
+def solve_optimized(min_digits: int, max_digits: int) -> int:
     """
     最適化解法: 上から下に向かって探索し、早期終了を活用
     時間計算量: O(n²) but with better pruning
     空間計算量: O(1)
     """
     if min_digits > max_digits:
-        return 0, 0, 0
+        return 0
 
     min_num = 10 ** (min_digits - 1)
     max_num = 10**max_digits - 1
 
     largest_palindrome = 0
-    factors = (0, 0)
 
     # 大きな数から小さな数に向かって探索
     for i in range(max_num, min_num - 1, -1):
@@ -68,13 +65,12 @@ def solve_optimized(min_digits: int, max_digits: int) -> tuple[int, int, int]:
 
             if is_palindrome(product):
                 largest_palindrome = product
-                factors = (i, j)
                 break  # 最大値を見つけたので内側ループを終了
 
-    return largest_palindrome, factors[0], factors[1]
+    return largest_palindrome
 
 
-def solve_mathematical(min_digits: int, max_digits: int) -> tuple[int, int, int]:
+def solve_mathematical(min_digits: int, max_digits: int) -> int:
     """
     数学的解法: 回文の構造を利用した最適化
     回文は特定の構造を持つため、候補を絞り込める
@@ -82,13 +78,12 @@ def solve_mathematical(min_digits: int, max_digits: int) -> tuple[int, int, int]
     空間計算量: O(1)
     """
     if min_digits > max_digits:
-        return 0, 0, 0
+        return 0
 
     min_num = 10 ** (min_digits - 1)
     max_num = 10**max_digits - 1
 
     largest_palindrome = 0
-    factors = (0, 0)
 
     # 1桁や2桁の場合は最適化を適用せず、通常の方法を使用
     if max_digits <= 2:
@@ -120,9 +115,8 @@ def solve_mathematical(min_digits: int, max_digits: int) -> tuple[int, int, int]
 
             if is_palindrome(product):
                 largest_palindrome = product
-                factors = (i, j)
                 break
 
             j -= j_step
 
-    return largest_palindrome, factors[0], factors[1]
+    return largest_palindrome

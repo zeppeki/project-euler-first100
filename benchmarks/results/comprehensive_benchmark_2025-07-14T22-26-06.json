@@ -1,0 +1,65 @@
+{
+  "benchmark_info": {
+    "version": "2.0",
+    "timestamp": "2025-07-14T22:26:06.326150",
+    "timeout_seconds": 60,
+    "total_problems": 1,
+    "total_execution_time": 60.00141423600007
+  },
+  "summary": {
+    "successful_problems": 1,
+    "failed_problems": 0,
+    "problems_with_timeouts": 1,
+    "total_solutions_tested": 3,
+    "total_successful_solutions": 2,
+    "total_timeout_solutions": 1,
+    "one_minute_rule_compliance": 1,
+    "result_consistency_rate": 1.0
+  },
+  "problems": {
+    "094": {
+      "problem_number": "094",
+      "problem_title": "Almost equilateral triangles",
+      "timestamp": "2025-07-14T22:26:06.326112",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 5.92399965171353e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 518408346
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "timeout",
+          "time": null,
+          "result": null,
+          "error": "Timed out after 60 seconds",
+          "timeout": true
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 5.253999916021712e-06,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 518408346
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 2,
+      "timeout_solutions": 1,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "最適化解法 (Optimized)",
+      "fastest_time": 5.253999916021712e-06,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]",
+      "answer_correct": true
+    }
+  }
+}

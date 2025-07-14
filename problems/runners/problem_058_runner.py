@@ -28,7 +28,11 @@ class Problem058Runner(BaseProblemRunner):
         self, enable_performance_test: bool = False, enable_demonstrations: bool = False
     ) -> None:
         super().__init__(
-            "058", "Spiral primes", 0, enable_performance_test, enable_demonstrations
+            "058",
+            "Spiral primes",
+            26241,
+            enable_performance_test,
+            enable_demonstrations,
         )
 
     def get_test_cases(self) -> list[tuple[Any, ...]]:

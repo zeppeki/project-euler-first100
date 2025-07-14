@@ -1,0 +1,66 @@
+{
+  "benchmark_info": {
+    "version": "2.0",
+    "timestamp": "2025-07-14T21:45:33.094043",
+    "timeout_seconds": 60,
+    "total_problems": 1,
+    "total_execution_time": 0.01051584299989372
+  },
+  "summary": {
+    "successful_problems": 1,
+    "failed_problems": 0,
+    "problems_with_timeouts": 0,
+    "total_solutions_tested": 3,
+    "total_successful_solutions": 3,
+    "total_timeout_solutions": 0,
+    "one_minute_rule_compliance": 1,
+    "result_consistency_rate": 1.0
+  },
+  "problems": {
+    "004": {
+      "problem_number": "004",
+      "problem_title": "Largest palindrome product",
+      "timestamp": "2025-07-14T21:45:33.093987",
+      "solutions": [
+        {
+          "name": "数学的解法 (Mathematical)",
+          "status": "success",
+          "time": 0.00024676799989720166,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 906609
+        },
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "success",
+          "time": 0.0017036459998962528,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 906609
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "success",
+          "time": 0.0015332140001191874,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 906609
+        }
+      ],
+      "total_solutions": 3,
+      "successful_solutions": 3,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "数学的解法 (Mathematical)",
+      "fastest_time": 0.00024676799989720166,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]",
+      "answer_correct": true
+    }
+  }
+}

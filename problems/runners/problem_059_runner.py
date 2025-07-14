@@ -29,7 +29,7 @@ class Problem059Runner(BaseProblemRunner):
         super().__init__(
             "059",
             "XOR decryption",
-            7306,
+            129448,
             enable_performance_test,
             enable_demonstrations,
         )

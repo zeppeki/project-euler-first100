@@ -50,24 +50,11 @@ class TestProblem004:
         self, min_digits: int, max_digits: int, expected_palindrome: int
     ) -> None:
         """Test the naive solution."""
-        result, factor1, factor2 = solve_naive(min_digits, max_digits)
+        result = solve_naive(min_digits, max_digits)
         assert result == expected_palindrome, (
             f"Expected {expected_palindrome}, got {result}"
         )
         assert is_palindrome(result), f"Result {result} is not a palindrome"
-        assert factor1 * factor2 == result, (
-            f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
-        )
-
-        # Check that factors are within the expected range
-        min_num = 10 ** (min_digits - 1)
-        max_num = 10**max_digits - 1
-        assert min_num <= factor1 <= max_num, (
-            f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
-        )
-        assert min_num <= factor2 <= max_num, (
-            f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
-        )
 
     @pytest.mark.parametrize(
         "min_digits,max_digits,expected_palindrome",
@@ -80,24 +67,11 @@ class TestProblem004:
         self, min_digits: int, max_digits: int, expected_palindrome: int
     ) -> None:
         """Test the optimized solution."""
-        result, factor1, factor2 = solve_optimized(min_digits, max_digits)
+        result = solve_optimized(min_digits, max_digits)
         assert result == expected_palindrome, (
             f"Expected {expected_palindrome}, got {result}"
         )
         assert is_palindrome(result), f"Result {result} is not a palindrome"
-        assert factor1 * factor2 == result, (
-            f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
-        )
-
-        # Check that factors are within the expected range
-        min_num = 10 ** (min_digits - 1)
-        max_num = 10**max_digits - 1
-        assert min_num <= factor1 <= max_num, (
-            f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
-        )
-        assert min_num <= factor2 <= max_num, (
-            f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
-        )
 
     @pytest.mark.parametrize(
         "min_digits,max_digits,expected_palindrome",
@@ -110,24 +84,11 @@ class TestProblem004:
         self, min_digits: int, max_digits: int, expected_palindrome: int
     ) -> None:
         """Test the mathematical solution."""
-        result, factor1, factor2 = solve_mathematical(min_digits, max_digits)
+        result = solve_mathematical(min_digits, max_digits)
         assert result == expected_palindrome, (
             f"Expected {expected_palindrome}, got {result}"
         )
         assert is_palindrome(result), f"Result {result} is not a palindrome"
-        assert factor1 * factor2 == result, (
-            f"Factors don't multiply to result: {factor1} * {factor2} != {result}"
-        )
-
-        # Check that factors are within the expected range
-        min_num = 10 ** (min_digits - 1)
-        max_num = 10**max_digits - 1
-        assert min_num <= factor1 <= max_num, (
-            f"Factor1 {factor1} not in range [{min_num}, {max_num}]"
-        )
-        assert min_num <= factor2 <= max_num, (
-            f"Factor2 {factor2} not in range [{min_num}, {max_num}]"
-        )
 
     @pytest.mark.parametrize("min_digits,max_digits", [(1, 1), (2, 2)])
     def test_all_solutions_agree(self, min_digits: int, max_digits: int) -> None:
@@ -136,23 +97,23 @@ class TestProblem004:
         optimized_result = solve_optimized(min_digits, max_digits)
         math_result = solve_mathematical(min_digits, max_digits)
 
-        assert naive_result[0] == optimized_result[0] == math_result[0], (
+        assert naive_result == optimized_result == math_result, (
             f"Solutions disagree for {min_digits}-{max_digits} digits: "
-            f"naive={naive_result[0]}, optimized={optimized_result[0]}, "
-            f"math={math_result[0]}"
+            f"naive={naive_result}, optimized={optimized_result}, "
+            f"math={math_result}"
         )
 
     def test_edge_cases(self) -> None:
         """Test edge cases."""
         # Test with invalid input (min_digits > max_digits)
         result = solve_naive(3, 2)
-        assert result == (0, 0, 0)
+        assert result == 0
 
         result = solve_optimized(3, 2)
-        assert result == (0, 0, 0)
+        assert result == 0
 
         result = solve_mathematical(3, 2)
-        assert result == (0, 0, 0)
+        assert result == 0
 
     def test_problem_answer(self) -> None:
         """Test the actual problem with 3-digit numbers (optimized for speed)."""
@@ -163,15 +124,12 @@ class TestProblem004:
 
         # Test mathematical solution first (fastest)
         result_math = solve_mathematical(min_digits, max_digits)
-        assert result_math[0] == expected_answer
-        assert is_palindrome(result_math[0])
-        assert 100 <= result_math[1] <= 999
-        assert 100 <= result_math[2] <= 999
-        assert result_math[1] * result_math[2] == result_math[0]
+        assert result_math == expected_answer
+        assert is_palindrome(result_math)
 
         # Test optimized solution
         result_optimized = solve_optimized(min_digits, max_digits)
-        assert result_optimized[0] == expected_answer
+        assert result_optimized == expected_answer
 
         # Skip naive solution for 3-digit case as it's too slow
 
@@ -214,11 +172,11 @@ class TestProblem004:
         result_math = solve_mathematical(min_digits, max_digits)
 
         # All should return the same correct result
-        assert result_naive[0] == expected
-        assert result_optimized[0] == expected
-        assert result_math[0] == expected
+        assert result_naive == expected
+        assert result_optimized == expected
+        assert result_math == expected
 
         # Verify palindrome properties
-        assert is_palindrome(result_naive[0])
-        assert is_palindrome(result_optimized[0])
-        assert is_palindrome(result_math[0])
+        assert is_palindrome(result_naive)
+        assert is_palindrome(result_optimized)
+        assert is_palindrome(result_math)
