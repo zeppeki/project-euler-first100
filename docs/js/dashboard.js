@@ -3,14 +3,14 @@
 // Dashboard data - this would typically come from an API or build process
 const dashboardData = {
   progress: {
-    completed: 75,
+    completed: 100,
     total: 100,
-    percentage: 75
+    percentage: 100
   },
   stats: {
-    solutions: 225, // 75問 × 3解法 = 225解法
-    testCases: 1734, // 現在のテスト数に基づく
-    documentation: 76, // 75問の解説 + README
+    solutions: 252, // 99 naive + 97 optimized + 56 mathematical = 252解法
+    testCases: 1362, // 実際のテスト関数数
+    documentation: 101, // 100問の解説 + README
     codeQuality: 100
   },
   problems: [
@@ -88,7 +88,32 @@ const dashboardData = {
     { number: '072', title: 'Counting fractions', learningPoint: '既約分数の数え上げ' },
     { number: '073', title: 'Counting fractions in a range', learningPoint: '範囲内分数の数え上げ' },
     { number: '074', title: 'Digit factorial chains', learningPoint: '桁階乗チェーン' },
-    { number: '075', title: 'Singular integer right triangles', learningPoint: '一意整数直角三角形' }
+    { number: '075', title: 'Singular integer right triangles', learningPoint: '一意整数直角三角形' },
+    { number: '076', title: 'Counting summations', learningPoint: '整数分割と動的計画法' },
+    { number: '077', title: 'Prime summations', learningPoint: '素数分割と動的計画法' },
+    { number: '078', title: 'Coin partitions', learningPoint: 'オイラーの五角数定理' },
+    { number: '079', title: 'Passcode derivation', learningPoint: 'トポロジカルソート' },
+    { number: '080', title: 'Square root digital expansion', learningPoint: '高精度計算' },
+    { number: '081', title: 'Path sum: two ways', learningPoint: '動的計画法と最短経路' },
+    { number: '082', title: 'Path sum: three ways', learningPoint: '動的計画法と3方向移動' },
+    { number: '083', title: 'Path sum: four ways', learningPoint: 'Dijkstra法' },
+    { number: '084', title: 'Monopoly odds', learningPoint: 'モンテカルロ法' },
+    { number: '085', title: 'Counting rectangles', learningPoint: '組み合わせ論と二分探索' },
+    { number: '086', title: 'Cuboid route', learningPoint: '立体幾何学とピタゴラス数' },
+    { number: '087', title: 'Prime power triples', learningPoint: '素数生成と探索範囲' },
+    { number: '088', title: 'Product-sum numbers', learningPoint: '積和数と再帰的探索' },
+    { number: '089', title: 'Roman numerals', learningPoint: 'ローマ数字と文字列処理' },
+    { number: '090', title: 'Cube digit pairs', learningPoint: '立方数と組み合わせ' },
+    { number: '091', title: 'Right triangles with integer coordinates', learningPoint: '格子点と直角三角形' },
+    { number: '092', title: 'Square digit chains', learningPoint: 'サイクル検出' },
+    { number: '093', title: 'Arithmetic expressions', learningPoint: '算術式の評価' },
+    { number: '094', title: 'Almost equilateral triangles', learningPoint: 'ペル方程式' },
+    { number: '095', title: 'Amicable chains', learningPoint: '友愛数列とサイクル' },
+    { number: '096', title: 'Su Doku', learningPoint: 'バックトラッキング' },
+    { number: '097', title: 'Large non-Mersenne prime', learningPoint: 'モジュラー計算' },
+    { number: '098', title: 'Anagramic squares', learningPoint: 'アナグラムと平方数' },
+    { number: '099', title: 'Largest exponential', learningPoint: '対数比較' },
+    { number: '100', title: 'Arranged probability', learningPoint: 'ペル方程式の応用' }
   ]
 };
 
