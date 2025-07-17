@@ -1,0 +1,49 @@
+{
+  "benchmark_info": {
+    "version": "2.0",
+    "timestamp": "2025-07-16T09:04:57.202785",
+    "timeout_seconds": 60,
+    "total_problems": 1,
+    "total_execution_time": 120.00296419999995
+  },
+  "summary": {
+    "successful_problems": 0,
+    "failed_problems": 0,
+    "problems_with_timeouts": 1,
+    "total_solutions_tested": 2,
+    "total_successful_solutions": 0,
+    "total_timeout_solutions": 2,
+    "one_minute_rule_compliance": 0,
+    "result_consistency_rate": 0
+  },
+  "problems": {
+    "086": {
+      "problem_number": "086",
+      "problem_title": "Project Euler Problem 86: Cuboid route",
+      "timestamp": "2025-07-16T09:04:57.202739",
+      "solutions": [
+        {
+          "name": "素直な解法 (Naive)",
+          "status": "timeout",
+          "time": null,
+          "result": null,
+          "error": "Timed out after 60 seconds",
+          "timeout": true
+        },
+        {
+          "name": "最適化解法 (Optimized)",
+          "status": "timeout",
+          "time": null,
+          "result": null,
+          "error": "Timed out after 60 seconds",
+          "timeout": true
+        }
+      ],
+      "total_solutions": 2,
+      "successful_solutions": 0,
+      "timeout_solutions": 2,
+      "error_solutions": 0,
+      "status": "failed"
+    }
+  }
+}
