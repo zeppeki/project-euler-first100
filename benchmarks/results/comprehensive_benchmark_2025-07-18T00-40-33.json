@@ -1,0 +1,48 @@
+{
+  "benchmark_info": {
+    "version": "2.0",
+    "timestamp": "2025-07-18T00:40:33.880135",
+    "timeout_seconds": 60,
+    "total_problems": 1,
+    "total_execution_time": 0.6220496799996909
+  },
+  "summary": {
+    "successful_problems": 1,
+    "failed_problems": 0,
+    "problems_with_timeouts": 0,
+    "total_solutions_tested": 1,
+    "total_successful_solutions": 1,
+    "total_timeout_solutions": 0,
+    "one_minute_rule_compliance": 1,
+    "result_consistency_rate": 1.0
+  },
+  "problems": {
+    "030": {
+      "problem_number": "030",
+      "problem_title": "Digit fifth powers",
+      "timestamp": "2025-07-18T00:40:33.880030",
+      "solutions": [
+        {
+          "name": "汎用解法 (General)",
+          "status": "success",
+          "time": 0.6184399140001915,
+          "result": "[隠匿]",
+          "error": null,
+          "timeout": false,
+          "raw_result": 443839
+        }
+      ],
+      "total_solutions": 1,
+      "successful_solutions": 1,
+      "timeout_solutions": 0,
+      "error_solutions": 0,
+      "status": "success",
+      "fastest_solution": "汎用解法 (General)",
+      "fastest_time": 0.6184399140001915,
+      "one_minute_rule": true,
+      "result_consistency": true,
+      "verified_result": "[隠匿]",
+      "answer_correct": true
+    }
+  }
+}

@@ -3,14 +3,14 @@
 // Dashboard data - this would typically come from an API or build process
 const dashboardData = {
   progress: {
-    completed: 75,
+    completed: 100,
     total: 100,
-    percentage: 75
+    percentage: 100
   },
   stats: {
-    solutions: 225, // 75問 × 3解法 = 225解法
-    testCases: 1734, // 現在のテスト数に基づく
-    documentation: 76, // 75問の解説 + README
+    solutions: 252, // 99 naive + 97 optimized + 56 mathematical = 252解法
+    testCases: 1362, // 実際のテスト関数数
+    documentation: 101, // 100問の解説 + README
     codeQuality: 100
   },
   problems: [
@@ -88,7 +88,32 @@ const dashboardData = {
     { number: '072', title: 'Counting fractions', learningPoint: '既約分数の数え上げ' },
     { number: '073', title: 'Counting fractions in a range', learningPoint: '範囲内分数の数え上げ' },
     { number: '074', title: 'Digit factorial chains', learningPoint: '桁階乗チェーン' },
-    { number: '075', title: 'Singular integer right triangles', learningPoint: '一意整数直角三角形' }
+    { number: '075', title: 'Singular integer right triangles', learningPoint: '一意整数直角三角形' },
+    { number: '076', title: 'Counting summations', learningPoint: '整数分割と動的計画法' },
+    { number: '077', title: 'Prime summations', learningPoint: '素数分割と動的計画法' },
+    { number: '078', title: 'Coin partitions', learningPoint: 'オイラーの五角数定理' },
+    { number: '079', title: 'Passcode derivation', learningPoint: 'トポロジカルソート' },
+    { number: '080', title: 'Square root digital expansion', learningPoint: '高精度計算' },
+    { number: '081', title: 'Path sum: two ways', learningPoint: '動的計画法と最短経路' },
+    { number: '082', title: 'Path sum: three ways', learningPoint: '動的計画法と3方向移動' },
+    { number: '083', title: 'Path sum: four ways', learningPoint: 'Dijkstra法' },
+    { number: '084', title: 'Monopoly odds', learningPoint: 'モンテカルロ法' },
+    { number: '085', title: 'Counting rectangles', learningPoint: '組み合わせ論と二分探索' },
+    { number: '086', title: 'Cuboid route', learningPoint: '立体幾何学とピタゴラス数' },
+    { number: '087', title: 'Prime power triples', learningPoint: '素数生成と探索範囲' },
+    { number: '088', title: 'Product-sum numbers', learningPoint: '積和数と再帰的探索' },
+    { number: '089', title: 'Roman numerals', learningPoint: 'ローマ数字と文字列処理' },
+    { number: '090', title: 'Cube digit pairs', learningPoint: '立方数と組み合わせ' },
+    { number: '091', title: 'Right triangles with integer coordinates', learningPoint: '格子点と直角三角形' },
+    { number: '092', title: 'Square digit chains', learningPoint: 'サイクル検出' },
+    { number: '093', title: 'Arithmetic expressions', learningPoint: '算術式の評価' },
+    { number: '094', title: 'Almost equilateral triangles', learningPoint: 'ペル方程式' },
+    { number: '095', title: 'Amicable chains', learningPoint: '友愛数列とサイクル' },
+    { number: '096', title: 'Su Doku', learningPoint: 'バックトラッキング' },
+    { number: '097', title: 'Large non-Mersenne prime', learningPoint: 'モジュラー計算' },
+    { number: '098', title: 'Anagramic squares', learningPoint: 'アナグラムと平方数' },
+    { number: '099', title: 'Largest exponential', learningPoint: '対数比較' },
+    { number: '100', title: 'Arranged probability', learningPoint: 'ペル方程式の応用' }
   ]
 };
 
@@ -182,17 +207,6 @@ function createPerformanceChart() {
   const container = document.getElementById('performance-chart');
   if (!container) return;
 
-  // Check if Chart.js is available
-  if (typeof Chart === 'undefined') {
-    container.innerHTML = `
-      <div class="chart-container">
-        <div class="chart-title">パフォーマンス比較</div>
-        <p>Chart.js が読み込まれていません。グラフを表示するにはChart.jsが必要です。</p>
-      </div>
-    `;
-    return;
-  }
-
   // Check if performance data is available
   if (typeof performanceData === 'undefined' || !performanceData.problems) {
     container.innerHTML = `
@@ -213,22 +227,221 @@ function createPerformanceChart() {
       <div class="chart-controls">
         <button id="timesModeBtn" class="chart-mode-btn active">実行時間 (ms)</button>
         <button id="relativeModeBtn" class="chart-mode-btn">相対速度</button>
-        <button id="logModeBtn" class="chart-mode-btn">対数スケール</button>
+        <button id="tableViewBtn" class="chart-mode-btn">表形式</button>
       </div>
       <div class="chart-info">
         <span id="chartInfo">データ生成: ${performanceData.metadata.generated_from}</span>
       </div>
-      <canvas id="performanceCanvas" class="chart-canvas"></canvas>
+      <div id="chartContent">
+        <canvas id="performanceCanvas" class="chart-canvas"></canvas>
+      </div>
     </div>
   `;
 
-  const ctx = document.getElementById('performanceCanvas').getContext('2d');
-  let currentChart = null;
   let currentMode = 'times';
-  let useLogScale = false;
+  let isTableView = false;
 
-  function getChartData(mode) {
-    const data = mode === 'times' ? performanceData.times : performanceData.relative;
+  function formatTime(ms) {
+    if (ms === null || ms === undefined) return 'N/A';
+    if (ms < 1) return ms.toFixed(3) + ' ms';
+    if (ms < 1000) return ms.toFixed(1) + ' ms';
+    return (ms / 1000).toFixed(2) + ' s';
+  }
+
+  function formatRelative(value) {
+    if (value === null || value === undefined) return 'N/A';
+    return value.toFixed(2) + 'x';
+  }
+
+  function createTable() {
+    const problems = performanceData.problems;
+    const times = performanceData.times;
+    const relative = performanceData.relative;
+
+    let tableHTML = `
+      <div class="performance-table-container">
+        <div class="table-controls">
+          <input type="text" id="problemFilter" placeholder="問題番号で検索 (例: 001, 025)" class="table-filter">
+          <select id="solutionFilter" class="table-filter">
+            <option value="all">すべての解法</option>
+            <option value="naive">素直な解法のみ</option>
+            <option value="optimized">最適化解法のみ</option>
+            <option value="mathematical">数学的解法のみ</option>
+          </select>
+        </div>
+        <table class="performance-table" id="performanceTable">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="problem">問題番号 <span class="sort-arrow">↕</span></th>
+              <th class="sortable" data-sort="naive">素直な解法 (Naive) <span class="sort-arrow">↕</span></th>
+              <th class="sortable" data-sort="optimized">最適化解法 (Optimized) <span class="sort-arrow">↕</span></th>
+              <th class="sortable" data-sort="mathematical">数学的解法 (Mathematical) <span class="sort-arrow">↕</span></th>
+              <th class="sortable" data-sort="fastest">最速解法 <span class="sort-arrow">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+    `;
+
+    for (let i = 0; i < problems.length; i++) {
+      const problem = problems[i];
+      const naiveTime = times.naive[i];
+      const optimizedTime = times.optimized[i];
+      const mathematicalTime = times.mathematical[i];
+
+      // Find fastest solution
+      const timesArray = [naiveTime, optimizedTime, mathematicalTime].filter(t => t !== null);
+      const fastestTime = timesArray.length > 0 ? Math.min(...timesArray) : null;
+      let fastestSolution = 'N/A';
+
+      if (fastestTime !== null) {
+        if (naiveTime === fastestTime) fastestSolution = 'Naive';
+        else if (optimizedTime === fastestTime) fastestSolution = 'Optimized';
+        else if (mathematicalTime === fastestTime) fastestSolution = 'Mathematical';
+      }
+
+      const naiveDisplay = currentMode === 'times' ? formatTime(naiveTime) : formatRelative(relative.naive[i]);
+      const optimizedDisplay = currentMode === 'times' ? formatTime(optimizedTime) : formatRelative(relative.optimized[i]);
+      const mathematicalDisplay = currentMode === 'times' ? formatTime(mathematicalTime) : formatRelative(relative.mathematical[i]);
+
+      tableHTML += `
+        <tr data-problem="${problem}" data-naive="${naiveTime || 'null'}" data-optimized="${optimizedTime || 'null'}" data-mathematical="${mathematicalTime || 'null'}" data-fastest="${fastestSolution}">
+          <td class="problem-number">Problem ${problem}</td>
+          <td class="naive-cell ${naiveTime === fastestTime ? 'fastest' : ''}">${naiveDisplay}</td>
+          <td class="optimized-cell ${optimizedTime === fastestTime ? 'fastest' : ''}">${optimizedDisplay}</td>
+          <td class="mathematical-cell ${mathematicalTime === fastestTime ? 'fastest' : ''}">${mathematicalDisplay}</td>
+          <td class="fastest-solution">${fastestSolution}</td>
+        </tr>
+      `;
+    }
+
+    tableHTML += `
+          </tbody>
+        </table>
+      </div>
+    `;
+
+    return tableHTML;
+  }
+
+  function addTableInteractivity() {
+    const problemFilter = document.getElementById('problemFilter');
+    const solutionFilter = document.getElementById('solutionFilter');
+    const tableBody = document.getElementById('tableBody');
+    const sortableHeaders = document.querySelectorAll('.sortable');
+
+    // Filter functionality
+    function filterTable() {
+      const problemQuery = problemFilter.value.toLowerCase();
+      const solutionQuery = solutionFilter.value;
+      const rows = tableBody.querySelectorAll('tr');
+
+      rows.forEach(row => {
+        const problem = row.dataset.problem.toLowerCase();
+        const naive = row.dataset.naive !== 'null';
+        const optimized = row.dataset.optimized !== 'null';
+        const mathematical = row.dataset.mathematical !== 'null';
+
+        const matchesProblem = problem.includes(problemQuery);
+        const matchesSolution = solutionQuery === 'all' ||
+          (solutionQuery === 'naive' && naive) ||
+          (solutionQuery === 'optimized' && optimized) ||
+          (solutionQuery === 'mathematical' && mathematical);
+
+        row.style.display = matchesProblem && matchesSolution ? '' : 'none';
+      });
+    }
+
+    problemFilter.addEventListener('input', filterTable);
+    solutionFilter.addEventListener('change', filterTable);
+
+    // Sort functionality
+    let sortDirection = {};
+
+    sortableHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const sortKey = header.dataset.sort;
+        const currentDirection = sortDirection[sortKey] || 'asc';
+        const newDirection = currentDirection === 'asc' ? 'desc' : 'asc';
+        sortDirection[sortKey] = newDirection;
+
+        // Update sort arrows
+        sortableHeaders.forEach(h => {
+          const arrow = h.querySelector('.sort-arrow');
+          if (h === header) {
+            arrow.textContent = newDirection === 'asc' ? '↑' : '↓';
+          } else {
+            arrow.textContent = '↕';
+          }
+        });
+
+        // Sort rows
+        const rows = Array.from(tableBody.querySelectorAll('tr'));
+        rows.sort((a, b) => {
+          let aValue, bValue;
+
+          if (sortKey === 'problem') {
+            aValue = parseInt(a.dataset.problem);
+            bValue = parseInt(b.dataset.problem);
+          } else if (sortKey === 'fastest') {
+            aValue = a.dataset.fastest;
+            bValue = b.dataset.fastest;
+          } else {
+            aValue = parseFloat(a.dataset[sortKey]);
+            bValue = parseFloat(b.dataset[sortKey]);
+
+            // Handle null values
+            if (isNaN(aValue)) aValue = newDirection === 'asc' ? Infinity : -Infinity;
+            if (isNaN(bValue)) bValue = newDirection === 'asc' ? Infinity : -Infinity;
+          }
+
+          if (newDirection === 'asc') {
+            return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+          } else {
+            return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+          }
+        });
+
+        // Re-append sorted rows
+        rows.forEach(row => tableBody.appendChild(row));
+
+        // Re-apply filter
+        filterTable();
+      });
+    });
+  }
+
+  function createChart() {
+    if (typeof Chart === 'undefined') {
+      return '<p>Chart.js が読み込まれていません。</p>';
+    }
+
+    return '<canvas id="performanceCanvas" class="chart-canvas"></canvas>';
+  }
+
+  function updateDisplay() {
+    const chartContent = document.getElementById('chartContent');
+
+    if (isTableView) {
+      chartContent.innerHTML = createTable();
+      // Add interactivity after table is created
+      setTimeout(() => {
+        addTableInteractivity();
+      }, 100);
+    } else {
+      chartContent.innerHTML = createChart();
+
+      if (typeof Chart !== 'undefined') {
+        initializeChart();
+      }
+    }
+  }
+
+  function initializeChart() {
+    const canvas = document.getElementById('performanceCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const data = currentMode === 'times' ? performanceData.times : performanceData.relative;
 
     const datasets = [];
 
@@ -266,18 +479,14 @@ function createPerformanceChart() {
       });
     }
 
-    return {
+    const chartData = {
       labels: performanceData.problems,
       datasets: datasets
     };
-  }
 
-  function getChartOptions(mode, logScale = false) {
-    const yAxisTitle = mode === 'times' ?
-      (logScale ? '実行時間 (ms, 対数)' : '実行時間 (ms)') :
-      '相対速度 (最速解法 = 1.0)';
+    const yAxisTitle = currentMode === 'times' ? '実行時間 (ms)' : '相対速度 (最速解法 = 1.0)';
 
-    return {
+    const chartOptions = {
       responsive: true,
       maintainAspectRatio: false,
       interaction: {
@@ -286,18 +495,16 @@ function createPerformanceChart() {
       },
       scales: {
         y: {
-          type: logScale ? 'logarithmic' : 'linear',
-          beginAtZero: !logScale,
+          type: 'linear',
+          beginAtZero: true,
           title: {
             display: true,
             text: yAxisTitle
           },
           ticks: {
             callback: function(value) {
-              if (mode === 'relative') {
+              if (currentMode === 'relative') {
                 return value.toFixed(1) + 'x';
-              } else if (logScale) {
-                return value < 1 ? value.toFixed(3) : value.toFixed(1);
               } else {
                 return value < 1 ? value.toFixed(3) : value.toFixed(1);
               }
@@ -328,7 +535,7 @@ function createPerformanceChart() {
                 return label + ': データなし';
               }
 
-              if (mode === 'relative') {
+              if (currentMode === 'relative') {
                 return label + ': ' + value.toFixed(2) + 'x';
               } else {
                 if (value < 1) {
@@ -348,47 +555,39 @@ function createPerformanceChart() {
         easing: 'easeInOutQuart'
       }
     };
-  }
 
-  function updateChart() {
-    if (currentChart) {
-      currentChart.destroy();
-    }
-
-    const chartData = getChartData(currentMode);
-    const chartOptions = getChartOptions(currentMode, useLogScale);
-
-    currentChart = new Chart(ctx, {
+    new Chart(ctx, {
       type: 'bar',
       data: chartData,
       options: chartOptions
     });
   }
 
-  // Initialize chart
-  updateChart();
+  // Initialize display
+  updateDisplay();
 
   // Add event listeners for mode switching
   document.getElementById('timesModeBtn').addEventListener('click', () => {
     currentMode = 'times';
-    useLogScale = false;
+    isTableView = false;
     document.querySelectorAll('.chart-mode-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById('timesModeBtn').classList.add('active');
-    updateChart();
+    updateDisplay();
   });
 
   document.getElementById('relativeModeBtn').addEventListener('click', () => {
     currentMode = 'relative';
-    useLogScale = false;
+    isTableView = false;
     document.querySelectorAll('.chart-mode-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById('relativeModeBtn').classList.add('active');
-    updateChart();
+    updateDisplay();
   });
 
-  document.getElementById('logModeBtn').addEventListener('click', () => {
-    useLogScale = !useLogScale;
-    document.getElementById('logModeBtn').classList.toggle('active', useLogScale);
-    updateChart();
+  document.getElementById('tableViewBtn').addEventListener('click', () => {
+    isTableView = true;
+    document.querySelectorAll('.chart-mode-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('tableViewBtn').classList.add('active');
+    updateDisplay();
   });
 }
 

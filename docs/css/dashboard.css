@@ -10,6 +10,149 @@
   --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   --border-radius: 8px;
   --transition: all 0.3s ease;
+  --naive-color: #1976d2;
+  --optimized-color: #4caf50;
+  --mathematical-color: #ff9800;
+}
+
+/* Performance Table Styles */
+.performance-table-container {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.performance-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.performance-table th {
+  background: var(--background-light);
+  padding: 1rem 0.75rem;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 2px solid #e0e0e0;
+  color: var(--secondary-color);
+}
+
+.performance-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+.performance-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.performance-table tr:last-child td {
+  border-bottom: none;
+}
+
+.problem-number {
+  font-weight: 600;
+  color: var(--primary-color);
+  min-width: 100px;
+}
+
+.naive-cell {
+  color: var(--naive-color);
+  font-weight: 500;
+}
+
+.optimized-cell {
+  color: var(--optimized-color);
+  font-weight: 500;
+}
+
+.mathematical-cell {
+  color: var(--mathematical-color);
+  font-weight: 500;
+}
+
+.fastest {
+  background-color: rgba(76, 175, 80, 0.1);
+  font-weight: 600;
+  position: relative;
+}
+
+.fastest::after {
+  content: '⭐';
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.fastest-solution {
+  font-weight: 600;
+  text-align: center;
+  color: var(--success-color);
+}
+
+/* Table Controls */
+.table-controls {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--background-light);
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table-filter {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.table-filter:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* Sortable headers */
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: var(--transition);
+}
+
+.sortable:hover {
+  background-color: #e8f4f8;
+}
+
+.sort-arrow {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  opacity: 0.7;
+}
+
+/* Table responsive design */
+@media (max-width: 768px) {
+  .performance-table-container {
+    overflow-x: auto;
+  }
+
+  .performance-table {
+    min-width: 600px;
+  }
+
+  .performance-table th,
+  .performance-table td {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .table-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
 /* Dashboard Container */
