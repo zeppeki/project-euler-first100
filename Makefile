@@ -33,7 +33,7 @@ RESET := \033[0m
 .PHONY: pre-commit setup check run-problem
 .PHONY: clean clean-docs clean-all clean-reports
 .PHONY: problems status stats progress new-problem
-.PHONY: benchmark benchmark-simple benchmark-simple-problem benchmark-problem benchmark-comprehensive benchmark-problem-timeout benchmark-retry-failed
+.PHONY: benchmark benchmark-simple benchmark-simple-problem benchmark-problem benchmark-comprehensive benchmark-problem-timeout benchmark-problem-extended benchmark-retry-failed
 .PHONY: issue-create issue-develop pr-create pr-status pr-merge issue-close
 
 ## Help
@@ -69,6 +69,7 @@ help: ## Show this help message
 	@echo "  make run-problem PROBLEM=001               # Run specific problem"
 	@echo "  make benchmark-simple-problem PROBLEM=001 # Quick benchmark"
 	@echo "  make benchmark-comprehensive               # Full benchmark with timeout"
+	@echo "  make benchmark-problem-extended PROBLEM=086 TIMEOUT=300  # Extended timeout benchmark"
 	@echo "  make new-problem PROBLEM=010               # Create new problem template"
 	@echo "  make issue-create PROBLEM=025              # Create GitHub issue for problem"
 	@echo "  make pr-create ISSUE=123                   # Create PR for issue"
@@ -277,6 +278,16 @@ benchmark-problem-timeout: ## Run comprehensive benchmark with timeout for speci
 	fi
 	@echo "$(BOLD)$(CYAN)Running comprehensive benchmark with timeout for Problem $(PROBLEM)...$(RESET)"
 	$(PYTHON) -m problems.utils.comprehensive_benchmark --problems $(PROBLEM)
+
+benchmark-problem-extended: ## Run comprehensive benchmark with extended timeout for specific problem (use: make benchmark-problem-extended PROBLEM=086 TIMEOUT=300)
+	@if [ -z "$(PROBLEM)" ]; then \
+		echo "$(RED)Error: PROBLEM variable is required$(RESET)"; \
+		echo "Usage: make benchmark-problem-extended PROBLEM=086 TIMEOUT=300"; \
+		exit 1; \
+	fi
+	@TIMEOUT_VAL=$${TIMEOUT:-300}; \
+	echo "$(BOLD)$(CYAN)Running comprehensive benchmark with extended timeout ($$TIMEOUT_VAL seconds) for Problem $(PROBLEM)...$(RESET)"; \
+	$(PYTHON) -m problems.utils.comprehensive_benchmark --problems $(PROBLEM) --timeout $$TIMEOUT_VAL
 
 benchmark-retry-failed: ## Retry benchmarking for previously failed problems
 	@echo "$(BOLD)$(CYAN)Retrying benchmarks for previously failed problems...$(RESET)"
